@@ -1,0 +1,28 @@
+#AnimePageLayout {
+    margin: 5vh auto;
+    width: 60%;
+}
+
+#MainTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#AnimeInformationPage {
+    padding: 1vh 1vw;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+#AnimeInformationPage div:nth-child(1) {
+    width: 20%;
+}
+
+#AnimeInformationPage div:nth-child(2) {
+    background: chartreuse;
+
+    width: 70%;
+}

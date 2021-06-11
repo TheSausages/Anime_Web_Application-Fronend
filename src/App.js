@@ -12,6 +12,7 @@ import Login from './Components/AuthenticationAndLogin/Login'
 
 import Loading from './Components/Loading'
 import Anime from './Components/Anime/Anime';
+import Forum from './Components/Forum/Forum';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
 
           <Switch>
             <PrivateRoute path='/forum'>
-              <Anime />
+              <Forum />
             </PrivateRoute>
 
             <Route exact path='/'>

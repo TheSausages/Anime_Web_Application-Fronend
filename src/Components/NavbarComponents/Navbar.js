@@ -23,7 +23,7 @@ function Navbar(props) {
                 {MenuItems
                     .filter( 
                         function(elem) {
-                            if (!elem.auth.includes((auth !== undefined && auth.token) ? 'loggedIn' : 'anonymous')) {
+                            if (!elem.auth.includes((auth !== undefined && auth.accessToken) ? 'loggedIn' : 'anonymous')) {
                                 return false;
                             }
         
@@ -41,7 +41,7 @@ function Navbar(props) {
                     })}
             </ul>      
 
-            {(auth !== undefined && auth.token) ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
+            {(auth !== undefined && auth.accessToken) ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
            
         </nav>
     )

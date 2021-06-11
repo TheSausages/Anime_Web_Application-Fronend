@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { getCurrentSeasonInformation, getCurrentSeasonAnime } from '../../Scripts/CurrentSeasonFetches';
-import { Capitalize } from '../../Scripts/Capitalize';
 import Loading from '../Loading'
 import { Link } from "react-router-dom";
-import { findFirstNotUndefined } from "../../Scripts/Utilities"
+import { findFirstNotUndefined, Capitalize } from "../../Scripts/Utilities"
+import ScrollContainer from 'react-indiana-drag-scroll'
 //import { useAuth } from '../AuthenticationAndLogin/Auth'
 import '../ComponentsCss/MainPage.css';
+import '../ComponentsCss/Line.css';
 
 
 export default function MainPage() {
@@ -44,7 +45,6 @@ export default function MainPage() {
             <div className='seasonalAnimeContainer'>
                 <div className='line'>
                     <p>{Capitalize(data.Anime.currentSeason.season) + ' ' + data.Anime.currentSeason.year} Season</p>
-                    <p></p>
                 </div>
                 
                 <div className='buttonHover buttonLeft'  onClick={() => scrollElementRight('seasonalAnime')}>{'<'}</div>

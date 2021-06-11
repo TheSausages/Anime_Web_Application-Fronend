@@ -13,7 +13,7 @@ export const MenuItems = [
     },
     {
         title: 'Forum',
-        url: '#',
+        url: '/forum',
         cName: 'nav-links',
         auth: 'loggedIn anonymous'
     },

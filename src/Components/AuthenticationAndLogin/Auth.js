@@ -15,7 +15,8 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   let history = useHistory();
-  const [token, setToken] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshTtoken, setRefreshToken] = useState(null);
   
   const signin = async (username, password) => {
     loginUser({
@@ -23,21 +24,23 @@ function useProvideAuth() {
             password
         })
         .then(data => {
-            setToken(data)
+            setAccessToken(data.access_token)
+            setRefreshToken(data.refresh_token)
         });
 
     history.push('/');
   };
 
   const signout = () => {
-    setToken(false);
+    setAccessToken(null);
 
     history.push('/');
   };
 
   
   return {
-    token,
+    accessToken,
+    refreshTtoken,
     signin,
     signout
   };
@@ -50,7 +53,7 @@ export function PrivateRoute({ children, path, ...rest }) {
       <Route
         {...rest}
         render={({location}) =>
-          (auth !== undefined && auth.token) ? (
+          (auth !== undefined && auth.accessToken) ? (
             children
           ) : (
             <Redirect to={{
@@ -74,7 +77,7 @@ async function loginUser(credentials) {
         headers: headers,
         body: JSON.stringify(credentials)
     })
-    .then( data => data.headers.get("Authorization"))
+    .then( data => data.json())
     .then( data => {
         return data
     })

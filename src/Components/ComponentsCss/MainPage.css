@@ -88,16 +88,3 @@
 .seasonalAnimeContainer:hover .buttonHover {
     opacity: 1;
 }
-
-/* Line and its title */
-.line p:first-child {
-    margin: 0;
-    padding: 0;
-    text-align: left;
-}
-
-.line p:last-child {
-    width: 100%;
-    border-bottom: 1px solid rgb(26, 145, 32);
-    margin-block: 0 1vh;
-}
