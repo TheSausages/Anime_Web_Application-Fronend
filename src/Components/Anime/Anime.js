@@ -6,6 +6,7 @@ import Loading from '../Loading'
 export default function Anime(props) {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
 
     useEffect(async () => {
             try {
@@ -20,7 +21,7 @@ export default function Anime(props) {
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
-                console.log('Error:' + error)
+                setError(error)
             }
     }, []);
 
@@ -29,7 +30,7 @@ export default function Anime(props) {
     }
 
     if (!data) {
-        return <span>Data not available</span>;
+        return <span>Data not available with error: {error}</span>;
     }
 
     return (
