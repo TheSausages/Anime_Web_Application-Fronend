@@ -3,7 +3,7 @@ Web Application created for my Bachelor's degree
 
 [Link to Backend](https://github.com/TheSausages/Anime_Web_Application-Backend "BackEnd")
 
-Section uder is automaticly created
+Section underneath is automaticly created
 
 # Getting Started with Create React App
 
