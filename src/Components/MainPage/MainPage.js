@@ -4,13 +4,13 @@ import Loading from '../Loading'
 import { Link } from "react-router-dom";
 import { findFirstNotUndefined, Capitalize } from "../../Scripts/Utilities"
 import ScrollContainer from 'react-indiana-drag-scroll'
-//import { useAuth } from '../AuthenticationAndLogin/Auth'
+import { useAuth } from '../AuthenticationAndLogin/Auth'
 import '../ComponentsCss/MainPage.css';
 import '../ComponentsCss/Line.css';
 
 
 export default function MainPage() {
-    //let auth = useAuth();
+    let auth = useAuth();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
 
@@ -43,6 +43,11 @@ export default function MainPage() {
     return(
         <div>
             <div className='seasonalAnimeContainer'>
+                <div>Token: {auth.accessToken ? auth.accessToken : 'no Token'}</div>
+                <div>
+                    <button onClick={() => aa(auth.accessToken)}>AAAAAAAAAAA</button>
+                </div>
+
                 <div className='line'>
                     <p>{Capitalize(data.Anime.currentSeason.season) + ' ' + data.Anime.currentSeason.year} Season</p>
                 </div>
@@ -71,4 +76,14 @@ function scrollElementRight(element) {
 
 function scrollElementLeft(element) {
     document.getElementById(element).scrollLeft += (window.innerWidth < 960 ? window.innerWidth * 0.795 : window.innerWidth * 0.75)
+}
+
+function aa(accessToken) {
+    fetch('http://localhost:8080/aa', {
+        method: 'GET',
+        headers: {
+            Authorization: "Bearer " + accessToken
+        }
+    })
+    .then(data => data.json());
 }

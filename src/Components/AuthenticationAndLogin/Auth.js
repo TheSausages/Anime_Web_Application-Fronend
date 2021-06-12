@@ -1,6 +1,6 @@
 import React, { useState, useContext, createContext } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const authContext = createContext();
 
@@ -15,24 +15,29 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   let history = useHistory();
+  const { state } = useLocation();
   const [accessToken, setAccessToken] = useState(null);
-  const [refreshTtoken, setRefreshToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
   
   const signin = async (username, password) => {
-    loginUser({
-            username,
-            password
-        })
-        .then(data => {
-            setAccessToken(data.access_token)
-            setRefreshToken(data.refresh_token)
-        });
+    await loginUser({
+      username,
+      password
+    })
+    .then(data => {
+      setAccessToken(data.access_token)
+      setRefreshToken(data.refresh_token)
+    });
 
-    history.push('/');
+    history.push(state === undefined || state.from === undefined ? '/' : state.from.pathname);
   };
 
-  const signout = () => {
-    setAccessToken(null);
+  const signout = async () => {
+    await logout(accessToken, refreshToken)
+    .then(data => {
+      setAccessToken(null)
+      setRefreshToken(null)
+    })
 
     history.push('/');
   };
@@ -40,7 +45,7 @@ function useProvideAuth() {
   
   return {
     accessToken,
-    refreshTtoken,
+    refreshToken,
     signin,
     signout
   };
@@ -56,7 +61,7 @@ export function PrivateRoute({ children, path, ...rest }) {
           (auth !== undefined && auth.accessToken) ? (
             children
           ) : (
-            <Redirect to={{
+            <Redirect push to={{
               pathname: '/login',
               state: { from: location }
           }}
@@ -68,25 +73,36 @@ export function PrivateRoute({ children, path, ...rest }) {
   }
 
 async function loginUser(credentials) {
-    let headers = new Headers({
-        "Content-Type": "application/json",
-    })
+  let headers = new Headers({
+    "Content-Type": "application/json",
+  })
 
-    return await fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(credentials)
-    })
-    .then( data => data.json())
-    .then( data => {
-        return data
-    })
-    .catch(error => {
-        console.log("Error:" + error)
-    })
+  return await fetch('http://localhost:8080/login', {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(credentials)
+  })
+  .then( data => data.json())
+  .then( data => {
+    return data
+  })
+  .catch(error => {
+    console.log("Error during login:" + error)
+  })
 }
 
-/*async function logoutUser(token) {
+async function logout(accessToken, refreshToken) {
+  let headers = new Headers({
+    "Authorization": "Bearer " + accessToken
+  })
 
-}*/
-   
+  return await fetch('http://localhost:8080/logoutUser', {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({refreshToken: refreshToken})
+  })
+  .then(data => {return data})
+  .catch(error => {
+    console.log("Error during login:" + error)
+  })
+}

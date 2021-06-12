@@ -41,7 +41,7 @@ function App() {
             </Route>
 
             <Route path="/logout">
-            <Login out={true}/>
+              <Login out={true}/>
             </Route>
 
           </Switch>
