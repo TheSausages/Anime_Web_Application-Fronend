@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
+import './css/RankingSelect.css'
 
 
-export default function Forum(props) {
+export default function RankingSelect(props) {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
@@ -30,7 +31,7 @@ export default function Forum(props) {
 
     return (
         <div>
-            Witam na forum!
+            Rankingi!
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../ComponentsCss/Button.css'
+import '../MiscellaneousCss/Button.css'
 
 const STYLES = [
     'btn--primary',

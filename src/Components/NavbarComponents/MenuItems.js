@@ -1,13 +1,13 @@
 export const MenuItems = [
     {
-        title: 'Anime',
-        url: '/anime',
+        title: 'Search',
+        url: '/search',
         cName: 'nav-links',
         auth: 'loggedIn anonymous'
     },
     {
         title: 'Rankings',
-        url: '#',
+        url: '/rankings',
         cName: 'nav-links',
         auth: 'loggedIn anonymous'
     },

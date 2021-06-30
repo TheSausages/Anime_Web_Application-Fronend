@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getAnimeById } from '../../Scripts/AnimeFetch'
 import { findFirstNotUndefined } from "../../Scripts/Utilities"
-import Loading from '../Loading'
-import '../ComponentsCss/Anime.css';
+import Loading from '../Loading/Loading'
+import './css/Anime.css';
 
 export default function Anime(props) {
     const [data, setData] = useState();

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getCurrentSeasonInformation, getCurrentSeasonAnime } from '../../Scripts/CurrentSeasonFetches';
-import Loading from '../Loading'
+import Loading from '../Loading/Loading'
 import { Link } from "react-router-dom";
 import { findFirstNotUndefined, Capitalize } from "../../Scripts/Utilities"
-import ScrollContainer from 'react-indiana-drag-scroll'
 import { useAuth } from '../AuthenticationAndLogin/Auth'
-import '../ComponentsCss/MainPage.css';
-import '../ComponentsCss/Line.css';
+import './css/MainPage.css';
+import '../MiscellaneousCss/Line.css';
 
 
 export default function MainPage() {
@@ -43,10 +42,12 @@ export default function MainPage() {
     return(
         <div>
             <div className='seasonalAnimeContainer'>
-                <div>Token: {auth.accessToken ? auth.accessToken : 'no Token'}</div>
-                <div>
+                {/*
+                   <div>Token: {auth.accessToken ? auth.accessToken : 'no Token'}</div> 
+                    <div>
                     <button onClick={() => aa(auth.accessToken)}>AAAAAAAAAAA</button>
-                </div>
+                    </div> 
+                */}
 
                 <div className='line'>
                     <p>{Capitalize(data.Anime.currentSeason.season) + ' ' + data.Anime.currentSeason.year} Season</p>

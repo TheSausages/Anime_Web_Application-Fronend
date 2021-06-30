@@ -1,5 +1,4 @@
 import './App.css';
-import { ProvideAuth, PrivateRoute } from "./Components/AuthenticationAndLogin/Auth";
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -9,10 +8,11 @@ import {
 import Navbar from './Components/NavbarComponents/Navbar'
 import MainPage from './Components/MainPage/MainPage'
 import Login from './Components/AuthenticationAndLogin/Login'
-
-import Loading from './Components/Loading'
+import { ProvideAuth, PrivateRoute } from "./Components/AuthenticationAndLogin/Auth";
+import Loading from './Components/Loading/Loading'
 import Anime from './Components/Anime/Anime';
 import Forum from './Components/Forum/Forum';
+import RankingSelect from './Components/Ranking/RankingSelect';
 
 function App() {
   return (
@@ -31,6 +31,10 @@ function App() {
             </Route>
 
             <Route path='/anime/:id' component={Anime}/>
+
+            <Route path='/rankings'>
+              <RankingSelect />
+            </Route>
 
             <Route path='/loading'>
               <Loading />
