@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
 import { RankingItems } from './RankingItems';
-import InfiniteScroll from "react-infinite-scroll-component";
+import RankingItemRender from './RankingItemsRender';
 import './css/RankingSelect.css'
 
 
@@ -12,15 +12,10 @@ export default function RankingSelect(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
-    useEffect(async () => {
+    useEffect(() => {
             try {
                 setLoading(true);
-
-                console.log('change')
-
-                var results = await data.Selected.fetch(1);
-                data.SelectedRankingData = results.data.Page.media;
-                data.CurrentPageInfoOfRankingData = results.data.Page.pageInfo;
+                
 
                 setLoading(false)
             } catch (error) {
@@ -30,15 +25,9 @@ export default function RankingSelect(props) {
     }, [data.Selected]);
 
 
-    if (loading) {
-        return <Loading />
+    if (loading || !data) {
+        return <Loading error={error}/>
     }
-
-    if (!data) {
-        return <span>Data not available with error: {error}</span>;
-    }
-
-    console.log(data.SelectedRankingData)
 
     return (
         <div id="MainRankingContainer">
@@ -55,34 +44,10 @@ export default function RankingSelect(props) {
             </div>
 
             <div className='line'>
-                    <p>{data.Selected !== undefined ? data.Selected.title : ''}</p>
+                    <p>{data.Selected !== undefined ? data.Selected.title : 'Not Found'}</p>
             </div>
 
-            <InfiniteScroll dataLength={data.SelectedRankingData.length}
-                next={getMoreAnime}
-                hasMore={data.CurrentPageInfoOfRankingData.currentPage < data.CurrentPageInfoOfRankingData.lastPage ? true : false}
-                loader={<h4>Loading...</h4>}
-            >
-                {data.SelectedRankingData.map((elem, index) => {
-                    return (
-                        <p key={index}>
-                            {elem.title.english !== null ? elem.title.english : elem.title.romaji}
-                        </p>
-                    )
-                })}
-            </InfiniteScroll>
+            <RankingItemRender Selected={data.Selected}/>
         </div>
     )
-
-    async function getMoreAnime() {
-        var pageNumber = data.CurrentPageInfoOfRankingData.currentPage + 1;
-
-        console.log(pageNumber)
-        var existingList = data.SelectedRankingData
-    
-        var results = await data.Selected.fetch(pageNumber);
-        existingList = existingList.concat(results.data.Page.media);
-    
-        setData({Selected: data.Selected, SelectedRankingData: existingList, CurrentPageInfoOfRankingData: results.data.Page.pageInfo});
-    }
 }

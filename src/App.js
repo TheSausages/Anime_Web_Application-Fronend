@@ -18,9 +18,9 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <ProvideAuth>
+        <ProvideAuth>  
           <Navbar />
-
+          
           <Switch>
             <PrivateRoute path='/forum'>
               <Forum />

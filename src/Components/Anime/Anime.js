@@ -9,29 +9,28 @@ export default function Anime(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
-    useEffect(async () => {
+    useEffect(() => {
             try {
                 setLoading(true);
 
-                let result = await getAnimeById(props.match.params.id);
-                setData({
-                    Anime: result.data.Media 
-                });
+                async function wrapper() {
+                    let result = await getAnimeById(props.match.params.id);
+                    return setData({
+                        Anime: result.data.Media 
+                    });
+                }
 
-
+                wrapper();
+                
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
                 setError(error)
             }
-    }, []);
+    }, [props.match.params.id]);
 
-    if (loading) {
-        return <Loading />
-    }
-
-    if (!data) {
-        return <span>Data not available with error: {error}</span>;
+    if (loading || !data) {
+        return <Loading error={error}/>
     }
 
     return (

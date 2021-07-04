@@ -15,9 +15,8 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   let history = useHistory();
+  const [rerender, setRerender] = useState(false); //
   const { state } = useLocation();
-  const [accessToken, setAccessToken] = useState(null);
-  const [refreshToken, setRefreshToken] = useState(null);
   
   const signin = async (username, password) => {
     await loginUser({
@@ -25,40 +24,42 @@ function useProvideAuth() {
       password
     })
     .then(data => {
-      setAccessToken(data.access_token)
-      setRefreshToken(data.refresh_token)
+      localStorage.setItem('accessToken', data.access_token);
+      localStorage.setItem('refreshToken', data.refresh_token);
+      setRerender(true);
     });
 
     history.push(state === undefined || state.from === undefined ? '/' : state.from.pathname);
   };
 
   const signout = async () => {
-    await logout(accessToken, refreshToken)
+    await logout()
     .then(data => {
-      setAccessToken(null)
-      setRefreshToken(null)
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      setRerender(true);
     })
 
     history.push('/');
   };
 
-  
+  const rerenderThisComponent = () => {
+    return rerender
+  }
+
   return {
-    accessToken,
-    refreshToken,
+    rerenderThisComponent,
     signin,
     signout
   };
 }
 
 export function PrivateRoute({ children, path, ...rest }) {
-    let auth = useAuth();
-
     return (
       <Route
         {...rest}
         render={({location}) =>
-          (auth !== undefined && auth.accessToken) ? (
+          (localStorage.getItem('accessToken') !== undefined && localStorage.getItem('accessToken')) ? (
             children
           ) : (
             <Redirect push to={{
@@ -83,25 +84,22 @@ async function loginUser(credentials) {
     body: JSON.stringify(credentials)
   })
   .then( data => data.json())
-  .then( data => {
-    return data
-  })
+  .then( data => { return data})
   .catch(error => {
     console.log("Error during login:" + error)
   })
 }
 
-async function logout(accessToken, refreshToken) {
+async function logout() {
   let headers = new Headers({
-    "Authorization": "Bearer " + accessToken
+    "Authorization": "Bearer " + localStorage.getItem('accessToken')
   })
 
-  return await fetch('http://localhost:8080/logoutUser', {
+  await fetch('http://localhost:8080/logoutUser', {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify({refreshToken: refreshToken})
+    body: JSON.stringify({refreshToken: localStorage.getItem('refreshToken')})
   })
-  .then(data => {return data})
   .catch(error => {
     console.log("Error during login:" + error)
   })

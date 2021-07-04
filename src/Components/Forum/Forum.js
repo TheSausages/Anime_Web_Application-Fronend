@@ -7,7 +7,7 @@ export default function Forum(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
-    useEffect(async () => {
+    useEffect(() => {
             try {
                 setLoading(true);
 
@@ -20,17 +20,25 @@ export default function Forum(props) {
             }
     }, []);
 
-    if (loading) {
-        return <Loading />
-    }
-
-    if (!data) {
-        return <span>Data not available with error: {error}</span>;
+    if (loading || !data) {
+        return <Loading error={error}/>
     }
 
     return (
         <div>
             Witam na forum!
+
+            <button onClick={() => user()}>Sprawdz Context</button>
         </div>
     )
+
+    function user() {
+        fetch('http://localhost:8080/forum/user', {
+            method: 'GET',
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('accessToken')
+            }
+        })
+        .then(data => data.json());
+    }
 }
