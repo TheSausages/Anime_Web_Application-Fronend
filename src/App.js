@@ -8,6 +8,7 @@ import {
 import Navbar from './Components/NavbarComponents/Navbar'
 import MainPage from './Components/MainPage/MainPage'
 import Login from './Components/AuthenticationAndLogin/Login'
+import Logout from './Components/AuthenticationAndLogin/Logout'
 import { ProvideAuth, PrivateRoute } from "./Components/AuthenticationAndLogin/Auth";
 import Loading from './Components/Loading/Loading'
 import Anime from './Components/Anime/Anime';
@@ -41,11 +42,11 @@ function App() {
             </Route>
 
             <Route path='/login'>
-              <Login out={false}/>
+              <Login />
             </Route>
 
             <Route path="/logout">
-              <Login out={true}/>
+              <Logout />
             </Route>
 
           </Switch>

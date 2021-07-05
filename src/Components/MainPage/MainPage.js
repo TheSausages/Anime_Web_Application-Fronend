@@ -17,10 +17,11 @@ export default function MainPage() {
             setLoading(true);
 
             async function wrapper() {
+                let result = await getCurrentSeasonAnime();
                 setData(
                     { Anime: {
-                        currentSeason: await getCurrentSeasonInformation(),
-                        currentSeasonAnime: await getCurrentSeasonAnime()
+                        currentSeason: result.seasonInformation,
+                        currentSeasonAnime: result.media
                     }
                 });
             }
@@ -38,6 +39,8 @@ export default function MainPage() {
         return <Loading error={error}/>
     }
 
+    console.log(data.Anime)
+
     return(
         <div>
             <div className='seasonalAnimeContainer'>
@@ -49,7 +52,7 @@ export default function MainPage() {
                 <div className='buttonHover buttonRight' onClick={() => scrollElementLeft('seasonalAnime')}>{'>'}</div>
 
                 <div className='seasonalAnime' id='seasonalAnime'>
-                    {data.Anime.currentSeasonAnime.data.Page.media.map((anime, index) => {
+                    {data.Anime.currentSeasonAnime.map((anime, index) => {
                         return (
                             <Link key={index} to={'/anime/' + anime.id + '/'} title={findFirstNotUndefined(anime.title)}>
                                 <img src={anime.coverImage.large} alt='new'></img>

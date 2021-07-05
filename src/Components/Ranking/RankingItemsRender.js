@@ -16,8 +16,8 @@ export default function RankingItemRender(props) {
             async function wrapper() {
                 let results = await props.Selected.fetch(1);
                 setData({Selected: props.Selected,
-                    SelectedRankingData: results.data.Page.media,
-                    CurrentPageInfoOfRankingData: results.data.Page.pageInfo
+                    SelectedRankingData: results.media,
+                    CurrentPageInfoOfRankingData: results.pageInfo
                 });
             }
 
@@ -58,8 +58,8 @@ export default function RankingItemRender(props) {
         var existingList = data.SelectedRankingData
     
         var results = await data.Selected.fetch(pageNumber);
-        existingList = existingList.concat(results.data.Page.media);
+        existingList = existingList.concat(results.media);
     
-        setData({Selected: data.Selected, SelectedRankingData: existingList, CurrentPageInfoOfRankingData: results.data.Page.pageInfo});
+        setData({Selected: data.Selected, SelectedRankingData: existingList, CurrentPageInfoOfRankingData: results.pageInfo});
     }
 }

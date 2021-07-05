@@ -16,7 +16,7 @@ export default function Anime(props) {
                 async function wrapper() {
                     let result = await getAnimeById(props.match.params.id);
                     return setData({
-                        Anime: result.data.Media 
+                        Anime: result
                     });
                 }
 
