@@ -38,8 +38,8 @@ export default function RankingItemRender(props) {
         <div>
             <InfiniteScroll dataLength={data.SelectedRankingData.length}
                 next={getMoreAnime}
-                hasMore={data.CurrentPageInfoOfRankingData.currentPage < data.CurrentPageInfoOfRankingData.lastPage ? true : false}
-                loader={<h4>Loading...</h4>}
+                hasMore={data.CurrentPageInfoOfRankingData.hasNextPage}
+                loader={<Loading />}
             >
                 {data.SelectedRankingData.map((elem, index) => {
                     return (
@@ -53,11 +53,9 @@ export default function RankingItemRender(props) {
     )
         
     async function getMoreAnime() {
-        var pageNumber = data.CurrentPageInfoOfRankingData.currentPage + 1;
-
         var existingList = data.SelectedRankingData
     
-        var results = await data.Selected.fetch(pageNumber);
+        var results = await data.Selected.fetch(data.CurrentPageInfoOfRankingData.currentPage + 1);
         existingList = existingList.concat(results.media);
     
         setData({Selected: data.Selected, SelectedRankingData: existingList, CurrentPageInfoOfRankingData: results.pageInfo});

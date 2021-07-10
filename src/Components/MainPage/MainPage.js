@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getCurrentSeasonInformation, getCurrentSeasonAnime } from '../../Scripts/CurrentSeasonFetches';
 import Loading from '../Loading/Loading'
 import { Link } from "react-router-dom";
-import { findFirstNotUndefined, Capitalize } from "../../Scripts/Utilities"
+import { findFirstNotUndefined, Capitalize, getRandomColor } from "../../Scripts/Utilities"
 import './css/MainPage.css';
 import '../MiscellaneousCss/Line.css';
 
@@ -55,7 +55,7 @@ export default function MainPage() {
                     {data.Anime.currentSeasonAnime.map((anime, index) => {
                         return (
                             <Link key={index} to={'/anime/' + anime.id + '/'} title={findFirstNotUndefined(anime.title)}>
-                                <img src={anime.coverImage.large} alt='new'></img>
+                                <img src={anime.coverImage.large} style={{ 'border': '1px solid ' + getRandomColor() }} alt='new'></img>
                                 <p title={findFirstNotUndefined(anime.title)}></p>
                             </Link>
                         )
@@ -67,9 +67,9 @@ export default function MainPage() {
 }
 
 function scrollElementRight(element) {
-    document.getElementById(element).scrollLeft -= (window.innerWidth < 960 ? window.innerWidth * 0.795 : window.innerWidth * 0.75)
+    document.getElementById(element).scrollLeft -= (window.innerWidth < 960 ? window.innerWidth * 0.795 : window.innerWidth * 0.70)
 }
 
 function scrollElementLeft(element) {
-    document.getElementById(element).scrollLeft += (window.innerWidth < 960 ? window.innerWidth * 0.795 : window.innerWidth * 0.75)
+    document.getElementById(element).scrollLeft += (window.innerWidth < 960 ? window.innerWidth * 0.795 : window.innerWidth * 0.70)
 }

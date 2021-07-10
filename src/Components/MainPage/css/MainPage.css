@@ -33,7 +33,7 @@
 .seasonalAnime a img {
     border-radius: 5%;
     display: block;
-    max-height: 80%;
+    max-height: 90%;
     width: auto;
     height: auto;
 }
@@ -46,6 +46,7 @@
     text-overflow: ellipsis;
     font-size: 0.7rem;
     text-align: left;
+    left: 5%;
     max-width: max(8vw, 120px)
 }
 
@@ -73,14 +74,14 @@
 
 .buttonHover.buttonLeft {
     left: 0;
-    top: 50%;
+    top: 55%;
     transform: translate(0, -50%);
     clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 0% 100%, 0% 50%, 0% 0%);
 }
 
 .buttonHover.buttonRight {
     right: 0;
-    top: 50%;
+    top: 55%;
     transform: translate(0, -50%);
     clip-path: polygon(100% 0%, 100% 50%, 100% 100%, 0% 100%, 25% 50%, 0% 0%);
 }

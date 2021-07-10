@@ -44,7 +44,7 @@ export default function RankingSelect(props) {
             </div>
 
             <div className='line'>
-                    <p>{data.Selected !== undefined ? data.Selected.title : 'Not Found'}</p>
+                    <p>{data.Selected !== undefined ? data.Selected.title : 'No Title Found'}</p>
             </div>
 
             <RankingItemRender Selected={data.Selected}/>

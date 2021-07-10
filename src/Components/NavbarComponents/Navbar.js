@@ -15,7 +15,7 @@ export default function Navbar(props) {
         <nav className="NavbarItems">
             <h1 className="navbar-logo">
                 <Link to='/'>
-                    Anime<i className="fab fa-phoenix-framework"></i>
+                    BachAni<i className="fab fa-phoenix-framework"></i>
                 </Link>
             </h1>
             <div className="menu-icon" onClick={() => setClicked(!clicked)}>
