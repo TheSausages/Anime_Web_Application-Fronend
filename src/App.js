@@ -14,8 +14,12 @@ import Loading from './Components/Loading/Loading'
 import Anime from './Components/Anime/Anime';
 import Forum from './Components/Forum/Forum';
 import RankingSelect from './Components/Ranking/RankingSelect';
+import Rerender from './Scripts/Rerender';
 
 function App() {
+  {/*Small method that rerender when screen dimensions change, found in Utilities*/}
+  Rerender()
+
   return (
     <div className="App">
       <Router>

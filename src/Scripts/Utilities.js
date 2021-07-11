@@ -28,8 +28,12 @@ export function Capitalize(value) {
     return value;
 }
 
-export function valueOrNotKnown(value) {
-    return value === undefined ? "Not Known" : Capitalize(value)
+export function valueOrNotKnown(value, after = "") {
+    if (typeof value === 'string') {
+        value = value.replaceAll("_", " ")
+    }
+
+    return value === undefined ? "Not Known" : Capitalize(value) + after
 }
 
 export function dateOrNotKnown(value) {

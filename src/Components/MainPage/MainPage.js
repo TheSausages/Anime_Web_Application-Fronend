@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { getCurrentSeasonInformation, getCurrentSeasonAnime } from '../../Scripts/CurrentSeasonFetches';
+import { getCurrentSeasonAnime } from '../../Scripts/CurrentSeasonFetches';
 import Loading from '../Loading/Loading'
 import { Link } from "react-router-dom";
-import { findFirstNotUndefined, Capitalize, getRandomColor } from "../../Scripts/Utilities"
+import { Capitalize, getRandomColor, titlesInWantedOrder } from "../../Scripts/Utilities"
 import './css/MainPage.css';
 import '../MiscellaneousCss/Line.css';
 
@@ -39,8 +39,6 @@ export default function MainPage() {
         return <Loading error={error}/>
     }
 
-    console.log(data.Anime)
-
     return(
         <div>
             <div className='seasonalAnimeContainer'>
@@ -54,9 +52,9 @@ export default function MainPage() {
                 <div className='seasonalAnime' id='seasonalAnime'>
                     {data.Anime.currentSeasonAnime.map((anime, index) => {
                         return (
-                            <Link key={index} to={'/anime/' + anime.id + '/'} title={findFirstNotUndefined(anime.title)}>
+                            <Link key={index} to={'/anime/' + anime.id + '/'} title={titlesInWantedOrder(anime.title)}>
                                 <img src={anime.coverImage.large} style={{ 'border': '1px solid ' + getRandomColor() }} alt='new'></img>
-                                <p title={findFirstNotUndefined(anime.title)}></p>
+                                <p title={titlesInWantedOrder(anime.title)}></p>
                             </Link>
                         )
                     })}

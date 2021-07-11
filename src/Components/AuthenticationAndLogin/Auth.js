@@ -1,6 +1,6 @@
 import React, { useState, useContext, createContext } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const authContext = createContext();
 
@@ -15,21 +15,20 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   let history = useHistory();
-  const [rerender, setRerender] = useState(false); //
-  const { state } = useLocation();
+  const [rerender, setRerender] = useState(false);
   
   const signin = async (username, password) => {
     await loginUser({
       username,
       password
     })
-    .then(data => {
+    .then(data => {  
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('refreshToken', data.refresh_token);
-      setRerender(true);
+      setRerender(!rerender);
     });
 
-    history.push(state === undefined || state.from === undefined ? '/' : state.from.pathname);
+    history.goBack()
   };
 
   const signout = async () => {
@@ -37,10 +36,10 @@ function useProvideAuth() {
     .then(data => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      setRerender(true);
+      setRerender(!rerender);
     })
 
-    history.push('/');
+    history.push("/")
   };
 
   const rerenderThisComponent = () => {
@@ -74,6 +73,8 @@ export function PrivateRoute({ children, path, ...rest }) {
   }
 
 async function loginUser(credentials) {
+
+
   let headers = new Headers({
     "Content-Type": "application/json",
   })
@@ -83,8 +84,7 @@ async function loginUser(credentials) {
     headers: headers,
     body: JSON.stringify(credentials)
   })
-  .then( data => data.json())
-  .then( data => { return data})
+  .then(data => data.json())
   .catch(error => {
     console.log("Error during login:" + error)
   })

@@ -36,8 +36,48 @@
 .AnimeDescription {
     grid-area: AnimeDescription;
     text-align: start;
-    padding-top: 5%;
+}
 
+.AnimeDescription :not(:last-child) {
+    flex-grow: 1;
+}
+
+.AnimeDescription .reactionButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5%;
+    color: white;
+
+    margin-bottom: 3%;
+}
+
+.AnimeDescription .reactionButtons .selectStatus {
+    max-width: 150px;
+    font-size: 0.8rem;
+}
+
+.AnimeDescription .reactionButtons .favouritedButton {
+    border-radius: 20%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 45px;
+}
+
+.AnimeDescription .reactionButtons .selectEpisodes {
+    width: 150px;
+    font-size: 0.8rem;
+}
+
+.favouritedButton.liked {
+    background-color: rgb(230, 61, 61);
+}
+
+.favouritedButton.notLiked {
+    background-color: rgb(82, 122, 243);
 }
 
 .AnimeBasicInformation { 
@@ -49,7 +89,7 @@
 }
 
 .AnimeBasicInformation > div {
-    padding-bottom: 7%;
+    padding-bottom: 10%;
 }
 
 .AnimeBasicInformation div :nth-child(odd) { 
@@ -63,17 +103,138 @@
 .AnimeDetails { 
     grid-area: AnimeDetails;
     align-self: stretch;
+    align-items: flex-start;
+}
 
-    background-color: chocolate;
+#AnimeRelations {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 5%;
+    justify-items: flex-end;
+}
+
+.animeRelation {
+    display: flex;
+
+    position: relative;
+}
+
+.animeRelation img {
+    object-fit: fill;
+    height: 150px;
+    max-width: 130px;
+    border-radius: 5%;
+}
+
+.AnimeRelationInfo {
+    position: absolute;
+    display: none;
+    opacity: 0;
+    font-size: 0.7rem;
+    color: black;
+
+    text-align: start;
+    user-select: none;
+
+    transform: translate(49.5%);
+    z-index: 2;
+}
+
+.AnimeRelationInfo {
+    width: 200%;
+}
+
+.animeRelation a:hover img {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.animeRelation a:hover + .AnimeRelationInfo {
+    background-color: white;
+    border: 1px solid green;
+    border-left: none;
+    display: block;
+    opacity: 1;
+    height: 96%;
+    
+}
+
+.animeRelation a:hover + .AnimeRelationInfo {
+    border-top-right-radius: 5%;
+    border-bottom-right-radius: 5%;
+}
+
+.AnimeRelationInfoValue {
+    padding: 5%;
+}
+
+.rowWrapper {
+    display: contents;
+}
+
+.rowWrapper > .animeRelation {
+    display: none;
 }
 
 @media screen and (max-width: 960px) {
     #AnimePageLayout {
         margin: 5vh auto;
-        width: 85%;
+        
+        width: 95%;
+    }
+
+    .AnimeInformationPage {
+        display: grid; 
+        grid-template-columns: 1fr 3fr; 
+        grid-template-rows: max(15vh, 1fr) max(45vh, 3fr);
+        gap: 2% 4%; 
+        grid-template-areas: 
+        "AnimeImage AnimeImage"
+        "AnimeDescription AnimeDescription"
+        "AnimeBasicInformation AnimeDetails"
+        "AnimeBasicInformation AnimeDetails";
     }
 
     .AnimeBasicInformation > div {
         padding-bottom: 12%;
+    }
+
+    .animeRelation img {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .AnimeRelationInfo {
+        width: 250px;
+    }
+
+    #AnimeRelations {
+        display: grid;
+        grid-template-columns: repeat(1, min-content);
+        justify-content: flex-start;
+        grid-gap: 20px;
+        padding-inline-start: 20%;
+    }
+
+    .animeRelation {
+        justify-content: flex-end;
+    }
+
+    .AnimeRelationInfo {
+        height: 96%;
+        background-color: white;
+        border: 1px solid green;
+        border-left: none;
+        display: block;
+        opacity: 1;
+
+        transform: translate(100%);
+    }
+
+    .animeRelation a:hover + .AnimeRelationInfo {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
     }
 }
