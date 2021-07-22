@@ -106,27 +106,35 @@
     align-items: flex-start;
 }
 
-#AnimeRelations {
+.AnimeDetails > * {
+    padding-bottom: 5%;
+}
+
+#Section {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 5%;
     justify-items: flex-end;
 }
 
-.animeRelation {
+.SectionItem {
+    height: 150px;
     display: flex;
 
     position: relative;
 }
 
-.animeRelation img {
+.SectionItem img {
     object-fit: fill;
     height: 150px;
     max-width: 130px;
     border-radius: 5%;
 }
 
-.AnimeRelationInfo {
+.SectionItemInfo {
+    width: 200%;
+    height: 99%;
+
     position: absolute;
     display: none;
     opacity: 0;
@@ -138,42 +146,93 @@
 
     transform: translate(49.5%);
     z-index: 2;
+
+    border-top-right-radius: 5%;
+    border-bottom-right-radius: 5%
 }
 
-.AnimeRelationInfo {
-    width: 200%;
+.SectionItemInfo.withMoreWidth {
+    width: 300%;
+    transform: translate(33%);
 }
 
-.animeRelation a:hover img {
+.SectionItem:hover img {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.animeRelation a:hover + .AnimeRelationInfo {
+.SectionItem a:hover + .SectionItemInfo, .SectionItem img:hover + .SectionItemInfo {
     background-color: white;
     border: 1px solid green;
     border-left: none;
     display: block;
     opacity: 1;
-    height: 96%;
-    
 }
 
-.animeRelation a:hover + .AnimeRelationInfo {
-    border-top-right-radius: 5%;
-    border-bottom-right-radius: 5%;
-}
+.SectionItemInfoInfoValue {
+    height: 87%;
 
-.AnimeRelationInfoValue {
     padding: 5%;
+    display: flex;
+    flex-direction: column;
 }
+
+.SectionItemInfoInfoValue :last-child {
+    margin-top: auto;
+}
+
+
+.SectionItemInfoWithPicture {
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.SectionItemInfoWithPicture :first-child {
+    margin-right: auto;
+}
+
+.SectionItemInfoWithPicture :nth-last-child(2) > * {
+    text-align: right;
+}
+
+.SectionItemInfoWithPicture :not(:last-child) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 2%;
+}
+
+.SectionItem:hover .SectionItemInfoWithPicture img {
+    height: 100%;
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 7%;
+    border-bottom-right-radius: 7%;
+}
+
 
 .rowWrapper {
     display: contents;
 }
 
-.rowWrapper > .animeRelation {
+.rowWrapper > .SectionItem {
     display: none;
+}
+
+.noPointer {
+    cursor: default;
+}
+
+.linkPointer {
+    cursor: pointer;
+}
+
+.unCopyable {
+    user-select: none;
 }
 
 @media screen and (max-width: 960px) {
@@ -199,16 +258,7 @@
         padding-bottom: 12%;
     }
 
-    .animeRelation img {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .AnimeRelationInfo {
-        width: 250px;
-    }
-
-    #AnimeRelations {
+    #Section {
         display: grid;
         grid-template-columns: repeat(1, min-content);
         justify-content: flex-start;
@@ -216,12 +266,20 @@
         padding-inline-start: 20%;
     }
 
-    .animeRelation {
+    .SectionItem {
         justify-content: flex-end;
     }
 
-    .AnimeRelationInfo {
-        height: 96%;
+    .SectionItem img {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .SectionItemInfo {
+        width: 250px;
+    }
+
+    .SectionItemInfo {
         background-color: white;
         border: 1px solid green;
         border-left: none;
@@ -231,10 +289,4 @@
         transform: translate(100%);
     }
 
-    .animeRelation a:hover + .AnimeRelationInfo {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
 }

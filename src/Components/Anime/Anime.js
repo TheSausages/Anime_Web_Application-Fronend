@@ -4,31 +4,18 @@ import { dateOrNotKnown, getRandomColor, titlesInWantedOrder, valueOrNotKnown } 
 import Loading from '../Loading/Loading'
 import './css/Anime.css';
 import parse from 'html-react-parser';
-import Select from 'react-select'
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Relation from './Relation';
+import Character from './Character';
+import SocialButtuns from './SocialButtons';
 
 export default function Anime(props) {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
-    const [liked, setLiked] = useState(false);
     const [showRows, setShowRows] = useState({
-        relations: true
+        relations: true,
+        characters: true
     })
-
-    var options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
-
-    options.unshift( { value: 'Status', label: 'Status', disabled: true })
-
-    function toggle()  {
-        setLiked(!liked)
-    };
 
     function changeRows(stateName) {
         let showRowsCopy = JSON.parse(JSON.stringify(showRows))
@@ -65,7 +52,6 @@ export default function Anime(props) {
     }
 
     console.log(data.Anime)
-    console.log(showRows)
 
     return (
         <div id="AnimePageLayout">
@@ -94,32 +80,7 @@ export default function Anime(props) {
                 {/*Description and social buttons*/}
                 <div className="AnimeDescription">
                     {
-                        localStorage.getItem('accessToken') ? 
-                            <div className="reactionButtons">
-                                <Select className="selectStatus" options={options} defaultValue={options[0]} isOptionDisabled={(option) => option.disabled} styles={customStyles()} theme={theme => ({
-                                    ...theme,
-                                    borderRadius: 5,
-                                    colors: {
-                                    ...theme.colors,
-                                    primary25: 'rgb(34, 206, 43)',
-                                    primary: 'rgb(34, 206, 43);',
-                                }, })}/>
-
-
-                                <div className={`favouritedButton ${liked ? "liked" : "notLiked"}`} onClick={() => toggle()} >
-                                    <FontAwesomeIcon icon={faHeart} />
-                                </div>
-                        
-                                <Select className="selectEpisodes" options={getEpisodeArray(airedEpisodes(data.Anime))} defaultValue={getEpisodeArray(airedEpisodes(data.Anime))[0]} isOptionDisabled={(option) => option.disabled} styles={customStyles()} theme={theme => ({
-                                    ...theme,
-                                    borderRadius: 5,
-                                    colors: {
-                                    ...theme.colors,
-                                    primary25: 'rgb(34, 206, 43)',
-                                    primary: 'rgb(34, 206, 43);',
-                                }, })}/>
-                            </div> 
-                        : null
+                        <SocialButtuns aired={getEpisodeArray(airedEpisodes(data.Anime))}/>
                     }
 
                     <div className="line">
@@ -137,12 +98,12 @@ export default function Anime(props) {
                     <div className="line" >
                         {
                             ((window.innerWidth > 960 && data.Anime.relations.edges.length > 5) || (window.innerWidth < 960 && data.Anime.relations.edges.length > 2) ) ? 
-                                <p onClick={() => changeRows('relations')}>Relations | Click to show {showRows.relations ? 'More' : 'Less'}</p>
+                                <p className="linkPointer unCopyable" onClick={() => changeRows('relations')}>Relations | Click to show {showRows.relations ? 'More' : 'Less'}</p>
                             :
                                 <p>Relations</p>
                         }
 
-                        <div id="AnimeRelations">
+                        <div id="Section">
                         {
                             data.Anime.relations.edges
                             .slice(0,  (window.innerWidth > 960 ? 5 : 2))
@@ -159,19 +120,37 @@ export default function Anime(props) {
                         }
                         </div>
                     </div>
+
+                    {/*Characters*/}
+                    <div className="line" >
+                        {
+                            ((window.innerWidth > 960 && data.Anime.characters.edges.length > 5) || (window.innerWidth < 960 && data.Anime.characters.edges.length > 2) ) ? 
+                                <p className="linkPointer unCopyable" onClick={() => changeRows('characters')}>Characters | Click to show {showRows.characters ? 'More' : 'Less'}</p>
+                            :
+                                <p>Characters</p>
+                        }
+
+                        <div id="Section">
+                        {
+                            data.Anime.characters.edges
+                            .slice(0,  (window.innerWidth > 960 ? 5 : 2))
+                            .map((elem, index) => {
+                                return <Character key={index} elem={elem} index={index} />
+                            })
+                        }
+                        {
+                            data.Anime.characters.edges
+                            .slice((window.innerWidth > 960 ? 5 : 2))
+                            .map((elem, index) => {
+                                return <Character key={index} elem={elem} index={index} wrap={true} renderValue={showRows.characters} />
+                            })
+                        }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     )
-}
-
-function customStyles() {
-    return {
-        option: provided => ({
-            ...provided,
-            color: 'black'
-          })
-      }
 }
 
 function createBasinAnimeMap(results) {
@@ -228,7 +207,7 @@ function getEpisodeArray(episodesAired) {
         return [{ value: 'Not Available', label: 'Not Available' }]
     }
 
-    var epAiredArray =  Array.from(Array(episodesAired + 1).keys()).map((elem) => {
+    var epAiredArray =  Array.from(Array(episodesAired).keys()).map((elem) => {
         return {value: elem, label: elem, disabled: false}
     })
 

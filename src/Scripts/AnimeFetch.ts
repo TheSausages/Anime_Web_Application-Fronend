@@ -1,4 +1,6 @@
-export async function getAnimeById(id, token = undefined) {
+import { Media } from "../data/MediaInformation"
+
+export async function getAnimeById(id, token = undefined): Promise<Media> {
     let headers = {
         'Content-Type': 'application/json'
     }
