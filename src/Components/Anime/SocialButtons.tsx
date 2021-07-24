@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from "react";
+import { EpisodeArray } from "./Anime";
 import Select from 'react-select'
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-export default function Relation(props) {
+interface SocialButtonsProps {
+    airedEpisodes: EpisodeArray[]
+}
+
+export default function SocialButtons(props: SocialButtonsProps) {
     const [liked, setLiked] = useState(false);
 
     function toggle()  {
@@ -11,9 +16,9 @@ export default function Relation(props) {
     };
 
     var options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
+        { value: 'chocolate', label: 'Chocolate', disabled: false },
+        { value: 'strawberry', label: 'Strawberry', disabled: false },
+        { value: 'vanilla', label: 'Vanilla', disabled: false }
     ]
 
     options.unshift( { value: 'Status', label: 'Status', disabled: true })
@@ -35,7 +40,7 @@ export default function Relation(props) {
                 <FontAwesomeIcon icon={faHeart} />
             </div>
     
-            <Select className="selectEpisodes" options={props.aired} defaultValue={props.aired[0]} isOptionDisabled={(option) => option.disabled} styles={customStyles()} theme={theme => ({
+            <Select className="selectEpisodes" options={props.airedEpisodes} defaultValue={props.airedEpisodes[0]} isOptionDisabled={(option) => option.disabled} styles={customStyles()} theme={theme => ({
                 ...theme,
                 borderRadius: 5,
                 colors: {
@@ -50,10 +55,9 @@ export default function Relation(props) {
     )
 }
 
-
 function customStyles() {
     return {
-        option: provided => ({
+        option: (provided: any) => ({
             ...provided,
             color: 'black'
           })

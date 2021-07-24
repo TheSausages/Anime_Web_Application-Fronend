@@ -152,8 +152,8 @@
 }
 
 .SectionItemInfo.withMoreWidth {
-    width: 300%;
-    transform: translate(33%);
+    width: 280%;
+    transform: translate(35.6%);
 }
 
 .SectionItem:hover img {
@@ -189,11 +189,15 @@
     justify-content: flex-end;
 }
 
+.withPicture {
+    display: flex;
+}
+
 .SectionItemInfoWithPicture :first-child {
     margin-right: auto;
 }
 
-.SectionItemInfoWithPicture :nth-last-child(2) > * {
+.SectionItemInfoWithPicture div :nth-last-child(2) > * {
     text-align: right;
 }
 
@@ -210,8 +214,8 @@
 
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border-top-right-radius: 7%;
-    border-bottom-right-radius: 7%;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
 }
 
 
@@ -261,9 +265,9 @@
     #Section {
         display: grid;
         grid-template-columns: repeat(1, min-content);
-        justify-content: flex-start;
+        justify-content: center;
         grid-gap: 20px;
-        padding-inline-start: 20%;
+        margin-left: -300px;
     }
 
     .SectionItem {
@@ -276,7 +280,7 @@
     }
 
     .SectionItemInfo {
-        width: 250px;
+        width: 300px;
     }
 
     .SectionItemInfo {
@@ -289,4 +293,21 @@
         transform: translate(100%);
     }
 
+    .SectionItemInfo.Character {
+        width: 300px;
+    }
+    
+    .SectionItemInfo.withMoreWidth {
+        width: 300px;
+        transform: translate(100%)
+    }
+
+    .SectionItemInfoWithPicture img {
+        height: 100%;
+    
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 10%;
+        border-bottom-right-radius: 10%;
+    }
 }

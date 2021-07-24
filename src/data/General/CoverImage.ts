@@ -1,6 +1,6 @@
 export interface CoverImage {
-    extraLarge?: String
-    large?: String
-    medium?: String
-    color?: String
+    extraLarge: string
+    large: string
+    medium: string
+    color: string
 }

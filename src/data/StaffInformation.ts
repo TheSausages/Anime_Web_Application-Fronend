@@ -16,10 +16,10 @@ export interface StaffEdge {
 export interface Staff {
     id: number
     name: StaffName
-    language: String
+    languageV2: String
     image: {
-        large: String
-        medium: String
+        large: string
+        medium: string
     }
     description: String
     primaryOccupation: String[]

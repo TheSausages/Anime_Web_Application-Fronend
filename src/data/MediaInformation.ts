@@ -1,42 +1,48 @@
 import { Relation } from "./General/Enums";
 import { PageInfo } from "./PageInfo";
-
-export interface MediaInformation {
-    edges?: MediaEdge[]
-    nodes?: Media[]
-    pageInfo?: PageInfo
-}
-
 import { CoverImage } from "./General/CoverImage";
 import { Format, Season, Status } from "./General/Enums";
 import { FuzzyDate } from "./General/FuzzyDate";
-import { titles } from "./General/Titles";
+import { Titles } from "./General/Titles";
+import { StaffInformation } from "./StaffInformation";
+import { CharacterInformation } from "./CharacterInformation";
 
-export interface Media {
+export interface MediaInformation {
+    edges?: MediaEdge[]
+    nodes?: MediaB[]
+    pageInfo?: PageInfo
+}
+
+export interface MediaB {
     id: number
 
     season: Season
     seasonYear: number
-    genres: String[]
+    genres: string[]
     format: Format
     isAdult: boolean
     status: Status
+    type: string
 
-    anilistAverageScore?: number
+    averageScore?: number
     bachaniAverageScore?: number
-    anilistFavourites?: number
+    favourites?: number
     bachaniFavourites?: number
 
     episodes: number
     duration: number
     nextAiringEpisode: NextAiringEpisode
     
-    titles: titles
+    title: Titles
     coverImage: CoverImage
-    description: String
+    description: string
 
     startDate: FuzzyDate
     endDate: FuzzyDate
+
+    relations: MediaInformation
+    characters: CharacterInformation
+    staff: StaffInformation
 }
 
 export interface NextAiringEpisode {
@@ -48,8 +54,8 @@ export interface NextAiringEpisode {
 }
 
 export interface MediaEdge {
-    Node: Media
+    node: MediaB
 
     id: number
-    relation: Relation
+    relationType: Relation
 }

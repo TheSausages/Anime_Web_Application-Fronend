@@ -1,5 +1,5 @@
-export interface titles {
-    english?: String
-    romaji?: String
-    native?: String
+export interface Titles {
+    english?: string
+    romaji?: string
+    native?: string
 }

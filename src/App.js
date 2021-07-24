@@ -17,7 +17,7 @@ import RankingSelect from './Components/Ranking/RankingSelect';
 import Rerender from './Scripts/Rerender';
 
 function App() {
-  {/*Small method that rerender when screen dimensions change, found in Utilities*/}
+  /*Small method that rerender when screen dimensions change, found in Utilities*/
   Rerender()
 
   return (
@@ -35,7 +35,7 @@ function App() {
               <MainPage />
             </Route>
 
-            <Route path='/anime/:id' component={Anime}/>
+            <Route path='/anime/:id' render={(props) => <Anime id={props.match.params.id} />}/>
 
             <Route path='/rankings'>
               <RankingSelect />
