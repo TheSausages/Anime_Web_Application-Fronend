@@ -4,7 +4,7 @@
     margin: 0 auto;
 }
 
-.RankingItem {
+.Rankings {
     display: flex;
     height: 80px;
     flex-direction: row;
@@ -15,21 +15,22 @@
     list-style: none;
 }
 
-.RankingItem > li {
+.Rankings > li {
     padding: 10px;
     margin: 0;
     margin: max(1vw, 1vh);
     border-radius: 7px;
     background-color: rgb(34, 206, 43);
     color: white;
+    cursor: pointer;
 }
 
-.RankingItem > li:hover {
+.Rankings > li:hover {
     background-color: rgb(56, 133, 49);
     transition: all 0.2s ease-out;
 }
 
-.RankingItem > li:active {
+.Rankings > li:active {
     background-color: rgb(47, 100, 42);
     transition: all 0.2s ease-out;
 }

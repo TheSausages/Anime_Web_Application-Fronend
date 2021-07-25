@@ -27,6 +27,8 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
 
     const headers = getHeaders(needAuth);
 
+    body = JSON.stringify(body)
+
     const options = {
         method,
         headers,
@@ -40,11 +42,11 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
 }
 
 function getHeaders(needAuth: boolean) : Headers {
-    let headers: HeadersInit = new Headers();
+    const headers = new Headers();
     headers.set('Content-Type', 'application/json');
 
     if (needAuth) {
-        headers.set('Authorization', "Bearer " + localStorage.getItem('accessToken')!);
+        headers.set("Authorization", "Bearer " + localStorage.getItem('accessToken')!);
     }
 
     return headers;

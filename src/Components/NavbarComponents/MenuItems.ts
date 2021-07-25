@@ -1,4 +1,11 @@
-export const MenuItems = [
+interface MenuItemStruct {
+    title: string
+    url: string
+    cName: string
+    auth: string
+}
+
+export const MenuItems: MenuItemStruct[] = [
     {
         title: 'Search',
         url: '/search',

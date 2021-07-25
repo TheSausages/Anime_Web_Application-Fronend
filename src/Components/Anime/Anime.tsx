@@ -1,7 +1,7 @@
 import parse from 'html-react-parser';
 import { useEffect, useState } from "react";
 import { MediaB } from "../../data/MediaInformation";
-import { AnimeService } from "../../Scripts/AnimeService";
+import { AnimeService } from "../../Scripts/Services/AnimeService";
 import { Capitalize, dateOrNotKnown, getRandomColor, titlesInWantedOrder, valueOrNotKnown } from "../../Scripts/Utilities";
 import Loading from '../Loading/Loading';
 import Character from './Character';

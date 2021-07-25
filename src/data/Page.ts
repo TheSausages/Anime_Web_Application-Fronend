@@ -1,7 +1,7 @@
-import { Media } from "react-bootstrap";
+import { MediaB } from "./MediaInformation";
 import { PageInfo } from "./PageInfo";
 
 export interface Page {
     pageInfo?: PageInfo
-    media?: Media
+    media?: MediaB[]
 }

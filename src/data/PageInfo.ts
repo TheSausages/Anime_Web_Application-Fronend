@@ -1,7 +1,7 @@
 export interface PageInfo {
     total?: number
     perPage?: number
-    currectPage?: number
+    currentPage?: number
     lastPage?: number
     hasNextPage?: boolean
 }

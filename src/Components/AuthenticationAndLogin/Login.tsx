@@ -1,17 +1,19 @@
 import { useAuth } from "./Auth";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './css/Login.css'
 
+interface LoginProps {
+}
 
-export default function Login(props) {
+export default function Login(props: LoginProps) {
     const auth = useAuth();
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
+    const [username, setUserName] = useState<string>();
+    const [password, setPassword] = useState<string>();
 
-    const login = e => {
+    const login = (e: { preventDefault: () => void; }) => {
       e.preventDefault();
 
-      auth.signin(username, password);
+      auth.signin(username!, password!);
     }
 
     return(

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
 
+interface ForumProps {
+}
 
-export default function Forum(props) {
-    const [data, setData] = useState();
+export default function Forum(props: ForumProps) {
+    const [data, setData] = useState<boolean>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 

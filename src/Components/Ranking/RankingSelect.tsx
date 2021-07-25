@@ -1,41 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
-import { RankingItems } from './RankingItems';
-import RankingItemRender from './RankingItemsRender';
+import { RankingItem, Rankings } from './Rankings';
+import RankingItemRender from './SelectedRankingRender';
 import './css/RankingSelect.css'
 
+interface RankingSelectProps {
+}
 
-export default function RankingSelect(props) {
-    const [data, setData] = useState({
-        Selected: RankingItems[0]
-    });
+export default function RankingSelect(props: RankingSelectProps) {
+    const [selectedRanking, setSelectedRanking] = useState<RankingItem>(Rankings[0]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
     useEffect(() => {
             try {
-                setLoading(true);
-                
-
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
                 setError(error)
             }
-    }, [data.Selected]);
+    }, [selectedRanking]);
 
 
-    if (loading || !data) {
+    if (loading || !selectedRanking) {
         return <Loading error={error}/>
     }
 
     return (
         <div id="MainRankingContainer">
-            <div className="RankingItem">
+            <div className="Rankings">
                 {
-                    RankingItems.map((item, index) => {
+                    Rankings.map((item, index) => {
                         return (
-                            <li key={index} onClick={() => setData({Selected: item, SelectedRankingData: data.SelectedRankingData, CurrentPageInfoOfRankingData: data.CurrentPageInfoOfRankingData})}>
+                            <li key={index} onClick={() => setSelectedRanking(item)}>
                                 {item.title}
                             </li>
                         )
@@ -44,10 +41,10 @@ export default function RankingSelect(props) {
             </div>
 
             <div className='line'>
-                    <p>{data.Selected !== undefined ? data.Selected.title : 'No Title Found'}</p>
+                    <p>{selectedRanking? selectedRanking.title : 'No Title Found'}</p>
             </div>
 
-            <RankingItemRender Selected={data.Selected}/>
+            <RankingItemRender selectedRanking={selectedRanking}/>
         </div>
     )
 }

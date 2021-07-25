@@ -29,9 +29,9 @@ function code(index: number, element: MediaEdge) {
         <div key={index} className="SectionItem">
             {
                 (element.node.type !== "ANIME") ?
-                    <Link key={index} to="#" title={titlesInWantedOrder(element.node.title)} className={"noPointer"} ><img src={element.node.coverImage.medium} alt="Cover" /></Link>
+                    <Link key={index} to="#" className={"noPointer"} ><img src={element.node.coverImage.medium} alt="Cover" /></Link>
                 :
-                    <Link  key={index} to={'/anime/' + element.node.id + '/'} title={titlesInWantedOrder(element.node.title)} >
+                    <Link  key={index} to={'/anime/' + element.node.id + '/'} >
                         <img src={element.node.coverImage.medium} alt="Cover" />
                     </Link>
             }

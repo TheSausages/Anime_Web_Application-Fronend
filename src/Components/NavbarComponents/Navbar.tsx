@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MenuItems } from './MenuItems'
 import './css/Navbar.css'
-import { Button } from './Button';
+import Button from './Button';
 import { Link } from "react-router-dom";
 import { useAuth } from '../AuthenticationAndLogin/Auth';
 
-export default function Navbar(props) {
+interface NavbarProps {
+}
+
+export default function Navbar(props: NavbarProps) {
     const [clicked, setClicked] = useState(false);
-
-
-    useAuth().rerenderThisComponent(); //rerender when log in / log out
+    const auth = useAuth()
     
     return(
         <nav className="NavbarItems">
@@ -43,7 +44,7 @@ export default function Navbar(props) {
                     })}
             </ul>      
 
-            {localStorage.getItem('accessToken') ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
+            {auth.loggedIn ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
            
         </nav>
     )

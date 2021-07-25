@@ -27,7 +27,7 @@ function App() {
           <Navbar />
           
           <Switch>
-            <PrivateRoute path='/forum'>
+            <PrivateRoute path="/forum">
               <Forum />
             </PrivateRoute>
 
@@ -35,7 +35,7 @@ function App() {
               <MainPage />
             </Route>
 
-            <Route path='/anime/:id' render={(props) => <Anime id={props.match.params.id} />}/>
+            <Route path='/anime/:id' render={(props) => <Anime id={props.match.params.id as unknown as number} />}/>
 
             <Route path='/rankings'>
               <RankingSelect />
