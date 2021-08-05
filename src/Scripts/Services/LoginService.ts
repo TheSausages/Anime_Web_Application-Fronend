@@ -1,16 +1,17 @@
-import { Credentials } from "../../data/Anilist/Credentials";
-import { performRequest } from "./ApiService";
+import { AnwserAfterLogin } from "../../data/General/AnwserAfterLogin";
+import { Credentials } from "../../data/General/Credentials";
+import { performRequest, performRequestWithType } from "./ApiService";
 import { HttpMethods } from "./ApiService";
 
 export class LoginService {
-    static login(credentials: Credentials): Promise<any> {
+    static login(credentials: Credentials): Promise<AnwserAfterLogin> {
         if (credentials === undefined) {
-            return new Promise((resolve, reject) => {})
+            throw Error("The Credentials are undefined!")
         }
-        return performRequest(HttpMethods.POST, "/login", false, credentials).then(data => data.json())
+        return performRequestWithType<AnwserAfterLogin>(HttpMethods.POST, "/login", false, credentials)
     } 
 
     static logout(): Promise<any> {
-        return performRequest(HttpMethods.POST, "/logoutUser", true, JSON.stringify({refreshToken: localStorage.getItem('refreshToken')}))
+        return performRequest(HttpMethods.POST, "/logoutUser", true, {refreshToken: localStorage.getItem('refreshToken')})
     } 
 }

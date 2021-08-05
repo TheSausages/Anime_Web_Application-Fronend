@@ -1,11 +1,10 @@
 import React, { useState, useContext, createContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { Credentials } from "../../data/Anilist/Credentials";
+import { Credentials } from "../../data/General/Credentials";
 import { LoginService } from "../../Scripts/Services/LoginService";
 
 export interface AuthReturn {
-    loggedIn: boolean
     signin: (username: string, password: string) => void
     signout: () => void
     rerenderThisComponent: () => boolean
@@ -29,7 +28,6 @@ export const useAuth = () => {
 function useProvideAuth(): AuthReturn {
   let history = useHistory();
   const [rerender, setRerender] = useState<boolean>(false);
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
   
   const signin = async (username: string, password: string) => {
     await LoginService.login({username, password} as Credentials)
@@ -37,7 +35,6 @@ function useProvideAuth(): AuthReturn {
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('refreshToken', data.refresh_token);
       setRerender(!rerender);
-      setLoggedIn(true)
     });
 
     history.goBack()
@@ -49,7 +46,6 @@ function useProvideAuth(): AuthReturn {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       setRerender(!rerender);
-      setLoggedIn(false)
     })
 
     history.push("/")
@@ -60,7 +56,6 @@ function useProvideAuth(): AuthReturn {
   }
 
   return {
-    loggedIn,
     rerenderThisComponent,
     signin,
     signout,
@@ -72,12 +67,11 @@ interface PrivateRouteProps {
   children: React.ReactNode
 }
 
-export function PrivateRoute(props: PrivateRouteProps) {
-  let auth = useAuth();  
+export function PrivateRoute(props: PrivateRouteProps) {  
   return (
       <Route
         render={({location}) =>
-          (auth.loggedIn ? (
+          (localStorage.getItem('accessToken') ? (
             props.children
           ) : (
             <Redirect push to={{

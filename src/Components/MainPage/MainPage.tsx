@@ -5,7 +5,7 @@ import { Capitalize, getRandomColor, titlesInWantedOrder } from "../../Scripts/U
 import './css/MainPage.css';
 import '../MiscellaneousCss/Line.css';
 import { AnimeService } from '../../Scripts/Services/AnimeService';
-import { CurrectSeasonInformation } from '../../data/General/MainPageInterfaces';
+import { CurrectSeasonInformation } from '../../data/Anilist/Smaller/MainPageInterfaces';
 
 interface MainPageProps {
 }

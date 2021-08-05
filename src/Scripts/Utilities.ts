@@ -1,5 +1,5 @@
-import { FuzzyDate } from "../data/General/FuzzyDate";
-import { Titles } from "../data/General/Titles";
+import { FuzzyDate } from "../data/Anilist/Smaller/FuzzyDate";
+import { Titles } from "../data/Anilist/Smaller/Titles";
 
 export function findFirstNotUndefined(elements: any[]) {
     var title: string = elements[elements.findIndex(val => val)];

@@ -11,66 +11,64 @@ interface RankingItemRenderProps {
     selectedRanking: RankingItem
 }
 
-interface RankingItemData {
-    selectedRanking: RankingItem
-    page?: Page
+interface RankingInformation {
+    items: Page;
+    currentPage: number;
 }
 
 const delayInSeconds = 5.5;
 
 export default function RankingItemRender(props: RankingItemRenderProps) {
-    const [rankingItemData, setRankingItemData] = useState<RankingItemData>(
-        props
-    );
+    const { selectedRanking } = props
+    const [rankingItems, setRankingItems] = useState<RankingInformation>(
+        { items: {media: []} as Page, currentPage: 0 }
+    )
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
-    async function wrapper() {
-        let results = await props.selectedRanking.fetch(1);
+    async function getMoreRankingData() {
+        let currectRankingItems = { ...rankingItems }
+        let currentPageAfter = rankingItems.currentPage + 1;
 
-        let currectRankingData = { ...rankingItemData }
-        currectRankingData.page = results
-
-        setRankingItemData(currectRankingData)
-    }
-
-    async function getMoreAnime() {
-        let currectRankingData = { ...rankingItemData }
+        console.log(currentPageAfter)
     
-        var results = await rankingItemData.selectedRanking.fetch(rankingItemData.page!.pageInfo!.currentPage! + 1);
-        currectRankingData.page!.media = currectRankingData.page!.media!.concat(results.media!)
-        currectRankingData.page!.pageInfo! = results.pageInfo!
-    
-        setRankingItemData(currectRankingData)
+        var results: Page = await selectedRanking.fetch(currentPageAfter)
+        currectRankingItems.items.media!.push(...results.media!)
+        currectRankingItems.items.pageInfo = results.pageInfo!
+        currectRankingItems.currentPage = currentPageAfter
+
+        setRankingItems(currectRankingItems)
     }
 
     useEffect(() => {
         try {
             setLoading(true)
 
+            console.log("a")
             let timer = setTimeout(() => setLoading(false), delayInSeconds * 100);
 
-            wrapper();
+            getMoreRankingData()
 
             return () => clearTimeout(timer)
         } catch (error) {
             setLoading(false)
             setError(error)
         }
-    }, [props.selectedRanking])
+    }, [selectedRanking])
 
-    if (loading || !rankingItemData.selectedRanking || !rankingItemData.page) {
+    if (loading || rankingItems.items.media!.length! < 1) {
         return <Loading error={error}/>
     }
+
+    console.log(rankingItems.items.pageInfo!)
 
     return (
         <div className="RankingItem">
             <InfiniteScroll
-                /*className="infiniteScroll"*/
                 style={{overflow: "hidden"}}
-                dataLength={rankingItemData.page.media!.length - 1}
-                next={getMoreAnime}
-                hasMore={rankingItemData.page!.pageInfo!.hasNextPage!}
+                dataLength={rankingItems.items.media!.length}
+                next={() => getMoreRankingData()}
+                hasMore={rankingItems.items.pageInfo!.hasNextPage!}
                 loader={<Loading />}
                 endMessage={
                     <div>
@@ -78,7 +76,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
                     </div>
                 }
             >
-                {rankingItemData.page!.media!.map((element, index) => {
+                {rankingItems.items.media!.map((element, index) => {
                     return (
                         <p key={index}>
                             {titlesInWantedOrder(element.title)}

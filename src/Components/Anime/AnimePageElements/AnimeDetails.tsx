@@ -5,6 +5,7 @@ import Character from "../Character"
 import Relation from "../Relation"
 
 import "../css/AnimeDetails.css";
+import "../../MiscellaneousCss/Section.css"
 
 interface AnimeDetailsProps {
     relationEdges: MediaEdge[];

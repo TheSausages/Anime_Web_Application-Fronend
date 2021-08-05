@@ -1,5 +1,4 @@
 import './App.css';
-import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -50,7 +49,7 @@ function App() {
             </Route>
 
             <Route path="/logout">
-              <Logout />
+              <Logout/>
             </Route>
 
           </Switch>

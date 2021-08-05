@@ -15,7 +15,7 @@
     list-style: none;
 }
 
-.Rankings > li {
+.Rankings > div {
     padding: 10px;
     margin: 0;
     margin: max(1vw, 1vh);
@@ -25,12 +25,12 @@
     cursor: pointer;
 }
 
-.Rankings > li:hover {
+.Rankings > div:hover {
     background-color: rgb(56, 133, 49);
     transition: all 0.2s ease-out;
 }
 
-.Rankings > li:active {
+.Rankings > div:active {
     background-color: rgb(47, 100, 42);
     transition: all 0.2s ease-out;
 }

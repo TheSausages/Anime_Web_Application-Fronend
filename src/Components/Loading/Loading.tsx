@@ -11,7 +11,7 @@ interface LoadingProps {
 export default function Loading(props: LoadingProps) {
     let errorMsg = props.error ? props.error! : "The Request cound not be processed \n Try again later"
 
-    let expiryTimestamp = (new Date().setSeconds(new Date().getSeconds() + 10))
+    let expiryTimestamp = (new Date().setSeconds(new Date().getSeconds() + 100))
     const {
         isRunning,
       } = useTimer({ expiryTimestamp });

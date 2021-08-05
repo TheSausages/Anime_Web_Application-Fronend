@@ -1,4 +1,4 @@
-import { CurrectSeasonInformation } from "../../data/General/MainPageInterfaces";
+import { CurrectSeasonInformation } from "../../data/Anilist/Smaller/MainPageInterfaces";
 import { MediaB } from "../../data/Anilist/MediaInformation";
 import { Page } from "../../data/Anilist/Page";
 import { performRequestWithType } from "./ApiService";

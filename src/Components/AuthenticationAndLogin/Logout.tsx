@@ -8,8 +8,10 @@ export default function Logout(props: LogoutProps) {
     const auth = useAuth();
 
     useEffect(() => {
-        auth.signout();
-    }, [])
+        if (localStorage.getItem('accessToken')) {
+            auth.signout();
+        }
+    }, [auth])
 
     return null;
 }

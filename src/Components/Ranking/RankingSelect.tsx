@@ -14,6 +14,8 @@ export default function RankingSelect(props: RankingSelectProps) {
 
     useEffect(() => {
             try {
+                setLoading(true)
+
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
@@ -32,9 +34,9 @@ export default function RankingSelect(props: RankingSelectProps) {
                 {
                     Rankings.map((item, index) => {
                         return (
-                            <li key={index} onClick={() => setSelectedRanking(item)}>
+                            <div key={index} onClick={() => setSelectedRanking(item)}>
                                 {item.title}
-                            </li>
+                            </div>
                         )
                     })
                 }
@@ -44,7 +46,7 @@ export default function RankingSelect(props: RankingSelectProps) {
                     <p>{selectedRanking? selectedRanking.title : 'No Title Found'}</p>
             </div>
 
-            <RankingItemRender selectedRanking={selectedRanking}/>
+            <RankingItemRender key={selectedRanking.title} selectedRanking={selectedRanking}/>
         </div>
     )
 }

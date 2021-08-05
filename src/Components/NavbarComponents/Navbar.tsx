@@ -4,13 +4,16 @@ import './css/Navbar.css'
 import Button from './Button';
 import { Link } from "react-router-dom";
 import { useAuth } from '../AuthenticationAndLogin/Auth';
+import { useEffect } from 'react';
 
 interface NavbarProps {
 }
 
 export default function Navbar(props: NavbarProps) {
     const [clicked, setClicked] = useState(false);
-    const auth = useAuth()
+    const rerender = useAuth().rerenderThisComponent()
+
+    useEffect(() => {},[rerender])
     
     return(
         <nav className="NavbarItems">
@@ -44,7 +47,7 @@ export default function Navbar(props: NavbarProps) {
                     })}
             </ul>      
 
-            {auth.loggedIn ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
+            {localStorage.getItem('accessToken') ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
            
         </nav>
     )

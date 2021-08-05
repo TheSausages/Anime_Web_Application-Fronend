@@ -2,7 +2,7 @@ import { Page } from "../../data/Anilist/Page";
 import { AnimeService } from "../../Scripts/Services/AnimeService";
 
 export interface RankingItem {
-    title: String
+    title: string
     fetch: (pageNumber: number) => Promise<Page>
 }
 
