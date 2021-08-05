@@ -6,6 +6,7 @@ import { RankingItem } from './Rankings';
 import { Page } from '../../data/Anilist/Page';
 import { titlesInWantedOrder } from '../../Scripts/Utilities';
 import "./css/SelectedRankingRender.css"
+import { useCallback } from 'react';
 
 interface RankingItemRenderProps {
     selectedRanking: RankingItem
@@ -20,17 +21,16 @@ const delayInSeconds = 5.5;
 
 export default function RankingItemRender(props: RankingItemRenderProps) {
     const { selectedRanking } = props
-    const [rankingItems, setRankingItems] = useState<RankingInformation>(
-        { items: {media: []} as Page, currentPage: 0 }
-    )
+
+    /*Start items state as possibly undefined - dummy start*/
+    const [rankingItems, setRankingItems] = useState<RankingInformation>()
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
-    async function getMoreRankingData() {
+    const getMoreRankingData = useCallback(async (rankingItems) => {
         let currectRankingItems = { ...rankingItems }
-        let currentPageAfter = rankingItems.currentPage + 1;
-
-        console.log(currentPageAfter)
+        let currentPageAfter = currectRankingItems.currentPage + 1;
     
         var results: Page = await selectedRanking.fetch(currentPageAfter)
         currectRankingItems.items.media!.push(...results.media!)
@@ -38,36 +38,34 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
         currectRankingItems.currentPage = currentPageAfter
 
         setRankingItems(currectRankingItems)
-    }
+    }, [selectedRanking])
 
     useEffect(() => {
         try {
             setLoading(true)
 
-            console.log("a")
             let timer = setTimeout(() => setLoading(false), delayInSeconds * 100);
 
-            getMoreRankingData()
+            /*true state start - begin with page 0 and empty array*/
+            getMoreRankingData({ items: {media: []} as Page, currentPage: 0 })
 
             return () => clearTimeout(timer)
         } catch (error) {
             setLoading(false)
             setError(error)
         }
-    }, [selectedRanking])
+    }, [getMoreRankingData])
 
-    if (loading || rankingItems.items.media!.length! < 1) {
+    if (loading || rankingItems === undefined) {
         return <Loading error={error}/>
     }
-
-    console.log(rankingItems.items.pageInfo!)
 
     return (
         <div className="RankingItem">
             <InfiniteScroll
                 style={{overflow: "hidden"}}
                 dataLength={rankingItems.items.media!.length}
-                next={() => getMoreRankingData()}
+                next={() => getMoreRankingData(rankingItems)}
                 hasMore={rankingItems.items.pageInfo!.hasNextPage!}
                 loader={<Loading />}
                 endMessage={
