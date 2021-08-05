@@ -1,4 +1,4 @@
-import { Credentials } from "../../data/Credentials";
+import { Credentials } from "../../data/Anilist/Credentials";
 import { performRequest } from "./ApiService";
 import { HttpMethods } from "./ApiService";
 

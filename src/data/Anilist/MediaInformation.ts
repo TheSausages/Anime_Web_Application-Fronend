@@ -1,9 +1,9 @@
-import { Relation } from "./General/Enums";
+import { Relation } from "../General/Enums";
 import { PageInfo } from "./PageInfo";
-import { CoverImage } from "./General/CoverImage";
-import { Format, Season, Status } from "./General/Enums";
-import { FuzzyDate } from "./General/FuzzyDate";
-import { Titles } from "./General/Titles";
+import { CoverImage } from "../General/CoverImage";
+import { Format, Season, Status } from "../General/Enums";
+import { FuzzyDate } from "../General/FuzzyDate";
+import { Titles } from "../General/Titles";
 import { StaffInformation } from "./StaffInformation";
 import { CharacterInformation } from "./CharacterInformation";
 

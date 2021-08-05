@@ -1,7 +1,7 @@
 import React, { useState, useContext, createContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { Credentials } from "../../data/Credentials";
+import { Credentials } from "../../data/Anilist/Credentials";
 import { LoginService } from "../../Scripts/Services/LoginService";
 
 export interface AuthReturn {

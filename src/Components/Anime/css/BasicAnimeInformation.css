@@ -1,0 +1,25 @@
+.AnimeBasicInformation { 
+    grid-area: AnimeBasicInformation;
+
+    width: 80%;
+    justify-self: center;
+    font-size: 0.9rem;
+}
+
+.AnimeBasicInformation > div {
+    padding-bottom: 10%;
+}
+
+.AnimeBasicInformation div :nth-child(odd) { 
+    text-align: start;
+}
+
+.AnimeBasicInformation div :nth-child(even) { 
+    text-align: end;
+}
+
+@media screen and (max-width: 960px) {
+    .AnimeBasicInformation > div {
+        padding-bottom: 12%;
+    }
+}

@@ -1,4 +1,4 @@
-import { CharacterRole } from "./General/Enums";
+import { CharacterRole } from "../General/Enums";
 import { PageInfo } from "./PageInfo";
 import { Staff } from "./StaffInformation";
 

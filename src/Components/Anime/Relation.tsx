@@ -1,4 +1,4 @@
-import { MediaEdge } from "../../data/MediaInformation"
+import { MediaEdge } from "../../data/Anilist/MediaInformation"
 import { Link } from 'react-router-dom';
 import { Capitalize, titlesInWantedOrder, valueOrNotKnown } from "../../Scripts/Utilities";
 

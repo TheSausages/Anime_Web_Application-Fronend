@@ -1,5 +1,5 @@
-import { MediaB } from "../MediaInformation";
-import { PageInfo } from "../PageInfo";
+import { MediaB } from "../Anilist/MediaInformation";
+import { PageInfo } from "../Anilist/PageInfo";
 import { Season } from "./Enums";
 
 export interface CurrectSeasonInformation {

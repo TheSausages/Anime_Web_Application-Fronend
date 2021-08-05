@@ -1,6 +1,6 @@
 import { CurrectSeasonInformation } from "../../data/General/MainPageInterfaces";
-import { MediaB } from "../../data/MediaInformation";
-import { Page } from "../../data/Page";
+import { MediaB } from "../../data/Anilist/MediaInformation";
+import { Page } from "../../data/Anilist/Page";
 import { performRequestWithType } from "./ApiService";
 import { HttpMethods } from "./ApiService";
 

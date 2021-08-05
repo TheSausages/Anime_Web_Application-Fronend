@@ -1,4 +1,4 @@
-import { CharacterEdge } from "../../data/CharacterInformation"
+import { CharacterEdge } from "../../data/Anilist/CharacterInformation"
 import { Capitalize, valueOrNotKnown } from "../../Scripts/Utilities"
 
 interface CharacterProps {
