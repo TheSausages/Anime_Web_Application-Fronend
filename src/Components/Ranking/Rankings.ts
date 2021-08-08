@@ -1,4 +1,4 @@
-import { Page } from "../../data/Anilist/Page";
+import { Page } from "../../data/Anime/Page";
 import { AnimeService } from "../../Scripts/Services/AnimeService";
 
 export interface RankingItem {

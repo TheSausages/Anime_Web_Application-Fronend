@@ -2,7 +2,7 @@
     grid-area: AnimeBasicInformation;
 
     width: 80%;
-    justify-self: center;
+    margin: auto;
     font-size: 0.9rem;
 }
 

@@ -1,7 +1,8 @@
-import { MediaB } from "../../../data/Anilist/MediaInformation";
+import { MediaB } from "../../../data/Anime/MediaInformation";
 import { getRandomColor, valueOrNotKnown, Capitalize, dateOrNotKnown } from "../../../Scripts/Utilities";
 
 import "../css/BasicAnimeInformation.css"
+import SocialButtons from "./UserAnimeInformation";
 
 interface AnimeBasicInformationProps {
     anime: MediaB
@@ -9,20 +10,37 @@ interface AnimeBasicInformationProps {
 
 export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
     return (
-        <div className="AnimeBasicInformation">
-                    {createBasinAnimeMap(props.anime).map((elem, index) => {
-                        return (
-                            <div key={index}>
-                                <div className='line' style={{ 'borderBottom': '1px solid ' + getRandomColor()}} id="noMargin"><p>{elem.name}</p></div>
-                                <div>{elem.value}</div>
-                            </div>
-                        )
-                    })}
-                </div>
+        <div>
+            {
+                props.anime.animeUserInformation ?
+                    <SocialButtons airedEpisodes={airedEpisodes(props.anime)} animeUserInformation={props.anime.animeUserInformation} />
+                :
+                    null
+            }
+
+            <div className="AnimeBasicInformation">
+
+                {createBasinAnimeInformationMap(props.anime).map((elem, index) => {
+                    return (
+                        <div key={index}>
+                            <div className='line' style={{ 'borderBottom': '1px solid ' + getRandomColor()}} id="noMargin"><p>{elem.name}</p></div>
+                            <div>{elem.value}</div>
+                        </div>
+                    )
+                })}   
+            </div>
+        </div>
     );
 }
 
-function createBasinAnimeMap(results: MediaB) {
+function airedEpisodes(Anime: MediaB): number {
+    if (Anime.nextAiringEpisode && Anime.nextAiringEpisode.episode) {
+        return Anime.nextAiringEpisode.episode
+    }
+    return Anime.episodes
+}
+
+function createBasinAnimeInformationMap(results: MediaB) {
     return [
         {
             name: "Airing Season:",

@@ -1,6 +1,6 @@
 #AnimePageLayout {
     margin: 5vh auto;
-    width: 60%;
+    width: 70%;
 }
 
 #MainTitle {
@@ -11,11 +11,10 @@
 .AnimeInformationPage {
     padding: 1vh 1vw;
     
-
     display: grid; 
     grid-template-columns: 1fr 3fr; 
     grid-template-rows: max(15vh, 1fr) max(45vh, 3fr);
-    gap: 2% 4%; 
+    gap: 20px 20px; 
     grid-template-areas: 
     "AnimeImage AnimeDescription"
     "AnimeBasicInformation AnimeDetails"
@@ -30,6 +29,7 @@
 .animeImage > img {
     border-radius: 5%;
     max-width: 100%;
+    min-width: 250px;
     height: auto;
 }
 
@@ -44,7 +44,6 @@
         display: grid; 
         grid-template-columns: 1fr 3fr; 
         grid-template-rows: max(15vh, 1fr) max(45vh, 3fr);
-        gap: 2% 4%; 
         grid-template-areas: 
         "AnimeImage AnimeImage"
         "AnimeDescription AnimeDescription"

@@ -1,35 +1,20 @@
-import { CharacterEdge } from "../../data/Anilist/CharacterInformation"
-import { Capitalize, valueOrNotKnown } from "../../Scripts/Utilities"
+import { CharacterEdge } from "../../../data/Anime/CharacterInformation"
+import { Capitalize, valueOrNotKnown } from "../../../Scripts/Utilities"
 
 interface CharacterProps {
     key: number
     element: CharacterEdge
     index: number
-    wrap?: boolean
-    renderValue?: boolean
 }
 
 export default function Character(props: CharacterProps) {
-    if (props.wrap) {
-        return (
-            <div className={`${props.renderValue ? 'rowWrapper' : ''}`}>
-                { code(props.index, props.element) }
-            </div>
-        )
-    } else {
-        return (
-            code(props.index, props.element)
-        )
-    }
-}
+    const { element, index } = props;
 
-function code(index: number, element: CharacterEdge) {
     if (element.voiceActors.length > 0) {
         return (
             <div key={index} className="SectionItem">
                 <img src={element.node.image.medium} alt="Cover" />
             
-    
                 <div className="SectionItemInfo withMoreWidth" id={`relation${element.node.id}`}>
                     <div className="SectionItemInfoWithPicture">
                         <div>
@@ -49,7 +34,6 @@ function code(index: number, element: CharacterEdge) {
             <div key={index} className="SectionItem">
                 <img src={element.node.image.medium} alt="Cover" />
             
-    
                 <div className="SectionItemInfo Character" id={`relation${element.node.id}`}>
                     <div className="SectionItemInfoInfoValue">
                         <div>{valueOrNotKnown(element.node.name.full, "", false)}</div>

@@ -1,4 +1,4 @@
-import { MediaB } from "..//MediaInformation";
+import { MediaB } from "../MediaInformation";
 import { PageInfo } from "../PageInfo";
 import { Season } from "./Enums";
 

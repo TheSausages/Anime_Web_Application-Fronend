@@ -1,12 +1,12 @@
-import { CurrectSeasonInformation } from "../../data/Anilist/Smaller/MainPageInterfaces";
-import { MediaB } from "../../data/Anilist/MediaInformation";
-import { Page } from "../../data/Anilist/Page";
+import { CurrectSeasonInformation } from "../../data/Anime/Smaller/MainPageInterfaces";
+import { MediaB } from "../../data/Anime/MediaInformation";
+import { Page } from "../../data/Anime/Page";
 import { performRequestWithType } from "./ApiService";
 import { HttpMethods } from "./ApiService";
 
 export class AnimeService {
     static getAnimeById(id: number): Promise<MediaB> {
-        return performRequestWithType<MediaB>(HttpMethods.GET, "/anime/" + id, false)
+        return performRequestWithType<MediaB>(HttpMethods.GET, "/anime/" + id, true)
     }
 
     static getCurrentSeasonAnime(): Promise<CurrectSeasonInformation> {

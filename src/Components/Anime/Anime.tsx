@@ -1,23 +1,17 @@
 import parse from 'html-react-parser';
 import { useEffect, useState } from "react";
-import { MediaB } from "../../data/Anilist/MediaInformation";
+import { MediaB } from "../../data/Anime/MediaInformation";
 import { AnimeService } from "../../Scripts/Services/AnimeService";
 import { getRandomColor, titlesInWantedOrder } from "../../Scripts/Utilities";
 import Loading from '../Loading/Loading';
 
 import "./css/Anime.css"
 import { AnimeBasicInformation } from './AnimePageElements/BasicAnimeInformation';
-import { DescriptionWithSocialButtons } from './AnimePageElements/DescriptionWithSocialButtons';
+import { DescriptionWithSocialButtons as Description } from './AnimePageElements/Description';
 import { AnimeDetails } from './AnimePageElements/AnimeDetails';
 
 interface AnimeProps {
     id: number
-}
-
-export interface EpisodeArray {
-    value: number | string
-    label: number | string
-    disabled: boolean
 }
 
 export default function Anime(props: AnimeProps) {
@@ -64,18 +58,11 @@ export default function Anime(props: AnimeProps) {
                 <AnimeBasicInformation anime={Anime} />
 
                 {/*Description and social buttons*/}
-                <DescriptionWithSocialButtons description={Anime.description} airedEpisodes={airedEpisodes(Anime)} />
+                <Description description={Anime.description} />
 
                 {/*Anime Details*/}
                 <AnimeDetails characterEdges={Anime.characters.edges!} relationEdges={Anime.relations.edges!} />
             </div>
         </div>
     )
-}
-
-function airedEpisodes(Anime: MediaB): number {
-    if (Anime.nextAiringEpisode === undefined || Anime.nextAiringEpisode.episode === undefined) {
-        return Anime.episodes
-    }
-    return Anime.nextAiringEpisode.episode
 }

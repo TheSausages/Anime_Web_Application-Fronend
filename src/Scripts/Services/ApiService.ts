@@ -41,11 +41,16 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
     return fetch(new Request(fullUrl, options))
 }
 
+/**
+ * 
+ * @param needAuth Does the request need authentification or need user data
+ * @returns 
+ */
 function getHeaders(needAuth: boolean) : Headers {
     const headers = new Headers();
     headers.set('Content-Type', 'application/json');
 
-    if (needAuth) {
+    if (needAuth && localStorage.getItem('accessToken')) {
         headers.set("Authorization", "Bearer " + localStorage.getItem('accessToken')!);
     }
 

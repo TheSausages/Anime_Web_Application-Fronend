@@ -1,5 +1,5 @@
-import { FuzzyDate } from "../data/Anilist/Smaller/FuzzyDate";
-import { Titles } from "../data/Anilist/Smaller/Titles";
+import { FuzzyDate } from "../data/Anime/Smaller/FuzzyDate";
+import { Titles } from "../data/Anime/Smaller/Titles";
 
 export function findFirstNotUndefined(elements: any[]) {
     var title: string = elements[elements.findIndex(val => val)];
@@ -47,11 +47,24 @@ export function dateOrNotKnown(value: FuzzyDate) {
     return !value.year ? "Not Known" : (value.day + '.' + value.month + '.' + value.year)
 }
 
-export function getRandomColor() {
+export function getRandomColor(dark?: boolean) {
     var letters = '0123456789ABCDEF';
+    var darkLetters = '01234'
     var color = '#';
+
+    let genFunction: () => string
+    
+    dark ? 
+        genFunction = function(): string {
+            return Math.random() >= 0.5 ? darkLetters[Math.floor(Math.random() * 4)] : letters[Math.floor(Math.random() * 16)]
+        }
+    :
+        genFunction = function(): string {
+            return letters[Math.floor(Math.random() * 16)];
+        }
+
     for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+        color += genFunction()
     }
     
     return color

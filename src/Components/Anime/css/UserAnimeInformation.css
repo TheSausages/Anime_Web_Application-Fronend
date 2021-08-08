@@ -1,0 +1,11 @@
+.reactionButtons {
+    margin: auto;
+    margin-bottom: 10%;
+}
+
+.reactionButtons > * {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+}

@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { CharacterEdge } from "../../../data/Anilist/CharacterInformation"
-import { MediaEdge } from "../../../data/Anilist/MediaInformation"
-import Character from "../Character"
-import Relation from "../Relation"
+import { CharacterEdge } from "../../../data/Anime/CharacterInformation"
+import { MediaEdge } from "../../../data/Anime/MediaInformation"
+import Character from "./Character"
+import Relation from "../AnimePageElements/Relation"
+import { isTooManySections, spliceArrayIfNeeded } from "../../Section/SectionUrils"
 
 import "../css/AnimeDetails.css";
-import "../../MiscellaneousCss/Section.css"
+import "../../Section/Section.css"
 
 interface AnimeDetailsProps {
     relationEdges: MediaEdge[];
@@ -38,56 +39,40 @@ export function AnimeDetails(props: AnimeDetailsProps) {
         <div className="AnimeDetails">
 
                     {/*Relations*/}
-                    <div className="line" >
+                    <div className="line">
                         {
-                            ((window.innerWidth > 960 && relationEdges!.length > 5) || (window.innerWidth < 960 && relationEdges!.length > 2) ) ? 
+                            isTooManySections(relationEdges) ?
                                 <p className="linkPointer unCopyable" onClick={() => changeRowState('relations')}>Relations | Click to show {findRowState('relations') ? 'More' : 'Less'}</p>
                             :
                                 <p>Relations</p>
                         }
 
                         <div id="Section">
-                        {
-                            relationEdges!
-                            .slice(0,  (window.innerWidth > 960 ? 5 : 2))
-                            .map((elem, index) => {
-                                return <Relation key={index} element={elem} index={index}/>
-                            })
-                        }
-                        {
-                            relationEdges!
-                            .slice((window.innerWidth > 960 ? 5 : 2))
-                            .map((elem, index) => {
-                                return <Relation key={index} element={elem} index={index} wrap={true} renderValue={findRowState('relations')}/>
-                            })
-                        }
+                            {
+                                spliceArrayIfNeeded(relationEdges, findRowState('relations'))
+                                .map((elem, index) => {
+                                    return <Relation key={index} element={elem} index={index} />
+                                })
+                            }
                         </div>
                     </div>
 
                     {/*Characters*/}
                     <div className="line" >
                         {
-                            ((window.innerWidth > 960 && characterEdges!.length > 5) || (window.innerWidth < 960 && characterEdges!.length > 2) ) ? 
+                            isTooManySections(characterEdges) ? 
                                 <p className="linkPointer unCopyable" onClick={() => changeRowState('characters')}>Characters | Click to show {findRowState('characters') ? 'More' : 'Less'}</p>
                             :
                                 <p>Characters</p>
                         }
 
                         <div id="Section">
-                        {
-                            characterEdges!
-                            .slice(0,  (window.innerWidth > 960 ? 5 : 2))
-                            .map((elem, index) => {
-                                return <Character key={index} element={elem} index={index} />
-                            })
-                        }
-                        {
-                            characterEdges!
-                            .slice((window.innerWidth > 960 ? 5 : 2))
-                            .map((elem, index) => {
-                                return <Character key={index} element={elem} index={index} wrap={true} renderValue={findRowState('characters')} />
-                            })
-                        }
+                            {
+                                spliceArrayIfNeeded(characterEdges, findRowState('characters'))
+                                .map((elem, index) => {
+                                    return <Character key={index} element={elem} index={index} />
+                                })
+                            }
                         </div>
                     </div>
                 </div>

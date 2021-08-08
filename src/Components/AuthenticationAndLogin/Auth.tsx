@@ -2,7 +2,7 @@ import React, { useState, useContext, createContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Credentials } from "../../data/General/Credentials";
-import { LoginService } from "../../Scripts/Services/LoginService";
+import { UserService } from "../../Scripts/Services/UserService";
 
 export interface AuthReturn {
     signin: (username: string, password: string) => void
@@ -30,7 +30,7 @@ function useProvideAuth(): AuthReturn {
   const [rerender, setRerender] = useState<boolean>(false);
   
   const signin = async (username: string, password: string) => {
-    await LoginService.login({username, password} as Credentials)
+    await UserService.login({username, password} as Credentials)
     .then(data => {  
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('refreshToken', data.refresh_token);
@@ -41,7 +41,7 @@ function useProvideAuth(): AuthReturn {
   };
 
   const signout = async () => {
-    await LoginService.logout()
+    await UserService.logout()
     .then(data => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');

@@ -1,11 +1,12 @@
-import { Relation } from "../Anilist/Smaller/Enums";
+import { Relation } from "./Smaller/Enums";
 import { PageInfo } from "./PageInfo";
 import { CoverImage } from "./Smaller/CoverImage";
-import { Format, Season, Status } from "../Anilist/Smaller/Enums";
-import { FuzzyDate } from "../Anilist/Smaller/FuzzyDate";
-import { Titles } from "../Anilist/Smaller/Titles";
+import { Format, Season, Status } from "./Smaller/Enums";
+import { FuzzyDate } from "./Smaller/FuzzyDate";
+import { Titles } from "./Smaller/Titles";
 import { StaffInformation } from "./StaffInformation";
 import { CharacterInformation } from "./CharacterInformation";
+import { AnimeUserInformation } from "./Smaller/AnimeUserInformation";
 
 export interface MediaInformation {
     edges?: MediaEdge[]
@@ -43,6 +44,9 @@ export interface MediaB {
     relations: MediaInformation
     characters: CharacterInformation
     staff: StaffInformation
+
+    /*User information, only available when user is logged in*/
+    animeUserInformation?: AnimeUserInformation
 }
 
 export interface NextAiringEpisode {

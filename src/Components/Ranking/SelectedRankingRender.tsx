@@ -3,7 +3,7 @@ import Loading from '../Loading/Loading'
 import InfiniteScroll from "react-infinite-scroll-component";
 import './css/RankingSelect.css'
 import { RankingItem } from './Rankings';
-import { Page } from '../../data/Anilist/Page';
+import { Page } from '../../data/Anime/Page';
 import { titlesInWantedOrder } from '../../Scripts/Utilities';
 import "./css/SelectedRankingRender.css"
 import { useCallback } from 'react';
