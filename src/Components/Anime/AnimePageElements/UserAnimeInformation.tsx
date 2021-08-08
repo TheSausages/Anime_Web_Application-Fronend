@@ -118,6 +118,7 @@ export default function SocialButtons(props: SocialButtonsProps) {
                             defaultValue={animeUserInformation.status}
                         >
                             {
+                                /*slice(0, half of enum) to get only enum names, not elements*/
                                 Object.values(AnimeUserStatus).slice(0, 5).map(status => (
                                     <MenuItem key={status} value={status}>
                                         {valueOrNotKnown(status)}
