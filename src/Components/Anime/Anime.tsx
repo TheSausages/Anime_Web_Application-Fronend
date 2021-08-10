@@ -9,6 +9,7 @@ import "./css/Anime.css"
 import { AnimeBasicInformation } from './AnimePageElements/BasicAnimeInformation';
 import { DescriptionWithSocialButtons as Description } from './AnimePageElements/Description';
 import { AnimeDetails } from './AnimePageElements/AnimeDetails';
+import UserAnimeInformation from './AnimePageElements/UserAnimeInformation';
 
 interface AnimeProps {
     id: number
@@ -54,6 +55,19 @@ export default function Anime(props: AnimeProps) {
                     <img src={Anime.coverImage.large} style={{ 'border': '1px solid ' + getRandomColor() }} alt='Cover'></img> 
                 </div>
 
+                {
+                    /*AnimeUserInformation*/
+                    localStorage.getItem('accessToken') ?
+                        <UserAnimeInformation
+                            airedEpisodes={airedEpisodes(Anime)} 
+                            animeUserInformation={Anime.animeUserInformation} 
+                            animeStartDate={Anime.startDate}
+                            animeEndDate={Anime.endDate}
+                        />
+                    :
+                        <div className="animeUserInformation"></div>
+                }
+
                 {/*Basic Anime Information*/}
                 <AnimeBasicInformation anime={Anime} />
 
@@ -65,4 +79,11 @@ export default function Anime(props: AnimeProps) {
             </div>
         </div>
     )
+}
+
+function airedEpisodes(Anime: MediaB): number {
+    if (Anime.nextAiringEpisode && Anime.nextAiringEpisode.episode) {
+        return Anime.nextAiringEpisode.episode
+    }
+    return Anime.episodes
 }

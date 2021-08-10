@@ -35,12 +35,12 @@ export function Capitalize(value: any) {
     return value;
 }
 
-export function valueOrNotKnown(value: any, after: string = "", capitalize: boolean = true) {
+export function valueOrNotKnown(value: any, capitalize: boolean = true) {
     if (typeof value === 'string') {
         value = value.replaceAll("_", " ")
     }
 
-    return !value ? "Not Known" : (capitalize ? Capitalize(value) + after : value + after)
+    return !value ? "Not Known" : (capitalize ? Capitalize(value): value)
 }
 
 export function dateOrNotKnown(value: FuzzyDate) {

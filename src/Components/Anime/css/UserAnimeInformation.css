@@ -1,11 +1,5 @@
-.reactionButtons {
-    margin: auto;
-    margin-bottom: 10%;
-}
-
-.reactionButtons > * {
-    width: 80%;
+.userAnimeInformation {
+    grid-area: SocialButtons;
     display: flex;
-    flex-direction: column;
-    font-size: 0.9rem;
+    justify-content: space-evenly;
 }

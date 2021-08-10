@@ -1,19 +1,23 @@
 import { MenuItem, Select, InputLabel, FormControl, makeStyles } from "@material-ui/core"
-import { ChangeEvent, ReactNode } from "react";
+import { ReactNode } from "react";
 import { useEffect } from "react";
-import { useState } from "react";
-import { useCallback } from "react";
-import { AnimeUserInformation } from "../../../data/Anime/Smaller/AnimeUserInformation";
+import { AnimeUserInformation, Grade, Grades } from "../../../data/Anime/Smaller/AnimeUserInformation";
 import { AnimeUserStatus } from "../../../data/Anime/Smaller/Enums";
 import { UserService } from "../../../Scripts/Services/UserService";
 import { getRandomColor, valueOrNotKnown } from "../../../Scripts/Utilities";
+import * as yup from "yup"
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FuzzyDate } from "../../../data/Anime/Smaller/FuzzyDate";
+import { Controller, useForm } from "react-hook-form";
 
 import "../css/UserAnimeInformation.css"
+import { useCallback } from "react";
 
 const color = getRandomColor(true);
 const useStyles = makeStyles({
     inputSpace: {
-        paddingBottom: 15,
+        paddingBottom: 5,
+        width: '15vw',
     },
     label: {
         color: '#101010',
@@ -43,14 +47,36 @@ const useStyles = makeStyles({
     },
 });
 
-interface SocialButtonsProps {
+interface UserAnimeInformationProps {
     airedEpisodes: number;
-    animeUserInformation: AnimeUserInformation;
+    animeUserInformation?: AnimeUserInformation;
+    animeStartDate: FuzzyDate;
+    animeEndDate: FuzzyDate;
 }
 
-export default function SocialButtons(props: SocialButtonsProps) {
-    const { airedEpisodes, animeUserInformation } = props;
-    const [animeUserInformationData, setAnimeUserInformationData] = useState<AnimeUserInformation>(
+export default function UserAnimeInformation(props: UserAnimeInformationProps) {
+    const { airedEpisodes, animeUserInformation, animeStartDate, animeEndDate } = props;
+    const schema = yup.object().shape({
+        status: yup.mixed<AnimeUserStatus | string>().oneOf(Object.values(AnimeUserStatus).slice(0, 5)).notRequired().default(animeUserInformation?.status ?? AnimeUserStatus.NO_STATUS),
+        watchStartDate: yup.date().nullable(true).notRequired().default(animeUserInformation?.watchStartDate ?? new Date()),
+        watchEndDate: yup.date().nullable(true).notRequired().default(animeUserInformation?.watchEndDate ?? new Date()),
+        nrOfEpisodesSeen: yup.number().integer().min(0, "Must be positive").default(animeUserInformation?.nrOfEpisodesSeen ?? 0),
+        isFavourite: yup.boolean().default(animeUserInformation?.isFavourite ?? false),
+        didReview: yup.boolean().default(animeUserInformation?.isFavourite ?? false),
+        review: yup.object({
+            id: yup.number().integer().notRequired(),
+            reviewText: yup.string(),
+            nrOfHelpful: yup.number().integer(),
+            nrOfPlus: yup.number().integer(),
+            nrOfMinus: yup.number().integer()
+        }).default(animeUserInformation?.review ?? {}),
+        grade: yup.object({
+            scale: yup.number().integer(),
+            gradeName: yup.string()
+        }).default(animeUserInformation?.grade ?? {})
+    })
+
+    /*const [animeUserInformationData, setAnimeUserInformationData] = useState<AnimeUserInformation>(
         {
             status: animeUserInformation.status,
             watchStartDate: animeUserInformation.watchStartDate,
@@ -61,51 +87,68 @@ export default function SocialButtons(props: SocialButtonsProps) {
             review: animeUserInformation.review,
             grade: animeUserInformation.grade
         }
-    )
+    )*/
+
     const classes = useStyles();
+    const { control, formState: { errors }, reset, getValues } = useForm<AnimeUserInformation>({
+        resolver: yupResolver(schema),
+        mode: 'all',
+        defaultValues: {
+            status: animeUserInformation?.status ?? AnimeUserStatus.NO_STATUS,
+            watchStartDate: animeUserInformation?.watchStartDate ?? new Date(),
+            watchEndDate: animeUserInformation?.watchEndDate ?? new Date(),
+            nrOfEpisodesSeen: animeUserInformation?.nrOfEpisodesSeen ?? 0,
+            isFavourite: animeUserInformation?.isFavourite ?? false,
+            didReview: animeUserInformation?.isFavourite ?? false,
+            review: animeUserInformation?.review ?? {},
+            grade: animeUserInformation?.grade ?? {}
+        }
+    })
 
     const save = useCallback(() => {
-        UserService.updateAnimeUserInformationData(animeUserInformationData)
-    }, [animeUserInformationData])
+        console.log(getValues())
+    }, [getValues])
 
     useEffect(() => {
-        window.addEventListener('beforeunload', save);
+        window.addEventListener('onbeforeunload', (e: Event) => save);
 
         return (() => {
-            window.removeEventListener('beforeunload', save);
-            save();
+            save()
+            window.removeEventListener('onbeforeunload', (e: Event) => save);
         })
     }, [save])
 
-    function handleAnimeUserInformationDataChange(event: ChangeEvent<{ value: unknown; }>, field: keyof AnimeUserInformation) {
-        setAnimeUserInformationData({...animeUserInformationData, [field]: event.target.value})
-    }
-
     return (
         localStorage.getItem('accessToken') ? 
-        <div className="reactionButtons">
-            <FormControl>
-                {
-                    <div className={classes.inputSpace}>
-                        <InputLabel id="episodesSeenLabel" className={classes.label}>
-                            Episodes Seen
-                        </InputLabel>
-                        <Select 
-                            className={classes.select}
-                            inputProps={{classes: {icon: classes.icon}}}
-                            onChange={e => handleAnimeUserInformationDataChange(e, 'nrOfEpisodesSeen')}
-                            labelId="episodesSeenLabel"
-                            defaultValue={animeUserInformation.nrOfEpisodesSeen}
+        <form className="userAnimeInformation">
+                <Controller  render={(props) => {
+                    const { fieldState, formState, field } = props;
+                    return <FormControl className={classes.inputSpace} 
                         >
-                            {
-                                getEpisodeArray(airedEpisodes)
-                            }
-                        </Select>
-                    </div>
-                }
-            </FormControl>
+                            <InputLabel id="episodesSeenLabel" className={classes.label}>
+                                Episodes Seen
+                            </InputLabel>
+                            <Select
+                                inputProps={{classes: {icon: classes.icon}, }}
+                                className={classes.select}
+                                labelId="episodesSeenLabel"
+                                error={errors.nrOfEpisodesSeen !== undefined}
+                                ref={field.ref}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
+                                value={field.value}
+                            >
+                                {
+                                    getEpisodeArray(airedEpisodes)
+                                }
+                            </Select>
+                    </FormControl>
+                }}
+                control={control}
+                name="nrOfEpisodesSeen"
+                />
 
-            <FormControl>
+            {/*<FormControl>
                 <div className={classes.inputSpace}>
                         <InputLabel id="StatusLabel" className={classes.label}>
                             Your Status
@@ -113,12 +156,12 @@ export default function SocialButtons(props: SocialButtonsProps) {
                         <Select 
                             className={classes.select}
                             inputProps={{classes: {icon: classes.icon}}}
-                            onChange={e => handleAnimeUserInformationDataChange(e, 'status')}
+                            //onChange={e => handleAnimeUserInformationDataChange(e, 'status')}
                             labelId="StatusLabel"
-                            defaultValue={animeUserInformation.status}
+                            //defaultValue={animeUserInformation.status}
                         >
                             {
-                                /*slice(0, half of enum) to get only enum names, not elements*/
+                                slice(0, half of enum) to get only enum names, not elements
                                 Object.values(AnimeUserStatus).slice(0, 5).map(status => (
                                     <MenuItem key={status} value={status}>
                                         {valueOrNotKnown(status)}
@@ -126,9 +169,9 @@ export default function SocialButtons(props: SocialButtonsProps) {
                                 ))
                             }
                         </Select>
-                    </div>
-            </FormControl>
-        </div> 
+                </div>
+            </FormControl>*/}
+        </form>
 
     : 
         null

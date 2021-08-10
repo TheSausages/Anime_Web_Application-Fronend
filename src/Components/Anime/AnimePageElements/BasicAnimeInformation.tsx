@@ -2,7 +2,6 @@ import { MediaB } from "../../../data/Anime/MediaInformation";
 import { getRandomColor, valueOrNotKnown, Capitalize, dateOrNotKnown } from "../../../Scripts/Utilities";
 
 import "../css/BasicAnimeInformation.css"
-import SocialButtons from "./UserAnimeInformation";
 
 interface AnimeBasicInformationProps {
     anime: MediaB
@@ -10,41 +9,24 @@ interface AnimeBasicInformationProps {
 
 export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
     return (
-        <div>
-            {
-                props.anime.animeUserInformation ?
-                    <SocialButtons airedEpisodes={airedEpisodes(props.anime)} animeUserInformation={props.anime.animeUserInformation} />
-                :
-                    null
-            }
-
-            <div className="AnimeBasicInformation">
-
-                {createBasinAnimeInformationMap(props.anime).map((elem, index) => {
-                    return (
-                        <div key={index}>
-                            <div className='line' style={{ 'borderBottom': '1px solid ' + getRandomColor()}} id="noMargin"><p>{elem.name}</p></div>
-                            <div>{elem.value}</div>
-                        </div>
-                    )
-                })}   
-            </div>
+        <div className="AnimeBasicInformation">
+            {createBasinAnimeInformationMap(props.anime).map((elem, index) => {
+                return (
+                    <div key={index}>
+                        <div className='line' style={{ 'borderBottom': '1px solid ' + getRandomColor()}} id="noMargin"><p>{elem.name}</p></div>
+                        <div>{elem.value}</div>
+                    </div>
+                )
+            })}   
         </div>
     );
-}
-
-function airedEpisodes(Anime: MediaB): number {
-    if (Anime.nextAiringEpisode && Anime.nextAiringEpisode.episode) {
-        return Anime.nextAiringEpisode.episode
-    }
-    return Anime.episodes
 }
 
 function createBasinAnimeInformationMap(results: MediaB) {
     return [
         {
             name: "Airing Season:",
-            value: valueOrNotKnown(results.season + ' ' + results.seasonYear)
+            value: valueOrNotKnown(`${results.season} ${results.seasonYear}`)
         },
         {
             name: "Status:",
@@ -76,7 +58,7 @@ function createBasinAnimeInformationMap(results: MediaB) {
         },
         {
             name: "Anilist Average Score:",
-            value: valueOrNotKnown(results.averageScore, '%')
+            value: valueOrNotKnown(`${results.averageScore}%`)
         },
         {
             name: "BachAni Favourites:",

@@ -17,6 +17,7 @@
     gap: 20px 20px; 
     grid-template-areas: 
     "AnimeImage AnimeDescription"
+    "SocialButtons SocialButtons"
     "AnimeBasicInformation AnimeDetails"
     "AnimeBasicInformation AnimeDetails";
 }
@@ -46,6 +47,7 @@
         grid-template-rows: max(15vh, 1fr) max(45vh, 3fr);
         grid-template-areas: 
         "AnimeImage AnimeImage"
+        "SocialButtons SocialButtons"
         "AnimeDescription AnimeDescription"
         "AnimeBasicInformation AnimeDetails"
         "AnimeBasicInformation AnimeDetails";
