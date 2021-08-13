@@ -4,8 +4,8 @@ export interface AnimeUserInformation {
     /*W backu id ma inną strukture, ale nie wiem jeszcze czy potrzebne
     id: string*/
     status: AnimeUserStatus;
-    watchStartDate: Date;
-    watchEndDate: Date;
+    watchStartDate?: Date;
+    watchEndDate?: Date;
     nrOfEpisodesSeen: number;
     isFavourite: boolean;
     didReview: boolean;

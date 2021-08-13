@@ -65,6 +65,7 @@ export default function Anime(props: AnimeProps) {
                             animeEndDate={Anime.endDate}
                         />
                     :
+                        // TODO zrobić przycisk który powie żeby się zalogować aby dodać dane
                         <div className="animeUserInformation"></div>
                 }
 
