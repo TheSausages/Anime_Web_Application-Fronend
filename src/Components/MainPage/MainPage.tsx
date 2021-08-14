@@ -2,36 +2,47 @@ import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
 import { Link } from "react-router-dom";
 import { Capitalize, getRandomColor, titlesInWantedOrder } from "../../Scripts/Utilities"
+import { AnimeService } from '../../Scripts/Services/AnimeService';
+import { CurrentSeasonInformation } from '../../data/Anime/Smaller/MainPageInterfaces';
+import { BackendError } from '../../data/General/BackendError';
+import { useSnackbar } from 'notistack';
+import { snackbarError } from '../../data/General/SnackBar';
+import { useCallback } from 'react';
+
 import './css/MainPage.css';
 import '../MiscellaneousCss/Line.css';
-import { AnimeService } from '../../Scripts/Services/AnimeService';
-import { CurrectSeasonInformation } from '../../data/Anime/Smaller/MainPageInterfaces';
 
 interface MainPageProps {
 }
 
 export default function MainPage(props: MainPageProps) {
-    const [currectSeason, setCurrectSeason] = useState<CurrectSeasonInformation>();
+    const [currectSeason, setCurrectSeason] = useState<CurrentSeasonInformation>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
+    const { enqueueSnackbar } = useSnackbar();
 
-    async function wrapper() {
-        let result = await AnimeService.getCurrentSeasonAnime();
-        setCurrectSeason(result)
-    }
+    const getCurrentAnime = useCallback(async () => {
+        await AnimeService.getCurrentSeasonAnime()
+        .then((result: CurrentSeasonInformation) => {
+            setCurrectSeason(result)
+        })
+        .catch((error: BackendError) => {
+            enqueueSnackbar(error.message,  snackbarError )
+        })
+    }, [enqueueSnackbar])
 
     useEffect(() => {
         try {
             setLoading(true);
 
-            wrapper();
+            getCurrentAnime();
 
             setLoading(false);
         } catch (error) {
             setLoading(false);
             setError(error)
         }
-    }, []);
+    }, [getCurrentAnime]);
 
     if (loading || !currectSeason) {
         return <Loading error={error}/>

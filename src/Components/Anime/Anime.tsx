@@ -4,12 +4,16 @@ import { MediaB } from "../../data/Anime/MediaInformation";
 import { AnimeService } from "../../Scripts/Services/AnimeService";
 import { getRandomColor, titlesInWantedOrder } from "../../Scripts/Utilities";
 import Loading from '../Loading/Loading';
-
-import "./css/Anime.css"
 import { AnimeBasicInformation } from './AnimePageElements/BasicAnimeInformation';
 import { DescriptionWithSocialButtons as Description } from './AnimePageElements/Description';
 import { AnimeDetails } from './AnimePageElements/AnimeDetails';
 import UserAnimeInformation from './AnimePageElements/UserAnimeInformation';
+import { BackendError } from '../../data/General/BackendError';
+import { useSnackbar } from 'notistack';
+import { snackbarError } from '../../data/General/SnackBar';
+
+import "./css/Anime.css"
+import { useCallback } from 'react';
 
 interface AnimeProps {
     id: number
@@ -18,26 +22,33 @@ interface AnimeProps {
 export default function Anime(props: AnimeProps) {
     const [Anime, setAnime] = useState<MediaB>({} as MediaB);
     const [loading, setLoading] = useState<boolean>(true);
+    const { enqueueSnackbar } = useSnackbar();
     const [error, setError] = useState();
 
-    async function wrapper(id: number) {
-        let response = await AnimeService.getAnimeById(id)
-
-        return setAnime(response as MediaB)
-    }
+    const getAnime = useCallback(async (id: number) => {
+        await AnimeService.getAnimeById(id)
+        .then((response: MediaB) => {
+            setAnime(response);
+        })
+        .catch((error: BackendError) => {
+            enqueueSnackbar(error.message,  snackbarError )
+        })
+    }, [enqueueSnackbar])
 
     useEffect(() => {
         try {
+            /*used to make the page to use Loading component*/
+            setAnime({} as MediaB)
             setLoading(true);
 
-            wrapper(props.id);
+            getAnime(props.id);
             
             setLoading(false)
         } catch (error) {
             setLoading(false)
             setError(error)
         }
-    }, [props.id]);
+    }, [getAnime, props.id]);
 
     if (loading || Object.keys(Anime).length === 0) {
         return <Loading error={error}/>

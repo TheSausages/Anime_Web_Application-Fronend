@@ -1,4 +1,4 @@
-import { CurrectSeasonInformation } from "../../data/Anime/Smaller/MainPageInterfaces";
+import { CurrentSeasonInformation } from "../../data/Anime/Smaller/MainPageInterfaces";
 import { MediaB } from "../../data/Anime/MediaInformation";
 import { Page } from "../../data/Anime/Page";
 import { performRequestWithType } from "./ApiService";
@@ -9,8 +9,8 @@ export class AnimeService {
         return performRequestWithType<MediaB>(HttpMethods.GET, "/anime/" + id, true)
     }
 
-    static getCurrentSeasonAnime(): Promise<CurrectSeasonInformation> {
-        return performRequestWithType<CurrectSeasonInformation>(HttpMethods.GET, '/anime/season/current', false)
+    static getCurrentSeasonAnime(): Promise<CurrentSeasonInformation> {
+        return performRequestWithType<CurrentSeasonInformation>(HttpMethods.GET, '/anime/season/current', false)
     }
 
     static getTopAnimeOfAllTime(pageNumber: number): Promise<Page> {

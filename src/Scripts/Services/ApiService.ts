@@ -1,3 +1,5 @@
+import { BackendError } from "../../data/General/BackendError"
+
 export enum HttpMethods {
     GET = "GET",
     POST = "POST",
@@ -11,7 +13,18 @@ export async function performRequestWithType<T>(method: HttpMethods, url: String
             if (response.ok) {
                 return response.json()
             } else {
-                throw response
+                return handleError(response)
+            }
+        })
+}
+
+export async function performRequestWithNoResponse(method: HttpMethods, url: String, needAuth: boolean, body?: any) {
+    return performRequest(method, url, needAuth, body)
+        .then(response => {
+            if (response.ok) {
+                return;
+            } else {
+                return handleError(response)
             }
         })
 }
@@ -39,6 +52,16 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
     const fullUrl = backendUrl + url;
 
     return fetch(new Request(fullUrl, options))
+}
+
+function handleError(response: Response) {
+    return response.json().then((err: {message: string}) => {
+        return { status: response.status, message: err.message };
+    }).catch(_ => {
+        return { status: response.status, message: "No error message available" };
+    }).then((error: BackendError) => {
+        throw error;
+    })
 }
 
 /**

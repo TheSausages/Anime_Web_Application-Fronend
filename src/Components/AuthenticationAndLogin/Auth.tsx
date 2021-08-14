@@ -1,7 +1,10 @@
+import { useSnackbar } from "notistack";
 import React, { useState, useContext, createContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { BackendError } from "../../data/General/BackendError";
 import { Credentials } from "../../data/General/Credentials";
+import { snackbarError, snackBarSuccess } from "../../data/General/SnackBar";
 import { UserService } from "../../Scripts/Services/UserService";
 
 export interface AuthReturn {
@@ -27,6 +30,7 @@ export const useAuth = () => {
 
 function useProvideAuth(): AuthReturn {
   let history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const [rerender, setRerender] = useState<boolean>(false);
   
   const signin = async (username: string, password: string) => {
@@ -35,9 +39,13 @@ function useProvideAuth(): AuthReturn {
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('refreshToken', data.refresh_token);
       setRerender(!rerender);
-    });
 
-    history.goBack()
+      history.goBack()
+      enqueueSnackbar("Loged In",  snackBarSuccess )
+    })
+    .catch((error: BackendError) => {
+      enqueueSnackbar(error.message,  snackbarError )
+    })
   };
 
   const signout = async () => {
@@ -46,6 +54,9 @@ function useProvideAuth(): AuthReturn {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       setRerender(!rerender);
+    })
+    .catch((error: BackendError) => {
+      enqueueSnackbar(error.message,  snackbarError )
     })
 
     history.push("/")

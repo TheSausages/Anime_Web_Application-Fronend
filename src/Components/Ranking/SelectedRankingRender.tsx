@@ -7,6 +7,9 @@ import { Page } from '../../data/Anime/Page';
 import { titlesInWantedOrder } from '../../Scripts/Utilities';
 import "./css/SelectedRankingRender.css"
 import { useCallback } from 'react';
+import { BackendError } from '../../data/General/BackendError';
+import { useSnackbar } from 'notistack';
+import { snackbarError } from '../../data/General/SnackBar';
 
 interface RankingItemRenderProps {
     selectedRanking: RankingItem
@@ -25,6 +28,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
     /*Start items state as possibly undefined - dummy start*/
     const [rankingItems, setRankingItems] = useState<RankingInformation>()
 
+    const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
@@ -32,13 +36,18 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
         let currectRankingItems = { ...rankingItems }
         let currentPageAfter = currectRankingItems.currentPage + 1;
     
-        var results: Page = await selectedRanking.fetch(currentPageAfter)
-        currectRankingItems.items.media!.push(...results.media!)
-        currectRankingItems.items.pageInfo = results.pageInfo!
-        currectRankingItems.currentPage = currentPageAfter
+        await selectedRanking.fetch(currentPageAfter)
+        .then((results: Page) => {
+            currectRankingItems.items.media!.push(...results.media!)
+            currectRankingItems.items.pageInfo = results.pageInfo!
+            currectRankingItems.currentPage = currentPageAfter
 
-        setRankingItems(currectRankingItems)
-    }, [selectedRanking])
+            setRankingItems(currectRankingItems)
+        })
+        .catch((error: BackendError) => {
+            enqueueSnackbar(error.message,  snackbarError )
+        })
+    }, [selectedRanking, enqueueSnackbar])
 
     useEffect(() => {
         try {
