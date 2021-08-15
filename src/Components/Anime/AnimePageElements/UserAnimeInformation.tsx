@@ -1,9 +1,9 @@
-import { MenuItem, Select, InputLabel, FormControl, makeStyles } from "@material-ui/core"
+import { MenuItem, Select, InputLabel, FormControl, makeStyles, Checkbox, FormControlLabel } from "@material-ui/core"
 import { ReactNode } from "react";
 import { useEffect } from "react";
-import { AnimeUserInformation } from "../../../data/Anime/Smaller/AnimeUserInformation";
+import { AnimeUserInformation, Grade, Grades, Review } from "../../../data/Anime/Smaller/AnimeUserInformation";
 import { AnimeUserStatus } from "../../../data/Anime/Smaller/Enums";
-import { getRandomColor } from "../../../Scripts/Utilities";
+import { getRandomColor, valueOrNotKnown } from "../../../Scripts/Utilities";
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FuzzyDate } from "../../../data/Anime/Smaller/FuzzyDate";
@@ -13,6 +13,8 @@ import { UserService } from "../../../Scripts/Services/UserService";
 import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import { useSnackbar } from "notistack";
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import Favorite from '@material-ui/icons/Favorite';
 
 import "../css/UserAnimeInformation.css"
 
@@ -48,6 +50,10 @@ const useStyles = makeStyles({
     icon: {
         fill: color,
     },
+    border: {
+        border: `1px solid ${color}`,
+        borderRadius: 5,
+    }
 });
 
 interface UserAnimeInformationProps {
@@ -61,7 +67,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const { enqueueSnackbar } = useSnackbar();
     const { airedEpisodes, animeUserInformation, animeStartDate, animeEndDate } = props;
     const schema = yup.object().shape({
-        status: yup.mixed<AnimeUserStatus | string>().oneOf(Object.values(AnimeUserStatus).slice(0, 5)).notRequired(),
+        status: yup.mixed<AnimeUserStatus>().oneOf(Object.values(AnimeUserStatus).slice(0, 5).map(status => status as AnimeUserStatus)).notRequired(),
         watchStartDate: yup.date().nullable(true).notRequired(),
         watchEndDate: yup.date().nullable(true).notRequired(),
         nrOfEpisodesSeen: yup.number().integer().min(0, "Must be positive").notRequired(),
@@ -74,10 +80,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             nrOfPlus: yup.number().integer(),
             nrOfMinus: yup.number().integer()
         }).notRequired(),
-        grade: yup.object({
-            scale: yup.number().integer(),
-            gradeName: yup.string()
-        }).notRequired()
+        grade: yup.number().integer().nullable(true).notRequired()
     })
 
     const classes = useStyles();
@@ -85,20 +88,20 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
         resolver: yupResolver(schema),
         mode: 'all',
         defaultValues: {
-            status: animeUserInformation?.status ?? AnimeUserStatus.NO_STATUS,
+            status: animeUserInformation?.status as AnimeUserStatus ?? AnimeUserStatus[0],
             watchStartDate: animeUserInformation?.watchStartDate ?? undefined,
             watchEndDate: animeUserInformation?.watchEndDate ?? undefined,
             nrOfEpisodesSeen: animeUserInformation?.nrOfEpisodesSeen ?? 0,
             isFavourite: animeUserInformation?.isFavourite ?? false,
             didReview: animeUserInformation?.didReview ?? false,
-            review: animeUserInformation?.review ?? {},
-            grade: animeUserInformation?.grade ?? {}
+            review: animeUserInformation?.review ?? undefined,
+            grade: animeUserInformation?.grade ?? undefined
         }
     })
 
     const save = useCallback(() => {
         if (isDirty) {
-            UserService.updateAnimeUserInformationData(getValues())
+            UserService.updateAnimeUserInformationData({...getValues(), id: animeUserInformation?.id!})
             .then(() => enqueueSnackbar("Your anime data has been updated!", snackbarInfo))
             .catch((error: BackendError) => {
                 enqueueSnackbar(error.message, snackbarError)
@@ -119,40 +122,102 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
 
     return (
         <form className="userAnimeInformation">
-                <FormControl className={classes.inputSpace}>
-                    <InputLabel id="episodesSeenLabel" className={classes.label}>
-                        Episodes Seen
-                    </InputLabel>
-                    <Controller  render={({ field }) => {
-                        return <Select
+            <FormControl className={classes.inputSpace}>
+                <Controller render={({field}) => (
+                    <FormControlLabel 
+                        control={
+                            <Checkbox 
                             {...field}
-                            inputProps={{
-                                classes: { icon: classes.icon
-                                }
-                            }}
-                            onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
-                            className={classes.select}
-                            labelId="episodesSeenLabel"
-                            error={errors.nrOfEpisodesSeen !== undefined}
-                        >
-                            {
-                                getEpisodeArray(airedEpisodes)
-                            }
-                    </Select>
-                    }} 
-                    control={control}
-                    name="nrOfEpisodesSeen"
+                            onChange={data => setValue('isFavourite', Boolean(data.target.value), setValueOptions)}
+                            icon={<FavoriteBorder />} 
+                            checkedIcon={<Favorite />} 
+                        />
+                        }
+                        label="Is my Favourite"
+                        className={classes.border}
                     />
-                </FormControl>
+                )}
+                control={control}
+                name="isFavourite"
+                />
+            </FormControl>
 
-                {/*{
-                                slice(0, half of enum) to get only enum names, not elements
-                                Object.values(AnimeUserStatus).slice(0, 5).map(status => (
-                                    <MenuItem key={status} value={status}>
-                                        {valueOrNotKnown(status)}
-                                    </MenuItem>
-                                ))
-                            }*/}
+            <FormControl className={classes.inputSpace}>
+                <InputLabel id="episodesSeenLabel" className={classes.label}>
+                    Episodes Seen
+                </InputLabel>
+                <Controller render={({ field }) => (
+                    <Select
+                        {...field}
+                        inputProps={{ classes: { icon: classes.icon} }}
+                        onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
+                        className={classes.select}
+                        labelId="episodesSeenLabel"
+                        error={errors.nrOfEpisodesSeen !== undefined}
+                    >
+                    {
+                        getEpisodeArray(airedEpisodes)
+                    }
+                    </Select>
+                )} 
+                control={control}
+                name="nrOfEpisodesSeen"
+                />
+            </FormControl>
+
+            <FormControl className={classes.inputSpace}>
+                <InputLabel id="StatusLabel" className={classes.label}>
+                    Status
+                </InputLabel>
+                <Controller render={({field}) => (
+                    <Select
+                        {...field}
+                        inputProps={{ classes: { icon: classes.icon} }}
+                        onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
+                        className={classes.select}
+                        labelId="StatusLabel"
+                        error={errors.status !== undefined}
+                    >
+                    {
+                        Object.values(AnimeUserStatus).slice(0, 5).map(status => (
+                            <MenuItem key={status} value={status}>
+                                {valueOrNotKnown(status)}
+                            </MenuItem>
+                        ))
+                    }
+                    </Select>
+                )}
+                control={control}
+                name="status"
+                />
+            </FormControl>
+
+            <FormControl className={classes.inputSpace}>
+                <InputLabel id="GradeLabel" className={classes.label}>
+                    Grade
+                </InputLabel>
+                <Controller render={({field}) => (
+                    <Select
+                        {...field}
+                        inputProps={{ classes: { icon: classes.icon} }}
+                        onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
+                        className={classes.select}
+                        labelId="GradeLabel"
+                        error={errors.status !== undefined}
+                    >
+                    {
+                        Grades.map((grade: Grade) => (
+                            <MenuItem key={grade.scale} value={grade.scale}>
+                                {`${grade.scale}. ${grade.gradeName}`}
+                            </MenuItem>
+                        ))
+                    }
+                    </Select>
+                )}
+                control={control}
+                name="grade"
+                />
+            </FormControl>
         </form>
     )
 }

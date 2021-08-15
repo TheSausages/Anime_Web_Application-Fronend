@@ -18,7 +18,6 @@
     grid-template-areas: 
     "AnimeImage AnimeDescription"
     "SocialButtons SocialButtons"
-    "AnimeBasicInformation AnimeDetails"
     "AnimeBasicInformation AnimeDetails";
 }
 
@@ -49,7 +48,6 @@
         "AnimeImage AnimeImage"
         "SocialButtons SocialButtons"
         "AnimeDescription AnimeDescription"
-        "AnimeBasicInformation AnimeDetails"
         "AnimeBasicInformation AnimeDetails";
     }
 }

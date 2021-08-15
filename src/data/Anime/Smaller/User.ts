@@ -1,4 +1,6 @@
 export interface User {
-    username: string
-    loggedIn: boolean
+    userId: string;
+    watchTime: number;
+    nrOfPOsts: number;
+    achievmentPoints: number;
 }

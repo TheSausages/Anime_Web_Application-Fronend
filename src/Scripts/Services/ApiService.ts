@@ -32,11 +32,13 @@ export async function performRequestWithNoResponse(method: HttpMethods, url: Str
 
 export async function performRequest(method: HttpMethods, url: String, needAuth: boolean, body?: any): Promise<Response> {
     if (method === null || method === undefined) {
-        throw { message: "The method cannot be null or undefined", status: 400 } as BackendError
+        const err = { message: "The method cannot be null or undefined", status: 400 } as BackendError
+        throw err;
     }
     
     if (!Object.values(HttpMethods).includes(method)) {
-        throw { message: "There is no such Http Method:" + method, status: 400 } as BackendError
+        const err = { message: "There is no such Http Method:" + method, status: 400 } as BackendError
+        throw err;
     }
 
     if (localStorage.getItem('accessToken') && new Date(localStorage.getItem('refreshIfLaterThen')!) <= new Date()) {

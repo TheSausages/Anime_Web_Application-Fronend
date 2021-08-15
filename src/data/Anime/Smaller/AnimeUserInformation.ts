@@ -1,8 +1,8 @@
 import { AnimeUserStatus } from "./Enums";
+import { User } from "./User";
 
 export interface AnimeUserInformation {
-    /*W backu id ma inną strukture, ale nie wiem jeszcze czy potrzebne
-    id: string*/
+    id: AnimeUserInformationId;
     status: AnimeUserStatus;
     watchStartDate?: Date;
     watchEndDate?: Date;
@@ -10,7 +10,12 @@ export interface AnimeUserInformation {
     isFavourite: boolean;
     didReview: boolean;
     review?: Review;
-    grade?: Grade;
+    grade?: number;
+}
+
+export interface AnimeUserInformationId {
+    animeId: number;
+    user: User;
 }
 
 export interface Review {

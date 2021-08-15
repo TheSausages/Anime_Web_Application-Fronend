@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { AnimeUserInformation } from '../../data/Anime/Smaller/AnimeUserInformation';
-import { UserService } from '../../Scripts/Services/UserService';
+import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
 
 interface ForumProps {
