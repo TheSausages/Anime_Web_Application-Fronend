@@ -1,3 +1,4 @@
+import { AuthenticationToken } from "../../data/General/AuthenticationToken"
 import { BackendError } from "../../data/General/BackendError"
 
 export enum HttpMethods {
@@ -31,11 +32,15 @@ export async function performRequestWithNoResponse(method: HttpMethods, url: Str
 
 export async function performRequest(method: HttpMethods, url: String, needAuth: boolean, body?: any): Promise<Response> {
     if (method === null || method === undefined) {
-        throw Error("The method cannot be null or undefined")
+        throw { message: "The method cannot be null or undefined", status: 400 } as BackendError
     }
     
     if (!Object.values(HttpMethods).includes(method)) {
-        throw Error("There is no such Http Method:" + method)
+        throw { message: "There is no such Http Method:" + method, status: 400 } as BackendError
+    }
+
+    if (localStorage.getItem('accessToken') && new Date(localStorage.getItem('refreshIfLaterThen')!) <= new Date()) {
+        refreshTokens();
     }
 
     const headers = getHeaders(needAuth);
@@ -60,6 +65,23 @@ function handleError(response: Response) {
     }).catch(_ => {
         return { status: response.status, message: "No error message available" };
     }).then((error: BackendError) => {
+        throw error;
+    })
+}
+
+function refreshTokens() {
+    fetch("http://localhost:8080/auth/refreshToken", {
+        method: "POST",
+        headers: getHeaders(false),
+        body: JSON.stringify({refreshToken: localStorage.getItem('refreshToken')})
+    })
+    .then(data => data.json())
+    .then((data: AuthenticationToken) => {
+        localStorage.setItem('accessToken', data.access_token);
+        localStorage.setItem('refreshToken', data.refresh_token);
+        localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+    })
+    .catch((error: BackendError) => {
         throw error;
     })
 }

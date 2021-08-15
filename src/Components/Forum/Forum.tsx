@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { AnimeUserInformation } from '../../data/Anime/Smaller/AnimeUserInformation';
+import { UserService } from '../../Scripts/Services/UserService';
 import Loading from '../Loading/Loading'
 
 interface ForumProps {
@@ -30,17 +32,7 @@ export default function Forum(props: ForumProps) {
         <div>
             Witam na forum!
 
-            <button onClick={() => user()}>Sprawdz Context</button>
+            <button>Sprawdz Context</button>
         </div>
     )
-
-    function user() {
-        fetch('http://localhost:8080/forum/user', {
-            method: 'GET',
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem('accessToken')
-            }
-        })
-        .then(data => data.json());
-    }
 }

@@ -38,10 +38,11 @@ function useProvideAuth(): AuthReturn {
     .then(data => {  
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('refreshToken', data.refresh_token);
+      localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
       setRerender(!rerender);
 
       history.goBack()
-      enqueueSnackbar("Loged In",  snackBarSuccess )
+      enqueueSnackbar("Logged In Successfully",  snackBarSuccess )
     })
     .catch((error: BackendError) => {
       enqueueSnackbar(error.message,  snackbarError )
@@ -53,13 +54,15 @@ function useProvideAuth(): AuthReturn {
     .then(data => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('refreshIfLaterThen');
       setRerender(!rerender);
+
+      history.goBack()
+      enqueueSnackbar("Logged Out Successfully",  snackBarSuccess )
     })
     .catch((error: BackendError) => {
       enqueueSnackbar(error.message,  snackbarError )
     })
-
-    history.push("/")
   };
 
   const rerenderThisComponent = () => {

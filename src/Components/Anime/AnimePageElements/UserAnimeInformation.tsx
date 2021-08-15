@@ -9,6 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FuzzyDate } from "../../../data/Anime/Smaller/FuzzyDate";
 import { Controller, useForm } from "react-hook-form";
 import { useCallback } from "react";
+import { UserService } from "../../../Scripts/Services/UserService";
+import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
+import { BackendError } from "../../../data/General/BackendError";
+import { useSnackbar } from "notistack";
 
 import "../css/UserAnimeInformation.css"
 
@@ -16,7 +20,7 @@ const color = getRandomColor(true);
 const useStyles = makeStyles({
     inputSpace: {
         paddingBottom: 5,
-        width: '15vw',
+        width: '10vw',
     },
     label: {
         color: '#101010',
@@ -54,6 +58,7 @@ interface UserAnimeInformationProps {
 }
 
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
+    const { enqueueSnackbar } = useSnackbar();
     const { airedEpisodes, animeUserInformation, animeStartDate, animeEndDate } = props;
     const schema = yup.object().shape({
         status: yup.mixed<AnimeUserStatus | string>().oneOf(Object.values(AnimeUserStatus).slice(0, 5)).notRequired(),
@@ -92,8 +97,14 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     })
 
     const save = useCallback(() => {
-        if (isDirty) console.log(getValues())
-    }, [getValues, isDirty])
+        if (isDirty) {
+            UserService.updateAnimeUserInformationData(getValues())
+            .then(() => enqueueSnackbar("Your anime data has been updated!", snackbarInfo))
+            .catch((error: BackendError) => {
+                enqueueSnackbar(error.message, snackbarError)
+            })
+        }
+    }, [getValues, isDirty, enqueueSnackbar])
 
     useEffect(() => {
         window.addEventListener('onbeforeunload', (e: Event) => save);

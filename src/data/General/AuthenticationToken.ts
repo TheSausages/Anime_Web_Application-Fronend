@@ -1,6 +1,4 @@
-import { number } from "prop-types"
-
-export interface AnwserAfterLogin {
+export interface AuthenticationToken {
     access_token: string;
     expires_in: number;
     id_token: string;
