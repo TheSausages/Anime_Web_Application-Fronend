@@ -10,7 +10,7 @@ export interface AnimeUserInformation {
     isFavourite: boolean;
     didReview: boolean;
     review?: Review;
-    grade?: number;
+    grade?: number | '';
 }
 
 export interface AnimeUserInformationId {

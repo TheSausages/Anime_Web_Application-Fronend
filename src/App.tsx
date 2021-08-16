@@ -14,47 +14,51 @@ import Anime from './Components/Anime/Anime';
 import Forum from './Components/Forum/Forum';
 import RankingSelect from './Components/Ranking/RankingSelect';
 import Rerender from './Scripts/Rerender';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 function App() {
+  const theme = createTheme({})
   /*Small method that rerender when screen dimensions change, found in Utilities*/
   Rerender()
 
   return (
     <div className="App">
-      <Router>
-        <ProvideAuth>  
-          <Navbar />
-          
-          <Switch>
-            <PrivateRoute path="/forum">
-              <Forum />
-            </PrivateRoute>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <ProvideAuth>  
+            <Navbar />
+            
+            <Switch>
+              <PrivateRoute path="/forum">
+                <Forum />
+              </PrivateRoute>
 
-            <Route exact path='/'>
-              <MainPage />
-            </Route>
+              <Route exact path='/'>
+                <MainPage />
+              </Route>
 
-            <Route path='/anime/:id' render={(props) => <Anime id={props.match.params.id as unknown as number} />}/>
+              <Route path='/anime/:id' render={(props) => <Anime id={props.match.params.id as unknown as number} />}/>
 
-            <Route path='/rankings'>
-              <RankingSelect />
-            </Route>
+              <Route path='/rankings'>
+                <RankingSelect />
+              </Route>
 
-            <Route path='/loading'>
-              <Loading />
-            </Route>
+              <Route path='/loading'>
+                <Loading />
+              </Route>
 
-            <Route path='/login'>
-              <Login />
-            </Route>
+              <Route path='/login'>
+                <Login />
+              </Route>
 
-            <Route path="/logout">
-              <Logout/>
-            </Route>
+              <Route path="/logout">
+                <Logout/>
+              </Route>
 
-          </Switch>
-        </ProvideAuth>
-      </Router>
+            </Switch>
+          </ProvideAuth>
+        </Router>
+      </ThemeProvider>
     </div>
   );
 }

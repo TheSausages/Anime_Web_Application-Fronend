@@ -81,9 +81,12 @@ function refreshTokens() {
     .then((data: AuthenticationToken) => {
         localStorage.setItem('accessToken', data.access_token);
         localStorage.setItem('refreshToken', data.refresh_token);
-        localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+        data.expires_in && localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
     })
     .catch((error: BackendError) => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('refreshIfLaterThen');
         throw error;
     })
 }

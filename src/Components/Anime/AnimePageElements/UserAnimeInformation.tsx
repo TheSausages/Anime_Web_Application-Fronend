@@ -1,4 +1,5 @@
-import { MenuItem, Select, InputLabel, FormControl, makeStyles, Checkbox, FormControlLabel } from "@material-ui/core"
+import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
 import { ReactNode } from "react";
 import { useEffect } from "react";
 import { AnimeUserInformation, Grade, Grades, Review } from "../../../data/Anime/Smaller/AnimeUserInformation";
@@ -13,13 +14,14 @@ import { UserService } from "../../../Scripts/Services/UserService";
 import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import { useSnackbar } from "notistack";
+import { DatePicker } from '@material-ui/lab';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
 
 import "../css/UserAnimeInformation.css"
 
 const color = getRandomColor(true);
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     inputSpace: {
         paddingBottom: 5,
         width: '10vw',
@@ -54,7 +56,7 @@ const useStyles = makeStyles({
         border: `1px solid ${color}`,
         borderRadius: 5,
     }
-});
+}));
 
 interface UserAnimeInformationProps {
     airedEpisodes: number;
@@ -64,6 +66,7 @@ interface UserAnimeInformationProps {
 }
 
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
+    const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
     const { airedEpisodes, animeUserInformation, animeStartDate, animeEndDate } = props;
     const schema = yup.object().shape({
@@ -80,10 +83,9 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             nrOfPlus: yup.number().integer(),
             nrOfMinus: yup.number().integer()
         }).notRequired(),
-        grade: yup.number().integer().nullable(true).notRequired()
+        grade: yup.number().integer().nullable(true).notRequired().transform((_, val) => val === val ? val : '') 
     })
 
-    const classes = useStyles();
     const { control, formState: { errors, isDirty },setValue, getValues } = useForm<AnimeUserInformation>({
         resolver: yupResolver(schema),
         mode: 'all',
@@ -95,7 +97,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             isFavourite: animeUserInformation?.isFavourite ?? false,
             didReview: animeUserInformation?.didReview ?? false,
             review: animeUserInformation?.review ?? undefined,
-            grade: animeUserInformation?.grade ?? undefined
+            grade: animeUserInformation?.grade ?? ''
         }
     })
 
@@ -107,7 +109,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 enqueueSnackbar(error.message, snackbarError)
             })
         }
-    }, [getValues, isDirty, enqueueSnackbar])
+    }, [getValues, isDirty, enqueueSnackbar, animeUserInformation?.id])
 
     useEffect(() => {
         window.addEventListener('onbeforeunload', (e: Event) => save);
@@ -149,6 +151,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 <Controller render={({ field }) => (
                     <Select
                         {...field}
+                        variant="standard"
                         inputProps={{ classes: { icon: classes.icon} }}
                         onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
                         className={classes.select}
@@ -172,6 +175,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 <Controller render={({field}) => (
                     <Select
                         {...field}
+                        variant="standard"
                         inputProps={{ classes: { icon: classes.icon} }}
                         onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
                         className={classes.select}
@@ -194,11 +198,12 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
 
             <FormControl className={classes.inputSpace}>
                 <InputLabel id="GradeLabel" className={classes.label}>
-                    Grade
+                    Opinion
                 </InputLabel>
                 <Controller render={({field}) => (
                     <Select
                         {...field}
+                        variant="standard"
                         inputProps={{ classes: { icon: classes.icon} }}
                         onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
                         className={classes.select}
@@ -217,6 +222,10 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 control={control}
                 name="grade"
                 />
+            </FormControl>
+
+            <FormControl>
+
             </FormControl>
         </form>
     )
