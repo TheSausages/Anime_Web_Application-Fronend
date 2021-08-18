@@ -1,5 +1,19 @@
 .userAnimeInformation {
     grid-area: SocialButtons;
+    display: grid;
+    grid-template-rows: 1fr 1fr; 
+    grid-gap: 12%;
+    grid-template-areas: 
+    "."
+    ".";
+    margin-bottom: 3vh; 
+}
+
+.userAnimeInformation > * {
     display: flex;
     justify-content: space-evenly;
+}
+
+.userAnimeInformation > * > * {
+    justify-content: center;
 }
