@@ -1,6 +1,6 @@
-import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, styled, TextField } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useEffect } from "react";
 import { AnimeUserInformation, Grade, Grades, Review } from "../../../data/Anime/Smaller/AnimeUserInformation";
 import { AnimeUserStatus } from "../../../data/Anime/Smaller/Enums";
@@ -21,11 +21,11 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
 
 import "../css/UserAnimeInformation.css"
+import { ReviewComponent } from './ReviewComponent';
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
     inputSpace: {
-        paddingBottom: 5,
         width: '15vw',
         "& .MuiOutlinedInput-notchedOutline": {
             borderTop: 'none',
@@ -68,7 +68,25 @@ const useStyles = makeStyles((theme) => ({
             color: color,
         }
     },
+    centerContent: {
+        justifyContent: 'center',
+    },
 }));
+
+const ReviewButton = styled(Button)({
+    backgroundColor: 'rgb(34, 206, 43)',
+    background: 'rgb(34, 206, 43)',
+    '&:hover': {
+        backgroundColor: 'rgb(56, 133, 49)',
+        borderColor: 'rgb(56, 133, 49)',
+        boxShadow: 'none',
+    },
+    '&:active': {
+        boxShadow: 'none',
+        backgroundColor: 'rgb(47, 100, 42)',
+        borderColor: 'rgb(47, 100, 42)',
+    },
+});
 
 interface UserAnimeInformationProps {
     airedEpisodes: number;
@@ -79,6 +97,7 @@ interface UserAnimeInformationProps {
 
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const classes = useStyles();
+    const [openReview, setOpenReview] = useState<boolean>(false)
     const { enqueueSnackbar } = useSnackbar();
     const { airedEpisodes, animeUserInformation, animeStartDate, animeEndDate } = props;
     const schema = yup.object().shape({
@@ -136,22 +155,18 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     
     return (
         <form className="userAnimeInformation">
-            <div>
+            <div className="firstLine">
                 <FormControl className={classes.inputSpace}>
                     <Controller render={({field}) => (
                         <FormControlLabel 
                             control={
                                 <Checkbox 
                                 {...field}
-                                onChange={data => {
-                                    console.log(data.target.value)
-                                    console.log(data.target.value === 'true' ? true : false)
-                                    setValue('isFavourite', Boolean(data.target.value), setValueOptions)
-                                }}
+                                onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
                                 icon={<FavoriteBorder />} 
                                 checkedIcon={<Favorite />} 
-                            />
-                            }
+                            />}
+                            className={classes.centerContent}
                             label="Is my Favourite"
                         />
                     )}
@@ -196,7 +211,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 </FormControl>
             </div>
 
-            <div>
+            <div className="secondLine">
                 <FormControl className={classes.inputSpace}>
                     <InputLabel id="episodesSeenLabel" className={classes.label}>
                         Episodes Seen
@@ -271,6 +286,13 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                     name="grade"
                     />
                 </FormControl>
+            </div>
+
+            <div className="review">
+                <ReviewButton onClick={() => setOpenReview(true)} variant="contained">
+                    Review Editor
+                </ReviewButton>
+                <ReviewComponent open={openReview} setReviewOpen={setOpenReview}/>
             </div>
         </form>
     )

@@ -1,19 +1,47 @@
 .userAnimeInformation {
     grid-area: SocialButtons;
     display: grid;
+    grid-template-columns: 50vw 10vw; 
     grid-template-rows: 1fr 1fr; 
-    grid-gap: 12%;
+    row-gap: 12%;
     grid-template-areas: 
-    "."
-    ".";
+    "firstLine review"
+    "secondLine review";
     margin-bottom: 3vh; 
+    justify-content: center;
 }
 
-.userAnimeInformation > * {
+.firstLine {
+    grid-area: firstLine;
     display: flex;
     justify-content: space-evenly;
 }
 
-.userAnimeInformation > * > * {
-    justify-content: center;
+.secondLine {
+    grid-area: secondLine;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.review {
+    grid-area: review;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+@media screen and (max-width: 960px) {
+    #AnimePageLayout {
+        margin: 5vh auto;
+        
+        width: 95%;
+    }
+
+    .userAnimeInformation {
+        grid-template-columns: none;
+        grid-template-areas: 
+        "firstLine"
+        "secondLine"
+        "review";
+    }
 }

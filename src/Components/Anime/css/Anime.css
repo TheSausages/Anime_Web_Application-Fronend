@@ -42,8 +42,6 @@
 
     .AnimeInformationPage {
         display: grid; 
-        grid-template-columns: 1fr 3fr; 
-        grid-template-rows: max(15vh, 1fr) max(45vh, 3fr);
         grid-template-areas: 
         "AnimeImage AnimeImage"
         "SocialButtons SocialButtons"
