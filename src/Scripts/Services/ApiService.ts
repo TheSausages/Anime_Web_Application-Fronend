@@ -1,3 +1,4 @@
+import { formControlClasses } from "@material-ui/core"
 import { AuthenticationToken } from "../../data/General/AuthenticationToken"
 import { BackendError } from "../../data/General/BackendError"
 
@@ -62,6 +63,14 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
 }
 
 function handleError(response: Response) {
+    if (response.status === 401) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('refreshIfLaterThen');
+
+        throw { status: response.status, message: "You remained unactive for too long! Please log in again" };
+    }
+
     return response.json().then((err: {message: string}) => {
         return { status: response.status, message: err.message };
     }).catch(_ => {
@@ -87,6 +96,7 @@ function refreshTokens() {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('refreshIfLaterThen');
+        console.log("OK")
         throw error;
     })
 }

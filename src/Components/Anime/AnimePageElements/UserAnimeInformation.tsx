@@ -156,6 +156,8 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             window.removeEventListener('onbeforeunload', (e: Event) => save);
         })
     }, [save])
+
+    console.log(animeUserInformation)
     
     return (
         <div className="userAnimeInformation">
@@ -167,6 +169,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                                 control={
                                     <Checkbox 
                                     {...field}
+                                    checked={field.value}
                                     onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
                                     icon={<FavoriteBorder />} 
                                     checkedIcon={<Favorite />} 

@@ -68,6 +68,7 @@ export function ReviewComponent(props: ReviewProps) {
 
     function setReview(data: ReviewForm) {
         props.setMainValue('review', { ...props.review, reviewTitle: data.reviewTitle, reviewText: data.reviewText }, setValueOptions)
+        props.setMainValue('didReview', true, setValueOptions)
     }
 
     return (
@@ -114,7 +115,7 @@ export function ReviewComponent(props: ReviewProps) {
 
                     <DialogActions>
                         <Button onClick={_ => props.setReviewOpen(false)}>Close</Button>
-                        <Button type="submit" onClick={_ => props.setReviewOpen(false)}>Submit</Button>
+                        <Button type="submit" onClick={_ => props.setReviewOpen(false)}>Write</Button>
                     </DialogActions>    
                 </form>
             </Dialog>

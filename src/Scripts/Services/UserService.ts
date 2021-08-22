@@ -14,6 +14,6 @@ export class UserService {
     } 
 
     static updateAnimeUserInformationData(data: AnimeUserInformation) {
-        return performRequestWithNoResponse(HttpMethods.POST, "/auth/liked", false, data);
+        return performRequestWithNoResponse(HttpMethods.POST, "/animeUser/updateUserAnime", true, data);
     }
 }
