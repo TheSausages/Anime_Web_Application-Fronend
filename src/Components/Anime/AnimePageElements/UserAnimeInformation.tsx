@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, styled, TextField } from '@material-ui/core';
+import { Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Portal, Select, styled, TextField } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
 import { ReactNode, useState } from "react";
 import { useEffect } from "react";
@@ -22,6 +22,7 @@ import Favorite from '@material-ui/icons/Favorite';
 
 import "../css/UserAnimeInformation.css"
 import { ReviewComponent } from './ReviewComponent';
+import React from 'react';
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -88,6 +89,8 @@ const ReviewButton = styled(Button)({
     },
 });
 
+const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
+
 interface UserAnimeInformationProps {
     airedEpisodes: number;
     animeUserInformation?: AnimeUserInformation;
@@ -98,8 +101,10 @@ interface UserAnimeInformationProps {
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const classes = useStyles();
     const [openReview, setOpenReview] = useState<boolean>(false)
+    const container = React.useRef(null);
     const { enqueueSnackbar } = useSnackbar();
     const { airedEpisodes, animeUserInformation, animeStartDate, animeEndDate } = props;
+
     const schema = yup.object().shape({
         status: yup.mixed<AnimeUserStatus>().oneOf(Object.values(AnimeUserStatus).slice(0, 5).map(status => status as AnimeUserStatus)).notRequired(),
         watchStartDate: yup.date().nullable(true).notRequired(),
@@ -108,7 +113,8 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
         isFavourite: yup.boolean().notRequired(),
         didReview: yup.boolean().notRequired(),
         review: yup.object({
-            id: yup.number().integer().notRequired(),
+            id: yup.number().integer().notRequired().default(undefined),
+            reviewTitle: yup.string(),
             reviewText: yup.string(),
             nrOfHelpful: yup.number().integer(),
             nrOfPlus: yup.number().integer(),
@@ -117,7 +123,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
         grade: yup.number().integer().nullable(true).notRequired()
     })
 
-    const { control, formState: { errors, isDirty },setValue, getValues } = useForm<AnimeUserInformation>({
+    const { control, formState: { errors, isDirty }, setValue, getValues } = useForm<AnimeUserInformation>({
         resolver: yupResolver(schema),
         mode: 'all',
         defaultValues: {
@@ -150,151 +156,155 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             window.removeEventListener('onbeforeunload', (e: Event) => save);
         })
     }, [save])
-
-    const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
     
     return (
-        <form className="userAnimeInformation">
-            <div className="firstLine">
-                <FormControl className={classes.inputSpace}>
-                    <Controller render={({field}) => (
-                        <FormControlLabel 
-                            control={
-                                <Checkbox 
-                                {...field}
-                                onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
-                                icon={<FavoriteBorder />} 
-                                checkedIcon={<Favorite />} 
-                            />}
-                            className={classes.centerContent}
-                            label="Is my Favourite"
+        <div className="userAnimeInformation">
+            <form className="mainAnimeInformationForm">
+                <div className="firstLine">
+                    <FormControl className={classes.inputSpace}>
+                        <Controller render={({field}) => (
+                            <FormControlLabel 
+                                control={
+                                    <Checkbox 
+                                    {...field}
+                                    onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
+                                    icon={<FavoriteBorder />} 
+                                    checkedIcon={<Favorite />} 
+                                />}
+                                className={classes.centerContent}
+                                label="Is my Favourite"
+                            />
+                        )}
+                        control={control}
+                        name="isFavourite"
                         />
-                    )}
-                    control={control}
-                    name="isFavourite"
-                    />
-                </FormControl>
+                    </FormControl>
 
-                <FormControl className={`${classes.inputSpace} ${classes.datePicker}`}>
-                    <Controller render={({field}) => (
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker 
+                    <FormControl className={`${classes.inputSpace} ${classes.datePicker}`}>
+                        <Controller render={({field}) => (
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DatePicker 
+                                    {...field}
+                                    label="Watch start date"
+                                    inputFormat="dd/MM/yyyy"
+                                    onChange={data => setValue('watchStartDate', data as Date, setValueOptions)}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
+                        )}
+                        control={control}
+                        name="watchStartDate"
+                        />
+                    </FormControl>
+
+                    <FormControl className={`${classes.inputSpace} ${classes.datePicker}`}>
+                        <Controller render={({field}) => (
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DatePicker 
+                                    {...field}
+                                    label="Watch end date"
+                                    className={classes.datePicker}
+                                    inputFormat="dd/MM/yyyy"
+                                    onChange={data => setValue('watchEndDate', data as Date, setValueOptions)}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
+                        )}
+                        control={control}
+                        name="watchEndDate"
+                        />
+                    </FormControl>
+                </div>
+
+                <div className="secondLine">
+                    <FormControl className={classes.inputSpace}>
+                        <InputLabel id="episodesSeenLabel" className={classes.label}>
+                            Episodes Seen
+                        </InputLabel>
+                        <Controller render={({ field }) => (
+                            <Select
                                 {...field}
-                                label="Watch start date"
-                                inputFormat="dd/MM/yyyy"
-                                onChange={data => setValue('watchStartDate', data as Date, setValueOptions)}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
-                        </LocalizationProvider>
-                    )}
-                    control={control}
-                    name="watchStartDate"
-                    />
-                </FormControl>
+                                onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
+                                className={classes.select}
+                                labelId="episodesSeenLabel"
+                                error={errors.nrOfEpisodesSeen !== undefined}
+                            >
+                            {
+                                getEpisodeArray(airedEpisodes)
+                            }
+                            </Select>
+                        )} 
+                        control={control}
+                        name="nrOfEpisodesSeen"
+                        />
+                    </FormControl>
 
-                <FormControl className={`${classes.inputSpace} ${classes.datePicker}`}>
-                    <Controller render={({field}) => (
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker 
+                    <FormControl className={classes.inputSpace}>
+                        <InputLabel id="StatusLabel" className={classes.label}>
+                            Status
+                        </InputLabel>
+                        <Controller render={({field}) => (
+                            <Select
                                 {...field}
-                                label="Watch end date"
-                                className={classes.datePicker}
-                                inputFormat="dd/MM/yyyy"
-                                onChange={data => setValue('watchEndDate', data as Date, setValueOptions)}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
-                        </LocalizationProvider>
-                    )}
-                    control={control}
-                    name="watchEndDate"
-                    />
-                </FormControl>
+                                
+                                onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
+                                className={classes.select}
+                                labelId="StatusLabel"
+                                error={errors.status !== undefined}
+                            >
+                            {
+                                Object.values(AnimeUserStatus).slice(0, 5).map(status => (
+                                    <MenuItem key={status} value={status}>
+                                        {valueOrNotKnown(status)}
+                                    </MenuItem>
+                                ))
+                            }
+                            </Select>
+                        )}
+                        control={control}
+                        name="status"
+                        />
+                    </FormControl>
+
+                    <FormControl className={classes.inputSpace}>
+                        <InputLabel id="GradeLabel" className={classes.label}>
+                            Opinion
+                        </InputLabel>
+                        <Controller render={({field}) => (
+                            <Select
+                                {...field}
+                                onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
+                                className={classes.select}
+                                labelId="GradeLabel"
+                                error={errors.status !== undefined}
+                            >
+                            {
+                                Grades.map((grade: Grade) => (
+                                    <MenuItem key={grade.scale} value={grade.scale}>
+                                        {`${grade.scale}. ${grade.gradeName}`}
+                                    </MenuItem>
+                                ))
+                            }
+                            </Select>
+                        )}
+                        control={control}
+                        name="grade"
+                        />
+                    </FormControl>
+                </div>
+
+                <div className="review">
+                    <ReviewButton onClick={() => setOpenReview(true)} variant="contained">
+                        Review Editor
+                    </ReviewButton>
+                    <Portal container={container.current} />
+                </div>
+            </form>
+
+            <div ref={container}>
+                <ReviewComponent open={openReview} control={control} setReviewOpen={setOpenReview} setMainValue={setValue} review={animeUserInformation?.review}/>
             </div>
-
-            <div className="secondLine">
-                <FormControl className={classes.inputSpace}>
-                    <InputLabel id="episodesSeenLabel" className={classes.label}>
-                        Episodes Seen
-                    </InputLabel>
-                    <Controller render={({ field }) => (
-                        <Select
-                            {...field}
-                            onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
-                            className={classes.select}
-                            labelId="episodesSeenLabel"
-                            error={errors.nrOfEpisodesSeen !== undefined}
-                        >
-                        {
-                            getEpisodeArray(airedEpisodes)
-                        }
-                        </Select>
-                    )} 
-                    control={control}
-                    name="nrOfEpisodesSeen"
-                    />
-                </FormControl>
-
-                <FormControl className={classes.inputSpace}>
-                    <InputLabel id="StatusLabel" className={classes.label}>
-                        Status
-                    </InputLabel>
-                    <Controller render={({field}) => (
-                        <Select
-                            {...field}
-                            
-                            onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
-                            className={classes.select}
-                            labelId="StatusLabel"
-                            error={errors.status !== undefined}
-                        >
-                        {
-                            Object.values(AnimeUserStatus).slice(0, 5).map(status => (
-                                <MenuItem key={status} value={status}>
-                                    {valueOrNotKnown(status)}
-                                </MenuItem>
-                            ))
-                        }
-                        </Select>
-                    )}
-                    control={control}
-                    name="status"
-                    />
-                </FormControl>
-
-                <FormControl className={classes.inputSpace}>
-                    <InputLabel id="GradeLabel" className={classes.label}>
-                        Opinion
-                    </InputLabel>
-                    <Controller render={({field}) => (
-                        <Select
-                            {...field}
-                            onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
-                            className={classes.select}
-                            labelId="GradeLabel"
-                            error={errors.status !== undefined}
-                        >
-                        {
-                            Grades.map((grade: Grade) => (
-                                <MenuItem key={grade.scale} value={grade.scale}>
-                                    {`${grade.scale}. ${grade.gradeName}`}
-                                </MenuItem>
-                            ))
-                        }
-                        </Select>
-                    )}
-                    control={control}
-                    name="grade"
-                    />
-                </FormControl>
-            </div>
-
-            <div className="review">
-                <ReviewButton onClick={() => setOpenReview(true)} variant="contained">
-                    Review Editor
-                </ReviewButton>
-                <ReviewComponent open={openReview} setReviewOpen={setOpenReview}/>
-            </div>
-        </form>
+        </div>
     )
 }
 

@@ -18,12 +18,16 @@ export interface AnimeUserInformationId {
     user: User;
 }
 
-export interface Review {
-    id?: number;
+export interface ReviewForm {
+    reviewTitle: string;
     reviewText: string;
-    nrOfHelpful: number;
-    nrOfPlus: number;
-    nrOfMinus: number;
+}
+
+export interface Review extends ReviewForm {
+    id?: number;
+    nrOfHelpful?: number;
+    nrOfPlus?: number;
+    nrOfMinus?: number;
 }
 
 export interface Grade {

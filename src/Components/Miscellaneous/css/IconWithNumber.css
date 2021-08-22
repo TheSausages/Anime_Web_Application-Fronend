@@ -1,0 +1,10 @@
+.iconWithNumber {
+    max-width: min-content;
+    max-height: min-content;
+
+    display: flex;
+}
+
+.iconWithNumber > * {
+    padding-inline: 5px;
+}

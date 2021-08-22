@@ -10,7 +10,7 @@ import { snackbarError } from '../../data/General/SnackBar';
 import { useCallback } from 'react';
 
 import './css/MainPage.css';
-import '../MiscellaneousCss/Line.css';
+import '../Miscellaneous/css/Line.css';
 
 interface MainPageProps {
 }
