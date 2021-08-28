@@ -4,13 +4,15 @@ import { Route, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { BackendError } from "../../data/General/BackendError";
 import { Credentials } from "../../data/General/Credentials";
+import { RegistrationBody } from "../../data/General/RegistrationBody";
 import { snackbarError, snackBarSuccess } from "../../data/General/SnackBar";
 import { UserService } from "../../Scripts/Services/UserService";
 
 export interface AuthReturn {
-    signin: (cred: Credentials) => void
-    signout: () => void
-    rerenderThisComponent: () => boolean
+    signin: (cred: Credentials) => void;
+    signout: () => void;
+    register: (regis: RegistrationBody) => void;
+    rerenderThisComponent: () => boolean;
 }
 
 const authContext = createContext<AuthReturn>({} as AuthReturn);
@@ -65,6 +67,24 @@ function useProvideAuth(): AuthReturn {
     })
   };
 
+  const register = async (regis: RegistrationBody) => {
+    await UserService.register(regis)
+    .then(data => {  
+      sessionStorage.setItem('accessToken', data.access_token);
+      sessionStorage.setItem('refreshToken', data.refresh_token);
+      sessionStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+      setRerender(!rerender);
+
+      history.goBack();
+      history.goBack();
+      enqueueSnackbar("Registered Successfully",  snackBarSuccess )
+    })
+    .catch((error: BackendError) => {
+      console.log(error)
+      enqueueSnackbar(error.message,  snackbarError )
+    })
+  };
+
   const rerenderThisComponent = () => {
     return rerender
   }
@@ -72,6 +92,7 @@ function useProvideAuth(): AuthReturn {
   return {
     rerenderThisComponent,
     signin,
+    register,
     signout,
   };
 }

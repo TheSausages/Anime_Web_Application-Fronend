@@ -1,6 +1,5 @@
 import { useAuth } from "./Auth";
 import * as yup from "yup"
-import './css/Login.css'
 import { Controller, useForm } from "react-hook-form";
 import { Credentials } from "../../data/General/Credentials";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,6 +7,8 @@ import { makeStyles } from "@material-ui/styles";
 import TextFieldColored from "../Miscellaneous/TextFieldColored";
 import ButtonCollored from "../Miscellaneous/ButtonCollored";
 import { Link } from "react-router-dom";
+
+import './css/Auth.css'
 
 const useStyles = makeStyles((theme) => ({
     inputSpace: {
