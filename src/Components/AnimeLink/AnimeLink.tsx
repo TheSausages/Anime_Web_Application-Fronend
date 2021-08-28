@@ -2,8 +2,11 @@ import { styled } from "@material-ui/styles"
 import { Link } from "react-router-dom"
 import { MediaB } from "../../data/Anime/MediaInformation"
 import { titlesInWantedOrder, getRandomColor } from "../../Scripts/Utilities"
+import ScrollContainer from 'react-indiana-drag-scroll'
 
 import "./css/AnimeLink.css"
+import { useRef } from "react"
+import { useEffect } from "react"
 
 interface AnimeLinkProps {
     elements: MediaB[];
@@ -13,6 +16,8 @@ interface AnimeLinkProps {
 }
 
 export default function AnimeLink(props: AnimeLinkProps) {
+    const container = useRef(null);
+
     const StyledDiv = styled('div')({
         display: 'grid',
         gridTemplateColumns: 'repeat(5, 1fr)',
@@ -44,6 +49,10 @@ export default function AnimeLink(props: AnimeLinkProps) {
         
     }
 
+    useEffect(() => {
+        
+    }, [])
+
     if (props.grid) {
         return (
             <StyledDiv className='animeLink' id={props.id}>
@@ -53,7 +62,9 @@ export default function AnimeLink(props: AnimeLinkProps) {
     } else {
         return (
             <div className='animeLink' id={props.id}>
-                {restOfCode()}
+                <ScrollContainer className="container" vertical={false}>
+                    {restOfCode()}
+                </ScrollContainer>
             </div>
         )
     }

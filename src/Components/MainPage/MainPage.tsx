@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
-import { Link } from "react-router-dom";
 import { Capitalize, getRandomColor, titlesInWantedOrder } from "../../Scripts/Utilities"
 import { AnimeService } from '../../Scripts/Services/AnimeService';
 import { CurrentSeasonInformation } from '../../data/Anime/Smaller/MainPageInterfaces';
@@ -9,6 +8,7 @@ import { useSnackbar } from 'notistack';
 import { snackbarError } from '../../data/General/SnackBar';
 import { useCallback } from 'react';
 import AnimeLink from '../AnimeLink/AnimeLink';
+import ScrollContainer from 'react-indiana-drag-scroll'
 
 import './css/MainPage.css';
 import '../Miscellaneous/css/Line.css';
@@ -56,8 +56,8 @@ export default function MainPage(props: MainPageProps) {
                     <p>{Capitalize(currectSeason.currentSeason.season) + ' ' + currectSeason.currentSeason.year} Season</p>
                 </div>
                 
-                <div className='buttonHover buttonLeft'  onClick={() => scrollElementRight('seasonalAnime')}>{'<'}</div>
-                <div className='buttonHover buttonRight' onClick={() => scrollElementLeft('seasonalAnime')}>{'>'}</div>
+                {/*<div className='buttonHover buttonLeft'  onClick={() => scrollElementRight('seasonalAnime')}>{'<'}</div>
+                <div className='buttonHover buttonRight' onClick={() => scrollElementLeft('seasonalAnime')}>{'>'}</div>*/}
 
                 <AnimeLink elements={currectSeason.media} id="seasonalAnime" />
             </div>
