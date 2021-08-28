@@ -68,7 +68,7 @@ export default function Anime(props: AnimeProps) {
 
                 {
                     /*AnimeUserInformation*/
-                    localStorage.getItem('accessToken') ?
+                    sessionStorage.getItem('accessToken') ?
                         <UserAnimeInformation
                             airedEpisodes={airedEpisodes(Anime)} 
                             animeUserInformation={Anime.animeUserInformation} 

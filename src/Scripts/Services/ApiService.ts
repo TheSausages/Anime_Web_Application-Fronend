@@ -1,4 +1,5 @@
 import { formControlClasses } from "@material-ui/core"
+import { useHistory } from "react-router-dom"
 import { AuthenticationToken } from "../../data/General/AuthenticationToken"
 import { BackendError } from "../../data/General/BackendError"
 
@@ -42,7 +43,7 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
         throw err;
     }
 
-    if (localStorage.getItem('accessToken') && new Date(localStorage.getItem('refreshIfLaterThen')!) <= new Date()) {
+    if (sessionStorage.getItem('accessToken') && new Date(sessionStorage.getItem('refreshIfLaterThen')!) <= new Date()) {
         refreshTokens();
     }
 
@@ -64,9 +65,9 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
 
 function handleError(response: Response) {
     if (response.status === 401) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('refreshIfLaterThen');
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('refreshToken');
+        sessionStorage.removeItem('refreshIfLaterThen');
 
         throw { status: response.status, message: "You remained unactive for too long! Please log in again" };
     }
@@ -84,18 +85,18 @@ function refreshTokens() {
     fetch("http://localhost:8080/auth/refreshToken", {
         method: "POST",
         headers: getHeaders(false),
-        body: JSON.stringify({refreshToken: localStorage.getItem('refreshToken')})
+        body: JSON.stringify({refreshToken: sessionStorage.getItem('refreshToken')})
     })
     .then(data => data.json())
     .then((data: AuthenticationToken) => {
-        localStorage.setItem('accessToken', data.access_token);
-        localStorage.setItem('refreshToken', data.refresh_token);
-        data.expires_in && localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+        sessionStorage.setItem('accessToken', data.access_token);
+        sessionStorage.setItem('refreshToken', data.refresh_token);
+        data.expires_in && sessionStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
     })
     .catch((error: BackendError) => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('refreshIfLaterThen');
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('refreshToken');
+        sessionStorage.removeItem('refreshIfLaterThen');
         console.log("OK")
         throw error;
     })
@@ -110,8 +111,8 @@ function getHeaders(needAuth: boolean) : Headers {
     const headers = new Headers();
     headers.set('Content-Type', 'application/json');
 
-    if (needAuth && localStorage.getItem('accessToken')) {
-        headers.set("Authorization", "Bearer " + localStorage.getItem('accessToken')!);
+    if (needAuth && sessionStorage.getItem('accessToken')) {
+        headers.set("Authorization", "Bearer " + sessionStorage.getItem('accessToken')!);
     }
 
     return headers;

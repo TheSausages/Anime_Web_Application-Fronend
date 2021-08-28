@@ -156,8 +156,6 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             window.removeEventListener('onbeforeunload', (e: Event) => save);
         })
     }, [save])
-
-    console.log(animeUserInformation)
     
     return (
         <div className="userAnimeInformation">

@@ -29,7 +29,7 @@ export default function Navbar(props: NavbarProps) {
                 {MenuItems
                     .filter( 
                         function(elem) {
-                            if (!elem.auth.includes(localStorage.getItem('accessToken') ? 'loggedIn' : 'anonymous')) {
+                            if (!elem.auth.includes(sessionStorage.getItem('accessToken') ? 'loggedIn' : 'anonymous')) {
                                 return false;
                             }
         
@@ -47,7 +47,7 @@ export default function Navbar(props: NavbarProps) {
                     })}
             </ul>      
 
-            {localStorage.getItem('accessToken') ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
+            {sessionStorage.getItem('accessToken') ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
            
         </nav>
     )

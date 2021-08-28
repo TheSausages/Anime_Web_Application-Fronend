@@ -36,9 +36,9 @@ function useProvideAuth(): AuthReturn {
   const signin = async (username: string, password: string) => {
     await UserService.login({username, password} as Credentials)
     .then(data => {  
-      localStorage.setItem('accessToken', data.access_token);
-      localStorage.setItem('refreshToken', data.refresh_token);
-      localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+      sessionStorage.setItem('accessToken', data.access_token);
+      sessionStorage.setItem('refreshToken', data.refresh_token);
+      sessionStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
       setRerender(!rerender);
 
       history.goBack()
@@ -52,9 +52,9 @@ function useProvideAuth(): AuthReturn {
   const signout = async () => {
     await UserService.logout()
     .then(data => {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('refreshIfLaterThen');
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('refreshToken');
+      sessionStorage.removeItem('refreshIfLaterThen');
       setRerender(!rerender);
 
       history.goBack()
@@ -85,7 +85,7 @@ export function PrivateRoute(props: PrivateRouteProps) {
   return (
       <Route
         render={({location}) =>
-          (localStorage.getItem('accessToken') ? (
+          (sessionStorage.getItem('accessToken') ? (
             props.children
           ) : (
             <Redirect push to={{
