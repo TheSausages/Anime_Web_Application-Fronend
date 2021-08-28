@@ -15,6 +15,7 @@ import Forum from './Components/Forum/Forum';
 import RankingSelect from './Components/Ranking/RankingSelect';
 import Rerender from './Scripts/Rerender';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import Register from './Components/AuthenticationAndLogin/Register';
 
 function App() {
   const theme = createTheme({})
@@ -49,6 +50,10 @@ function App() {
 
               <Route path='/login'>
                 <Login />
+              </Route>
+
+              <Route path='/register'>
+                <Register />
               </Route>
 
               <Route path="/logout">

@@ -1,4 +1,4 @@
-.login-wrapper {
+.wrapper {
     inline-size: min(60vw, 400px);
 
     border: 5px outset green;
@@ -10,4 +10,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#registerText {
+    margin-top: 10px;
+    font-size: 0.7rem;
+}
+
+#registerText > * {
+    text-decoration: none;
+    color: rgb(34, 206, 43);
+}
+
+#registerText > *:hover {
+    color: rgb(56, 133, 49);
+}
+
+#registerText > *:active {
+    color: rgb(47, 100, 42);
 }

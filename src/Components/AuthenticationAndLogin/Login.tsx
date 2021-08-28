@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { makeStyles } from "@material-ui/styles";
 import TextFieldColored from "../Miscellaneous/TextFieldColored";
 import ButtonCollored from "../Miscellaneous/ButtonCollored";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     inputSpace: {
@@ -43,40 +44,44 @@ export default function Login(props: LoginProps) {
     })
 
     return(
-      <form onSubmit={handleSubmit(auth.signin)} className="login-wrapper">
-          <div className={classes.inputSpace}>
-              <Controller render={({field}) => (
-                  <TextFieldColored
-                      field={field}
-                      errors={errors.username}
-                      label="Username"
-                  />
-              )}
-              control={control}
-              name="username"
-              />
-          </div>
+        <form onSubmit={handleSubmit(auth.signin)} className="wrapper">
+            <div className={classes.inputSpace}>
+                <Controller render={({field}) => (
+                    <TextFieldColored
+                        field={field}
+                        errors={errors.username}
+                        label="Username"
+                    />
+                )}
+                control={control}
+                name="username"
+                />
+            </div>
 
-          <div className={classes.inputSpace}>
-              <Controller render={({field}) => (
-                  <TextFieldColored
-                      field={field}
-                      errors={errors.password}
-                      label="Password"
-                      type="password"
-                  />
-              )}
-              control={control}
-              name="password"
-              />
-          </div>
+            <div className={classes.inputSpace}>
+                <Controller render={({field}) => (
+                    <TextFieldColored
+                        field={field}
+                        errors={errors.password}
+                        label="Password"
+                        type="password"
+                    />
+                )}
+                control={control}
+                name="password"
+                />
+            </div>
 
-          <div className={classes.submitButton}>
-              <ButtonCollored text="Log In"
-                  type="submit"
-                  disabled={!isValid}
-              />
-          </div>
+            <div className={classes.submitButton}>
+                <ButtonCollored text="Log In"
+                    type="submit"
+                    disabled={!isValid}
+                />
+            </div>
+
+            <div id="registerText">
+                <Link to="/register">No Account? Register!</Link>
+            </div>
       </form>
     )
 }
