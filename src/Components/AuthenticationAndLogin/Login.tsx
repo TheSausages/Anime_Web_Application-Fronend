@@ -1,36 +1,82 @@
 import { useAuth } from "./Auth";
-import { useState } from 'react';
+import * as yup from "yup"
 import './css/Login.css'
+import { Controller, useForm } from "react-hook-form";
+import { Credentials } from "../../data/General/Credentials";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { makeStyles } from "@material-ui/styles";
+import TextFieldColored from "../Miscellaneous/TextFieldColored";
+import ButtonCollored from "../Miscellaneous/ButtonCollored";
+
+const useStyles = makeStyles((theme) => ({
+    inputSpace: {
+        width: '80%',
+        marginBottom: '15px',
+    },
+    input: {
+      width: '100%',
+    },
+    submitButton: {
+        marginTop: '25px',
+    }
+}));
 
 interface LoginProps {
 }
 
+const schema = yup.object().shape({
+    username: yup.string().required("Login cannot be empty"),
+    password: yup.string().required("Password cannot be empty")
+})
+
 export default function Login(props: LoginProps) {
-  const auth = useAuth();
-  const [username, setUserName] = useState<string>();
-  const [password, setPassword] = useState<string>();
+    const auth = useAuth();
+    const classes = useStyles();
 
-  const login = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
+    const { control, handleSubmit, formState: { errors, isValid } } = useForm<Credentials>({
+        resolver: yupResolver(schema),
+        mode: 'all',
+        defaultValues: {
+            username: '',
+            password: ''
+        }   
+    })
 
-    auth.signin(username!, password!);
-  }
+    return(
+      <form onSubmit={handleSubmit(auth.signin)} className="login-wrapper">
+          <div className={classes.inputSpace}>
+              <Controller render={({field}) => (
+                  <TextFieldColored
+                      field={field}
+                      errors={errors.username}
+                      label="Username"
+                  />
+              )}
+              control={control}
+              name="username"
+              />
+          </div>
 
-  return(
-    <div className="login-wrapper">
-      <form onSubmit={login}>
-        <label htmlFor='username'>
-          <p>Username</p>
-          <input type="text" name='username' id='username' autoComplete="on" onChange={e => setUserName(e.target.value)}/>
-        </label>
-        <label htmlFor='password'>
-          <p>Password</p>
-          <input type="password" name='password' id='password' autoComplete="on" onChange={e => setPassword(e.target.value)}/>
-        </label>
-        <div className='LogInButton'>
-          <button type="submit">Log In</button>
-        </div>
+          <div className={classes.inputSpace}>
+              <Controller render={({field}) => (
+                  <TextFieldColored
+                      field={field}
+                      errors={errors.password}
+                      label="Password"
+                      type="password"
+                  />
+              )}
+              control={control}
+              name="password"
+              />
+          </div>
+
+          <div className={classes.submitButton}>
+              <ButtonCollored text="Log In"
+                  type="submit"
+                  disabled={!isValid}
+              />
+          </div>
       </form>
-    </div>
-  )
+    )
 }

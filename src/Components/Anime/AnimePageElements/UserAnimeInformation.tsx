@@ -19,10 +19,11 @@ import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import { DatePicker } from '@material-ui/lab';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
-
-import "../css/UserAnimeInformation.css"
 import { ReviewComponent } from './ReviewComponent';
 import React from 'react';
+
+import "../css/UserAnimeInformation.css"
+import ButtonCollored from '../../Miscellaneous/ButtonCollored';
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -35,9 +36,6 @@ const useStyles = makeStyles((theme) => ({
             borderBottom: `1px solid ${color}`,
             borderRadius: 0,
         },
-    },
-    colorBorder: {
-        borderBottom: `1px solid ${color}`,
     },
     label: {
         color: '#101010',
@@ -73,21 +71,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
 }));
-
-const ReviewButton = styled(Button)({
-    backgroundColor: 'rgb(34, 206, 43)',
-    background: 'rgb(34, 206, 43)',
-    '&:hover': {
-        backgroundColor: 'rgb(56, 133, 49)',
-        borderColor: 'rgb(56, 133, 49)',
-        boxShadow: 'none',
-    },
-    '&:active': {
-        boxShadow: 'none',
-        backgroundColor: 'rgb(47, 100, 42)',
-        borderColor: 'rgb(47, 100, 42)',
-    },
-});
 
 const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
 
@@ -295,9 +278,9 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 </div>
 
                 <div className="review">
-                    <ReviewButton onClick={() => setOpenReview(true)} variant="contained">
-                        Review Editor
-                    </ReviewButton>
+                    <ButtonCollored text="Review Editor"
+                        onClick={() => setOpenReview(true)}
+                    />
                     <Portal container={container.current} />
                 </div>
             </form>

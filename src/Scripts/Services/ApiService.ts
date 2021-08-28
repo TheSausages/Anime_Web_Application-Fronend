@@ -65,9 +65,7 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
 
 function handleError(response: Response) {
     if (response.status === 401) {
-        sessionStorage.removeItem('accessToken');
-        sessionStorage.removeItem('refreshToken');
-        sessionStorage.removeItem('refreshIfLaterThen');
+        sessionStorage.clear();
 
         throw { status: response.status, message: "You remained unactive for too long! Please log in again" };
     }

@@ -8,7 +8,7 @@ import { snackbarError, snackBarSuccess } from "../../data/General/SnackBar";
 import { UserService } from "../../Scripts/Services/UserService";
 
 export interface AuthReturn {
-    signin: (username: string, password: string) => void
+    signin: (cred: Credentials) => void
     signout: () => void
     rerenderThisComponent: () => boolean
 }
@@ -33,8 +33,8 @@ function useProvideAuth(): AuthReturn {
   const { enqueueSnackbar } = useSnackbar();
   const [rerender, setRerender] = useState<boolean>(false);
   
-  const signin = async (username: string, password: string) => {
-    await UserService.login({username, password} as Credentials)
+  const signin = async (cred: Credentials) => {
+    await UserService.login(cred)
     .then(data => {  
       sessionStorage.setItem('accessToken', data.access_token);
       sessionStorage.setItem('refreshToken', data.refresh_token);
