@@ -11,7 +11,7 @@ import { FuzzyDate, getDateFromFuzzy } from "../../../data/Anime/Smaller/FuzzyDa
 import { Controller, useForm } from "react-hook-form";
 import { useCallback } from "react";
 import { UserService } from "../../../Scripts/Services/UserService";
-import { snackbarError, snackbarInfo, snackbarWarning } from "../../../data/General/SnackBar";
+import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import { useSnackbar } from "notistack";
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
@@ -85,7 +85,6 @@ interface UserAnimeInformationProps {
     airedEpisodes: number;
     animeUserInformation?: AnimeUserInformation;
     animeStartDate: FuzzyDate;
-    animeEndDate: FuzzyDate;
 }
 
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
@@ -93,7 +92,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const [openReview, setOpenReview] = useState<boolean>(false)
     const container = React.useRef(null);
     const { enqueueSnackbar } = useSnackbar();
-    const { airedEpisodes, animeUserInformation, animeStartDate, animeEndDate } = props;
+    const { airedEpisodes, animeUserInformation, animeStartDate } = props;
 
     const schema = yup.object().shape({
         status: yup.mixed<AnimeUserStatus>().oneOf(Object.values(AnimeUserStatus).slice(0, 5).map(status => status as AnimeUserStatus)).notRequired(),
@@ -135,10 +134,8 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             .catch((error: BackendError) => {
                 enqueueSnackbar(error.message, snackbarError)
             })
-        } else {
-            enqueueSnackbar("Your anime data has not been updated! It had some errors", snackbarWarning)
         }
-    }, [getValues, isDirty, enqueueSnackbar, animeUserInformation?.id])
+    }, [getValues, isDirty, isValid, enqueueSnackbar, animeUserInformation?.id])
 
     useEffect(() => {
         window.addEventListener('onbeforeunload', (e: Event) => save);

@@ -3,10 +3,9 @@ import { Link } from "react-router-dom"
 import { MediaB } from "../../data/Anime/MediaInformation"
 import { titlesInWantedOrder, getRandomColor } from "../../Scripts/Utilities"
 import ScrollContainer from 'react-indiana-drag-scroll'
+import { useEffect } from "react"
 
 import "./css/AnimeLink.css"
-import { useRef } from "react"
-import { useEffect } from "react"
 
 interface AnimeLinkProps {
     elements: MediaB[];

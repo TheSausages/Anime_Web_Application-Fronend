@@ -1,5 +1,3 @@
-import { formControlClasses } from "@material-ui/core"
-import { useHistory } from "react-router-dom"
 import { AuthenticationToken } from "../../data/General/AuthenticationToken"
 import { BackendError } from "../../data/General/BackendError"
 
@@ -67,7 +65,8 @@ function handleError(response: Response) {
     if (response.status === 401) {
         sessionStorage.clear();
 
-        throw { status: response.status, message: "You remained unactive for too long! Please log in again" };
+        const err = { status: response.status, message: "You remained unactive for too long! Please log in again" };
+        throw err;
     }
 
     return response.json().then((err: {message: string}) => {

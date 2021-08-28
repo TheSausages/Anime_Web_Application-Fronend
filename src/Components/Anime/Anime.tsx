@@ -73,7 +73,6 @@ export default function Anime(props: AnimeProps) {
                             airedEpisodes={airedEpisodes(Anime)} 
                             animeUserInformation={Anime.animeUserInformation} 
                             animeStartDate={Anime.startDate}
-                            animeEndDate={Anime.endDate}
                         />
                     :
                         // TODO zrobić przycisk który powie żeby się zalogować aby dodać dane
