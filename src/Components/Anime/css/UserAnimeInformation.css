@@ -4,26 +4,38 @@
 
 .mainAnimeInformationForm {
     display: grid;
-    grid-template-columns: 50vw 10vw; 
+    grid-template-columns: repeat(4, 1fr); 
     grid-template-rows: 1fr 1fr; 
-    row-gap: 12%;
+    row-gap: 60px;
     grid-template-areas: 
-    "firstLine review"
-    "secondLine review";
+    "isFavourite watchStartDate watchEndDate review"
+    "episodesSeen status opinion review";
     margin-bottom: 3vh; 
     justify-content: center;
 }
 
-.firstLine {
-    grid-area: firstLine;
-    display: flex;
-    justify-content: space-evenly;
+.isFavourite {
+    grid-area: isFavourite;
 }
 
-.secondLine {
-    grid-area: secondLine;
-    display: flex;
-    justify-content: space-evenly;
+.watchStartDate {
+    grid-area: watchStartDate;
+}
+
+.watchEndDate {
+    grid-area: watchEndDate;
+}
+
+.episodesSeen {
+    grid-area: episodesSeen;
+}
+
+.status {
+    grid-area: status;
+}
+
+.opinion {
+    grid-area: opinion;
 }
 
 .review {
@@ -40,11 +52,17 @@
         width: 95%;
     }
 
-    .userAnimeInformation {
-        grid-template-columns: none;
+    .mainAnimeInformationForm {
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
         grid-template-areas: 
-        "firstLine"
-        "secondLine"
-        "review";
+        "isFavourite status"
+        "watchStartDate watchEndDate"
+        "episodesSeen opinion"
+        "review review";
+    }
+
+    .mainAnimeInformationForm > * {
+        width: 40%;
     }
 }

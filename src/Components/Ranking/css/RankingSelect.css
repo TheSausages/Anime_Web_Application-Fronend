@@ -37,3 +37,10 @@
 .line {
     margin-bottom: 30px;
 }
+
+@media screen and (max-width: 960px) {
+    .Rankings {
+        padding: 15%;
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+    }
+}
