@@ -8,6 +8,7 @@ import { BackendError } from '../../data/General/BackendError';
 import { useSnackbar } from 'notistack';
 import { snackbarError } from '../../data/General/SnackBar';
 import { useCallback } from 'react';
+import AnimeLink from '../AnimeLink/AnimeLink';
 
 import './css/MainPage.css';
 import '../Miscellaneous/css/Line.css';
@@ -58,16 +59,7 @@ export default function MainPage(props: MainPageProps) {
                 <div className='buttonHover buttonLeft'  onClick={() => scrollElementRight('seasonalAnime')}>{'<'}</div>
                 <div className='buttonHover buttonRight' onClick={() => scrollElementLeft('seasonalAnime')}>{'>'}</div>
 
-                <div className='seasonalAnime' id='seasonalAnime'>
-                    {currectSeason.media.map((anime, index) => {
-                        return (
-                            <Link key={index} to={'/anime/' + anime.id + '/'} title={titlesInWantedOrder(anime.title)}>
-                                <img src={anime.coverImage.large} style={{ 'border': '1px solid ' + getRandomColor() }} alt='new'></img>
-                                <p title={titlesInWantedOrder(anime.title)}></p>
-                            </Link>
-                        )
-                    })}
-                </div>
+                <AnimeLink elements={currectSeason.media} id="seasonalAnime" />
             </div>
         </div>
         )

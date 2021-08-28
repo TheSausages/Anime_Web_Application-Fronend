@@ -1,8 +1,14 @@
 .NavbarItems {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+
     background: rgb(34, 206, 43);
     background: linear-gradient(90deg, rgb(36, 202, 44) 0%, rgb(57, 168, 47) 100%);
     height: 80px;
-    z-index: 1;
+    z-index: 10;
 
     display: flex;
     justify-content: center;
@@ -68,10 +74,6 @@ fa-phoenix-framework {
 }
 
 @media screen and (max-width: 960px) {
-    .NavbarItems {
-        position: relative;
-    }
-
     .nav-menu {
         display: flex;
         flex-direction: column;
@@ -108,13 +110,6 @@ fa-phoenix-framework {
         background-color: rgb(51, 145, 42);
         border-radius: 0;
     }
-
-    /*.navbar-logo {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(25%, 50%)
-    }*/
 
     .menu-icon {
         display: block;

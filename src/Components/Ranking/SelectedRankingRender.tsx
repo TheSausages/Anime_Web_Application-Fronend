@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
 import InfiniteScroll from "react-infinite-scroll-component";
-import './css/RankingSelect.css'
 import { RankingItem } from './Rankings';
 import { Page } from '../../data/Anime/Page';
-import { titlesInWantedOrder } from '../../Scripts/Utilities';
-import "./css/SelectedRankingRender.css"
 import { useCallback } from 'react';
 import { BackendError } from '../../data/General/BackendError';
 import { useSnackbar } from 'notistack';
 import { snackbarError } from '../../data/General/SnackBar';
+import AnimeLink from '../AnimeLink/AnimeLink';
+
+import './css/RankingSelect.css'
 
 interface RankingItemRenderProps {
     selectedRanking: RankingItem
@@ -83,13 +83,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
                     </div>
                 }
             >
-                {rankingItems.items.media!.map((element, index) => {
-                    return (
-                        <p key={index}>
-                            {titlesInWantedOrder(element.title)}
-                        </p>
-                    )
-                })}
+                <AnimeLink grid={true} elements={rankingItems.items.media!} showIndex={true}/>
             </InfiniteScroll>
         </div>
     )

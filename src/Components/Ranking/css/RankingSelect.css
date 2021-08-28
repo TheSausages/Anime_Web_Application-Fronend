@@ -5,10 +5,9 @@
 }
 
 .Rankings {
-    display: flex;
+    display: grid;
     height: 80px;
-    flex-direction: row;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -33,4 +32,8 @@
 .Rankings > div:active {
     background-color: rgb(47, 100, 42);
     transition: all 0.2s ease-out;
+}
+
+.line {
+    margin-bottom: 30px;
 }
