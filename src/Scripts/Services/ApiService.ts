@@ -8,6 +8,10 @@ export enum HttpMethods {
     DELETE = "DELETE"
 }
 
+// pc only: localhost:8080
+// mobile and pc: 192.168.0.245:8080
+const backendUrl = "http://192.168.0.245:8080";
+
 export async function performRequestWithType<T>(method: HttpMethods, url: String, needAuth: boolean, body?: any): Promise<T> {
     return performRequest(method, url, needAuth, body)
         .then(response => {
@@ -55,7 +59,6 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
         body
     }
 
-    const backendUrl = "http://localhost:8080";
     const fullUrl = backendUrl + url;
 
     return fetch(new Request(fullUrl, options))
@@ -79,7 +82,7 @@ function handleError(response: Response) {
 }
 
 function refreshTokens() {
-    fetch("http://localhost:8080/auth/refreshToken", {
+    fetch(`${backendUrl}/auth/refreshToken`, {
         method: "POST",
         headers: getHeaders(false),
         body: JSON.stringify({refreshToken: sessionStorage.getItem('refreshToken')})
