@@ -2,7 +2,7 @@ import parse from 'html-react-parser';
 import { useEffect, useState } from "react";
 import { MediaB } from "../../data/Anime/MediaInformation";
 import { AnimeService } from "../../Scripts/Services/AnimeService";
-import { getRandomColor, titlesInWantedOrder } from "../../Scripts/Utilities";
+import { checkIfLoggedIn, getRandomColor, titlesInWantedOrder } from "../../Scripts/Utilities";
 import Loading from '../Loading/Loading';
 import { AnimeBasicInformation } from './AnimePageElements/BasicAnimeInformation';
 import { DescriptionWithSocialButtons as Description } from './AnimePageElements/Description';
@@ -68,7 +68,7 @@ export default function Anime(props: AnimeProps) {
 
                 {
                     /*AnimeUserInformation*/
-                    sessionStorage.getItem('accessToken') ?
+                    checkIfLoggedIn() ?
                         <UserAnimeInformation
                             airedEpisodes={airedEpisodes(Anime)} 
                             animeUserInformation={Anime.animeUserInformation} 

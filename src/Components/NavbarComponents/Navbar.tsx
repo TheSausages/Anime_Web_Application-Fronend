@@ -5,6 +5,7 @@ import Button from './Button';
 import { Link } from "react-router-dom";
 import { useAuth } from '../AuthenticationAndLogin/Auth';
 import { useEffect } from 'react';
+import { checkIfLoggedIn } from '../../Scripts/Utilities';
 
 interface NavbarProps {
 }
@@ -29,7 +30,7 @@ export default function Navbar(props: NavbarProps) {
                 {MenuItems
                     .filter( 
                         function(elem) {
-                            if (!elem.auth.includes(sessionStorage.getItem('accessToken') ? 'loggedIn' : 'anonymous')) {
+                            if (!elem.auth.includes(checkIfLoggedIn() ? 'loggedIn' : 'anonymous')) {
                                 return false;
                             }
         
@@ -46,8 +47,7 @@ export default function Navbar(props: NavbarProps) {
                         )
                     })}
             </ul>      
-
-            {sessionStorage.getItem('accessToken') ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
+            {checkIfLoggedIn() ? <Button to='/logout' mobileDis={true}>Sign Out</Button> : <Button to='/login' mobileDis={true}>Sign In</Button>}
            
         </nav>
     )

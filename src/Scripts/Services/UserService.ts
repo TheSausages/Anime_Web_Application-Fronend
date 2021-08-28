@@ -11,7 +11,7 @@ export class UserService {
     } 
 
     static logout(): Promise<any> {
-        return performRequestWithNoResponse(HttpMethods.POST, "/auth/logout", true, {refreshToken: sessionStorage.getItem('refreshToken')})
+        return performRequestWithNoResponse(HttpMethods.POST, "/auth/logout", true, {refreshToken: localStorage.getItem('refreshToken')})
     }
     
     static register(regis: RegistrationBody): Promise<AuthenticationToken> {

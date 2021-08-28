@@ -7,6 +7,7 @@ import { Credentials } from "../../data/General/Credentials";
 import { RegistrationBody } from "../../data/General/RegistrationBody";
 import { snackbarError, snackBarSuccess } from "../../data/General/SnackBar";
 import { UserService } from "../../Scripts/Services/UserService";
+import { checkIfLoggedIn } from "../../Scripts/Utilities";
 
 export interface AuthReturn {
     signin: (cred: Credentials) => void;
@@ -38,9 +39,9 @@ function useProvideAuth(): AuthReturn {
   const signin = async (cred: Credentials) => {
     await UserService.login(cred)
     .then(data => {  
-      sessionStorage.setItem('accessToken', data.access_token);
-      sessionStorage.setItem('refreshToken', data.refresh_token);
-      sessionStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+      localStorage.setItem('accessToken', data.access_token);
+      localStorage.setItem('refreshToken', data.refresh_token);
+      localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
       setRerender(!rerender);
 
       history.goBack()
@@ -54,9 +55,7 @@ function useProvideAuth(): AuthReturn {
   const signout = async () => {
     await UserService.logout()
     .then(data => {
-      sessionStorage.removeItem('accessToken');
-      sessionStorage.removeItem('refreshToken');
-      sessionStorage.removeItem('refreshIfLaterThen');
+      localStorage.clear();
       setRerender(!rerender);
 
       history.goBack()
@@ -70,9 +69,9 @@ function useProvideAuth(): AuthReturn {
   const register = async (regis: RegistrationBody) => {
     await UserService.register(regis)
     .then(data => {  
-      sessionStorage.setItem('accessToken', data.access_token);
-      sessionStorage.setItem('refreshToken', data.refresh_token);
-      sessionStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+      localStorage.setItem('accessToken', data.access_token);
+      localStorage.setItem('refreshToken', data.refresh_token);
+      localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
       setRerender(!rerender);
 
       history.goBack();
@@ -80,7 +79,6 @@ function useProvideAuth(): AuthReturn {
       enqueueSnackbar("Registered Successfully",  snackBarSuccess )
     })
     .catch((error: BackendError) => {
-      console.log(error)
       enqueueSnackbar(error.message,  snackbarError )
     })
   };
@@ -106,7 +104,7 @@ export function PrivateRoute(props: PrivateRouteProps) {
   return (
       <Route
         render={({location}) =>
-          (sessionStorage.getItem('accessToken') ? (
+          (checkIfLoggedIn() ? (
             props.children
           ) : (
             <Redirect push to={{

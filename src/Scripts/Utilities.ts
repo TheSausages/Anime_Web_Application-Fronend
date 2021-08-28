@@ -1,6 +1,11 @@
 import { FuzzyDate } from "../data/Anime/Smaller/FuzzyDate";
 import { Titles } from "../data/Anime/Smaller/Titles";
 
+export function checkIfLoggedIn(): boolean {
+    const accessToken = localStorage.getItem('accessToken')
+    return (accessToken && accessToken !== 'undefined') ? true : false;
+}
+
 export function findFirstNotUndefined(elements: any[]) {
     var title: string = elements[elements.findIndex(val => val)];
 
