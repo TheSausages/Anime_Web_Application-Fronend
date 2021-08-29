@@ -34,7 +34,7 @@
     transition: all 0.2s ease-out;
 }
 
-.line {
+#MainRankingContainer .line {
     margin-bottom: 30px;
 }
 

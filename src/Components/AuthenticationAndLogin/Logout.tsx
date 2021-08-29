@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { checkIfLoggedIn } from "../../Scripts/Utilities";
 import { useAuth } from "./Auth";
 
@@ -16,5 +16,6 @@ export default function Logout(props: LogoutProps) {
         }
     }, [auth])
 
-    return <Link to="/" />;
+    auth.rerenderThisComponent();
+    return <Redirect to="/" />;
 }
