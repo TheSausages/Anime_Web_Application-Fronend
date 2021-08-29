@@ -2,16 +2,15 @@ import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Portal, 
 import makeStyles from '@material-ui/styles/makeStyles';
 import { ReactNode, useState } from "react";
 import { useEffect } from "react";
-import { AnimeUserInformation, Grade, Grades } from "../../../data/Anime/Smaller/AnimeUserInformation";
-import { AnimeUserStatus } from "../../../data/Anime/Smaller/Enums";
-import { getRandomColor, valueOrNotKnown } from "../../../Scripts/Utilities";
+import { AnimeUserInformation, AnimeUserStatus, AnimeUserStatusElements, Grade, Grades } from "../../../data/Anime/Smaller/AnimeUserInformation";
+import { getRandomColor } from "../../../Scripts/Utilities";
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FuzzyDate, getDateFromFuzzy } from "../../../data/Anime/Smaller/FuzzyDate";
 import { Controller, useForm } from "react-hook-form";
 import { useCallback } from "react";
 import { UserService } from "../../../Scripts/Services/UserService";
-import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
+import { snackbarError, snackbarInfo, snackbarWarning } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import { useSnackbar } from "notistack";
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
@@ -67,9 +66,6 @@ const useStyles = makeStyles((theme) => ({
         '&:hover:not(.Mui-disabled):before': {
             borderColor: color,
         },
-        '& .MuiSelect-select.MuiSelect-select': {
-            paddingRight: 0,
-        },
         '& .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon': {
             color: color,
         }
@@ -95,7 +91,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const { airedEpisodes, animeUserInformation, animeStartDate } = props;
 
     const schema = yup.object().shape({
-        status: yup.mixed<AnimeUserStatus>().oneOf(Object.values(AnimeUserStatus).slice(0, 5).map(status => status as AnimeUserStatus)).notRequired(),
+        status: yup.mixed<AnimeUserStatus>().notRequired(),
         watchStartDate: yup.date().nullable(true).min(getDateFromFuzzy(animeStartDate), "Too early!").notRequired(),
         watchEndDate: yup.date().nullable(true).min(yup.ref('watchStartDate'), "Too early!").notRequired(),
         nrOfEpisodesSeen: yup.number().integer().min(0, "Must be positive").notRequired(),
@@ -114,9 +110,10 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
 
     const { control, formState: { errors, isDirty, isValid }, setValue, getValues } = useForm<AnimeUserInformation>({
         resolver: yupResolver(schema),
-        mode: 'all',
+        reValidateMode: 'onChange',
+        mode: 'onChange',
         defaultValues: {
-            status: animeUserInformation?.status as AnimeUserStatus ?? AnimeUserStatus[0],
+            status: animeUserInformation?.status as AnimeUserStatus ?? AnimeUserStatusElements[0],
             watchStartDate: animeUserInformation?.watchStartDate ?? undefined,
             watchEndDate: animeUserInformation?.watchEndDate ?? undefined,
             nrOfEpisodesSeen: animeUserInformation?.nrOfEpisodesSeen ?? 0,
@@ -128,12 +125,18 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     })
 
     const save = useCallback(() => {
-        if (isDirty && isValid) {
-            UserService.updateAnimeUserInformationData({...getValues(), id: animeUserInformation?.id!})
-            .then(() => enqueueSnackbar("Your anime data has been updated!", snackbarInfo))
-            .catch((error: BackendError) => {
-                enqueueSnackbar(error.message, snackbarError)
-            })
+        console.log(isDirty)
+        console.log(errors)
+        if (isDirty) {
+            if (errors) {
+                UserService.updateAnimeUserInformationData({...getValues(), id: animeUserInformation?.id!})
+                .then(() => enqueueSnackbar("Your anime data has been updated!", snackbarInfo))
+                .catch((error: BackendError) => {
+                    enqueueSnackbar(error.message, snackbarError)
+                })
+            } else {
+                enqueueSnackbar("YOu information was not updated, as it container errors", snackbarWarning)
+            }
         }
     }, [getValues, isDirty, isValid, enqueueSnackbar, animeUserInformation?.id])
 
@@ -239,9 +242,9 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                             error={errors.status !== undefined}
                         >
                         {
-                            Object.values(AnimeUserStatus).slice(0, 5).map(status => (
+                            AnimeUserStatusElements.map(status => (
                                 <MenuItem key={status} value={status}>
-                                    {valueOrNotKnown(status)}
+                                    {status}
                                 </MenuItem>
                             ))
                         }

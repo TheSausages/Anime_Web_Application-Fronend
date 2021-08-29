@@ -1,5 +1,7 @@
-import { AnimeUserStatus } from "./Enums";
 import { User } from "./User";
+
+export const AnimeUserStatusElements = ["No Status", "Watching", "Completed", "Dropped", "Plan to Watch"]
+export type AnimeUserStatus = typeof AnimeUserStatusElements[number]
 
 export interface AnimeUserInformation {
     id: AnimeUserInformationId;

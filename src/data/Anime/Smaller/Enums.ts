@@ -64,11 +64,3 @@ export enum Relation {
     COMPILATION,
     CONTAINS
 }
-
-export enum AnimeUserStatus {
-    NO_STATUS,
-    WATCHING,
-    COMPLETED,
-    DROPPED,
-    PLAN_TO_WATCH
-}

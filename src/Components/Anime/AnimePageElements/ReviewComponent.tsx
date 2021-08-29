@@ -9,6 +9,7 @@ import { IconWithNumber } from "../../Miscellaneous/IconWithNumber";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -114,8 +115,8 @@ export function ReviewComponent(props: ReviewProps) {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={_ => props.setReviewOpen(false)}>Close</Button>
-                        <Button type="submit" onClick={_ => props.setReviewOpen(false)}>Write</Button>
+                        <ButtonCollored onClick={() => props.setReviewOpen(false)} text="Close" />
+                        <ButtonCollored type="submit" onClick={() => props.setReviewOpen(false)} text="Submit" />
                     </DialogActions>    
                 </form>
             </Dialog>
