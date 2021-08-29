@@ -92,8 +92,8 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
 
     const schema = yup.object().shape({
         status: yup.mixed<AnimeUserStatus>().notRequired(),
-        watchStartDate: yup.date().nullable(true).min(getDateFromFuzzy(animeStartDate), "Too early!").notRequired(),
-        watchEndDate: yup.date().nullable(true).min(yup.ref('watchStartDate'), "Too early!").notRequired(),
+        watchStartDate: yup.date().nullable(true).min(getDateFromFuzzy(animeStartDate), "Too early!").max(new Date(), "Too late!").notRequired(),
+        watchEndDate: yup.date().nullable(true).min(yup.ref('watchStartDate'), "Too early!").max(new Date(), "Too late!").notRequired(),
         nrOfEpisodesSeen: yup.number().integer().min(0, "Must be positive").notRequired(),
         isFavourite: yup.boolean().notRequired(),
         didReview: yup.boolean().notRequired(),
@@ -125,17 +125,15 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     })
 
     const save = useCallback(() => {
-        console.log(isDirty)
-        console.log(errors)
         if (isDirty) {
-            if (errors) {
+            if (Object.keys(errors).length === 0) {
                 UserService.updateAnimeUserInformationData({...getValues(), id: animeUserInformation?.id!})
                 .then(() => enqueueSnackbar("Your anime data has been updated!", snackbarInfo))
                 .catch((error: BackendError) => {
                     enqueueSnackbar(error.message, snackbarError)
                 })
             } else {
-                enqueueSnackbar("YOu information was not updated, as it container errors", snackbarWarning)
+                enqueueSnackbar("Your information was not updated, as it contained errors", snackbarWarning)
             }
         }
     }, [getValues, isDirty, isValid, enqueueSnackbar, animeUserInformation?.id])
