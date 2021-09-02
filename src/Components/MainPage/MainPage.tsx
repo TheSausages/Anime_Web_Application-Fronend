@@ -18,7 +18,7 @@ interface MainPageProps {
 export default function MainPage(props: MainPageProps) {
     const [currectSeason, setCurrectSeason] = useState<CurrentSeasonInformation>();
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState();
+    const [error, setError] = useState<string>();
     const { enqueueSnackbar } = useSnackbar();
 
     const getCurrentAnime = useCallback(async () => {
@@ -27,6 +27,7 @@ export default function MainPage(props: MainPageProps) {
             setCurrectSeason(result)
         })
         .catch((error: BackendError) => {
+            setError(error.message)
             enqueueSnackbar(error.message,  snackbarError )
         })
     }, [enqueueSnackbar])

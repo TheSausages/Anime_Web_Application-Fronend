@@ -30,7 +30,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
 
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState();
+    const [error, setError] = useState<string>();
 
     const getMoreRankingData = useCallback(async (rankingItems) => {
         let currectRankingItems = { ...rankingItems }
@@ -45,6 +45,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
             setRankingItems(currectRankingItems)
         })
         .catch((error: BackendError) => {
+            setError(error.message)
             enqueueSnackbar(error.message,  snackbarError )
         })
     }, [selectedRanking, enqueueSnackbar])

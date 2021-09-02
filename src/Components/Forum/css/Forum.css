@@ -1,0 +1,18 @@
+#MainForumContainer {
+    width: 80%;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 3vh;
+
+    display: flex;
+    gap: 3vw;
+}
+
+#ForumMenu {
+    width: 30vw;
+    align-items: flex-start;
+}
+
+#ForumPage {
+    width: 100%;
+}

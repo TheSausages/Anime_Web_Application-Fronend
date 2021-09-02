@@ -20,7 +20,7 @@ export const MenuItems: MenuItemStruct[] = [
     },
     {
         title: 'Forum',
-        url: '/forum',
+        url: '/forum/newest',
         cName: 'nav-links',
         auth: 'loggedIn anonymous'
     },

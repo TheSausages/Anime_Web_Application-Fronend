@@ -23,7 +23,7 @@ export default function Anime(props: AnimeProps) {
     const [Anime, setAnime] = useState<MediaB>({} as MediaB);
     const [loading, setLoading] = useState<boolean>(true);
     const { enqueueSnackbar } = useSnackbar();
-    const [error, setError] = useState();
+    const [error, setError] = useState<string>();
 
     const getAnime = useCallback(async (id: number) => {
         await AnimeService.getAnimeById(id)
@@ -31,7 +31,8 @@ export default function Anime(props: AnimeProps) {
             setAnime(response);
         })
         .catch((error: BackendError) => {
-            enqueueSnackbar(error.message,  snackbarError )
+            setError(error.message)
+            enqueueSnackbar(error.message,  snackbarError)
         })
     }, [enqueueSnackbar])
 
