@@ -38,7 +38,7 @@ export default function Forum(props: ForumProps) {
 
                 setLoading(false)
             } catch (error) {
-                setLoading(false)
+                setLoading(true)
             }
     }, [getCategories]);
 

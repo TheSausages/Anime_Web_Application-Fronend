@@ -1,6 +1,6 @@
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { SimpleThread, SimpleThreadPage } from "../../data/Forum/Thread";
+import { SimpleThreadPage } from "../../data/Forum/Thread";
 import { BackendError } from "../../data/General/BackendError";
 import { snackbarError } from "../../data/General/SnackBar";
 import { ForumService } from "../../Scripts/Services/ForumService";
@@ -11,25 +11,25 @@ interface NewestThreadsProps {
 }
 
 export default function NewestThreads(props: NewestThreadsProps) {
-    const [threads, setThreads] = useState<SimpleThreadPage>({content: [] as SimpleThread[], pageNumber: -1} as SimpleThreadPage)
+    const [threads, setThreads] = useState<SimpleThreadPage>()
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string>();
     const { enqueueSnackbar } = useSnackbar();
 
-    const getNewestThreads = useCallback(async () => {
-        await ForumService.getNewestThreads(threads.pageNumber + 1)
-        .then((response: SimpleThreadPage) => setThreads({...response, content: threads.content.concat(response.content)}))
+    const getNewestThreads = useCallback(async (threads: SimpleThreadPage) => {
+        await ForumService.getNewestThreads(threads?.pageNumber ?? -1 + 1)
+        .then((response: SimpleThreadPage) => setThreads({...response, content: [ ...threads?.content ?? [], ...response.content ]}))
         .catch((error: BackendError) => {
             setError(error.message)
             enqueueSnackbar(error.message, snackbarError)
         })
-    }, [enqueueSnackbar, threads])
+    }, [enqueueSnackbar])
 
     useEffect(() => {
         try {
             setLoading(true);
 
-            getNewestThreads();  
+            getNewestThreads({} as SimpleThreadPage);  
 
             setLoading(false)
         } catch (error) {
@@ -38,12 +38,15 @@ export default function NewestThreads(props: NewestThreadsProps) {
         }
     }, [getNewestThreads]);
 
-    if (loading || threads.content.length < 1) {
+    if (loading || threads === undefined) {
         return <Loading error={error}/>
     }
 
+    if (threads!.content.length < 1) {
+        return <Loading error={error}/>
+    }
 
     return (
-        <Threads threads={threads} />
+        <Threads threads={threads!} />
     )
 }

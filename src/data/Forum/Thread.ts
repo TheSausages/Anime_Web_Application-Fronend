@@ -9,6 +9,8 @@ export interface SimpleThread {
     nrOfPosts: number;
     status: ThreadStatus;
     category: ForumCategory;
+    creation: string;
+    modification: string;
     tags: Tag[];
 }
 

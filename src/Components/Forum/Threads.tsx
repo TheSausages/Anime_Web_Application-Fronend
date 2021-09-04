@@ -6,13 +6,16 @@ interface ThreadsProps {
 }
 
 export default function Threads(props: ThreadsProps) {
+    const { threads } = props;
+
     return (
         <div>
             <Link to="/forum/search">Link to second</Link>
             {
-                props.threads.content.map((value: SimpleThread) => (
+                threads.content.map((value: SimpleThread) => (
                     <div key={value.threadId}>
                         {value.title}
+                        {new Date(threads.content[0].creation).toLocaleString()}
                     </div>
                 ))
             }
