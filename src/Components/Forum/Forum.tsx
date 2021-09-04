@@ -41,7 +41,7 @@ export default function Forum(props: ForumProps) {
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
-                setError(error)
+                setError("An unknown Error occured!")
             }
     }, []);
 

@@ -47,7 +47,7 @@ export default function Anime(props: AnimeProps) {
             setLoading(false)
         } catch (error) {
             setLoading(false)
-            setError(error)
+            setError("An unknown Error occured!")
         }
     }, [getAnime, props.id]);
 

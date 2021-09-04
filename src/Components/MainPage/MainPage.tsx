@@ -41,7 +41,7 @@ export default function MainPage(props: MainPageProps) {
             setLoading(false);
         } catch (error) {
             setLoading(false);
-            setError(error)
+            setError("An unknown Error occured!")
         }
     }, [getCurrentAnime]);
 

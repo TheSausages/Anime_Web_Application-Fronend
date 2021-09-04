@@ -62,7 +62,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
             return () => clearTimeout(timer)
         } catch (error) {
             setLoading(false)
-            setError(error)
+            setError("An unknown Error occured!")
         }
     }, [getMoreRankingData])
 

@@ -3,6 +3,7 @@ import Loading from '../Loading/Loading'
 import { RankingItem, Rankings } from './Rankings';
 import RankingItemRender from './SelectedRankingRender';
 import './css/RankingSelect.css'
+import { BackendError } from '../../data/General/BackendError';
 
 interface RankingSelectProps {
 }
@@ -10,7 +11,7 @@ interface RankingSelectProps {
 export default function RankingSelect(props: RankingSelectProps) {
     const [selectedRanking, setSelectedRanking] = useState<RankingItem>(Rankings[0]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState();
+    const [error, setError] = useState<string>();
 
     useEffect(() => {
             try {
@@ -19,7 +20,7 @@ export default function RankingSelect(props: RankingSelectProps) {
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
-                setError(error)
+                setError("An unknown Error occured!")
             }
     }, [selectedRanking]);
 
