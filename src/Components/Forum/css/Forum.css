@@ -16,3 +16,18 @@
 #ForumPage {
     width: 100%;
 }
+
+@media screen and (max-width: 960px) {
+    #MainForumContainer {
+        flex-direction: column;
+    }
+
+    #ForumMenu {
+        width: 100%;
+        align-items: center;
+    }
+    
+    #ForumPage {
+        width: 100%;
+    }
+}
