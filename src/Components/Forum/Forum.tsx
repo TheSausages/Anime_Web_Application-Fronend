@@ -5,7 +5,6 @@ import { ForumCategory } from '../../data/Forum/ForumCategory';
 import { BackendError } from '../../data/General/BackendError';
 import { snackbarError } from '../../data/General/SnackBar';
 import { ForumService } from '../../Scripts/Services/ForumService';
-import Loading from '../Loading/Loading'
 import ForumMenu from './ForumMenu';
 import ForumSwitch from './ForumSwitch';
 import { AdditionalForumCategories } from '../../data/Forum/AdditionalForumCategories';
@@ -19,7 +18,6 @@ interface ForumProps {
 export default function Forum(props: ForumProps) {
     const [categories, setCategories] = useState<ForumCategory[]>();
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>();
     const { enqueueSnackbar } = useSnackbar();
 
     const getCategories = useCallback(async () => {
@@ -28,7 +26,6 @@ export default function Forum(props: ForumProps) {
             setCategories(AdditionalForumCategories.concat(response))
         })
         .catch((error: BackendError) => {
-            setError(error.message)
             enqueueSnackbar(error.message, snackbarError)
         })
     }, [enqueueSnackbar])
@@ -42,9 +39,8 @@ export default function Forum(props: ForumProps) {
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
-                setError("An unknown Error occured!")
             }
-    }, []);
+    }, [getCategories]);
 
     if (loading || !categories) {
         return null;

@@ -23,7 +23,7 @@ export default function NewestThreads(props: NewestThreadsProps) {
             setError(error.message)
             enqueueSnackbar(error.message, snackbarError)
         })
-    }, [enqueueSnackbar])
+    }, [enqueueSnackbar, threads])
 
     useEffect(() => {
         try {
@@ -36,7 +36,7 @@ export default function NewestThreads(props: NewestThreadsProps) {
             setLoading(true)
             setError("An unknown Error occured!")
         }
-    }, []);
+    }, [getNewestThreads]);
 
     if (loading || threads.content.length < 1) {
         return <Loading error={error}/>

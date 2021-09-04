@@ -1,7 +1,7 @@
 import { Checkbox, Divider, FormControlLabel, FormGroup, List, ListItem, ListItemText, ListSubheader } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AdditionalForumCategories } from "../../data/Forum/AdditionalForumCategories";
 import { ForumCategory } from "../../data/Forum/ForumCategory";
 

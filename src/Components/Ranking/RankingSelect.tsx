@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
 import { RankingItem, Rankings } from './Rankings';
 import RankingItemRender from './SelectedRankingRender';
+
 import './css/RankingSelect.css'
-import { BackendError } from '../../data/General/BackendError';
 
 interface RankingSelectProps {
 }

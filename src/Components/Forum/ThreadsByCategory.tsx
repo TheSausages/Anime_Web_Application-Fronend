@@ -27,7 +27,7 @@ export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
             setError(error.message)
             enqueueSnackbar(error.message, snackbarError)
         })
-    }, [enqueueSnackbar, props.category])
+    }, [enqueueSnackbar, props.category, threads])
 
     useEffect(() => {
         try {
@@ -40,7 +40,7 @@ export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
             setLoading(false)
             setError("An unknown Error occured!")
         }
-    }, []);
+    }, [getNewestThreads]);
 
     if (loading || threads.content.length < 1) {
         return <Loading error={error}/>

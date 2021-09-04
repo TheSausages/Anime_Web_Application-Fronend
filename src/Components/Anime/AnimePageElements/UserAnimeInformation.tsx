@@ -108,7 +108,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
         grade: yup.number().integer().nullable(true).notRequired()
     })
 
-    const { control, formState: { errors, isDirty, isValid }, setValue, getValues } = useForm<AnimeUserInformation>({
+    const { control, formState: { errors, isDirty }, setValue, getValues } = useForm<AnimeUserInformation>({
         resolver: yupResolver(schema),
         reValidateMode: 'onChange',
         mode: 'onChange',
@@ -136,7 +136,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 enqueueSnackbar("Your information was not updated, as it contained errors", snackbarWarning)
             }
         }
-    }, [getValues, isDirty, isValid, enqueueSnackbar, animeUserInformation?.id])
+    }, [getValues, errors, isDirty, enqueueSnackbar, animeUserInformation?.id])
 
     useEffect(() => {
         window.addEventListener('onbeforeunload', (e: Event) => save);
