@@ -1,6 +1,8 @@
 import { Checkbox, Divider, FormControlLabel, FormGroup, List, ListItem, ListItemText, ListSubheader } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { AdditionalForumCategories } from "../../data/Forum/AdditionalForumCategories";
 import { ForumCategory } from "../../data/Forum/ForumCategory";
 
 import "./css/ForumMenu.css"
@@ -40,13 +42,13 @@ export default function ForumMenu(props: ForumMenuprops) {
                     General
                 </ListSubheader>
 
-                <ListItem disablePadding sx={listItem} >
-                    <ListItemText primary="Newest Threads" secondary={checked ? "See the newest threads" : null} />
-                </ListItem>
-
-                <ListItem disablePadding sx={listItem} >
-                    <ListItemText primary="Search" secondary={checked ? "Search threads from the forum" : null} />
-                </ListItem>
+                {props.categories.slice(0, AdditionalForumCategories.length).map((category: ForumCategory) => (
+                    <ListItem key={category.categoryId} sx={listItem} >
+                        <Link to={`/forum/${category.categoryName}`}>
+                            <ListItemText primary={category.categoryName} secondary={checked ? category.categoryDescription : null} />
+                        </Link>
+                    </ListItem>
+                ))}
 
                 <Divider />
 
@@ -54,9 +56,11 @@ export default function ForumMenu(props: ForumMenuprops) {
                     Categories
                 </ListSubheader>
 
-                {props.categories.map((category: ForumCategory) => (
+                {props.categories.slice(AdditionalForumCategories.length).map((category: ForumCategory) => (
                     <ListItem key={category.categoryId} sx={listItem} >
-                        <ListItemText primary={category.categoryName} secondary={checked ? category.categoryDescription : null} />
+                        <Link to={`/forum/${category.categoryName}`}>
+                            <ListItemText primary={category.categoryName} secondary={checked ? category.categoryDescription : null} />
+                        </Link>
                     </ListItem>
                 ))}
             </List>

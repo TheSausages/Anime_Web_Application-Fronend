@@ -1,18 +1,17 @@
 import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 import { useEffect, useState } from 'react';
-import { Route, Router, Switch, useRouteMatch } from 'react-router-dom';
 import { ForumCategory } from '../../data/Forum/ForumCategory';
 import { BackendError } from '../../data/General/BackendError';
 import { snackbarError } from '../../data/General/SnackBar';
 import { ForumService } from '../../Scripts/Services/ForumService';
 import Loading from '../Loading/Loading'
-
-import "./css/Forum.css"
 import ForumMenu from './ForumMenu';
 import ForumSwitch from './ForumSwitch';
-import Threads from './Threads';
-import ThreadSearch from './ThreadSearch';
+import { AdditionalForumCategories } from '../../data/Forum/AdditionalForumCategories';
+
+
+import "./css/Forum.css"
 
 interface ForumProps {
 }
@@ -25,7 +24,9 @@ export default function Forum(props: ForumProps) {
 
     const getCategories = useCallback(async () => {
         await ForumService.getForumCategories()
-        .then((response: ForumCategory[]) => setCategories(response))
+        .then((response: ForumCategory[]) => {
+            setCategories(AdditionalForumCategories.concat(response))
+        })
         .catch((error: BackendError) => {
             setError(error.message)
             enqueueSnackbar(error.message, snackbarError)
@@ -46,7 +47,7 @@ export default function Forum(props: ForumProps) {
     }, []);
 
     if (loading || !categories) {
-        return <Loading error={error}/>
+        return null;
     }
 
     return (
@@ -56,7 +57,7 @@ export default function Forum(props: ForumProps) {
             </div>
 
             <div id="ForumPage">
-                <ForumSwitch />
+                <ForumSwitch categories={categories} />
             </div>
         </div>
     )
