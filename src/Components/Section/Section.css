@@ -35,8 +35,8 @@
     transform: translate(49.5%);
     z-index: 2;
 
-    border-top-right-radius: 5%;
-    border-bottom-right-radius: 5%
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .SectionItemInfo.withMoreWidth {
@@ -102,8 +102,8 @@
 
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border-top-right-radius: 10%;
-    border-bottom-right-radius: 10%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .noPointer {
@@ -176,7 +176,7 @@
     
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-        border-top-right-radius: 10%;
-        border-bottom-right-radius: 10%;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
     }
 }

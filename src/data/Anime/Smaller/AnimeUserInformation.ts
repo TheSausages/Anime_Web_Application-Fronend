@@ -1,5 +1,4 @@
-import { User } from "./User";
-
+import { SimpleUser } from "../../General/User/SimpleUser";
 export const AnimeUserStatusElements = ["No Status", "Watching", "Completed", "Dropped", "Plan to Watch"]
 export type AnimeUserStatus = typeof AnimeUserStatusElements[number]
 
@@ -17,7 +16,7 @@ export interface AnimeUserInformation {
 
 export interface AnimeUserInformationId {
     animeId: number;
-    user: User;
+    user: SimpleUser;
 }
 
 export interface ReviewForm {

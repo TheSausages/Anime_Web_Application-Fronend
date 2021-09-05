@@ -19,6 +19,7 @@
 
 @media screen and (max-width: 960px) {
     #MainForumContainer {
+        width: 95%;
         flex-direction: column;
     }
 

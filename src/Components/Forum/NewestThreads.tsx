@@ -1,11 +1,11 @@
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { SimpleThreadPage } from "../../data/Forum/Thread";
+import { SimpleThread, SimpleThreadPage } from "../../data/Forum/Thread";
 import { BackendError } from "../../data/General/BackendError";
 import { snackbarError } from "../../data/General/SnackBar";
 import { ForumService } from "../../Scripts/Services/ForumService";
 import Loading from "../Loading/Loading";
-import Threads from "./Threads";
+import SimpleThreadComponent from "./SimpleThreadComponent";
 
 interface NewestThreadsProps {
 }
@@ -47,6 +47,12 @@ export default function NewestThreads(props: NewestThreadsProps) {
     }
 
     return (
-        <Threads threads={threads!} />
+        <div>
+            {
+                threads.content.map((value: SimpleThread) => (
+                    <SimpleThreadComponent thread={value} key={value.threadId} />
+                ))
+            }
+        </div>
     )
 }

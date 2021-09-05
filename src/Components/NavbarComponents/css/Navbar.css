@@ -78,13 +78,14 @@ fa-phoenix-framework {
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: max(30vh, 350px);
+        height: max(30vh, 330px);
         position: absolute;
         top: 80px;
         left: -100%;
         opacity: 1;
         transition: all 0.5s ease;
         padding: 0;
+        padding-block-end: 10px;
         margin-block-start: 0;
         z-index: 10;
     }

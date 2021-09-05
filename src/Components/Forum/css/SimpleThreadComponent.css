@@ -1,0 +1,66 @@
+.SimpleThread {
+    margin-block: 2vh;
+    padding: 5px;
+    border: 1px solid rgb(34, 206, 43);
+    border-radius: 10px;
+    align-items: center;
+}
+
+.SimpleThread > * {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+}
+
+.SimpleThread > * > * {
+    max-width: 50%;
+}
+
+.LinkAndCreator > * {
+    font-size: 1.2rem;
+    padding: 5px;
+    color: rgb(34, 206, 43);
+}
+
+.LinkAndCreator > :first-child {
+    text-align: left;
+}
+
+.LinkAndCreator > :hover {
+    cursor: pointer;
+    color: rgb(57, 168, 47);
+    text-decoration: underline;
+}
+
+.LinkAndCreator > :active {
+    color: rgb(47, 100, 42);
+}
+
+.DatesAndCategory > * {
+    align-self: center;
+}
+
+.DatesAndCategory > :first-child {
+    font-size: 0.7rem;
+    text-align: start;
+}
+
+.PostsAndTags {
+    align-items: center;
+}
+
+.PostsAndTags > :last-child {
+    width: 50%;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.PostsAndTags > :last-child > * {
+    font-size: 0.7rem;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 2px;
+}

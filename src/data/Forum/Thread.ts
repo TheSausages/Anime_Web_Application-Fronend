@@ -1,4 +1,5 @@
 import { PageDTO } from "../General/PageDTO";
+import { SimpleUser } from "../General/User/SimpleUser";
 import { ForumCategory } from "./ForumCategory";
 import { Tag } from "./Tag";
 import { ThreadStatus } from "./Types";
@@ -11,6 +12,7 @@ export interface SimpleThread {
     category: ForumCategory;
     creation: string;
     modification: string;
+    creator: SimpleUser;
     tags: Tag[];
 }
 

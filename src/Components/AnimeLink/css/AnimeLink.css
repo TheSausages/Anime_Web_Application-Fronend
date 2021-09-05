@@ -31,7 +31,7 @@
     height: 40px;
 
     background: rgb(85, 219, 92);
-    border-radius: 50%;
+    border-radius: 25px;
 
     display: flex;
     justify-content: center;
@@ -44,7 +44,7 @@
 }
 
 .animeLink a img {
-    border-radius: 5%;
+    border-radius: 25px;
     display: block;
     max-height: 90%;
     width: auto;
@@ -60,7 +60,7 @@
     font-size: 0.7rem;
     text-align: left;
     left: 5%;
-    max-width: max(10vw, 120px)
+    max-width: max(11vw, 150px)
 }
 
 .animeLink a p::before {
