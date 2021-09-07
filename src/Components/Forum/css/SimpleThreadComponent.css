@@ -1,12 +1,11 @@
 .SimpleThread {
     margin-block: 2vh;
-    padding: 5px;
     border: 1px solid rgb(34, 206, 43);
     border-radius: 10px;
     align-items: center;
 }
 
-.SimpleThread > * {
+.SimpleThread > *:not(.Status) {
     display: flex;
     justify-content: space-between;
     padding: 10px;
@@ -20,7 +19,7 @@
 .LinkAndCreator > * {
     font-size: 1.2rem;
     padding: 5px;
-    color: rgb(34, 206, 43);
+    color: rgb(54 192 61);
 }
 
 .LinkAndCreator > :first-child {
@@ -29,7 +28,7 @@
 
 .LinkAndCreator > :hover {
     cursor: pointer;
-    color: rgb(57, 168, 47);
+    color: rgb(54 192 61);
     text-decoration: underline;
 }
 
@@ -48,19 +47,4 @@
 
 .PostsAndTags {
     align-items: center;
-}
-
-.PostsAndTags > :last-child {
-    width: 50%;
-    white-space: nowrap;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-}
-
-.PostsAndTags > :last-child > * {
-    font-size: 0.7rem;
-    padding: 5px;
-    border-radius: 10px;
-    margin: 2px;
 }

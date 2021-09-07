@@ -1,11 +1,11 @@
 import { useSnackbar } from "notistack";
 import { useState, useCallback, useEffect } from "react";
-import { ForumCategory } from "../../data/Forum/ForumCategory";
-import { SimpleThread, SimpleThreadPage } from "../../data/Forum/Thread";
-import { BackendError } from "../../data/General/BackendError";
-import { snackbarError } from "../../data/General/SnackBar";
-import { ForumService } from "../../Scripts/Services/ForumService";
-import Loading from "../Loading/Loading";
+import { ForumCategory } from "../../../data/Forum/ForumCategory";
+import { SimpleThread, SimpleThreadPage } from "../../../data/Forum/Thread";
+import { BackendError } from "../../../data/General/BackendError";
+import { snackbarError } from "../../../data/General/SnackBar";
+import { ForumService } from "../../../Scripts/Services/ForumService";
+import Loading from "../../Loading/Loading";
 import SimpleThreadComponent from "./SimpleThreadComponent";
 
 interface ThreadsByCategoryProps {

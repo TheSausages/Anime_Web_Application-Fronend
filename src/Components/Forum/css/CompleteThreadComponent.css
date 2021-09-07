@@ -1,0 +1,50 @@
+#Thread {
+    margin-block: 2vh;
+    border: 1px solid rgb(54 192 61);
+    border-radius: 10px;
+    align-items: center;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+#Thread > *:not(.Status) {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+#Thread > * > * {
+    max-width: 50%;
+}
+
+#TitleUser {
+    font-size: 1.2rem;
+}
+
+#TitleUser > *:first-child {
+    max-width: 70%;
+    text-align: left;
+    line-height: 1.5rem;
+}
+
+#TitleUser > *:last-child {
+    color: rgb(54 192 61);
+}
+
+#TitleUser > *:last-child:hover {
+    cursor: pointer;
+    color: rgb(54 192 61);
+    text-decoration: underline;
+}
+
+#TitleUser > *:last-child:active {
+    color: rgb(47, 100, 42);
+}
+
+#ThreadText {
+    width: calc(100%);
+    text-align: left;
+    word-break: break-all;
+}

@@ -1,10 +1,10 @@
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { SimpleThread, SimpleThreadPage } from "../../data/Forum/Thread";
-import { BackendError } from "../../data/General/BackendError";
-import { snackbarError } from "../../data/General/SnackBar";
-import { ForumService } from "../../Scripts/Services/ForumService";
-import Loading from "../Loading/Loading";
+import { SimpleThread, SimpleThreadPage } from "../../../data/Forum/Thread";
+import { BackendError } from "../../../data/General/BackendError";
+import { snackbarError } from "../../../data/General/SnackBar";
+import { ForumService } from "../../../Scripts/Services/ForumService";
+import Loading from "../../Loading/Loading";
 import SimpleThreadComponent from "./SimpleThreadComponent";
 
 interface NewestThreadsProps {

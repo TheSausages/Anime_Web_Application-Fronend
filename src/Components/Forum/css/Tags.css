@@ -1,0 +1,14 @@
+.tags {
+    width: 50%;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.tags > * {
+    font-size: 0.7rem;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 2px;
+}
