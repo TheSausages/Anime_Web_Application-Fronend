@@ -1,5 +1,4 @@
 import { useHistory } from "react-router";
-import { Tag } from "../../../data/Forum/Tag";
 import { SimpleThread } from "../../../data/Forum/Thread"
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
@@ -21,28 +20,22 @@ export default function Threads(props: ThreadsProps) {
 
     return (
         <div style={{ borderColor: primaryColor }} key={thread.threadId} className="SimpleThread">
-            <ThreadStatusComponent primaryColor={primaryColor} status={thread.status} id={`${thread.threadId}`} />
+            <ThreadStatusComponent primaryColor={primaryColor} status={thread.status} id={`${thread.threadId}`} className="ThreadStatus" />
 
-            <div className="LinkAndCreator">
-                <span onClick={_ => history.push(`/forum/thread/${thread.threadId}`)}>{thread.title}</span>
+            <div onClick={_ => history.push(`/forum/thread/${thread.threadId}`)} className="ThreadTitle ThreadLink">{thread.title}</div>
 
-                <span onClick={_ => history.push("#")}>{thread.creator.username}</span>
+            <div onClick={_ => history.push("#")} className="ThreadCreator ThreadLink">{thread.creator.username}</div>
+
+            <div className="ThreadTimes">
+                <div title="Creation Time"><AddIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.creation).toLocaleString()}</div>
+                <div title="Last time Modificated"><EditIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.modification).toLocaleString()}</div>
             </div>
 
-            <div className="DatesAndCategory">
-                <span>
-                    <div title="Creation Time"><AddIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.creation).toLocaleString()}</div>
-                    <div title="Last time Modificated"><EditIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.modification).toLocaleString()}</div>
-                </span>
+            <div className="ThreadCategory"><i title="Category">{thread.category.categoryName}</i></div>
 
-                <i title="Category">{thread.category.categoryName}</i>
-            </div>
+            <div  className="ThreadPosts" title="Number of Posts"><ForumIcon sx={{ verticalAlign: 'bottom', color: primaryColor, paddingInline: '5px' }} />{thread.nrOfPosts}</div>
 
-            <div className="PostsAndTags">
-                <span title="Number of Posts"><ForumIcon sx={{ verticalAlign: 'bottom', color: primaryColor, paddingInline: '5px' }} />{thread.nrOfPosts}</span>
-
-                <Tags tags={thread.tags} />
-            </div>
+            <Tags tags={thread.tags} className="ThreadTags" />
         </div>
     )
 }

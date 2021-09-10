@@ -7,8 +7,12 @@ import { snackbarError } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import Loading from "../../Loading/Loading";
 import ThreadStatusComponent from "./ThreadStatusComponent";
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
 
 import "../css/CompleteThreadComponent.css";
+import '../../Miscellaneous/css/Line.css';
+import Tags from "./Tags";
 
 interface ThreadProps {
     threadId: number;
@@ -51,17 +55,23 @@ export default function CompleteThreadComponent(props: ThreadProps) {
 
     return (
         <div style={{ borderColor: primaryColor }} id="Thread">
-            <ThreadStatusComponent primaryColor={primaryColor} status={thread.status} id={`${thread.threadId}`} />
+            <ThreadStatusComponent primaryColor={primaryColor} status={thread.status} id={`${thread.threadId}`} className="ThreadStatus" />
 
-            <div id="TitleUser">
-                <span>{thread.title}</span>
+            <div className="ThreadUser"><div className="line"><p>{thread.title}</p></div></div>
 
-                <span onClick={_ => history.push("#")}>{thread.creator.username}</span>
+            <div onClick={_ => history.push("#")} className="ThreadUser ThreadLink">{thread.creator.username}</div>
+
+            <div className="ThreadText">{thread.threadText}</div>
+            <div></div>
+
+            <div className="ThreadTimes">
+                <div><AddIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: primaryColor }} />Created: {new Date(thread.creation).toLocaleString()}</div>
+                <div><EditIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: primaryColor }} />Last Modified: {new Date(thread.modification).toLocaleString()}</div>
             </div>
 
-            <div id="ThreadText">
-                {thread.threadText}
-            </div>
+            <div className="ThreadCategory"><i title="Category">{thread.category.categoryName}</i></div>
+
+            <Tags tags={thread.tags} className="ThreadTags" />
         </div>
     )
 }

@@ -7,6 +7,7 @@ interface ThreadStatusProps {
     primaryColor: string;
     status: ThreadStatus;
     id: string;
+    className?: string;
 }
 
 export default function ThreadStatusComponent(props: ThreadStatusProps) {
@@ -17,7 +18,7 @@ export default function ThreadStatusComponent(props: ThreadStatusProps) {
     });
 
     return (
-        <div className="Status" id={`Status${props.id}`} style={{ backgroundColor: props.primaryColor }}>
+        <div className={`Status ${props.className}`} id={`Status${props.id}`} style={{ backgroundColor: props.primaryColor }}>
             {props.status}
         </div>
     )

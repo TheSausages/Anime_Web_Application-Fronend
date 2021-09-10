@@ -21,7 +21,7 @@ interface ForumMenuprops {
 export default function ForumMenu(props: ForumMenuprops) {
     const classes = useStyles();
     const list = { width: '100%', bgcolor: 'background.paper' }
-    const subList = { fontSize: '1.5rem' }
+    const subList = { fontSize: '1.5rem', paddingRight: 0 }
     const checkboxLabel = { fontSize: '0.8rem' }
     const checkbox = { fontSize: '0.8rem', color: "rgb(34, 206, 43)", '&.Mui-checked': { color: "rgb(34, 206, 43)" } }
     const listItem = { paddingLeft: '3%', margin: "1%", '@media (max-width: 960px)': { textAlign: 'center' }, '&:hover': { cursor: 'pointer', backgroundColor: "rgb(242, 242, 242)", borderRadius: "5%" } }

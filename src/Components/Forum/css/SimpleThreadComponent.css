@@ -2,49 +2,56 @@
     margin-block: 2vh;
     border: 1px solid rgb(34, 206, 43);
     border-radius: 10px;
-    align-items: center;
+    display: grid; 
+    grid-auto-columns: 1fr; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr 1fr 1fr; 
+    grid-template-areas: 
+    "ThreadStatus ThreadStatus" 
+    "ThreadTitle ThreadCreator"
+    "ThreadTimes ThreadCategory"
+    "ThreadPosts ThreadTags"; 
+    justify-content: stretch; 
+    align-content: stretch; 
+    justify-items: stretch; 
+    align-items: start; 
+    width: 100%; 
 }
 
-.SimpleThread > *:not(.Status) {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    align-items: center;
+.SimpleThread > *:not(:first-child) {
+    padding: 0 10px 10px 10px;
 }
 
-.SimpleThread > * > * {
-    max-width: 50%;
-}
-
-.LinkAndCreator > * {
-    font-size: 1.2rem;
-    padding: 5px;
-    color: rgb(54 192 61);
-}
-
-.LinkAndCreator > :first-child {
+.SimpleThread > :nth-child(2n) {
     text-align: left;
 }
 
-.LinkAndCreator > :hover {
+.SimpleThread > :nth-child(2n + 3) {
+    text-align: right;
+}
+
+.ThreadStatus { grid-area: ThreadStatus; }
+.ThreadTitle { grid-area: ThreadTitle; }
+.ThreadCreator { grid-area: ThreadCreator; }
+.ThreadTimes { 
+    grid-area: ThreadTimes;
+    font-size: 0.7rem;
+}
+.ThreadCategory { grid-area: ThreadCategory; }
+.ThreadPosts { grid-area: ThreadPosts; }
+.ThreadTags { grid-area: ThreadTags; }
+
+.ThreadLink {
+    font-size: 1.2rem;
+    color: rgb(54 192 61);
+}
+
+.ThreadLink:hover {
     cursor: pointer;
     color: rgb(54 192 61);
     text-decoration: underline;
 }
 
-.LinkAndCreator > :active {
+.ThreadLink:active {
     color: rgb(47, 100, 42);
-}
-
-.DatesAndCategory > * {
-    align-self: center;
-}
-
-.DatesAndCategory > :first-child {
-    font-size: 0.7rem;
-    text-align: start;
-}
-
-.PostsAndTags {
-    align-items: center;
 }
