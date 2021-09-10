@@ -1,0 +1,69 @@
+.Post {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: 1fr;
+    grid-auto-flow: row;
+    justify-content: stretch;
+    align-content: stretch;
+    justify-items: stretch;
+    align-items: start;
+    grid-template-areas:
+      "PostTimes PostCreator"
+      "PostTitle PostTitle"
+      "PostText PostText"
+      ". PostInput";
+
+    margin-block: 2vh;
+    border: 1px solid rgb(34, 206, 43);
+    border-radius: 10px;
+    padding: 10px;
+}
+.Post > * {
+    margin-block-end: 10px;
+}
+  
+.PostCreator { 
+    grid-area: PostCreator;
+    text-align: right;
+}
+  
+.PostTimes { 
+    grid-area: PostTimes;
+    text-align: left;
+    font-size: 0.7rem;
+}
+  
+.PostTitle { 
+    grid-area: PostTitle;
+    text-align: left;
+    word-break: break-all;
+}
+  
+.PostText { 
+    grid-area: PostText;
+    text-align: left;
+    word-break: break-all;
+}
+  
+.PostInput { 
+    grid-area: PostInput;
+    text-align: right;
+    margin-block-end: 0;
+}
+
+.PostLink {
+    font-size: 1.2rem;
+    color: rgb(54 192 61);
+}
+
+.PostLink:hover {
+    cursor: pointer;
+    color: rgb(54 192 61);
+    text-decoration: underline;
+}
+
+.PostLink:active {
+    color: rgb(47, 100, 42);
+}

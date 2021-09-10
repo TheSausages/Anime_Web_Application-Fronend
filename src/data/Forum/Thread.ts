@@ -21,5 +21,5 @@ export interface SimpleThreadPage extends PageDTO<SimpleThread> {}
 
 export interface CompleteThread extends SimpleThread {
     threadText: string;
-    posts: CompletePost[];
+    posts: PageDTO<CompletePost>;
 }

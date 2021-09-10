@@ -9,7 +9,6 @@ import ForumMenu from './ForumMenu';
 import ForumSwitch from './ForumSwitch';
 import { AdditionalForumCategories } from '../../data/Forum/AdditionalForumCategories';
 
-
 import "./css/Forum.css"
 
 interface ForumProps {

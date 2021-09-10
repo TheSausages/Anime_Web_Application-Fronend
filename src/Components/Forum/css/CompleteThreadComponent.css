@@ -32,11 +32,13 @@
 }
 
 .ThreadStatus { grid-area: ThreadStatus; }
-.ThreadTitle { grid-area: ThreadTitle; }
+.ThreadTitle { 
+    grid-area: ThreadTitle;
+    word-break: break-all;
+}
 .ThreadCreator { grid-area: ThreadCreator; }
 .ThreadText { 
     grid-area: ThreadText; 
-    text-align: left;
     word-break: break-all;
 }
 .ThreadTimes { 
@@ -59,4 +61,8 @@
 
 .ThreadLink:active {
     color: rgb(47, 100, 42);
+}
+
+#Posts {
+    margin-block: 2vh;
 }

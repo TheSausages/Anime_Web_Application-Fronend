@@ -3,6 +3,7 @@
     max-height: min-content;
 
     display: flex;
+    align-items: center;
 }
 
 .iconWithNumber > * {
