@@ -2,7 +2,7 @@ import { PageDTO } from "../General/PageDTO";
 import { SimpleUser } from "../General/User/SimpleUser";
 
 export interface SimplePost {
-    id: number;
+    postId: number;
     title: string;
     isBlocked: boolean;
     creation: Date;

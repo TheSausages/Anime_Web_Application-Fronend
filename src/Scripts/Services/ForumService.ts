@@ -2,7 +2,7 @@ import { ForumCategory } from "../../data/Forum/ForumCategory";
 import { ForumQuery } from "../../data/Forum/ForumQuery";
 import { performRequestWithType, HttpMethods } from "./ApiService";
 import { CompleteThread, SimpleThreadPage } from "../../data/Forum/Thread";
-import { CompletePostPage } from "../../data/Forum/Post";
+import { CompletePostPage, PostUserStatus } from "../../data/Forum/Post";
 
 export class ForumService {
     static getForumCategories(): Promise<ForumCategory[]> {
@@ -22,6 +22,10 @@ export class ForumService {
     }
 
     static getPostsForThread(threadId: number, page: number): Promise<CompletePostPage> {
-        return performRequestWithType<CompletePostPage>(HttpMethods.GET, `/forum/posts/thread/${threadId}/${page}`, true);
+        return performRequestWithType<CompletePostPage>(HttpMethods.GET, `/forum/post/thread/${threadId}/${page}`, true);
+    }
+
+    static updatePostUserStatus(postId: number, status: PostUserStatus): Promise<PostUserStatus> {
+        return performRequestWithType<PostUserStatus>(HttpMethods.PUT, `/forum/post/${postId}`, true, status);
     }
 }
