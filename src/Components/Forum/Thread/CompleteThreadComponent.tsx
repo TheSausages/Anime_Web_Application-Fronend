@@ -14,6 +14,10 @@ import ThreadPostsComponent from "./ThreadPostsComponent";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
+import ButtonCollored from "../../Miscellaneous/ButtonCollored";
+import { Dialog } from "@material-ui/core";
+import NewPostComponent from "../Post/NewPostComponent";
+import NewThreadComponent from "./NewThreadComponent";
 
 interface ThreadProps {
     threadId: number;
@@ -78,6 +82,11 @@ export default function CompleteThreadComponent(props: ThreadProps) {
 
             <div id="Posts">
                 <ThreadPostsComponent postsPage={thread.posts} threadId={props.threadId} />
+            </div>
+
+            <div className="NewElementButtons">
+                <NewThreadComponent />
+                <NewPostComponent />
             </div>
         </div>
     )
