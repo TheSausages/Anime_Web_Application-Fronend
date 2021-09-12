@@ -4,7 +4,6 @@ import NewestThreads from "./Thread/NewestThreads";
 import ThreadsByCategory from "./Thread/ThreadsByCategory";
 import ThreadSearch from "./Thread/ThreadSearch";
 import CompleteThreadComponent from "./Thread/CompleteThreadComponent";
-import NewThreadComponent from "./Thread/NewThreadComponent";
 import ComponentWithNewThreadButton from "./Thread/ComponentWithNewThreadButton";
 
 interface ForumSwitchProps {

@@ -28,3 +28,12 @@ export interface PostUserStatus {
     isDisliked: boolean;
     isReported: boolean;
 }
+
+export interface CreatePost {
+    title: string;
+    postText: string;
+}
+
+export interface PutPost extends CreatePost {
+    postId: number;
+}

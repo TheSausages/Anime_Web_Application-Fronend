@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import { Control, Controller, useForm, UseFormSetValue } from "react-hook-form";
 import { AnimeUserInformation, Review, ReviewForm } from "../../../data/Anime/Smaller/AnimeUserInformation";
 import * as yup from "yup"
@@ -10,6 +10,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
+import TextFieldColored from "../../Miscellaneous/TextFieldColored";
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -22,15 +23,6 @@ const useStyles = makeStyles((theme) => ({
     },
     paddingTop: {
         paddingTop: 1,
-    },
-    inputSpace: {
-        "& .MuiOutlinedInput-notchedOutline": {
-            borderTop: 'none',
-            borderRight: 'none',
-            borderLeft: 'none',
-            borderBottom: `1px solid ${color}`,
-            borderRadius: 0,
-        },
     },
     reviewNumbers: {
         display: 'flex',
@@ -58,7 +50,7 @@ const schema = yup.object().shape({
 export function ReviewComponent(props: ReviewProps) {
     const classes = useStyles();
 
-    const { control, handleSubmit, setValue } = useForm<ReviewForm>({
+    const { control, handleSubmit } = useForm<ReviewForm>({
         resolver: yupResolver(schema),
         mode: "all",
         defaultValues: {
@@ -81,12 +73,10 @@ export function ReviewComponent(props: ReviewProps) {
                         <div className={classes.paddingTop} />
 
                         <Controller render={({field}) => (
-                            <TextField
-                                {...field}
-                                onChange={data => setValue('reviewTitle', data.target.value, setValueOptions)}
+                            <TextFieldColored 
+                                field={field}
+                                errors={undefined}
                                 label="Review Title"
-                                autoFocus 
-                                className={classes.inputSpace}
                             />
                         )}
                         name="reviewTitle"
@@ -94,13 +84,12 @@ export function ReviewComponent(props: ReviewProps) {
                         />
 
                         <Controller render={({field}) => (
-                            <TextField
-                                {...field}
-                                onChange={data => setValue('reviewText', data.target.value, setValueOptions)}
+                            <TextFieldColored
+                                field={field}
                                 label="Review Text"
+                                errors={undefined}
                                 multiline={true}
                                 rows={8}
-                                className={classes.inputSpace}
                             />
                         )}
                         name="reviewText"

@@ -2,6 +2,8 @@ import { Dialog, DialogTitle, DialogActions } from "@material-ui/core";
 import { useState } from "react";
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 
+import "../css/NewThreadComponent.css"
+
 interface NewThreadComponentProps {}
 
 export default function NewThreadComponent(props: NewThreadComponentProps) {

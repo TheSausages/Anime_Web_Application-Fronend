@@ -11,13 +11,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import Tags from "./Tags";
 import ThreadPostsComponent from "./ThreadPostsComponent";
+import NewPostButton from "../Post/NewPost";
+import NewThreadComponent from "./NewThreadComponent";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
-import ButtonCollored from "../../Miscellaneous/ButtonCollored";
-import { Dialog } from "@material-ui/core";
-import NewPostComponent from "../Post/NewPostComponent";
-import NewThreadComponent from "./NewThreadComponent";
 
 interface ThreadProps {
     threadId: number;
@@ -86,7 +84,7 @@ export default function CompleteThreadComponent(props: ThreadProps) {
 
             <div className="NewElementButtons">
                 <NewThreadComponent />
-                <NewPostComponent />
+                <NewPostButton threadId={thread.threadId} />
             </div>
         </div>
     )

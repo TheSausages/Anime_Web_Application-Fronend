@@ -7,28 +7,52 @@ interface TextFieldColoredProps {
     errors: FieldError | undefined;
     label: string;
     type?: string;
+    className?: string;
+    rows?: number;
+    multiline?: boolean;
 }
 
 const TextFieldColoredStyled = styled(TextField)({
-    width: '80%',
-    "& .css-1480iag-MuiInputBase-root-MuiInput-root:before": {
+    '& .MuiInputLabel-root.Mui-focused': {
+        color: 'rgb(36, 185, 44)',
+    },
+    "& .MuiInputBase-root:before": {
         borderBottom: 'none',
     },
-    "& .MuiInput-input": {
+    "& .MuiInputBase-root:after": {
         borderBottom: `2px solid rgb(36, 185, 44)`,
     },
-    "& .css-1480iag-MuiInputBase-root-MuiInput-root:after": {
-        borderBottom: `2px solid green`,
+
+    "& .MuiInputBase-input:before": {
+        borderBottom: 'none',
+    },
+    "& .MuiInputBase-input": {
+        borderBottom: `2px solid rgb(36, 185, 44)`,
+    },
+    "& .MuiInputBase-input:after": {
+        borderBottom: `2px solid rgb(36, 185, 44)`,
+        "& .Mui-error": {
+            borderBottom: '#d32f2f',
+        },
+    },
+    "& .MuiInputBase-multiline:before": {
+        borderBottom: 'none',
+    },
+    "& .MuiInputBase-multiline": {
+        padding: 0,
+    },
+    "& .MuiInputBase-multiline:after": {
+        borderBottom: `2px solid rgb(36, 185, 44)`,
     },
     "& .MuiFormHelperText-root": {
         position: "absolute",
         bottom: "-20px"
-    }
+    },
 })
 
 export default function TextFieldColored(props: TextFieldColoredProps) {
     return (
-        <TextFieldColoredStyled
+        <TextFieldColoredStyled className={props.className}
             {...props.field}
             autoComplete="off"
             variant="standard"
@@ -36,6 +60,8 @@ export default function TextFieldColored(props: TextFieldColoredProps) {
             helperText={props.errors?.message}
             label={props.label}
             type={props.type}
+            rows={props.rows}
+            multiline={props.multiline}
         />
     )
 }

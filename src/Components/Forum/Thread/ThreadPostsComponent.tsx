@@ -15,19 +15,21 @@ interface ThreadPostsComponentProps {
 }
 
 export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
-    const [postPage, setPostPage] = useState<CompletePostPage>(props.postsPage)
+    const { postsPage, threadId } = props;
+
+    const [postPage, setPostPage] = useState<CompletePostPage>(postsPage)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string>();
     const { enqueueSnackbar } = useSnackbar();
 
     const getMorePosts= useCallback(async () => {
-        await ForumService.getPostsForThread(props.threadId, postPage.pageNumber + 1)
+        await ForumService.getPostsForThread(threadId, postPage.pageNumber + 1)
         .then((response: CompletePostPage) => setPostPage({...response, content: [...postPage.content, ...response.content]}))
         .catch((error: BackendError) => {
             setError(error.message)
             enqueueSnackbar(error.message, snackbarError)
         })
-    }, [enqueueSnackbar, postPage, props.threadId])
+    }, [enqueueSnackbar, postPage, threadId])
 
     useEffect(() => {
         try {
@@ -58,7 +60,7 @@ export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
         >
             {
                 postPage.content.map((post, index) => (
-                    <PostComponent post={post} key={index} />
+                    <PostComponent post={post} key={index} threadId={threadId} />
                 ))
             }
         </InfiniteScroll>
