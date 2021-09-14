@@ -1,9 +1,9 @@
-import { CompletePost, PutPost } from "../../../data/Forum/Post";
+import { CompletePost, CreatePost, PutPost } from "../../../data/Forum/Post";
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from "react-router";
 import PostReactionForm from "./PostReactionForm";
-import { getRandomColor } from "../../../Scripts/Utilities";
+import { checkIfGivenUserLoggedIn, getRandomColor } from "../../../Scripts/Utilities";
 import { useState } from "react";
 import PostForm from "./PostForm";
 import { ForumService } from "../../../Scripts/Services/ForumService";
@@ -12,6 +12,7 @@ import { useSnackbar } from "notistack";
 import "../css/PostComponent.css"
 import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
+import { useAuth } from "../../AuthenticationAndLogin/Auth";
 
 interface PostProps {
     post: CompletePost;
@@ -20,21 +21,23 @@ interface PostProps {
 }
 
 export default function PostComponent(props: PostProps) {
-    let post = props.post;
+    const [post, setPost] = useState<CompletePost>(props.post)
     const { threadId } = props;
     const color = getRandomColor(true);
     const [open, setOpen] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
 
-    function editPost(editPost: PutPost) {
-        ForumService.updatePostForThread(threadId, editPost)
+    function editPost(editPost: CreatePost) {
+        ForumService.updatePostForThread(threadId, {...editPost, postId: post.postId})
         .then((response: CompletePost) => {
             enqueueSnackbar("Post updated successfully!", snackbarInfo);
-            post = response;
+            setPost(response);
         })
         .catch((error: BackendError) => enqueueSnackbar(error.message, snackbarError))
     }
+
+    const isLoggedUser = checkIfGivenUserLoggedIn(post.user.username);
 
     return (
         <div className="Post" style={{borderColor: color}}>
@@ -44,13 +47,17 @@ export default function PostComponent(props: PostProps) {
                 <div><EditIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />Last Modified: {new Date(post.modification).toLocaleString()}</div>
             </div>
             <div className="PostTitle">{post.title}</div>
-            <div className="PostText">{post.postText}</div>
-            <div className="PostEditText">
-                <i onClick={() => setOpen(true)} style={{color: color}}>edit post</i>
+            <div className="PostText">{post.text}</div>
 
-                <PostForm title="Edit Post" open={open} close={() => setOpen(false)} threadId={threadId} data={post} onSubmit={editPost} />
-            </div>
-            <div className="PostInput"><PostReactionForm nrOfPlus={post.nrOfPlus} nrOfMinus={post.nrOfMinus} postUserStatus={post.postUserStatus} color={color} /></div>
+            {isLoggedUser &&
+                <div className="PostEditText">
+                    <i onClick={() => setOpen(true)} style={{color: color}}>edit post</i>
+
+                    <PostForm title="Edit Post" open={open} close={() => setOpen(false)} data={post} onSubmit={editPost} />
+                </div>
+            }
+
+            <div className="PostInput"><PostReactionForm nrOfPlus={post.nrOfPlus} nrOfMinus={post.nrOfMinus} postUserStatus={post.postUserStatus} color={color} isLoggedUser={isLoggedUser} /></div>
         </div>
     )
 }

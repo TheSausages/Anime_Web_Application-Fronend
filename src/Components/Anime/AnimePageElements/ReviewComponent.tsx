@@ -43,14 +43,14 @@ interface ReviewProps {
 const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
 
 const schema = yup.object().shape({
-    reviewTitle: yup.string().required(),
-    reviewText: yup.string().required(),
+    reviewTitle: yup.string().required("Title cannot be empty!"),
+    reviewText: yup.string(),
 })
 
 export function ReviewComponent(props: ReviewProps) {
     const classes = useStyles();
 
-    const { control, handleSubmit } = useForm<ReviewForm>({
+    const { control, handleSubmit, formState: { errors, isValid } } = useForm<ReviewForm>({
         resolver: yupResolver(schema),
         mode: "all",
         defaultValues: {
@@ -75,7 +75,7 @@ export function ReviewComponent(props: ReviewProps) {
                         <Controller render={({field}) => (
                             <TextFieldColored 
                                 field={field}
-                                errors={undefined}
+                                errors={errors.reviewTitle}
                                 label="Review Title"
                             />
                         )}
@@ -105,7 +105,7 @@ export function ReviewComponent(props: ReviewProps) {
 
                     <DialogActions>
                         <ButtonCollored onClick={() => props.setReviewOpen(false)} text="Close" />
-                        <ButtonCollored type="submit" onClick={() => props.setReviewOpen(false)} text="Submit" />
+                        <ButtonCollored type="submit" disabled={!isValid} onClick={() => props.setReviewOpen(false)} text="Submit" />
                     </DialogActions>    
                 </form>
             </Dialog>

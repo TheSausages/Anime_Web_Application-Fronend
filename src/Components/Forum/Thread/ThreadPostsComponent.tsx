@@ -22,6 +22,20 @@ export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
     const [error, setError] = useState<string>();
     const { enqueueSnackbar } = useSnackbar();
 
+    useEffect(() => {
+        try {
+            setLoading(true);
+
+            console.log(postsPage)
+            setPostPage(postsPage)
+
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            setError("An unknown Error occured!")
+        }
+    }, [props.postsPage])
+
     const getMorePosts= useCallback(async () => {
         await ForumService.getPostsForThread(threadId, postPage.pageNumber + 1)
         .then((response: CompletePostPage) => setPostPage({...response, content: [...postPage.content, ...response.content]}))

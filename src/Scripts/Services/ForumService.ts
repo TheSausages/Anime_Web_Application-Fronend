@@ -3,6 +3,7 @@ import { ForumQuery } from "../../data/Forum/ForumQuery";
 import { performRequestWithType, HttpMethods } from "./ApiService";
 import { CompleteThread, SimpleThreadPage } from "../../data/Forum/Thread";
 import { CompletePost, CompletePostPage, CreatePost, PostUserStatus, PutPost } from "../../data/Forum/Post";
+import { PageDTO } from "../../data/General/PageDTO";
 
 export class ForumService {
     static getForumCategories(): Promise<ForumCategory[]> {
@@ -29,8 +30,8 @@ export class ForumService {
         return performRequestWithType<PostUserStatus>(HttpMethods.PUT, `/forum/post/${postId}`, true, status);
     }
 
-    static createPostForThread(threadId: number, post: CreatePost): Promise<CompletePost> {
-        return performRequestWithType<CompletePost>(HttpMethods.POST, `/forum/thread/${threadId}/post`, true, post)
+    static createPostForThread(threadId: number, post: CreatePost): Promise<PageDTO<CompletePost>> {
+        return performRequestWithType<PageDTO<CompletePost>>(HttpMethods.POST, `/forum/thread/${threadId}/post`, true, post)
     }
 
     static updatePostForThread(threadId: number, post: PutPost): Promise<CompletePost> {

@@ -27,7 +27,7 @@ interface RegisterProps {
 
 const schema = yup.object().shape({
     username: yup.string().min(6, "Must be at least 6 characters!").required(),
-    password: yup.string().min(6, "Must be at least 6 characters!").matches(/^(?=.+[0-9])(?=.{4,}[a-z])(?=.*[A-Z]).{6,}$/, "Password must have the correct structure").required(),
+    password: yup.string().min(6, "Must be at least 6 characters!").matches(/^(?=.+[0-9])(?=.{4,}[a-z])(?=.*[A-Z]).{6,}$/, "Wrong structure!").required(),
     matchingPassword: yup.string().test("password-match", "Passwords must match!", function(value) { return this.parent.password === value }).required(),
     email: yup.string().email("Value is not an Email!").required()
 })

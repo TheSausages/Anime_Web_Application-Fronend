@@ -13,6 +13,9 @@ import Tags from "./Tags";
 import ThreadPostsComponent from "./ThreadPostsComponent";
 import NewPostButton from "../Post/NewPost";
 import NewThreadComponent from "./NewThreadComponent";
+import { CompletePost } from "../../../data/Forum/Post";
+import { PageDTO } from "../../../data/General/PageDTO";
+import { checkIfObjectIsEmpty } from "../../../Scripts/Utilities";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
@@ -22,13 +25,13 @@ interface ThreadProps {
 }
 
 export default function CompleteThreadComponent(props: ThreadProps) {
-    const [thread, setThread] = useState<CompleteThread>()
+    const [thread, setThread] = useState<CompleteThread>({} as CompleteThread)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string>();
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     
-    const getByCategory = useCallback(async () => {
+    const getThread = useCallback(async () => {
         await ForumService.getThreadById(props.threadId)
         .then((thread: CompleteThread) => setThread(thread))
         .catch((error: BackendError) => {
@@ -41,16 +44,20 @@ export default function CompleteThreadComponent(props: ThreadProps) {
         try {
             setLoading(true);
 
-            getByCategory();  
+            getThread();  
 
             setLoading(false)
         } catch (error) {
             setLoading(false)
             setError("An unknown Error occured!")
         }
-    }, [getByCategory]);
+    }, [getThread]);
 
-    if (loading || thread === undefined) {
+    function setNewPostPage(posts: PageDTO<CompletePost>) {
+        setThread({ ...thread, nrOfPosts: thread.nrOfPosts + 1, posts })
+    }
+
+    if (loading || thread === undefined || checkIfObjectIsEmpty(thread)) {
         return <Loading error={error}/>
     }
 
@@ -65,7 +72,7 @@ export default function CompleteThreadComponent(props: ThreadProps) {
 
                 <div onClick={_ => history.push("#")} className="ThreadUser ThreadLink">{thread.creator.username}</div>
 
-                <div className="ThreadText">{thread.threadText}</div>
+                <div className="ThreadText">{thread.text}</div>
                 <div></div>
 
                 <div className="ThreadTimes">
@@ -84,7 +91,7 @@ export default function CompleteThreadComponent(props: ThreadProps) {
 
             <div className="NewElementButtons">
                 <NewThreadComponent />
-                <NewPostButton threadId={thread.threadId} />
+                <NewPostButton setNewPosts={setNewPostPage} thread={thread} />
             </div>
         </div>
     )

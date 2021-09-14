@@ -6,6 +6,24 @@ export function checkIfLoggedIn(): boolean {
     return (accessToken && accessToken !== 'undefined') ? true : false;
 }
 
+export function checkIfGivenUserLoggedIn(username: string): boolean {
+    if (username === undefined || !username || username === '') {
+        return false;
+    }
+
+    let logged: string | null = localStorage.getItem('username');
+
+    if (logged === null) {
+        return false;
+    }
+
+    return logged.toLocaleLowerCase() === username.toLocaleLowerCase();
+}
+
+export function checkIfObjectIsEmpty(object: Object) {
+    return Object.keys(object).length === 0;
+}
+
 export function findFirstNotUndefined(elements: any[]) {
     var title: string = elements[elements.findIndex(val => val)];
 

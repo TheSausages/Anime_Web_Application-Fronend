@@ -41,6 +41,7 @@ function useProvideAuth(): AuthReturn {
     .then(data => {  
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('refreshToken', data.refresh_token);
+      localStorage.setItem('username', cred.username);
       localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
       setRerender(!rerender);
 
@@ -71,6 +72,7 @@ function useProvideAuth(): AuthReturn {
     .then(data => {  
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('refreshToken', data.refresh_token);
+      localStorage.setItem('username', regis.username);
       localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
       setRerender(!rerender);
 

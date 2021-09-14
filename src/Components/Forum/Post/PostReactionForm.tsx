@@ -17,18 +17,20 @@ import { BackendError } from '../../../data/General/BackendError';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
+import { checkIfGivenUserLoggedIn } from '../../../Scripts/Utilities';
 
 interface PostReactionFormProps {
     nrOfPlus: number;
     nrOfMinus: number;
     postUserStatus?: PostUserStatus;
     color: string;
+    isLoggedUser: boolean;
 }
 
 const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
 
 export default function PostReactionForm(props: PostReactionFormProps) {
-    const { nrOfPlus, nrOfMinus, postUserStatus, color } = props;
+    const { nrOfPlus, nrOfMinus, postUserStatus, color, isLoggedUser } = props;
     const [openReport, setOpenReport] = useState<boolean>(false);
     const [nrOfLiked, setNrOfLiked] = useState<number>(nrOfPlus)
     const [nrOfDisliked, setNrOfDisliked] = useState<number>(nrOfMinus)
@@ -81,6 +83,7 @@ export default function PostReactionForm(props: PostReactionFormProps) {
                             }}
                             icon={<ThumbUpAltOutlinedIcon htmlColor={color} />}
                             checkedIcon={<ThumbUpIcon htmlColor={color} />}
+                            disabled={isLoggedUser}
                         /> 
                     }
                     numberToShow={nrOfLiked} />
@@ -109,6 +112,7 @@ export default function PostReactionForm(props: PostReactionFormProps) {
                             }}
                             icon={<ThumbDownAltOutlinedIcon htmlColor={color} />}
                             checkedIcon={<ThumbDownIcon htmlColor={color} />}
+                            disabled={isLoggedUser}
                         /> 
                     }
                     numberToShow={nrOfDisliked} />
@@ -118,7 +122,7 @@ export default function PostReactionForm(props: PostReactionFormProps) {
                 />
             </FormControl>
 
-            <IconButton onClick={() => setOpenReport(true)}>
+            <IconButton onClick={() => setOpenReport(true)} disabled={isLoggedUser}>
                 {getValues().isReported ? <ReportIcon htmlColor={color} /> : <ReportOutlinedIcon htmlColor={color} />}
             </IconButton>
 

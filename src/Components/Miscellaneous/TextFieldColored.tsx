@@ -21,13 +21,18 @@ const TextFieldColoredStyled = styled(TextField)({
     },
     "& .MuiInputBase-root:after": {
         borderBottom: `2px solid rgb(36, 185, 44)`,
+        "& .Mui-error": {
+            borderBottom: '#d32f2f',
+        },
     },
-
     "& .MuiInputBase-input:before": {
         borderBottom: 'none',
     },
     "& .MuiInputBase-input": {
         borderBottom: `2px solid rgb(36, 185, 44)`,
+        "& .Mui-error": {
+            borderBottom: '#d32f2f',
+        },
     },
     "& .MuiInputBase-input:after": {
         borderBottom: `2px solid rgb(36, 185, 44)`,
@@ -40,9 +45,15 @@ const TextFieldColoredStyled = styled(TextField)({
     },
     "& .MuiInputBase-multiline": {
         padding: 0,
+        "& .Mui-error": {
+            borderBottom: '#d32f2f',
+        },
     },
     "& .MuiInputBase-multiline:after": {
         borderBottom: `2px solid rgb(36, 185, 44)`,
+        "& .Mui-error": {
+            borderBottom: '#d32f2f',
+        },
     },
     "& .MuiFormHelperText-root": {
         position: "absolute",

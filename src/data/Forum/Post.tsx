@@ -11,7 +11,7 @@ export interface SimplePost {
 }
 
 export interface CompletePost extends SimplePost {
-    postText: string;
+    text: string;
     nrOfPlus: number;
     nrOfMinus: number;
     postUserStatus?: PostUserStatus
@@ -31,7 +31,7 @@ export interface PostUserStatus {
 
 export interface CreatePost {
     title: string;
-    postText: string;
+    text: string;
 }
 
 export interface PutPost extends CreatePost {

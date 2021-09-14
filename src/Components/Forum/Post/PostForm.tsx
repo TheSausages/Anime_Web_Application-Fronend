@@ -2,49 +2,89 @@ import { Dialog, DialogTitle, DialogActions, DialogContent } from "@material-ui/
 import { CreatePost, PutPost } from "../../../data/Forum/Post";
 import * as yup from "yup"
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import TextFieldColored from "../../Miscellaneous/TextFieldColored";
+import { makeStyles } from "@material-ui/styles";
+import { classNames } from "react-select/src/utils";
+
+const useStyles = makeStyles((theme) => ({
+    dialogContent: {
+        display: "flex",
+        flexDirection: "column",
+        rowGap: 15,
+        width: '95%',
+        paddingBottom: 20,
+    },
+    paddingTop: {
+        paddingTop: 1,
+    },
+}));
 
 interface NewPostFormProps {
     title: string,
     open: boolean;
     close: () => void;
-    threadId: number;
     data?: PutPost;
     onSubmit: (post: PutPost) => void;
 }
 
 export default function PostForm(props: NewPostFormProps) {
-    const { title, open, close, threadId, data } = props;
+    const classes = useStyles();
+    const { title, open, close, data, onSubmit } = props;
 
     const schema = yup.object().shape({
         title: yup.string().required("Post title cannot be empty"),
-        postText: yup.string().required("Post text cannot be empty")
+        text: yup.string().required("Post text cannot be empty")
     })
 
-    const { control, handleSubmit } = useForm<CreatePost>({
+    const { control, handleSubmit, formState: { errors, isValid } } = useForm<CreatePost>({
         resolver: yupResolver(schema),
         mode: 'all',
         defaultValues: {
             title: data?.title ?? '',
-            postText: data?.postText ?? ''
+            text: data?.text ?? ''
         }
     })
 
     return (
         <Dialog open={open} fullWidth maxWidth="lg">
-            <DialogTitle>
-                {title}
-            </DialogTitle>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <DialogTitle>
+                    {title}
+                </DialogTitle>
 
-            <DialogContent>
+                <DialogContent className={classes.dialogContent}>
+                    <Controller render={({field}) => (
+                        <TextFieldColored 
+                            field={field}
+                            errors={errors.title}
+                            label="Post Title"
+                        />
+                    )}
+                    name="title"
+                    control={control}
+                    />
 
-            </DialogContent>
+                    <Controller render={({field}) => (
+                        <TextFieldColored 
+                            field={field}
+                            errors={errors.text}
+                            label="Post Text"
+                            multiline={true}
+                            rows={8}
+                        />
+                    )}
+                    name="text"
+                    control={control}
+                    />
+                </DialogContent>
 
-            <DialogActions>
-                <ButtonCollored onClick={close} text="Close" />
-                <ButtonCollored type="submit" onClick={close} text="Submit" />
-            </DialogActions>
+                <DialogActions>
+                    <ButtonCollored onClick={close} text="Close" />
+                    <ButtonCollored type="submit" disabled={!isValid} onClick={close} text="Submit" />
+                </DialogActions>
+            </form>
         </Dialog>
     )
 }
