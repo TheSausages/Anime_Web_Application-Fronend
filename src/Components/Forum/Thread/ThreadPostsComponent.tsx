@@ -26,7 +26,6 @@ export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
         try {
             setLoading(true);
 
-            console.log(postsPage)
             setPostPage(postsPage)
 
             setLoading(false)

@@ -54,7 +54,12 @@ export default function CompleteThreadComponent(props: ThreadProps) {
     }, [getThread]);
 
     function setNewPostPage(posts: PageDTO<CompletePost>) {
+        //Setting loading to reset the component and hide posts for a second
+        setLoading(true)
+
         setThread({ ...thread, nrOfPosts: thread.nrOfPosts + 1, posts })
+        
+        setLoading(false)
     }
 
     if (loading || thread === undefined || checkIfObjectIsEmpty(thread)) {
