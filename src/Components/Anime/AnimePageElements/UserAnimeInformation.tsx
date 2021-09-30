@@ -1,4 +1,4 @@
-import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Portal, Select, TextField } from '@material-ui/core';
+import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Portal, Select, TextField, TextFieldProps } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
 import { ReactNode, useState } from "react";
 import { useEffect } from "react";
@@ -23,6 +23,9 @@ import React from 'react';
 
 import "../css/UserAnimeInformation.css"
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
+import DatePickerCollored from '../../Miscellaneous/DatePickerCollored';
+import CheckboxCollored from '../../Miscellaneous/CheckboxCollored';
+import SelectCollored from '../../Miscellaneous/SelectCollored';
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -39,10 +42,6 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: 0,
         },
     },
-    label: {
-        color: '#101010',
-        fontSize: '0.9rem'
-    },
     datePicker: {
         '& .css-i4bv87-MuiSvgIcon-root': {
             color: color
@@ -52,23 +51,9 @@ const useStyles = makeStyles((theme) => ({
             bottom: "-20px",
         }
     },
-    select: {
-        width: '100%',
-         '&:before': {
-            borderColor: color,
-        },
-        '&:after': {
-            borderColor: color,
-        },
-        '&:focus': {
-            borderColor: color,
-        },
-        '&:hover:not(.Mui-disabled):before': {
-            borderColor: color,
-        },
-        '& .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon': {
-            color: color,
-        }
+    label: {
+        color: '#101010',
+        fontSize: '0.9rem'
     },
     centerContent: {
         justifyContent: 'center',
@@ -152,17 +137,15 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             <form className="mainAnimeInformationForm">
                 <FormControl className={`${classes.inputSpace} isFavourite`}>
                     <Controller render={({field}) => (
-                        <FormControlLabel 
-                            control={
-                                <Checkbox 
-                                {...field}
-                                checked={field.value}
-                                onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
-                                icon={<FavoriteBorder />} 
-                                checkedIcon={<Favorite />} 
-                            />}
+                        <CheckboxCollored 
+                            field={field}
+                            checked={field.value}
+                            onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
+                            icon={<FavoriteBorder />} 
+                            checkedIcon={<Favorite />} 
                             className={classes.centerContent}
                             label="Is my Favourite"
+                            color={color}
                         />
                     )}
                     control={control}
@@ -172,15 +155,14 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
 
                 <FormControl className={`${classes.inputSpace} watchStartDate ${classes.datePicker}`}>
                     <Controller render={({field}) => (
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker 
-                                {...field}
-                                label="Watch start date"
-                                inputFormat="dd/MM/yyyy"
-                                onChange={data => setValue('watchStartDate', data as Date, setValueOptions)}
-                                renderInput={(params) => <TextField {...params} error={errors.watchStartDate !== undefined} helperText={errors.watchStartDate?.message} />}
-                            />
-                        </LocalizationProvider>
+                        <DatePickerCollored 
+                            field={field}
+                            label="Watch start date"
+                            color={color}
+                            inputFormat="dd/MM/yyyy"
+                            onChange={data => setValue('watchStartDate', data as Date, setValueOptions)}
+                            renderInput={(params : TextFieldProps) => <TextField {...params} error={errors.watchStartDate !== undefined} helperText={errors.watchStartDate?.message} />}
+                        />
                     )}
                     control={control}
                     name="watchStartDate"
@@ -189,16 +171,14 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
 
                 <FormControl className={`${classes.inputSpace} watchEndDate ${classes.datePicker}`}>
                     <Controller render={({field}) => (
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker 
-                                {...field}
-                                label="Watch end date"
-                                className={classes.datePicker}
-                                inputFormat="dd/MM/yyyy"
-                                onChange={data => setValue('watchEndDate', data as Date, setValueOptions)}
-                                renderInput={(params) => <TextField {...params} error={errors.watchEndDate !== undefined} helperText={errors.watchEndDate?.message}  />}
-                            />
-                        </LocalizationProvider>
+                        <DatePickerCollored 
+                            field={field}
+                            label="Watch end date"
+                            color={color}
+                            inputFormat="dd/MM/yyyy"
+                            onChange={data => setValue('watchEndDate', data as Date, setValueOptions)}
+                            renderInput={(params) => <TextField {...params} error={errors.watchEndDate !== undefined} helperText={errors.watchEndDate?.message} />}
+                        />
                     )}
                     control={control}
                     name="watchEndDate"
@@ -210,17 +190,14 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                         Episodes Seen
                     </InputLabel>
                     <Controller render={({ field }) => (
-                        <Select
-                            {...field}
+                        <SelectCollored
+                            field={field}
                             onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
-                            className={classes.select}
-                            labelId="episodesSeenLabel"
-                            error={errors.nrOfEpisodesSeen !== undefined}
-                        >
-                        {
-                            getEpisodeArray(airedEpisodes)
-                        }
-                        </Select>
+                            label="episodesSeenLabel"
+                            errors={errors.nrOfEpisodesSeen}
+                            options={getEpisodeArray(airedEpisodes)}
+                            color={color}
+                        />
                     )} 
                     control={control}
                     name="nrOfEpisodesSeen"
@@ -232,21 +209,20 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                         Status
                     </InputLabel>
                     <Controller render={({field}) => (
-                        <Select
-                            {...field}   
+                        <SelectCollored 
+                            field={field} 
                             onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
-                            className={classes.select}
-                            labelId="StatusLabel"
-                            error={errors.status !== undefined}
-                        >
-                        {
-                            AnimeUserStatusElements.map(status => (
-                                <MenuItem key={status} value={status}>
-                                    {status}
-                                </MenuItem>
-                            ))
-                        }
-                        </Select>
+                            label="StatusLabel"
+                            errors={errors.status}
+                            color={color}
+                            options={
+                                AnimeUserStatusElements.map(status => (
+                                    <MenuItem key={status} value={status}>
+                                        {status}
+                                    </MenuItem>
+                                ))
+                            }
+                        />
                     )}
                     control={control}
                     name="status"
@@ -258,21 +234,20 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                         Opinion
                     </InputLabel>
                     <Controller render={({field}) => (
-                        <Select
-                            {...field}
+                        <SelectCollored 
+                            field={field}
                             onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
-                            className={classes.select}
-                            labelId="GradeLabel"
-                            error={errors.status !== undefined}
-                        >
-                        {
-                            Grades.map((grade: Grade) => (
-                                <MenuItem key={grade.scale} value={grade.scale}>
-                                    {`${grade.scale}. ${grade.gradeName}`}
-                                </MenuItem>
-                            ))
-                        }
-                        </Select>
+                            label="GradeLabel"
+                            errors={errors.status}
+                            color={color}
+                            options={
+                                Grades.map((grade: Grade) => (
+                                    <MenuItem key={grade.scale} value={grade.scale}>
+                                        {`${grade.scale}. ${grade.gradeName}`}
+                                    </MenuItem>
+                                ))
+                            }
+                        />
                     )}
                     control={control}
                     name="grade"
