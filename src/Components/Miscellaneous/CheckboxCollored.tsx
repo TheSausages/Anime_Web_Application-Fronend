@@ -12,24 +12,26 @@ interface CheckboxColloredProps {
     onChange?: ((event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void);
 }
 
+const CheckboxColloredStyled = styled(Checkbox)({
+    '& .MuiSvgIcon-root': {
+        color: `var(--color)`,
+    },
+})
+
 export default function CheckboxCollored(props: CheckboxColloredProps) {
     let color = props.color ?? "rgb(36, 185, 44)";
-
-    const CheckboxCollored = styled(Checkbox)({
-        '& .MuiSvgIcon-root': {
-            color: color,
-        },
-    })
 
     return (
         <FormControlLabel 
             control={
-                <CheckboxCollored
+                <CheckboxColloredStyled
                     {...props.field}
                     checked={props.checked}
                     onChange={props.onChange}
                     icon={props.icon} 
                     checkedIcon={props.checkedIcon} 
+                
+                    style={{'--color': color} as React.CSSProperties}
             />}
             className={props.className}
             label={props.label}

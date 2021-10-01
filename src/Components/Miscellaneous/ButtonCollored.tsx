@@ -6,29 +6,36 @@ interface ButtonColloredProps {
     onClick?: () => void;
     disabled?: boolean;
     type?: "button" | "submit" | "reset" | undefined;
+    color?: string;
 }
 
 const ReviewButton = styled(Button)({
-    backgroundColor: 'rgb(34, 206, 43)',
-    background: 'rgb(34, 206, 43)',
+    background: `var(--color)`,
+    color: 'white',
     '&:hover': {
-        backgroundColor: 'rgb(56, 133, 49)',
-        borderColor: 'rgb(56, 133, 49)',
-        boxShadow: 'none',
+        backgroundColor: `var(--color)`,
+        borderColor: `var(--color)`,
+        color: 'white',
+        filter: 'brightness(92%)',
     },
     '&:active': {
-        boxShadow: 'none',
-        backgroundColor: 'rgb(47, 100, 42)',
-        borderColor: 'rgb(47, 100, 42)',
+        backgroundColor: `var(--color)`,
+        borderColor: `var(--color)`,
+        color: 'white',
+        filter: 'brightness(90%)',
     },
 });
 
 export default function ButtonCollored(props: ButtonColloredProps) {
+    let color = props.color ?? "rgb(36, 185, 44)";
+
     return (
         <ReviewButton variant="contained"
             onClick={props.onClick}
             type={props.type}
             disabled={props.disabled}
+
+            style={{'--color': color} as React.CSSProperties}
         >
             {props.text}
         </ReviewButton>

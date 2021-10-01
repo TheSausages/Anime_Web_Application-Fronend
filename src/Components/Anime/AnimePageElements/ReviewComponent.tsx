@@ -50,7 +50,7 @@ const schema = yup.object().shape({
 export function ReviewComponent(props: ReviewProps) {
     const classes = useStyles();
 
-    const { control, handleSubmit, formState: { errors, isValid } } = useForm<ReviewForm>({
+    const { control, handleSubmit, formState: { errors, isValid }, setValue } = useForm<ReviewForm>({
         resolver: yupResolver(schema),
         mode: "all",
         defaultValues: {
@@ -73,27 +73,31 @@ export function ReviewComponent(props: ReviewProps) {
                         <div className={classes.paddingTop} />
 
                         <Controller render={({field}) => (
-                            <TextFieldColored 
-                                field={field}
-                                errors={errors.reviewTitle}
-                                label="Review Title"
-                            />
-                        )}
-                        name="reviewTitle"
-                        control={control}
+                                <TextFieldColored 
+                                    field={field}
+                                    errors={errors.reviewTitle}
+                                    label="Review Title"
+                                    key="Review Title"
+                                />
+                            )}
+                            name="reviewTitle"
+                            control={control}
+                            key="reviewTitle"
                         />
 
-                        <Controller render={({field}) => (
-                            <TextFieldColored
-                                field={field}
-                                label="Review Text"
-                                errors={undefined}
-                                multiline={true}
-                                rows={8}
-                            />
-                        )}
-                        name="reviewText"
-                        control={control}
+                        <Controller render={({field}) => 
+                                <TextFieldColored
+                                    field={field}
+                                    label="Review Text"
+                                    errors={undefined}
+                                    multiline={true}
+                                    rows={8}
+                                    key="Review Text"
+                                />
+                            }
+                            name="reviewText"
+                            control={control}
+                            key="reviewText"
                         />
 
                         <div className={classes.reviewNumbers}>
