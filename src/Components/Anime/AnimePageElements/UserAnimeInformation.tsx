@@ -13,19 +13,16 @@ import { UserService } from "../../../Scripts/Services/UserService";
 import { snackbarError, snackbarInfo, snackbarWarning } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import { useSnackbar } from "notistack";
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import { DatePicker } from '@material-ui/lab';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
 import { ReviewComponent } from './ReviewComponent';
 import React from 'react';
-
-import "../css/UserAnimeInformation.css"
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
 import DatePickerCollored from '../../Miscellaneous/DatePickerCollored';
 import CheckboxCollored from '../../Miscellaneous/CheckboxCollored';
 import SelectCollored from '../../Miscellaneous/SelectCollored';
+
+import "../css/UserAnimeInformation.css"
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -270,7 +267,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
 }
 
 function getEpisodeArray(episodesAired: number): Array<ReactNode> {
-    return Array.from(Array(episodesAired + 1), (e,i)=>i)
+    return Array.from(Array(episodesAired), (e,i)=>i)
     .map((option: number) => (
         <MenuItem key={option} value={option}>
             {option}

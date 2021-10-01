@@ -17,21 +17,21 @@ export default function ForumSwitch(props: ForumSwitchProps) {
         <div>
             <Switch>
                 {/*These have Only Thread Button*/}
-                <Route exact path="/forum/Newest" ><ComponentWithNewThreadButton>
+                <Route exact path="/forum/Newest" ><ComponentWithNewThreadButton categories={categories} >
                     <NewestThreads />    
                 </ComponentWithNewThreadButton></Route>
-                <Route exact path="/forum/Search" ><ComponentWithNewThreadButton>
+                <Route exact path="/forum/Search" ><ComponentWithNewThreadButton categories={categories} >
                     <ThreadSearch />    
                 </ComponentWithNewThreadButton></Route>
                 <Route exact path="/forum/:category" render={(props) => 
-                    <ComponentWithNewThreadButton children={
+                    <ComponentWithNewThreadButton  categories={categories} children={
                         <ThreadsByCategory category={categories.find((category: ForumCategory) => category.categoryName === props.match.params.category)!} />
                     } />} 
                 />
 
                 {/*Custom number of Buttons, inside*/}
                 <Route exact path="/forum/thread/:id" render={(props) => 
-                    <CompleteThreadComponent threadId={Number(props.match.params.id)} />} 
+                    <CompleteThreadComponent threadId={Number(props.match.params.id)} categories={categories} />} 
                 />
             </Switch>
         </div>

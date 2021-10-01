@@ -23,3 +23,15 @@ export interface CompleteThread extends SimpleThread {
     text: string;
     posts: PageDTO<CompletePost>;
 }
+
+export interface CreateThread {
+    title: string;
+    text: string;
+    category: ForumCategory;
+    tags: Tag[];
+}
+
+export interface UpdateThread extends CreateThread {
+    threadId: number;
+    status: ThreadStatus;
+}

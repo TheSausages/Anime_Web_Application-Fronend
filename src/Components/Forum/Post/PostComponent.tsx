@@ -1,4 +1,4 @@
-import { CompletePost, CreatePost, PutPost } from "../../../data/Forum/Post";
+import { CompletePost, CreatePost, UpdatePost } from "../../../data/Forum/Post";
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from "react-router";

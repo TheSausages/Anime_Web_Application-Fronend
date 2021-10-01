@@ -1,12 +1,11 @@
 import { Dialog, DialogTitle, DialogActions, DialogContent } from "@material-ui/core";
-import { CreatePost, PutPost } from "../../../data/Forum/Post";
+import { CreatePost, UpdatePost } from "../../../data/Forum/Post";
 import * as yup from "yup"
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextFieldColored from "../../Miscellaneous/TextFieldColored";
 import { makeStyles } from "@material-ui/styles";
-import { classNames } from "react-select/src/utils";
 
 const useStyles = makeStyles((theme) => ({
     dialogContent: {
@@ -22,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface NewPostFormProps {
-    title: string,
+    title: string;
     open: boolean;
     close: () => void;
-    data?: PutPost;
-    onSubmit: (post: PutPost) => void;
+    data?: UpdatePost;
+    onSubmit: (post: UpdatePost) => void;
 }
 
 export default function PostForm(props: NewPostFormProps) {

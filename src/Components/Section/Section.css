@@ -1,7 +1,7 @@
 #Section {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-gap: 1%;
+    grid-gap: 3%;
     justify-items: center;
 }
 

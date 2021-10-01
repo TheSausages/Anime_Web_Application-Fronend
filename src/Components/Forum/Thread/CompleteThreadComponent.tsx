@@ -16,12 +16,14 @@ import NewThreadComponent from "./NewThreadComponent";
 import { CompletePost } from "../../../data/Forum/Post";
 import { PageDTO } from "../../../data/General/PageDTO";
 import { checkIfObjectIsEmpty } from "../../../Scripts/Utilities";
+import { ForumCategory } from "../../../data/Forum/ForumCategory";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
 
 interface ThreadProps {
     threadId: number;
+    categories: ForumCategory[];
 }
 
 export default function CompleteThreadComponent(props: ThreadProps) {
@@ -95,7 +97,7 @@ export default function CompleteThreadComponent(props: ThreadProps) {
             </div>
 
             <div className="NewElementButtons">
-                <NewThreadComponent />
+                <NewThreadComponent categories={props.categories} />
                 <NewPostButton setNewPosts={setNewPostPage} thread={thread} />
             </div>
         </div>

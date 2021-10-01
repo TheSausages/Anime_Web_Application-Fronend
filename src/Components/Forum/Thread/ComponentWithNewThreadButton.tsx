@@ -1,7 +1,9 @@
+import { ForumCategory } from "../../../data/Forum/ForumCategory";
 import NewThreadComponent from "./NewThreadComponent";
 
 interface ComponentWithNewThreadButtonProps {
     children: JSX.Element;
+    categories: ForumCategory[];
 }
 
 export default function ComponentWithNewThreadButton(props: ComponentWithNewThreadButtonProps) {
@@ -9,7 +11,7 @@ export default function ComponentWithNewThreadButton(props: ComponentWithNewThre
         <div>
             {props.children}
 
-            <NewThreadComponent />
+            <NewThreadComponent categories={props.categories} />
         </div>
     )
 }

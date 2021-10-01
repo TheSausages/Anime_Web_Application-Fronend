@@ -4,7 +4,7 @@ import { CompletePost, CreatePost } from "../../../data/Forum/Post";
 import { CompleteThread } from "../../../data/Forum/Thread";
 import { BackendError } from "../../../data/General/BackendError";
 import { PageDTO } from "../../../data/General/PageDTO";
-import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
+import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 import PostForm from "./PostForm";
@@ -21,7 +21,7 @@ export default function NewPostButton(props: NewPostComponentProps) {
     function createPost(post: CreatePost) {
         ForumService.createPostForThread(props.thread.threadId, post)
         .then((response: PageDTO<CompletePost>) => {
-            enqueueSnackbar("Your new post was created!", snackbarInfo)
+            enqueueSnackbar("Your new post was created!", snackBarSuccess)
             props.setNewPosts(response)
         })
         .catch((error: BackendError) => enqueueSnackbar(error.message, snackbarError))

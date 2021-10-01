@@ -34,6 +34,6 @@ export interface CreatePost {
     text: string;
 }
 
-export interface PutPost extends CreatePost {
+export interface UpdatePost extends CreatePost {
     postId: number;
 }

@@ -1,9 +1,10 @@
 import { ForumCategory } from "../../data/Forum/ForumCategory";
 import { ForumQuery } from "../../data/Forum/ForumQuery";
-import { performRequestWithType, HttpMethods } from "./ApiService";
-import { CompleteThread, SimpleThreadPage } from "../../data/Forum/Thread";
-import { CompletePost, CompletePostPage, CreatePost, PostUserStatus, PutPost } from "../../data/Forum/Post";
+import { performRequestWithType, HttpMethods, performRequestWithNoResponse } from "./ApiService";
+import { CompleteThread, CreateThread, SimpleThread, SimpleThreadPage, UpdateThread } from "../../data/Forum/Thread";
+import { CompletePost, CompletePostPage, CreatePost, PostUserStatus, UpdatePost } from "../../data/Forum/Post";
 import { PageDTO } from "../../data/General/PageDTO";
+import { Tag } from "../../data/Forum/Tag";
 
 export class ForumService {
     static getForumCategories(): Promise<ForumCategory[]> {
@@ -34,7 +35,19 @@ export class ForumService {
         return performRequestWithType<PageDTO<CompletePost>>(HttpMethods.POST, `/forum/thread/${threadId}/post`, true, post)
     }
 
-    static updatePostForThread(threadId: number, post: PutPost): Promise<CompletePost> {
+    static updatePostForThread(threadId: number, post: UpdatePost): Promise<CompletePost> {
         return performRequestWithType<CompletePost>(HttpMethods.PUT, `/forum/thread/${threadId}/post`, true, post)
+    }
+
+    static createThread(thread: CreateThread): Promise<any> {
+        return performRequestWithType<SimpleThread>(HttpMethods.POST, "/forum/thread", true, thread);
+    }
+
+    static updateThread(threadId: number, thread: UpdateThread): Promise<any> {
+        return performRequestWithNoResponse(HttpMethods.POST, `/forum/thread/${threadId}`, true, thread);
+    }
+
+    static getTags(): Promise<Tag[]> {
+        return performRequestWithType<Tag[]>(HttpMethods.GET, '/forum/tags', true)
     }
 }
