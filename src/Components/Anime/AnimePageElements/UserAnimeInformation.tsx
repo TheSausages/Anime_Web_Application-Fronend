@@ -190,7 +190,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                         <SelectCollored
                             field={field}
                             onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
-                            label="episodesSeenLabel"
+                            labelId="episodesSeenLabel"
                             errors={errors.nrOfEpisodesSeen}
                             options={getEpisodeArray(airedEpisodes)}
                             color={color}
@@ -209,7 +209,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                         <SelectCollored 
                             field={field} 
                             onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
-                            label="StatusLabel"
+                            labelId="StatusLabel"
                             errors={errors.status}
                             color={color}
                             options={
@@ -234,7 +234,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                         <SelectCollored 
                             field={field}
                             onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
-                            label="GradeLabel"
+                            labelId="GradeLabel"
                             errors={errors.status}
                             color={color}
                             options={

@@ -22,7 +22,7 @@ export default function Forum(props: ForumProps) {
     const getCategories = useCallback(async () => {
         await ForumService.getForumCategories()
         .then((response: ForumCategory[]) => {
-            setCategories(AdditionalForumCategories.concat(response))
+            setCategories(response)
         })
         .catch((error: BackendError) => {
             enqueueSnackbar(error.message, snackbarError)
@@ -48,7 +48,7 @@ export default function Forum(props: ForumProps) {
     return (
         <div id="MainForumContainer">
             <div id="ForumMenu">
-                <ForumMenu categories={categories}/>
+                <ForumMenu categories={AdditionalForumCategories.concat(categories)}/>
             </div>
 
             <div id="ForumPage">

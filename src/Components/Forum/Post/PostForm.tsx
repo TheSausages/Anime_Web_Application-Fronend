@@ -14,10 +14,14 @@ const useStyles = makeStyles((theme) => ({
         rowGap: 15,
         width: '95%',
         paddingBottom: 20,
+        '@media (max-width: 960px)': {
+            width: '85%',
+        },
     },
     paddingTop: {
         paddingTop: 1,
     },
+    
 }));
 
 interface NewPostFormProps {
@@ -55,27 +59,27 @@ export default function PostForm(props: NewPostFormProps) {
 
                 <DialogContent className={classes.dialogContent}>
                     <Controller render={({field}) => (
-                        <TextFieldColored 
-                            field={field}
-                            errors={errors.title}
-                            label="Post Title"
-                        />
-                    )}
-                    name="title"
-                    control={control}
+                            <TextFieldColored 
+                                field={field}
+                                errors={errors.title}
+                                label="Post Title"
+                            />
+                        )}
+                        name="title"
+                        control={control}
                     />
 
                     <Controller render={({field}) => (
-                        <TextFieldColored 
-                            field={field}
-                            errors={errors.text}
-                            label="Post Text"
-                            multiline={true}
-                            rows={8}
-                        />
-                    )}
-                    name="text"
-                    control={control}
+                            <TextFieldColored 
+                                field={field}
+                                errors={errors.text}
+                                label="Post Text"
+                                multiline={true}
+                                rows={8}
+                            />
+                        )}
+                        name="text"
+                        control={control}
                     />
                 </DialogContent>
 

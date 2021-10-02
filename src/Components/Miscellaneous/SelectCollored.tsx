@@ -5,7 +5,7 @@ import { ControllerRenderProps, FieldError, FieldPath, FieldValues } from "react
 
 interface SelectColloredProps {
     field: ControllerRenderProps<FieldValues, FieldPath<FieldValues>>;
-    label: string;
+    labelId: string;
     className?: string;
     onChange: (event: SelectChangeEvent<any>, child: ReactNode) => void;
     color?: string;
@@ -46,7 +46,7 @@ export default function SelectCollored(props: SelectColloredProps) {
             {...props.field}
             onChange={props.onChange}
             className={`${props.className} ${useStyles().select}`}
-            labelId={props.label}
+            labelId={props.labelId}
             error={props.errors !== undefined}
         >
         {
