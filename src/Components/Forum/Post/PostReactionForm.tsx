@@ -17,7 +17,6 @@ import { BackendError } from '../../../data/General/BackendError';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
-import { checkIfGivenUserLoggedIn } from '../../../Scripts/Utilities';
 
 interface PostReactionFormProps {
     nrOfPlus: number;

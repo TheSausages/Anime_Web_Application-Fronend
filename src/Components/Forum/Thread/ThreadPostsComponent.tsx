@@ -33,7 +33,7 @@ export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
             setLoading(false)
             setError("An unknown Error occured!")
         }
-    }, [props.postsPage])
+    }, [props.postsPage, postsPage])
 
     const getMorePosts= useCallback(async () => {
         await ForumService.getPostsForThread(threadId, postPage.pageNumber + 1)

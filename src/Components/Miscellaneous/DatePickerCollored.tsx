@@ -28,9 +28,9 @@ datePicker: {
     },
  */
 export default function DatePickerCollored(props: DatePickerColloredProps) {
-    let color = props.color ?? "rgb(36, 185, 44)";
+    /*let color = props.color ?? "rgb(36, 185, 44)";
 
-    /*const DatePickerColloredStyles = styled(DatePicker)({
+    const DatePickerColloredStyles = styled(DatePicker)({
         '& .MuiSvgIcon-root': {
             color: color,
         },

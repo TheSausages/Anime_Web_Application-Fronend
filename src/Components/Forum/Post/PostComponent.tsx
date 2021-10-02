@@ -1,4 +1,4 @@
-import { CompletePost, CreatePost, UpdatePost } from "../../../data/Forum/Post";
+import { CompletePost, CreatePost } from "../../../data/Forum/Post";
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from "react-router";
@@ -8,11 +8,10 @@ import { useState } from "react";
 import PostForm from "./PostForm";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import { useSnackbar } from "notistack";
-
-import "../css/PostComponent.css"
 import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
-import { useAuth } from "../../AuthenticationAndLogin/Auth";
+
+import "../css/PostComponent.css"
 
 interface PostProps {
     post: CompletePost;

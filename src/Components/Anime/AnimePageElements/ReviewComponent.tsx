@@ -50,7 +50,7 @@ const schema = yup.object().shape({
 export function ReviewComponent(props: ReviewProps) {
     const classes = useStyles();
 
-    const { control, handleSubmit, formState: { errors, isValid }, setValue } = useForm<ReviewForm>({
+    const { control, handleSubmit, formState: { errors, isValid } } = useForm<ReviewForm>({
         resolver: yupResolver(schema),
         mode: "all",
         defaultValues: {
