@@ -4,7 +4,7 @@ import React, { ChangeEventHandler } from "react";
 import { FieldError } from "react-hook-form";
 
 interface TextFieldColoredProps {
-    field: Object;
+    field?: Object;
     errors?: FieldError;
     label: string;
     type?: string;

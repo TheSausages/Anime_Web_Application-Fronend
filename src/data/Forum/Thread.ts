@@ -1,3 +1,4 @@
+import { NestedValue } from "react-hook-form";
 import { PageDTO } from "../General/PageDTO";
 import { SimpleUser } from "../General/User/SimpleUser";
 import { ForumCategory } from "./ForumCategory";
@@ -28,7 +29,7 @@ export interface CreateThread {
     title: string;
     text: string;
     category: ForumCategory;
-    tags: Tag[];
+    tags: NestedValue<Tag[]>;
 }
 
 export interface UpdateThread extends CreateThread {

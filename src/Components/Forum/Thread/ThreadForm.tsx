@@ -11,12 +11,13 @@ import { useSnackbar } from "notistack";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import { BackendError } from "../../../data/General/BackendError";
 import { snackbarError } from "../../../data/General/SnackBar";
-import { ThreadStatus, ThreadStatusArray } from "../../../data/Forum/Types";
+import { ThreadStatus, ThreadStatusArray, TagImportance } from "../../../data/Forum/Types";
 import Loading from "../../Loading/Loading";
 import { Controller, useForm } from "react-hook-form";
 import TextFieldColored from "../../Miscellaneous/TextFieldColored";
 import SelectCollored from "../../Miscellaneous/SelectCollored";
 import { checkIfObjectIsEmpty } from "../../../Scripts/Utilities";
+import TagInput from "../TagInput";
 
 interface NewThreadFormProps {
     title: string;
@@ -24,7 +25,7 @@ interface NewThreadFormProps {
     close: () => void;
     categories: ForumCategory[];
     data?: UpdateThread;
-    onSubmit?: (thread: UpdateThread) => void;
+    onSubmit: (thread: UpdateThread) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -91,7 +92,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
 
     const getTags = useCallback(async () => {
         await ForumService.getTags()
-        .then((response: Tag[]) => setTags({...response}))
+        .then((response: Tag[]) => setTags([...response]))
         .catch((error: BackendError) => {
             enqueueSnackbar(error.message, snackbarError)
             close();
@@ -114,7 +115,12 @@ export default function ThreadForm(props: NewThreadFormProps) {
             categoryName: yup.string(),
             categoryDescription: yup.string()
         }).required("Thread must have a category!"),
-        tags: yup.array().of(yup.mixed<Tag>()).required("Thread must have at least 1 tag!"),
+        tags: yup.array().of(yup.object().shape({
+            tagId: yup.number(),
+            tagName: yup.string(),
+            tagImportance: yup.mixed<TagImportance>(),
+            tagColor: yup.string()
+        })).min(1, "Thread must have at least 1 tag!"),
         status: yup.mixed<ThreadStatus>().required("Thread must have a valid status!")
     })
 
@@ -133,10 +139,10 @@ export default function ThreadForm(props: NewThreadFormProps) {
     if (loading) {
         return <Loading error={error}/>
     }
-
+    
     return (
         <Dialog open={open} fullWidth maxWidth="lg">
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogTitle>
                     {title}
                 </DialogTitle>
@@ -162,11 +168,14 @@ export default function ThreadForm(props: NewThreadFormProps) {
                                 <SelectCollored 
                                     field={field}
                                     labelId="CategoryLabel"
-                                    onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
+                                    onChange={category => {
+                                        console.log(category)
+                                        setValue('category', category.target.value as ForumCategory, setValueOptions)
+                                    }}
                                     errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
                                     options={
                                         props.categories.map((category: ForumCategory) => (
-                                            <MenuItem key={category.categoryId} value={`{categoryId: ${category.categoryId}, categoryName: ${category.categoryName}, categoryDescription: ${category.categoryDescription}}`} >
+                                            <MenuItem key={category.categoryId} value={JSON.stringify(category)} >
                                                 {category.categoryName}
                                             </MenuItem>
                                         ))
@@ -213,6 +222,18 @@ export default function ThreadForm(props: NewThreadFormProps) {
                         />
                     )}
                         name="text"
+                        control={control}
+                    />
+
+                    <Controller render={({field}) => (
+                        tags && <TagInput
+                            availableTags={tags}
+                            field={field}
+                            errors={errors.tags}
+                            onChange={(event, tags: Tag[]) => setValue('tags', tags, setValueOptions)}
+                        />
+                    )}
+                        name="tags"
                         control={control}
                     />
                 </DialogContent>

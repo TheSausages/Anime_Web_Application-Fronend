@@ -1,4 +1,4 @@
-import { CompletePost, CreatePost } from "../../../data/Forum/Post";
+import { CompletePost, CreatePost, UpdatePost } from "../../../data/Forum/Post";
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from "react-router";
@@ -28,7 +28,7 @@ export default function PostComponent(props: PostProps) {
     const history = useHistory();
 
     function editPost(editPost: CreatePost) {
-        ForumService.updatePostForThread(threadId, {...editPost, postId: post.postId})
+        ForumService.updatePostForThread(threadId, {...editPost, postId: post.postId} as UpdatePost)
         .then((response: CompletePost) => {
             enqueueSnackbar("Post updated successfully!", snackbarInfo);
             setPost(response);
