@@ -16,7 +16,6 @@ interface ThreadPostsComponentProps {
 
 export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
     const { postsPage, threadId } = props;
-
     const [postPage, setPostPage] = useState<CompletePostPage>(postsPage)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string>();
@@ -56,10 +55,6 @@ export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
     }, []);
 
     if (loading || postPage === undefined) {
-        return <Loading error={error}/>
-    }
-
-    if (postPage!.content.length < 1) {
         return <Loading error={error}/>
     }
 

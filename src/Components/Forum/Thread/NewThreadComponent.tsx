@@ -5,7 +5,7 @@ import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 import ThreadForm from "./ThreadForm";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { BackendError } from "../../../data/General/BackendError";
 import { ForumCategory } from "../../../data/Forum/ForumCategory";
 
