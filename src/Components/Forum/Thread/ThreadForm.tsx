@@ -172,7 +172,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
                                     onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
                                     errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
                                     options={
-                                        props.categories.map((category: ForumCategory) => (
+                                        categories.map((category: ForumCategory) => (
                                             <MenuItem key={category.categoryId} value={JSON.stringify(category)} >
                                                 {category.categoryName}
                                             </MenuItem>

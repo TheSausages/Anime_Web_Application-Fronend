@@ -119,7 +119,9 @@ export default function CompleteThreadComponent(props: ThreadProps) {
 
             <div className="NewElementButtons">
                 <NewThreadComponent categories={props.categories} />
-                <NewPostButton setNewPosts={setNewPostPage} thread={thread} />
+                { (thread.status === "Open" || checkIfGivenUserLoggedIn(thread.creator.username)) &&
+                    <NewPostButton setNewPosts={setNewPostPage} thread={thread} />
+                }
             </div>
         </div>
     )
