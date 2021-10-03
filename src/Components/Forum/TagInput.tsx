@@ -23,6 +23,12 @@ export default function TagInput(props: TagInputProps) {
             options={props.availableTags}
             getOptionLabel={(option: Tag) => option.tagName}
             popupIcon={<AddIcon htmlColor="rgb(36, 185, 44)" />}
+            isOptionEqualToValue={
+                (option, value) => option.tagId === value.tagId &&
+                                option.tagColor === value.tagColor &&
+                                option.tagImportance === value.tagImportance &&
+                                option.tagName === value.tagName
+            }
             renderTags={(tagValue, getTagProps) =>
                 tagValue.map((tag: Tag, index) => (
                     <Chip

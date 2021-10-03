@@ -11,7 +11,7 @@
     "ThreadTitle ThreadCreator"
     "ThreadText ThreadText"
     "ThreadTimes ThreadCategory"
-    "ThreadTags ThreadTags"; 
+    "ThreadEditText ThreadTags"; 
     justify-content: stretch; 
     align-content: stretch; 
     justify-items: stretch; 
@@ -61,6 +61,16 @@
 
 .ThreadLink:active {
     color: rgb(47, 100, 42);
+}
+
+.ThreadEditText {
+    grid-area: ThreadEditText;
+    text-align: start;
+    margin-block-end: 0;
+    align-self: flex-end;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: rgb(34, 206, 43);
 }
 
 #Posts {

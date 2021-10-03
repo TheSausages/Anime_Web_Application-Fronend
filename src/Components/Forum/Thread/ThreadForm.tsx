@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogActions, DialogContent, FormControl, InputLabel, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { UpdateThread } from "../../../data/Forum/Thread";
+import { CompleteThread, UpdateThread } from "../../../data/Forum/Thread";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup";
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
@@ -24,7 +24,7 @@ interface NewThreadFormProps {
     open: boolean;
     close: () => void;
     categories: ForumCategory[];
-    data?: UpdateThread;
+    data?: CompleteThread;
     onSubmit: (thread: UpdateThread) => void;
 }
 
@@ -124,13 +124,14 @@ export default function ThreadForm(props: NewThreadFormProps) {
         status: yup.mixed<ThreadStatus>().required("Thread must have a valid status!")
     })
 
-    const { control, handleSubmit, setValue, getValues, formState: { errors, isValid } } = useForm<UpdateThread>({
+    let cat1 = JSON.stringify(data?.category) ?? ""
+    const { control, handleSubmit, setValue, formState: { errors, isValid } } = useForm<UpdateThread>({
         resolver: yupResolver(schema),
         mode: 'all',
         defaultValues: {
             title: data?.title ?? "",
             text: data?.text ?? "",
-            category: data?.category as ForumCategory ?? "",
+            category: cat1 as any as ForumCategory,
             tags: data?.tags ?? [],
             status: data?.status ?? "Open"
         }
@@ -168,10 +169,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
                                 <SelectCollored 
                                     field={field}
                                     labelId="CategoryLabel"
-                                    onChange={category => {
-                                        console.log(category)
-                                        setValue('category', category.target.value as ForumCategory, setValueOptions)
-                                    }}
+                                    onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
                                     errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
                                     options={
                                         props.categories.map((category: ForumCategory) => (
@@ -196,7 +194,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
                                     field={field}
                                     labelId="StatusLabel"
                                     onChange={category => setValue('status', category.target.value as ThreadStatus, setValueOptions)}
-                                    errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
+                                    errors={errors.status}
                                     options={
                                         ThreadStatusArray.map((status: ThreadStatus) => (
                                             <MenuItem key={status} value={status} >

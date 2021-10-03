@@ -8,6 +8,8 @@ import { ForumService } from "../../../Scripts/Services/ForumService";
 import Loading from "../../Loading/Loading";
 import SimpleThreadComponent from "./SimpleThreadComponent";
 
+import "../css/ThreadByCategory.css"
+
 interface ThreadsByCategoryProps {
     category: ForumCategory;
 }
@@ -44,13 +46,11 @@ export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
         return <Loading error={error}/>
     }
 
-    if (threads!.content.length < 1) {
-        return <Loading error={error}/>
-    }
-
     return (
         <div>
-            {
+            { threads!.content.length < 1 ?
+                <div className="NoPostsText">No Posts exist for this category!</div>
+            :
                 threads.content.map((value: SimpleThread) => (
                     <SimpleThreadComponent thread={value} key={value.threadId} />
                 ))
