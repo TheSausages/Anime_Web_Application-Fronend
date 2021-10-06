@@ -15,7 +15,7 @@ export class ForumService {
         return performRequestWithType<SimpleThreadPage>(HttpMethods.GET, `/forum/thread/newest/${page}`, true)
     }
 
-    static searchThreads(query: ForumQuery, page: number): Promise<SimpleThreadPage> {
+    static searchThreadsByQuery(query: ForumQuery, page: number): Promise<SimpleThreadPage> {
         return performRequestWithType<SimpleThreadPage>(HttpMethods.POST, `/forum/search/${page}`, true, query)
     }
 

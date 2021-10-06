@@ -13,6 +13,24 @@ interface SelectColloredProps {
     options: ReactNode[];
 }
 
+/*
+in FormControl
+select: {
+        '& .MuiSelect-select.MuiSelect-outlined.MuiOutlinedInput-input': {
+            padding: '12px 14px',
+        },
+        '@media (max-width: 960px)': {
+            width: '40vw',
+        },
+        "& .MuiOutlinedInput-notchedOutline": {
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: `2px solid ${color}`,
+            borderRadius: 0,
+        },
+    },
+*/
 export default function SelectCollored(props: SelectColloredProps) {
     let color = props.color ?? "rgb(36, 185, 44)";
 

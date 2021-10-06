@@ -3,8 +3,8 @@ import { Titles } from "../data/Anime/Smaller/Titles";
 
 export function checkIfLoggedIn(): boolean {
     const accessToken = localStorage.getItem('accessToken')
-    const username = localStorage.getItem('username')
-    return (username && accessToken && accessToken !== 'undefined') ? true : false;
+    const refreshToken = localStorage.getItem('refreshToken')
+    return (refreshToken && accessToken && accessToken !== 'undefined') ? true : false;
 }
 
 export function checkIfGivenUserLoggedIn(username: string): boolean {

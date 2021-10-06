@@ -21,7 +21,7 @@ export default function ForumSwitch(props: ForumSwitchProps) {
                     <NewestThreads />    
                 </ComponentWithNewThreadButton></Route>
                 <Route exact path="/forum/Search" ><ComponentWithNewThreadButton categories={categories} >
-                    <ThreadSearch />    
+                    <ThreadSearch categories={categories} />    
                 </ComponentWithNewThreadButton></Route>
                 <Route exact path="/forum/:category" render={(props) => 
                     <ComponentWithNewThreadButton  categories={categories} children={

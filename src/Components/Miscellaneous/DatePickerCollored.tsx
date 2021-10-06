@@ -18,13 +18,24 @@ interface DatePickerColloredProps {
 
 /*Add this to formcontroll with the datePicker:
 datePicker: {
-        '& .css-i4bv87-MuiSvgIcon-root': {
-            color: color
+        '& .MuiOutlinedInput-input.MuiInputBase-input.MuiInputBase-inputAdornedEnd': {
+            padding: '12px 14px',
+            textAlign: 'start',
+        },
+        '& .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium': {
+            color: color,
         },
         "& .MuiFormHelperText-root": {
             position: "absolute",
             bottom: "-20px",
-        }
+        },
+        "& .MuiOutlinedInput-notchedOutline": {
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: `2px solid ${color}`,
+            borderRadius: 0,
+        },
     },
  */
 export default function DatePickerCollored(props: DatePickerColloredProps) {

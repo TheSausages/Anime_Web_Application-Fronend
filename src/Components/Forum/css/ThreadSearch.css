@@ -1,0 +1,65 @@
+.SearchOptions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 2px 2px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "minCreationInput minModificationInput minNrOfPostsInput TitleInput CategoryInput"
+        "maxCreationInput maxModificationInput maxNrOfPostsInput CreatorUsernameInput StatusInput"
+        "TagsInput TagsInput TagsInput TagsInput TagsInput";
+}
+
+.SearchOptions > *:not(.TagsInput) {
+    width: 10vw;
+    justify-content: end;
+    min-height: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+}
+
+.minNrOfPostsInput { grid-area: minNrOfPostsInput; }
+
+.maxNrOfPostsInput { grid-area: maxNrOfPostsInput; }
+  
+.minModificationInput { grid-area: minModificationInput; }
+
+.maxModificationInput { grid-area: maxModificationInput; }
+  
+.minCreationInput { grid-area: minCreationInput; }
+
+.maxCreationInput { grid-area: maxCreationInput; }
+  
+.TitleInput { grid-area: TitleInput; }
+  
+.CreatorUsernameInput { grid-area: CreatorUsernameInput; }
+
+.CategoryInput { grid-area: CategoryInput; }
+
+.StatusInput { grid-area: StatusInput; }
+  
+.TagsInput { 
+    grid-area: TagsInput;
+
+    margin: 10px 0;
+}
+
+@media screen and (max-width: 960px) {
+    .SearchOptions {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "minCreationInput maxCreationInput"
+            "minModificationInput maxModificationInput"
+            "minNrOfPostsInput maxNrOfPostsInput"
+            "TitleInput CreatorUsernameInput"
+            "CategoryInput StatusInput"
+            "TagsInput TagsInput";
+    }
+
+    .SearchOptions > *:not(.TagsInput) {
+        width: 40vw;
+    }
+}
+  

@@ -1,14 +1,15 @@
 import { useSnackbar } from "notistack";
 import { useState, useCallback, useEffect } from "react";
 import { ForumCategory } from "../../../data/Forum/ForumCategory";
-import { SimpleThread, SimpleThreadPage } from "../../../data/Forum/Thread";
+import { SimpleThreadPage } from "../../../data/Forum/Thread";
 import { BackendError } from "../../../data/General/BackendError";
 import { snackbarError } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import Loading from "../../Loading/Loading";
-import SimpleThreadComponent from "./SimpleThreadComponent";
+import { ForumQuery } from "../../../data/Forum/ForumQuery";
 
 import "../css/ThreadByCategory.css"
+import ThreadQueryResults from "./ThreadQueryResults";
 
 interface ThreadsByCategoryProps {
     category: ForumCategory;
@@ -21,7 +22,7 @@ export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
     const { enqueueSnackbar } = useSnackbar();
 
     const getByCategory = useCallback(async (threads: SimpleThreadPage) => {
-        await ForumService.searchThreads({category: props.category}, threads.pageNumber ?? -1 + 1)
+        await ForumService.searchThreadsByQuery({category: props.category} as ForumQuery, threads.pageNumber ?? -1 + 1)
         .then((response: SimpleThreadPage) => setThreads({...response, content: [ ...threads?.content ?? [], ...response.content ]}))
         .catch((error: BackendError) => {
             setError(error.message)
@@ -47,14 +48,6 @@ export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
     }
 
     return (
-        <div>
-            { threads!.content.length < 1 ?
-                <div className="NoPostsText">No Posts exist for this category!</div>
-            :
-                threads.content.map((value: SimpleThread) => (
-                    <SimpleThreadComponent thread={value} key={value.threadId} />
-                ))
-            }
-        </div>
+        <ThreadQueryResults threads={threads} getMore={getByCategory} />
     )
 }

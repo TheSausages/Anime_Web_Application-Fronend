@@ -1,5 +1,5 @@
 import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, Chip, styled, TextField } from "@mui/material";
-import { SyntheticEvent } from "react";
+import React, { SyntheticEvent } from "react";
 import { ControllerRenderProps, FieldError, FieldPath, FieldValues } from "react-hook-form";
 import { Tag } from "../../data/Forum/Tag";
 import AddIcon from '@material-ui/icons/Add';
@@ -9,20 +9,22 @@ interface TagInputProps {
     field: ControllerRenderProps<FieldValues, FieldPath<FieldValues>>;
     className?: string;
     errors?: FieldError;
+    color?: string;
     onChange: (event: SyntheticEvent<Element, Event>, value: any[], reason: AutocompleteChangeReason, details?: AutocompleteChangeDetails<any> | undefined) => void;
 }
 
 //Bacause a lot of options in renderInput, need to use normal TextField and customize it here
 export default function TagInput(props: TagInputProps) {
-
+    let color = props.color ?? "rgb(36, 185, 44)";
 
     return (
         <Autocomplete multiple 
+            className={props.className}
             value={props.field.value}
             onChange={props.onChange}
             options={props.availableTags}
             getOptionLabel={(option: Tag) => option.tagName}
-            popupIcon={<AddIcon htmlColor="rgb(36, 185, 44)" />}
+            popupIcon={<AddIcon htmlColor={color} />}
             isOptionEqualToValue={
                 (option, value) => option.tagId === value.tagId &&
                                 option.tagColor === value.tagColor &&
@@ -38,7 +40,7 @@ export default function TagInput(props: TagInputProps) {
                 ))
             }
             renderInput={(params) => (
-                <TextFieldStyled {...params} label="Tags" variant="standard" 
+                <TextFieldStyled {...params} label="Tags" variant="standard" style={{'--color': color} as React.CSSProperties}
                     error={props.errors !== undefined} helperText={props.errors?.message} />
             )}
         />
@@ -47,22 +49,22 @@ export default function TagInput(props: TagInputProps) {
 
 const TextFieldStyled = styled(TextField)({
     '& .MuiInputLabel-root.Mui-focused': {
-        color: 'rgb(36, 185, 44)',
+        color: `var(--color)`,
     },
     "& .MuiInputBase-root:before": {
-        borderBottom: `2px solid rgb(36, 185, 44)`,
+        borderBottom: `2px solid var(--color)`,
         "& .Mui-error": {
             borderBottom: '#d32f2f',
         },
     },
     "& .MuiInputBase-root:after": {
-        borderBottom: '2px solid rgb(36, 185, 44)',
+        borderBottom: `2px solid var(--color)`,
         "& .Mui-error": {
             borderBottom: '#d32f2f',
         },
     },
     "& .MuiInputBase-input:before": {
-        borderBottom: '2px solid rgb(36, 185, 44)',
+        borderBottom: `2px solid var(--color)`,
     },
     "& .MuiInputBase-input": {
         borderBottom: 'none',
@@ -72,7 +74,7 @@ const TextFieldStyled = styled(TextField)({
         },
     },
     "& .MuiInputBase-input:after": {
-        borderBottom: `2px solid rgb(36, 185, 44)`,
+        borderBottom: `2px solid var(--color)`,
         "& .Mui-error": {
             color: '#d32f2f',
             borderBottom: '#d32f2f',

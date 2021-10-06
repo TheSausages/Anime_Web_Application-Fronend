@@ -80,17 +80,21 @@ function handleError(response: Response) {
     })
 }
 
-function refreshTokens() {
-    fetch(`${backendUrl}/auth/refreshToken`, {
+async function refreshTokens() {
+    await fetch(`${backendUrl}/auth/refreshToken`, {
         method: "POST",
         headers: getHeaders(false),
         body: JSON.stringify({refreshToken: localStorage.getItem('refreshToken')})
     })
     .then(data => data.json())
     .then((data: AuthenticationToken) => {
+        if (data.expires_in) {
+            data.expires_in = 15
+        }
+
         localStorage.setItem('accessToken', data.access_token);
         localStorage.setItem('refreshToken', data.refresh_token);
-        data.expires_in && localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+        localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
     })
     .catch((error: BackendError) => {
         localStorage.clear();
