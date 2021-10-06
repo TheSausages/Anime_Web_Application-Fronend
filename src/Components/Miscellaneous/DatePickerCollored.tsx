@@ -1,108 +1,75 @@
-import { ControllerRenderProps, FieldPath, FieldValues } from "react-hook-form";
-import { TextFieldProps } from "@material-ui/core";
+import { Control, Controller } from "react-hook-form";
+import { FormControl, TextFieldProps } from "@material-ui/core";
 import DatePicker from "@material-ui/lab/DatePicker";
 import { LocalizationProvider } from "@material-ui/lab";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import { makeStyles } from "@material-ui/styles";
+
 //Errors in renderInput
 interface DatePickerColloredProps {
-    field: ControllerRenderProps<FieldValues, FieldPath<FieldValues>>;
     label: string;
-    className?: string;
+    datePickerClassName?: string;
+    formControlClassName?: string;
+    formControlName: string;
+    control: Control<any> | undefined
     inputFormat: string;
     renderInput: (params: TextFieldProps) => JSX.Element;
     onChange: (date: unknown, keyboardInputValue?: string | undefined) => void;
     color?: string;
 }
 
-//As of now, DatePicker is not a functional component, so styled() wont work(I think) 
-
-/*Add this to formcontroll with the datePicker:
-datePicker: {
-        '& .MuiOutlinedInput-input.MuiInputBase-input.MuiInputBase-inputAdornedEnd': {
-            padding: '12px 14px',
-            textAlign: 'start',
-        },
-        '& .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium': {
-            color: color,
-        },
-        "& .MuiFormHelperText-root": {
-            position: "absolute",
-            bottom: "-20px",
-        },
-        "& .MuiOutlinedInput-notchedOutline": {
-            borderTop: 'none',
-            borderRight: 'none',
-            borderLeft: 'none',
-            borderBottom: `2px solid ${color}`,
-            borderRadius: 0,
-        },
-    },
- */
 export default function DatePickerCollored(props: DatePickerColloredProps) {
-    /*let color = props.color ?? "rgb(36, 185, 44)";
+    let color = props.color ?? "rgb(36, 185, 44)";
 
-    const DatePickerColloredStyles = styled(DatePicker)({
-        '& .MuiSvgIcon-root': {
-            color: color,
-        },
-        '& .MuiInputLabel-root.Mui-focused': {
-            color: color,
-        },
-        "& .MuiInputBase-root:before": {
-            borderBottom: 'none',
-        },
-        "& .MuiInputBase-root:after": {
-            borderBottom: `2px solid ${color}`,
-            "& .Mui-error": {
-                borderBottom: '#d32f2f',
+    const useStyles = makeStyles((theme) => ({
+        datePicker: {
+            '& .MuiOutlinedInput-input.MuiInputBase-input': {
+                padding: '12px 0',
             },
-        },
-        "& .MuiInputBase-input:before": {
-            borderBottom: 'none',
-        },
-        "& .MuiInputBase-input": {
-            borderBottom: `2px solid ${color}`,
-            "& .Mui-error": {
-                borderBottom: '#d32f2f',
+            '& .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium': {
+                color: color,
             },
-        },
-        "& .MuiInputBase-input:after": {
-            borderBottom: `2px solid ${color}`,
-            "& .Mui-error": {
-                borderBottom: '#d32f2f',
+            "& .MuiFormHelperText-root": {
+                position: "absolute",
+                bottom: "-20px",
             },
-        },
-        "& .MuiInputBase-multiline:before": {
-            borderBottom: 'none',
-        },
-        "& .MuiInputBase-multiline": {
-            padding: 0,
-            "& .Mui-error": {
-                borderBottom: '#d32f2f',
+            "& .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined": {
+                left: "-0.7vw",
+                '@media (max-width: 960px)': {
+                    left: "-3vw",
+                },
             },
-        },
-        "& .MuiInputBase-multiline:after": {
-            borderBottom: `2px solid ${color}`,
-            "& .Mui-error": {
-                borderBottom: '#d32f2f',
+            "& .MuiOutlinedInput-notchedOutline": {
+                borderTop: 'none',
+                borderRight: 'none',
+                borderLeft: 'none',
+                borderBottom: `2px solid ${color}`,
+                borderRadius: 0,
             },
-        },
-        "& .MuiFormHelperText-root": {
-            position: "absolute",
-            bottom: "-20px"
-        },
-    })*/
+            '@media (max-width: 960px)': {
+                width: '40vw',
+            },
+        }
+    }));
 
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker className={props.className}
-                {...props.field}
-                label={props.label}
-                inputFormat={props.inputFormat}
-                onChange={props.onChange}
-                renderInput={props.renderInput}
+        <FormControl className={`${useStyles().datePicker} ${props.formControlClassName}`}>
+            <Controller render={({field}) => (
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
+                        {...field}
+                        label={props.label}
+                        inputFormat={props.inputFormat}
+                        onChange={props.onChange}
+                        renderInput={props.renderInput}
+                        className={props.datePickerClassName}
+                    />
+                </LocalizationProvider>
+                )}
+            control={props.control}
+            name={props.formControlName}
             />
-        </LocalizationProvider>
+        </FormControl>
     )
 }

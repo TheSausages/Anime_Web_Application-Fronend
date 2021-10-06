@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Portal, TextField, TextFieldProps } from '@material-ui/core';
+import { MenuItem, Portal, TextField, TextFieldProps } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
 import { ReactNode, useState } from "react";
 import { useEffect } from "react";
@@ -7,7 +7,7 @@ import { getRandomColor } from "../../../Scripts/Utilities";
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FuzzyDate, getDateFromFuzzy } from "../../../data/Anime/Smaller/FuzzyDate";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useCallback } from "react";
 import { UserService } from "../../../Scripts/Services/UserService";
 import { snackbarError, snackbarInfo, snackbarWarning } from "../../../data/General/SnackBar";
@@ -38,15 +38,6 @@ const useStyles = makeStyles((theme) => ({
             borderBottom: `1px solid ${color}`,
             borderRadius: 0,
         },
-    },
-    datePicker: {
-        '& .css-i4bv87-MuiSvgIcon-root': {
-            color: color
-        },
-        "& .MuiFormHelperText-root": {
-            position: "absolute",
-            bottom: "-20px",
-        }
     },
     label: {
         color: '#101010',
@@ -132,124 +123,81 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     return (
         <div className="userAnimeInformation">
             <form className="mainAnimeInformationForm">
-                <FormControl className={`${classes.inputSpace} isFavourite`}>
-                    <Controller render={({field}) => (
-                        <CheckboxCollored 
-                            field={field}
-                            checked={field.value}
-                            onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
-                            icon={<FavoriteBorder />} 
-                            checkedIcon={<Favorite />} 
-                            className={classes.centerContent}
-                            label="Is my Favourite"
-                            color={color}
-                        />
-                    )}
+                <CheckboxCollored className={classes.centerContent}
+                    onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
+                    icon={<FavoriteBorder />} 
+                    checkedIcon={<Favorite />} 
+                    label="Is my Favourite"
+                    color={color}
                     control={control}
-                    name="isFavourite"
-                    />
-                </FormControl>
+                    formControlName="isFavourite"
+                    formControlClassName={`${classes.inputSpace} isFavourite`}
+                />
 
-                <FormControl className={`${classes.inputSpace} watchStartDate ${classes.datePicker}`}>
-                    <Controller render={({field}) => (
-                        <DatePickerCollored 
-                            field={field}
-                            label="Watch start date"
-                            color={color}
-                            inputFormat="dd/MM/yyyy"
-                            onChange={data => setValue('watchStartDate', data as Date, setValueOptions)}
-                            renderInput={(params : TextFieldProps) => <TextField {...params} error={errors.watchStartDate !== undefined} helperText={errors.watchStartDate?.message} />}
-                        />
-                    )}
+                <DatePickerCollored formControlClassName={`${classes.inputSpace} watchStartDate`}
+                    label="Watch start date"
+                    color={color}
+                    inputFormat="dd/MM/yyyy"
                     control={control}
-                    name="watchStartDate"
-                    />
-                </FormControl>
+                    formControlName="watchStartDate"
+                    onChange={data => setValue('watchStartDate', data as Date, setValueOptions)}
+                    renderInput={(params: TextFieldProps) => <TextField {...params} error={errors.watchStartDate !== undefined} helperText={errors.watchStartDate?.message} />}
+                />
 
-                <FormControl className={`${classes.inputSpace} watchEndDate ${classes.datePicker}`}>
-                    <Controller render={({field}) => (
-                        <DatePickerCollored 
-                            field={field}
-                            label="Watch end date"
-                            color={color}
-                            inputFormat="dd/MM/yyyy"
-                            onChange={data => setValue('watchEndDate', data as Date, setValueOptions)}
-                            renderInput={(params) => <TextField {...params} error={errors.watchEndDate !== undefined} helperText={errors.watchEndDate?.message} />}
-                        />
-                    )}
+                <DatePickerCollored formControlClassName={`${classes.inputSpace} watchEndDate`}
+                    label="Watch end date"
+                    color={color}
+                    inputFormat="dd/MM/yyyy"
                     control={control}
-                    name="watchEndDate"
-                    />
-                </FormControl>
+                    formControlName="watchStartDate"
+                    onChange={data => setValue('watchEndDate', data as Date, setValueOptions)}
+                    renderInput={(params: TextFieldProps) => <TextField {...params} error={errors.watchEndDate !== undefined} helperText={errors.watchEndDate?.message} />}
+                />
 
-                <FormControl className={`${classes.inputSpace} episodesSeen`}>
-                    <InputLabel id="episodesSeenLabel" className={classes.label}>
-                        Episodes Seen
-                    </InputLabel>
-                    <Controller render={({ field }) => (
-                        <SelectCollored
-                            field={field}
-                            onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
-                            labelId="episodesSeenLabel"
-                            errors={errors.nrOfEpisodesSeen}
-                            options={getEpisodeArray(airedEpisodes)}
-                            color={color}
-                        />
-                    )} 
+                <SelectCollored labelId="episodesSeenLabel"
+                    title="Episodes Seen"
+                    formControlClassName={`${classes.inputSpace} episodesSeen`}
+                    onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
+                    errors={errors.nrOfEpisodesSeen}
+                    options={getEpisodeArray(airedEpisodes)}
+                    color={color}
                     control={control}
-                    name="nrOfEpisodesSeen"
-                    />
-                </FormControl>
+                    formControlName="nrOfEpisodesSeen"
+                />
 
-                <FormControl className={`${classes.inputSpace} status`}>
-                    <InputLabel id="StatusLabel" className={classes.label}>
-                        Status
-                    </InputLabel>
-                    <Controller render={({field}) => (
-                        <SelectCollored 
-                            field={field} 
-                            onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
-                            labelId="StatusLabel"
-                            errors={errors.status}
-                            color={color}
-                            options={
-                                AnimeUserStatusElements.map(status => (
-                                    <MenuItem key={status} value={status}>
-                                        {status}
-                                    </MenuItem>
-                                ))
-                            }
-                        />
-                    )}
+                <SelectCollored labelId="StatusLabel"
+                    title="Status"
+                    formControlClassName={`${classes.inputSpace} status`}
+                    onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
+                    errors={errors.status}
+                    color={color}
+                    options={
+                        AnimeUserStatusElements.map(status => (
+                            <MenuItem key={status} value={status}>
+                                {status}
+                            </MenuItem>
+                        ))
+                    }
                     control={control}
-                    name="status"
-                    />
-                </FormControl>
+                    formControlName="status"
+                />
 
-                <FormControl className={`${classes.inputSpace} grade`}>
-                    <InputLabel id="GradeLabel" className={classes.label}>
-                        Opinion
-                    </InputLabel>
-                    <Controller render={({field}) => (
-                        <SelectCollored 
-                            field={field}
-                            onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
-                            labelId="GradeLabel"
-                            errors={errors.status}
-                            color={color}
-                            options={
-                                Grades.map((grade: Grade) => (
-                                    <MenuItem key={grade.scale} value={grade.scale}>
-                                        {`${grade.scale}. ${grade.gradeName}`}
-                                    </MenuItem>
-                                ))
-                            }
-                        />
-                    )}
+                <SelectCollored labelId="GradeLabel"
+                    title="Opinion"
+                    formControlClassName={`${classes.inputSpace} grade`}
+                    onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
+                    errors={errors.status}
+                    color={color}
+                    options={
+                        Grades.map((grade: Grade) => (
+                            <MenuItem key={grade.scale} value={grade.scale}>
+                                {`${grade.scale}. ${grade.gradeName}`}
+                            </MenuItem>
+                        ))
+                    }
                     control={control}
-                    name="grade"
-                    />
-                </FormControl>
+                    formControlName="grade"
+                />
 
                 <div className="review">
                     <ButtonCollored text="Review Editor"

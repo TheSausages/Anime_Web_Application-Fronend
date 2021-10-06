@@ -1,6 +1,6 @@
 import { useAuth } from "./Auth";
 import * as yup from "yup"
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Credentials } from "../../data/General/Credentials";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { makeStyles } from "@material-ui/styles";
@@ -47,29 +47,19 @@ export default function Login(props: LoginProps) {
     return(
         <form onSubmit={handleSubmit(auth.signin)} className="wrapper">
             <div className={classes.inputSpace}>
-                <Controller render={({field}) => (
-                    <TextFieldColored
-                        field={field}
-                        errors={errors.username}
-                        label="Username"
-                    />
-                )}
-                control={control}
-                name="username"
+                <TextFieldColored errors={errors.username}
+                    label="Username"
+                    control={control}
+                    formControlName="username"
                 />
             </div>
 
             <div className={classes.inputSpace}>
-                <Controller render={({field}) => (
-                    <TextFieldColored
-                        field={field}
-                        errors={errors.password}
-                        label="Password"
-                        type="password"
-                    />
-                )}
-                control={control}
-                name="password"
+                <TextFieldColored errors={errors.password}
+                    label="Password"
+                    type="password"
+                    control={control}
+                    formControlName="password"
                 />
             </div>
 

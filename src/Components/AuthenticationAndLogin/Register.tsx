@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { makeStyles } from "@material-ui/styles"
-import { Controller, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { RegistrationBody } from "../../data/General/RegistrationBody"
 import ButtonCollored from "../Miscellaneous/ButtonCollored"
@@ -50,57 +50,37 @@ export default function Register(props: RegisterProps) {
     return (
         <form onSubmit={handleSubmit(auth.register)} className="wrapper">
             <div className={classes.inputSpace}>
-                <Controller render={({field}) => (
-                    <TextFieldColored
-                        field={field}
-                        errors={errors.username}
-                        label="Username"
-                    />
-                )}
-                control={control}
-                name="username"
+                <TextFieldColored errors={errors.username}
+                    label="Username"
+                    control={control}
+                    formControlName="username"
                 />
             </div>
 
             <div className={classes.inputSpace}>
-                <Controller render={({field}) => (
-                    <TextFieldColored
-                        field={field}
-                        errors={errors.password}
-                        label="Password"
-                        type="password"
-                    />
-                )}
-                control={control}
-                name="password"
+                <TextFieldColored errors={errors.password}
+                    label="Password"
+                    type="password"
+                    control={control}
+                    formControlName="password"
                 />
             </div>
 
             <div className={classes.inputSpace}>
-                <Controller render={({field}) => (
-                    <TextFieldColored
-                        field={field}
-                        errors={errors.matchingPassword}
-                        label="Repeat Password"
-                        type="password"
-                    />
-                )}
-                control={control}
-                name="matchingPassword"
+                <TextFieldColored errors={errors.matchingPassword}
+                    label="Repeat Password"
+                    type="password"
+                    control={control}
+                    formControlName="matchingPassword"
                 />
             </div>
 
             <div className={classes.inputSpace}>
-                <Controller render={({field}) => (
-                    <TextFieldColored
-                        field={field}
-                        errors={errors.email}
-                        label="Email"
-                        type="email"
-                    />
-                )}
-                control={control}
-                name="email"
+                <TextFieldColored errors={errors.email}
+                    label="Email"
+                    type="email"
+                    control={control}
+                    formControlName="email"
                 />
             </div>
 

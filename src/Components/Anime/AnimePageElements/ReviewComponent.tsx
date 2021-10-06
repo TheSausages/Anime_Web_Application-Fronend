@@ -1,5 +1,5 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
-import { Control, Controller, useForm, UseFormSetValue } from "react-hook-form";
+import { Control, useForm, UseFormSetValue } from "react-hook-form";
 import { AnimeUserInformation, Review, ReviewForm } from "../../../data/Anime/Smaller/AnimeUserInformation";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -72,32 +72,22 @@ export function ReviewComponent(props: ReviewProps) {
                     <DialogContent className={classes.dialogContent}>
                         <div className={classes.paddingTop} />
 
-                        <Controller render={({field}) => (
-                                <TextFieldColored 
-                                    field={field}
-                                    errors={errors.reviewTitle}
-                                    label="Review Title"
-                                    key="Review Title"
-                                />
-                            )}
-                            name="reviewTitle"
+                        <TextFieldColored errors={errors.reviewTitle}
+                            label="Review Title"
+                            key="Review Title"
+                            formControlName="reviewTitle"
                             control={control}
-                            key="reviewTitle"
+                            formKey="reviewTitle"
                         />
 
-                        <Controller render={({field}) => 
-                                <TextFieldColored
-                                    field={field}
-                                    label="Review Text"
-                                    errors={undefined}
-                                    multiline={true}
-                                    rows={8}
-                                    key="Review Text"
-                                />
-                            }
-                            name="reviewText"
+                        <TextFieldColored label="Review Text"
+                            errors={undefined}
+                            multiline={true}
+                            rows={8}
+                            key="Review Text"
+                            formControlName="reviewText"
                             control={control}
-                            key="reviewText"
+                            formKey="reviewText"
                         />
 
                         <div className={classes.reviewNumbers}>

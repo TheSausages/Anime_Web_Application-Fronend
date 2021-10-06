@@ -1,40 +1,52 @@
-import { Select, SelectChangeEvent } from "@material-ui/core";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { ReactNode } from "react";
-import { ControllerRenderProps, FieldError, FieldPath, FieldValues } from "react-hook-form";
+import { Control, Controller, FieldError } from "react-hook-form";
 
 interface SelectColloredProps {
-    field: ControllerRenderProps<FieldValues, FieldPath<FieldValues>>;
     labelId: string;
     className?: string;
     onChange: (event: SelectChangeEvent<any>, child: ReactNode) => void;
     color?: string;
+    title: string;
     errors?: FieldError;
     options: ReactNode[];
+    formControlClassName?: string;
+    formControlName: string;
+    control: Control<any> | undefined;
+    formKey?: string;
+    disabled?: boolean;
 }
 
-/*
-in FormControl
-select: {
-        '& .MuiSelect-select.MuiSelect-outlined.MuiOutlinedInput-input': {
-            padding: '12px 14px',
-        },
-        '@media (max-width: 960px)': {
-            width: '40vw',
-        },
-        "& .MuiOutlinedInput-notchedOutline": {
-            borderTop: 'none',
-            borderRight: 'none',
-            borderLeft: 'none',
-            borderBottom: `2px solid ${color}`,
-            borderRadius: 0,
-        },
-    },
-*/
 export default function SelectCollored(props: SelectColloredProps) {
     let color = props.color ?? "rgb(36, 185, 44)";
 
     const useStyles = makeStyles({
+        label: {
+            color: '#101010',
+            fontSize: '0.9rem'
+        },
+        selectForm: {
+            "& .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated": {
+                left: "-0.7vw",  
+                '@media (max-width: 960px)': {
+                    left: "-3vw",
+                },
+            },
+            '& .MuiSelect-select.MuiSelect-outlined.MuiOutlinedInput-input': {
+                padding: '12px 0',
+            },
+            '@media (max-width: 960px)': {
+                width: '40vw',
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+                borderTop: 'none',
+                borderRight: 'none',
+                borderLeft: 'none',
+                borderBottom: `2px solid ${color}`,
+                borderRadius: 0,
+            },
+        },
         select: {
             width: '100%',
              '&:before': {
@@ -57,19 +69,38 @@ export default function SelectCollored(props: SelectColloredProps) {
             },
         },
     })
-    //Same as DatePickerCollored, not a functional so no styled()
+    
+    const classes = useStyles();
+
+    let options =[
+        <MenuItem key={0} value="">
+            {<i>Clean</i>}
+        </MenuItem>,
+        ...props.options
+    ]
 
     return (
-        <Select
-            {...props.field}
-            onChange={props.onChange}
-            className={`${props.className} ${useStyles().select}`}
-            labelId={props.labelId}
-            error={props.errors !== undefined}
-        >
-        {
-            props.options
-        }
-        </Select>
+        <FormControl className={`${classes.selectForm} ${props.formControlClassName}`} disabled={props.disabled}>
+            <InputLabel id={props.labelId} className={classes.label}>
+                {props.title}
+            </InputLabel>
+
+            <Controller render={({field}) => (
+                <Select
+                    {...field}
+                    labelId={props.labelId}
+                    onChange={props.onChange}
+                    error={props.errors !== undefined}
+                    className={`${props.className} ${classes.select}`}
+                >
+                    {
+                        options
+                    }
+                </Select>
+            )}
+            name={props.formControlName}
+            control={props.control}
+            />
+        </FormControl>
     )
 }

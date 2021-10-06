@@ -12,7 +12,7 @@
 
 .SearchOptions > *:not(.TagsInput) {
     width: 10vw;
-    justify-content: end;
+    justify-content: flex-end;
     min-height: 65px;
     display: flex;
     flex-direction: column;

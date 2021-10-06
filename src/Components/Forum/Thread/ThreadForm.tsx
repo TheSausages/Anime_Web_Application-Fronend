@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogActions, DialogContent, FormControl, InputLabel, MenuItem } from "@material-ui/core";
+import { Dialog, DialogTitle, DialogActions, DialogContent, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { CompleteThread, UpdateThread } from "../../../data/Forum/Thread";
 import * as yup from "yup"
@@ -52,31 +52,18 @@ const useStyles = makeStyles((theme) => ({
         '@media (max-width: 960px)': {
             display: "flex",
             flexDirection: "column",
-            rowGap: 15,
             alignItems: 'center',
+        },
+    },
+    selectWidth: {
+        width: '18vw',
+        justifyContent: 'flex-end',
+        '@media (max-width: 960px)': {
+            width: '40vw',
         },
     },
     paddingTop: {
         paddingTop: 12,
-    },
-    label: {
-        color: '#101010',
-        fontSize: '0.9rem'
-    },
-    select: {
-        width: '18vw',
-        position: 'absolute',
-        bottom: 6,
-        '@media (max-width: 960px)': {
-            width: '40vw',
-        },
-        "& .MuiOutlinedInput-notchedOutline": {
-            borderTop: 'none',
-            borderRight: 'none',
-            borderLeft: 'none',
-            borderBottom: '2px solid rgb(36, 185, 44)',
-            borderRadius: 0,
-        },
     },
 }));
 
@@ -95,9 +82,10 @@ export default function ThreadForm(props: NewThreadFormProps) {
         .then((response: Tag[]) => setTags([...response]))
         .catch((error: BackendError) => {
             enqueueSnackbar(error.message, snackbarError)
+            setError(error.message)
             close();
         })
-    }, [enqueueSnackbar])
+    }, [enqueueSnackbar, close])
 
     useEffect(() => {
         setLoading(true);
@@ -121,7 +109,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
             tagImportance: yup.mixed<TagImportance>(),
             tagColor: yup.string()
         })).min(1, "Thread must have at least 1 tag!"),
-        status: yup.mixed<ThreadStatus>().required("Thread must have a valid status!")
+        status: yup.mixed<ThreadStatus>().required("Thread must have a valid status!").transform((curr, orig) => orig === "" ? undefined : curr)
     })
 
     let cat1 = JSON.stringify(data?.category) ?? ""
@@ -150,76 +138,51 @@ export default function ThreadForm(props: NewThreadFormProps) {
 
                 <DialogContent className={classes.dialogContent} >
                     <div className={`${classes.firstLine} ${classes.paddingTop}`} >
-                        <Controller render={({field}) => (
-                                <TextFieldColored 
-                                    field={field}
-                                    errors={errors.title}
-                                    label="Thread Title"
-                                />
-                            )}
-                            name="title"
+                        <TextFieldColored errors={errors.title}
+                            label="Thread Title"
+                            formControlName="title"
                             control={control}
                         />
 
-                        <FormControl className={classes.select}>
-                            <InputLabel id="CategoryLabel" className={classes.label}>
-                                Category
-                            </InputLabel>
-                            <Controller render={({field}) => (
-                                <SelectCollored 
-                                    field={field}
-                                    labelId="CategoryLabel"
-                                    onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
-                                    errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
-                                    options={
-                                        categories.map((category: ForumCategory) => (
-                                            <MenuItem key={category.categoryId} value={JSON.stringify(category)} >
-                                                {category.categoryName}
-                                            </MenuItem>
-                                        ))
-                                    }
-                                />
-                            )}
-                                name="category"
-                                control={control}
-                            />
-                        </FormControl>
+                        <SelectCollored labelId="CategoryLabel"
+                            formControlClassName={classes.selectWidth}
+                            title="Category"
+                            onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
+                            errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
+                            options={
+                                categories.map((category: ForumCategory) => (
+                                    <MenuItem key={category.categoryId} value={JSON.stringify(category)} >
+                                        {category.categoryName}
+                                    </MenuItem>
+                                ))
+                            }
+                            formControlName="category"
+                            control={control}
+                        />
 
-                        <FormControl className={classes.select} disabled={!(data && !checkIfObjectIsEmpty(data))} >
-                            <InputLabel id="StatusLabel" className={classes.label}>
-                                Status
-                            </InputLabel>
-                            <Controller render={({field}) => (
-                                <SelectCollored 
-                                    field={field}
-                                    labelId="StatusLabel"
-                                    onChange={category => setValue('status', category.target.value as ThreadStatus, setValueOptions)}
-                                    errors={errors.status}
-                                    options={
-                                        ThreadStatusArray.map((status: ThreadStatus) => (
-                                            <MenuItem key={status} value={status} >
-                                                {status}
-                                            </MenuItem>
-                                        ))
-                                    }
-                                />
-                            )}
-                                name="status"
-                                control={control}
-                            />
-                        </FormControl>
+                        <SelectCollored  labelId="StatusLabel"
+                            formControlClassName={classes.selectWidth}
+                            title="Status"
+                            onChange={category => setValue('status', category.target.value as ThreadStatus, setValueOptions)}
+                            errors={errors.status}
+                            disabled={!(data && !checkIfObjectIsEmpty(data))}
+                            options={
+                                ThreadStatusArray.map((status: ThreadStatus) => (
+                                    <MenuItem key={status} value={status} >
+                                        {status}
+                                    </MenuItem>
+                                ))
+                            }
+                            formControlName="status"
+                            control={control}
+                        />
                     </div>
 
-                    <Controller render={({field}) => (
-                        <TextFieldColored 
-                            field={field}
-                            errors={errors.text}
-                            label="Thread Text"
-                            multiline={true}
-                            rows={8}
-                        />
-                    )}
-                        name="text"
+                    <TextFieldColored errors={errors.text}
+                        label="Thread Text"
+                        multiline={true}
+                        rows={8}
+                        formControlName="text"
                         control={control}
                     />
 

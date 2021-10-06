@@ -1,10 +1,9 @@
 import { TextField } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 import React, { ChangeEventHandler } from "react";
-import { FieldError } from "react-hook-form";
+import { Control, Controller, FieldError } from "react-hook-form";
 
 interface TextFieldColoredProps {
-    field?: Object;
     errors?: FieldError;
     label: string;
     type?: string;
@@ -13,6 +12,9 @@ interface TextFieldColoredProps {
     multiline?: boolean;
     color?: string;
     onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+    formControlName: string;
+    control: Control<any> | undefined;
+    formKey?: string;
 }
 
 const TextFieldColoredStyled = styled(TextField)({
@@ -71,19 +73,25 @@ export default function TextFieldColored(props: TextFieldColoredProps) {
     let color = props.color ?? "rgb(36, 185, 44)";
 
     return (
-        <TextFieldColoredStyled className={props.className}
-            {...props.field}
-            autoComplete="off"
-            variant="standard"
-            error={props.errors !== undefined}
-            helperText={props.errors?.message}
-            label={props.label}
-            type={props.type}
-            rows={props.rows}
-            multiline={props.multiline}
-            key={props.label}
+        <Controller render={({field}) => (
+            <TextFieldColoredStyled className={props.className}
+                {...field}
+                autoComplete="off"
+                variant="standard"
+                error={props.errors !== undefined}
+                helperText={props.errors?.message}
+                label={props.label}
+                type={props.type}
+                rows={props.rows}
+                multiline={props.multiline}
+                key={props.label}
 
-            style={{'--color': color} as React.CSSProperties}
+                style={{'--color': color} as React.CSSProperties}
+            />
+        )}
+            name={props.formControlName}
+            control={props.control}
+            key={props.formKey}
         />
     )
 }

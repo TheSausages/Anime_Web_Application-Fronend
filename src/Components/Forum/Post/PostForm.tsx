@@ -2,7 +2,7 @@ import { Dialog, DialogTitle, DialogActions, DialogContent } from "@material-ui/
 import { CreatePost, UpdatePost } from "../../../data/Forum/Post";
 import * as yup from "yup"
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextFieldColored from "../../Miscellaneous/TextFieldColored";
 import { makeStyles } from "@material-ui/styles";
@@ -58,27 +58,17 @@ export default function PostForm(props: NewPostFormProps) {
                 </DialogTitle>
 
                 <DialogContent className={classes.dialogContent}>
-                    <Controller render={({field}) => (
-                            <TextFieldColored 
-                                field={field}
-                                errors={errors.title}
-                                label="Post Title"
-                            />
-                        )}
-                        name="title"
+                    <TextFieldColored errors={errors.title}
+                        label="Post Title"
+                        formControlName="title"
                         control={control}
                     />
 
-                    <Controller render={({field}) => (
-                            <TextFieldColored 
-                                field={field}
-                                errors={errors.text}
-                                label="Post Text"
-                                multiline={true}
-                                rows={8}
-                            />
-                        )}
-                        name="text"
+                    <TextFieldColored errors={errors.text}
+                        label="Post Text"
+                        multiline={true}
+                        rows={8}
+                        formControlName="text"
                         control={control}
                     />
                 </DialogContent>
