@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
             position: "absolute",
             bottom: "-20px",
         },
-        "& .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined.MuiFormLabel-root": {
+        "& .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined": {
             left: "-0.7vw",
             '@media (max-width: 960px)': {
-                left: "-1.4vw",
+                left: "-3vw",
             },
         },
         "& .MuiOutlinedInput-notchedOutline": {
@@ -59,10 +59,10 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     select: {
-        "& .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined.MuiFormLabel-root": {
+        "& .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined": {
             left: "-0.7vw",  
             '@media (max-width: 960px)': {
-                left: "-1.4vw",
+                left: "-3vw",
             },
         },
         '& .MuiSelect-select.MuiSelect-outlined.MuiOutlinedInput-input': {
