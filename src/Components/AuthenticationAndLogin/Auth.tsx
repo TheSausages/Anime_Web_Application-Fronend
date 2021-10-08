@@ -46,19 +46,19 @@ function useProvideAuth(): AuthReturn {
             setRerender(!rerender);
 
             history.goBack()
-            snackbar("Logged In Successfully",  snackBarSuccess )
+            snackbar("Logged In Successfully",  snackBarSuccess)
         })
         .catch((error: BackendError) => snackbar(error.message,  snackbarError))
     };
 
-    const signout = async () => {
-        await UserService.logout()
+    const signout = () => {
+        UserService.logout()
         .then(data => {
             clearTokenFields();
             setRerender(!rerender);
 
-            history.goBack()
-            snackbar("Logged Out Successfully",  snackBarSuccess )
+            snackbar("Logged Out Successfully",  snackBarSuccess)
+            history.push("/")
         })
         .catch((error: BackendError) => {
             snackbar(error.message,  snackbarError )
@@ -74,9 +74,8 @@ function useProvideAuth(): AuthReturn {
             localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
             setRerender(!rerender);
 
-            history.goBack();
-            history.goBack();
             snackbar("Registered Successfully",  snackBarSuccess)
+            history.push("/")
         })
         .catch((error: BackendError) => snackbar(error.message,  snackbarError))
     };
@@ -93,15 +92,15 @@ function useProvideAuth(): AuthReturn {
     };
 }
 
-interface PrivateRouteProps {
-    path: string,
-    children: React.ReactNode
-}
-
 export function clearTokenFields() {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('refreshIfLaterThen')
+}
+
+interface PrivateRouteProps {
+    path: string,
+    children: React.ReactNode
 }
 
 export function PrivateRoute(props: PrivateRouteProps) {  

@@ -64,12 +64,17 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const { airedEpisodes, animeUserInformation, animeStartDate } = props;
 
     const schema = yup.object().shape({
-        status: yup.mixed<AnimeUserStatus>().notRequired(),
-        watchStartDate: yup.date().nullable(true).min(getDateFromFuzzy(animeStartDate), "Too early!").max(new Date(), "Too late!").notRequired(),
-        watchEndDate: yup.date().nullable(true).min(yup.ref('watchStartDate'), "Too early!").max(new Date(), "Too late!").notRequired(),
-        nrOfEpisodesSeen: yup.number().integer().min(0, "Must be positive").notRequired(),
-        isFavourite: yup.boolean().notRequired(),
-        didReview: yup.boolean().notRequired(),
+        status: yup.mixed<AnimeUserStatus>().notRequired().nullable(true).transform((curr, orig) => orig === "" ? undefined : curr),
+        watchStartDate: yup.date().nullable(true).typeError("Wrong format")
+            .min(getDateFromFuzzy(animeStartDate), "Too early!").max(new Date(), "Too late!")
+            .notRequired().transform((curr, orig) => orig === "" ? undefined : curr),
+        watchEndDate: yup.date().nullable(true).typeError("Wrong format")
+            .min(yup.ref('watchStartDate'), "Too early!").max(new Date(), "Too late!")
+            .notRequired().transform((curr, orig) => orig === "" ? undefined : curr),
+        nrOfEpisodesSeen: yup.number().integer().min(0, "Must be positive").notRequired().nullable(true)
+        .transform((curr, orig) => orig === "" ? 0 : curr),
+        isFavourite: yup.boolean().notRequired().nullable(true),
+        didReview: yup.boolean().notRequired().nullable(true),
         review: yup.object({
             id: yup.number().integer().notRequired().default(undefined),
             reviewTitle: yup.string(),
@@ -77,8 +82,8 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             nrOfHelpful: yup.number().integer(),
             nrOfPlus: yup.number().integer(),
             nrOfMinus: yup.number().integer()
-        }).notRequired(),
-        grade: yup.number().integer().nullable(true).notRequired()
+        }).notRequired().nullable(true),
+        grade: yup.number().integer().nullable(true).notRequired().transform((curr, orig) => orig === "" ? undefined : curr)
     })
 
     const { control, formState: { errors, isDirty }, setValue, getValues } = useForm<AnimeUserInformation>({
@@ -86,21 +91,27 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
         reValidateMode: 'onChange',
         mode: 'onChange',
         defaultValues: {
-            status: animeUserInformation?.status as AnimeUserStatus ?? AnimeUserStatusElements[0],
-            watchStartDate: animeUserInformation?.watchStartDate ?? undefined,
-            watchEndDate: animeUserInformation?.watchEndDate ?? undefined,
+            status: animeUserInformation?.status as AnimeUserStatus ?? "No Status",
+            watchStartDate: animeUserInformation?.watchStartDate ?? "",
+            watchEndDate: animeUserInformation?.watchEndDate ?? "",
             nrOfEpisodesSeen: animeUserInformation?.nrOfEpisodesSeen ?? 0,
             isFavourite: animeUserInformation?.isFavourite ?? false,
             didReview: animeUserInformation?.didReview ?? false,
             review: animeUserInformation?.review ?? undefined,
-            grade: animeUserInformation?.grade ?? ''
+            grade: animeUserInformation?.grade ?? ""
         }
     })
 
     const save = useCallback(async () => {
         if (isDirty) {
             if (Object.keys(errors).length === 0) {
-                await UserService.updateAnimeUserInformationData({...getValues(), id: animeUserInformation?.id!})
+                let inf: AnimeUserInformation = getValues()
+
+                if (inf.status === "") inf.status = "No Status";
+                if (inf.watchStartDate === null) inf.watchStartDate = undefined;
+                if (inf.watchEndDate === null) inf.watchEndDate = undefined;
+
+                await UserService.updateAnimeUserInformationData({...inf, id: animeUserInformation?.id!})
                 .then(() => snackbar("Your anime data has been updated!", snackBarSuccess))
                 .catch((error: BackendError) => {
                     snackbar(error.message, snackbarError)
@@ -119,6 +130,8 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             window.removeEventListener('onbeforeunload', (e: Event) => save);
         })
     }, [save])
+
+    console.log(errors)
     
     return (
         <div className="userAnimeInformation">
@@ -149,7 +162,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
-                    formControlName="watchStartDate"
+                    formControlName="watchEndDate"
                     onChange={data => setValue('watchEndDate', data as Date, setValueOptions)}
                     renderInput={(params: TextFieldProps) => <TextField {...params} error={errors.watchEndDate !== undefined} helperText={errors.watchEndDate?.message} />}
                 />

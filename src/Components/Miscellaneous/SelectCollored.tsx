@@ -73,11 +73,13 @@ export default function SelectCollored(props: SelectColloredProps) {
     const classes = useStyles();
 
     let options =[
-        <MenuItem key={0} value="">
+        <MenuItem key={-1} value="">
             {<i>Clean</i>}
         </MenuItem>,
         ...props.options
     ]
+
+    console.log(props.errors !== undefined)
 
     return (
         <FormControl className={`${classes.selectForm} ${props.formControlClassName}`} disabled={props.disabled}>

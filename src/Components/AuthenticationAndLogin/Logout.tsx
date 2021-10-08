@@ -12,10 +12,10 @@ export default function Logout(props: LogoutProps) {
     useEffect(() => {
         if (checkIfLoggedIn()) {
             auth.signout();
-            auth.rerenderThisComponent();
         }
     }, [auth])
 
-    auth.rerenderThisComponent();
-    return <Redirect to="/" />;
+    return (
+        <Redirect to="/" />
+    )
 }

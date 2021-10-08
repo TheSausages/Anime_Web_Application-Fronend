@@ -33,9 +33,14 @@ export default function MainPage(props: MainPageProps) {
     useEffect(() => {
         startLoading()
 
-        getCurrentAnime();
+        getCurrentAnime()
 
         stopLoading()
+
+        /* After logout user is redirected here, and we need to block memory leak by cleaning */
+        return () => {
+            setCurrectSeason({} as CurrentSeasonInformation)
+        }
     }, [getCurrentAnime, startLoading, stopLoading]);
 
     if (loading || error || !currectSeason) {
