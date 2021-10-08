@@ -79,8 +79,6 @@ export default function SelectCollored(props: SelectColloredProps) {
         ...props.options
     ]
 
-    console.log(props.errors !== undefined)
-
     return (
         <FormControl className={`${classes.selectForm} ${props.formControlClassName}`} disabled={props.disabled}>
             <InputLabel id={props.labelId} className={classes.label}>
