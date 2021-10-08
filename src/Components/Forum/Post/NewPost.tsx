@@ -1,8 +1,8 @@
-import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { CompletePost, CreatePost } from "../../../data/Forum/Post";
 import { CompleteThread } from "../../../data/Forum/Thread";
 import { BackendError } from "../../../data/General/BackendError";
+import useBasicState from "../../../data/General/BasicState";
 import { PageDTO } from "../../../data/General/PageDTO";
 import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
@@ -16,15 +16,15 @@ interface NewPostComponentProps {
 
 export default function NewPostButton(props: NewPostComponentProps) {
     const [open, setOpen] = useState<boolean>(false);
-    const { enqueueSnackbar } = useSnackbar();
+    const { snackbar } = useBasicState()
 
-    function createPost(post: CreatePost) {
-        ForumService.createPostForThread(props.thread.threadId, post)
+    async function createPost(post: CreatePost) {
+        await ForumService.createPostForThread(props.thread.threadId, post)
         .then((response: PageDTO<CompletePost>) => {
-            enqueueSnackbar("Your new post was created!", snackBarSuccess)
+            snackbar("Your new post was created!", snackBarSuccess)
             props.setNewPosts(response)
         })
-        .catch((error: BackendError) => enqueueSnackbar(error.message, snackbarError))
+        .catch((error: BackendError) => snackbar(error.message, snackbarError))
     }
 
     return (

@@ -1,9 +1,8 @@
-import { useSnackbar } from "notistack";
 import { useState, useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { CompleteThread, UpdateThread } from "../../../data/Forum/Thread";
 import { BackendError } from "../../../data/General/BackendError";
-import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
+import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import Loading from "../../Loading/Loading";
 import ThreadStatusComponent from "./ThreadStatusComponent";
@@ -17,10 +16,11 @@ import { CompletePost } from "../../../data/Forum/Post";
 import { PageDTO } from "../../../data/General/PageDTO";
 import { checkIfGivenUserLoggedIn, checkIfObjectIsEmpty } from "../../../Scripts/Utilities";
 import { ForumCategory } from "../../../data/Forum/ForumCategory";
+import ThreadForm from "./ThreadForm";
+import useBasicState from "../../../data/General/BasicState";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
-import ThreadForm from "./ThreadForm";
 
 interface ThreadProps {
     threadId: number;
@@ -29,51 +29,42 @@ interface ThreadProps {
 
 export default function CompleteThreadComponent(props: ThreadProps) {
     const [thread, setThread] = useState<CompleteThread>({} as CompleteThread)
-    const [loading, setLoading] = useState(true);
-    const [open, setOpen] = useState<boolean>(false);
-    const [error, setError] = useState<string>();
     const history = useHistory();
-    const { enqueueSnackbar } = useSnackbar();
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, open, openElement, closeElement } = useBasicState()
     
     const getThread = useCallback(async () => {
         await ForumService.getThreadById(props.threadId)
         .then((response: CompleteThread) => setThread(response))
         .catch((error: BackendError) => {
-            enqueueSnackbar(error.message, snackbarError)
-            setError(error.message)
+            snackbar(error.message, snackbarError)
+            setErrorMessage(error.message)
         })
-    }, [enqueueSnackbar, props.threadId])
+    }, [snackbar, setErrorMessage, props.threadId])
 
     useEffect(() => {
-        try {
-            setLoading(true);
+        startLoading()
 
-            getThread();  
+        getThread();  
 
-            setLoading(false)
-        } catch (error) {
-            setLoading(false)
-            setError("An unknown Error occured!")
-        }
-    }, [getThread]);
+        stopLoading()
+    }, [getThread, startLoading, stopLoading]);
 
     function setNewPostPage(posts: PageDTO<CompletePost>) {
         //Setting loading to reset the component and hide posts for a second
-        setLoading(true)
-
+        startLoading()
         setThread({ ...thread, nrOfPosts: thread.nrOfPosts + 1, posts })
-        
-        setLoading(false)
+        stopLoading()
     }
 
-    function editThread(editThread: UpdateThread) {
-        setLoading(true)
-        ForumService.updateThread(thread.threadId, { ...editThread, threadId: thread.threadId })
+    async function editThread(editThread: UpdateThread) {
+        startLoading()
+
+        await ForumService.updateThread(thread.threadId, { ...editThread, threadId: thread.threadId })
         .then((response: CompleteThread) => {
             setThread(response)
-            enqueueSnackbar("Thread updates successfully!", snackbarInfo)
-            setLoading(false)
-        }).catch((error: BackendError) => enqueueSnackbar(error.message, snackbarError))
+            snackbar("Thread updates successfully!", snackBarSuccess)
+            stopLoading()
+        }).catch((error: BackendError) => snackbar(error.message, snackbarError))
     }
 
     if (loading || thread === undefined || checkIfObjectIsEmpty(thread)) {
@@ -104,9 +95,9 @@ export default function CompleteThreadComponent(props: ThreadProps) {
 
                 {isLoggedUser &&
                     <div className="ThreadEditText" style={{color: primaryColor}}>
-                        <i onClick={() => setOpen(true)}>edit thread</i>
+                        <i onClick={() => openElement()}>edit thread</i>
 
-                        <ThreadForm title="Edit Thread" open={open} close={() => setOpen(false)} categories={props.categories} data={thread} onSubmit={editThread} />
+                        <ThreadForm title="Edit Thread" open={open} close={() => closeElement()} categories={props.categories} data={thread} onSubmit={editThread} />
                     </div>
                 }
 

@@ -1,4 +1,3 @@
-import { useSnackbar } from "notistack"
 import { useState, useCallback, useEffect } from "react"
 import { ForumCategory } from "../../../data/Forum/ForumCategory"
 import { Tag } from "../../../data/Forum/Tag"
@@ -19,6 +18,7 @@ import DatePickerCollored from "../../Miscellaneous/DatePickerCollored"
 import TextFieldColored from "../../Miscellaneous/TextFieldColored"
 import SelectCollored from "../../Miscellaneous/SelectCollored"
 import TagInput from "../TagInput"
+import useBasicState from "../../../data/General/BasicState"
 
 import "../css/ThreadSearch.css"
 
@@ -33,14 +33,12 @@ const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: 
 export default function ThreadSearch(props: ThreadSearchProps) {
     const { categories } = props
     const [tags, setTags] = useState<Tag[]>([])
-    const [loading, setLoading] = useState<boolean>(true);
-    const { enqueueSnackbar } = useSnackbar();
-    const [error, setError] = useState<string>();
     const [threads, setThreads] = useState<SimpleThreadPage>()
     const [actualQuery, setActualQuery] = useState<ForumQuery>({} as ForumQuery)
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
 
     const searchUsingQuery = useCallback((async (query: ForumQuery) => {
-        setLoading(true)
+        startLoading()
         setActualQuery(query)
 
         if (query.minCreation === null) query.minCreation = undefined
@@ -51,33 +49,33 @@ export default function ThreadSearch(props: ThreadSearchProps) {
         await ForumService.searchThreadsByQuery(query, threads?.pageNumber ?? -1 + 1)
         .then((response: SimpleThreadPage) => {
             setThreads({...response})
-            setLoading(false)
+            stopLoading()
         })
-        .catch((error: BackendError) => enqueueSnackbar(error.message, snackbarError))
-    }), [enqueueSnackbar, threads?.pageNumber])
+        .catch((error: BackendError) => snackbar(error.message, snackbarError))
+    }), [snackbar, stopLoading, startLoading, threads?.pageNumber])
 
     const getTags = useCallback(async () => {
-        setLoading(true)
+        startLoading()
 
         await ForumService.getTags()
         .then((response: Tag[]) => {
             setTags([...response])
-            setLoading(false)
+            stopLoading()
         })
         .catch((error: BackendError) => {
-            enqueueSnackbar(error.message, snackbarError)
-            setError(error.message)
+            snackbar(error.message, snackbarError)
+            setErrorMessage(error.message)
         })
-    }, [enqueueSnackbar])
+    }, [snackbar, setErrorMessage, stopLoading, startLoading])
 
     useEffect(() => {
-        setLoading(true);
+        startLoading()
 
         getTags()
         searchUsingQuery({})
         
-        setLoading(false)
-    }, [getTags, searchUsingQuery])
+        stopLoading()
+    }, [getTags, searchUsingQuery, startLoading, stopLoading])
 
     const schema = yup.object().shape({
         title: yup.string().nullable(true),

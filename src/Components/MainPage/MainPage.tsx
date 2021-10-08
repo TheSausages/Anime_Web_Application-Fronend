@@ -4,10 +4,10 @@ import { Capitalize } from "../../Scripts/Utilities"
 import { AnimeService } from '../../Scripts/Services/AnimeService';
 import { CurrentSeasonInformation } from '../../data/Anime/Smaller/MainPageInterfaces';
 import { BackendError } from '../../data/General/BackendError';
-import { useSnackbar } from 'notistack';
 import { snackbarError } from '../../data/General/SnackBar';
 import { useCallback } from 'react';
 import AnimeLink from '../AnimeLink/AnimeLink';
+import useBasicState from '../../data/General/BasicState';
 
 import './css/MainPage.css';
 import '../Miscellaneous/css/Line.css';
@@ -17,9 +17,7 @@ interface MainPageProps {
 
 export default function MainPage(props: MainPageProps) {
     const [currectSeason, setCurrectSeason] = useState<CurrentSeasonInformation>();
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>();
-    const { enqueueSnackbar } = useSnackbar();
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
 
     const getCurrentAnime = useCallback(async () => {
         await AnimeService.getCurrentSeasonAnime()
@@ -27,25 +25,20 @@ export default function MainPage(props: MainPageProps) {
             setCurrectSeason(result)
         })
         .catch((error: BackendError) => {
-            setError(error.message)
-            enqueueSnackbar(error.message,  snackbarError )
+            setErrorMessage(error.message)
+            snackbar(error.message,  snackbarError )
         })
-    }, [enqueueSnackbar])
+    }, [setErrorMessage, snackbar])
 
     useEffect(() => {
-        try {
-            setLoading(true);
+        startLoading()
 
-            getCurrentAnime();
+        getCurrentAnime();
 
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            setError("An unknown Error occured!")
-        }
-    }, [getCurrentAnime]);
+        stopLoading()
+    }, [getCurrentAnime, startLoading, stopLoading]);
 
-    if (loading || !currectSeason) {
+    if (loading || error || !currectSeason) {
         return <Loading error={error}/>
     }
 

@@ -15,7 +15,7 @@ export default function ThreadStatusComponent(props: ThreadStatusProps) {
     useEffect(() => {
         // small method that adds overflow: hiiden to parent of element
         document.getElementById(`Status${props.id}`)!.parentElement!.style.overflow = "hidden"
-    });
+    }, [props.id]);
 
     return (
         <div className={`Status ${props.className}`} id={`Status${props.id}`} style={{ backgroundColor: props.primaryColor }}>

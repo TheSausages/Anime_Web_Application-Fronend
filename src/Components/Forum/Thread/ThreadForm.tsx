@@ -7,7 +7,6 @@ import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 import { ForumCategory } from "../../../data/Forum/ForumCategory";
 import { Tag } from "../../../data/Forum/Tag";
 import { useCallback, useEffect, useState } from "react";
-import { useSnackbar } from "notistack";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import { BackendError } from "../../../data/General/BackendError";
 import { snackbarError } from "../../../data/General/SnackBar";
@@ -18,6 +17,7 @@ import TextFieldColored from "../../Miscellaneous/TextFieldColored";
 import SelectCollored from "../../Miscellaneous/SelectCollored";
 import { checkIfObjectIsEmpty } from "../../../Scripts/Utilities";
 import TagInput from "../TagInput";
+import useBasicState from "../../../data/General/BasicState";
 
 interface NewThreadFormProps {
     title: string;
@@ -73,27 +73,25 @@ export default function ThreadForm(props: NewThreadFormProps) {
     const classes = useStyles();
     const { title, open, close, categories, data, onSubmit } = props;
     const [tags, setTags] = useState<Tag[]>([])
-    const [loading, setLoading] = useState<boolean>(true);
-    const { enqueueSnackbar } = useSnackbar();
-    const [error, setError] = useState<string>();
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
 
     const getTags = useCallback(async () => {
         await ForumService.getTags()
         .then((response: Tag[]) => setTags([...response]))
         .catch((error: BackendError) => {
-            enqueueSnackbar(error.message, snackbarError)
-            setError(error.message)
+            snackbar(error.message, snackbarError)
+            setErrorMessage(error.message)
             close();
         })
-    }, [enqueueSnackbar, close])
+    }, [snackbar, setErrorMessage, close])
 
     useEffect(() => {
-        setLoading(true);
+        startLoading()
 
         open && getTags()
         
-        setLoading(false)
-    }, [getTags, open])
+        stopLoading()
+    }, [getTags, open, startLoading, stopLoading])
 
     const schema = yup.object().shape({
         title: yup.string().required("Thread title cannot be empty"),

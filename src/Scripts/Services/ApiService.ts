@@ -1,6 +1,7 @@
-import { AuthenticationToken } from "../../data/General/AuthenticationToken"
+import { AuthenticationToken } from "../../data/General/User/AuthenticationToken"
 import { BackendError } from "../../data/General/BackendError"
 import { checkIfLoggedIn } from "../Utilities";
+import { clearTokenFields } from "../../Components/AuthenticationAndLogin/Auth";
 
 export enum HttpMethods {
     GET = "GET",
@@ -51,18 +52,10 @@ export async function performRequest(method: HttpMethods, url: String, needAuth:
     }
 
     const headers = getHeaders(needAuth);
-
     body = JSON.stringify(body)
 
-    const options = {
-        method,
-        headers,
-        body
-    }
-
     const fullUrl = backendUrl + url;
-
-    return fetch(new Request(fullUrl, options))
+    return fetch(new Request(fullUrl, { method, headers, body }))
 }
 
 function handleError(response: Response) {
@@ -70,7 +63,7 @@ function handleError(response: Response) {
         return { status: response.status, message: err.message };
     }).catch(_ => {
         if (response.status === 401) {
-            localStorage.clear()
+            clearTokenFields()
             return { status: response.status, message: "You remained unactive for too long! Please log in again" };
         }
 
@@ -94,10 +87,11 @@ async function refreshTokens() {
 
         localStorage.setItem('accessToken', data.access_token);
         localStorage.setItem('refreshToken', data.refresh_token);
-        localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+        //data.expires_in*1000 whould be max, but this way we get abit of time to refresh
+        localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*800).toISOString())
     })
     .catch((error: BackendError) => {
-        localStorage.clear();
+        clearTokenFields();
         throw error;
     })
 }

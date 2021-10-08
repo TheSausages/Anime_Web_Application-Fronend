@@ -1,13 +1,13 @@
 import { VariantType } from "notistack"
 
-interface snackBarVariants {
+export interface snackBarVariant {
     variant: VariantType | undefined
 }
 
-export const snackbarError: snackBarVariants = { variant: 'error' }
+export const snackbarError: snackBarVariant = { variant: 'error' }
 
-export const snackBarSuccess: snackBarVariants = { variant: 'success' }
+export const snackBarSuccess: snackBarVariant = { variant: 'success' }
 
-export const snackbarInfo: snackBarVariants = { variant: 'info' }
+export const snackbarInfo: snackBarVariant = { variant: 'info' }
 
-export const snackbarWarning: snackBarVariants = { variant: 'warning' }
+export const snackbarWarning: snackBarVariant = { variant: 'warning' }

@@ -12,11 +12,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { PostUserStatus } from '../../../data/Forum/Post';
 import { IconWithNumber } from '../../Miscellaneous/IconWithNumber';
 import { ForumService } from '../../../Scripts/Services/ForumService';
-import { snackbarError, snackbarInfo } from '../../../data/General/SnackBar';
+import { snackbarError, snackBarSuccess } from '../../../data/General/SnackBar';
 import { BackendError } from '../../../data/General/BackendError';
-import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
+import useBasicState from '../../../data/General/BasicState';
 
 interface PostReactionFormProps {
     nrOfPlus: number;
@@ -30,10 +30,9 @@ const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: 
 
 export default function PostReactionForm(props: PostReactionFormProps) {
     const { nrOfPlus, nrOfMinus, postUserStatus, color, isLoggedUser } = props;
-    const [openReport, setOpenReport] = useState<boolean>(false);
     const [nrOfLiked, setNrOfLiked] = useState<number>(nrOfPlus)
     const [nrOfDisliked, setNrOfDisliked] = useState<number>(nrOfMinus)
-    const { enqueueSnackbar } = useSnackbar();
+    const { snackbar, open, openElement, closeElement } = useBasicState()
 
     const schema = yup.object().shape({
         isLiked: yup.boolean().notRequired(),
@@ -51,12 +50,12 @@ export default function PostReactionForm(props: PostReactionFormProps) {
         }
     })
 
-    function updateStatus(status: PostUserStatus) {
+    async function updateStatus(status: PostUserStatus) {
         if (postUserStatus !== undefined) {
-            ForumService.updatePostUserStatus(postUserStatus?.ids.post.postId, { ...postUserStatus, ...status })
-            .then(_ => enqueueSnackbar("Opinion submitted!", snackbarInfo))
+            await ForumService.updatePostUserStatus(postUserStatus?.ids.post.postId, { ...postUserStatus, ...status })
+            .then(_ => snackbar("Opinion submitted!", snackBarSuccess))
             .catch((error: BackendError) => {
-                enqueueSnackbar(error.message, snackbarError)
+                snackbar(error.message, snackbarError)
             })
         }
     }
@@ -121,11 +120,11 @@ export default function PostReactionForm(props: PostReactionFormProps) {
                 />
             </FormControl>
 
-            <IconButton onClick={() => setOpenReport(true)} disabled={isLoggedUser}>
+            <IconButton onClick={() => openElement()} disabled={isLoggedUser}>
                 {getValues().isReported ? <ReportIcon htmlColor={color} /> : <ReportOutlinedIcon htmlColor={color} />}
             </IconButton>
 
-            <Dialog open={openReport}>
+            <Dialog open={open}>
                 <DialogTitle>
                     {`Report this Post`}
                 </DialogTitle>
@@ -137,10 +136,10 @@ export default function PostReactionForm(props: PostReactionFormProps) {
                 </DialogContent>
 
                 <DialogActions>
-                    <ButtonCollored onClick={() => setOpenReport(false)} text="Close"/>
+                    <ButtonCollored onClick={() => closeElement()} text="Close"/>
                     <ButtonCollored onClick={() => {
                         setValue('isReported', true, setValueOptions);
-                        setOpenReport(false);
+                        closeElement()
                         handleSubmit(updateStatus)();
                     }} text="Report"/>
                 </DialogActions>

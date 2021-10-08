@@ -1,8 +1,8 @@
-import { useSnackbar } from "notistack";
 import { useState, useCallback, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { CompletePost, CompletePostPage } from "../../../data/Forum/Post";
 import { BackendError } from "../../../data/General/BackendError";
+import useBasicState from "../../../data/General/BasicState";
 import { PageDTO } from "../../../data/General/PageDTO";
 import { snackbarError } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
@@ -17,42 +17,24 @@ interface ThreadPostsComponentProps {
 export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
     const { postsPage, threadId } = props;
     const [postPage, setPostPage] = useState<CompletePostPage>(postsPage)
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>();
-    const { enqueueSnackbar } = useSnackbar();
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
 
     useEffect(() => {
-        try {
-            setLoading(true);
+        startLoading()
 
-            setPostPage(postsPage)
+        setPostPage(postsPage)
 
-            setLoading(false)
-        } catch (error) {
-            setLoading(false)
-            setError("An unknown Error occured!")
-        }
-    }, [props.postsPage, postsPage])
+        stopLoading()
+    }, [props.postsPage, postsPage, startLoading, stopLoading])
 
     const getMorePosts= useCallback(async () => {
         await ForumService.getPostsForThread(threadId, postPage.pageNumber + 1)
         .then((response: CompletePostPage) => setPostPage({...response, content: [...postPage.content, ...response.content]}))
         .catch((error: BackendError) => {
-            setError(error.message)
-            enqueueSnackbar(error.message, snackbarError)
+            setErrorMessage(error.message)
+            snackbar(error.message, snackbarError)
         })
-    }, [enqueueSnackbar, postPage, threadId])
-
-    useEffect(() => {
-        try {
-            setLoading(true);
-
-            setLoading(false)
-        } catch (error) {
-            setLoading(false)
-            setError("An unknown Error occured!")
-        }
-    }, []);
+    }, [snackbar, setErrorMessage, postPage, threadId])
 
     if (loading || postPage === undefined) {
         return <Loading error={error}/>

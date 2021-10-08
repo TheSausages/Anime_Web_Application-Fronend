@@ -10,9 +10,8 @@ import { FuzzyDate, getDateFromFuzzy } from "../../../data/Anime/Smaller/FuzzyDa
 import { useForm } from "react-hook-form";
 import { useCallback } from "react";
 import { UserService } from "../../../Scripts/Services/UserService";
-import { snackbarError, snackbarInfo, snackbarWarning } from "../../../data/General/SnackBar";
+import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
-import { useSnackbar } from "notistack";
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
 import { ReviewComponent } from './ReviewComponent';
@@ -21,6 +20,7 @@ import ButtonCollored from '../../Miscellaneous/ButtonCollored';
 import DatePickerCollored from '../../Miscellaneous/DatePickerCollored';
 import CheckboxCollored from '../../Miscellaneous/CheckboxCollored';
 import SelectCollored from '../../Miscellaneous/SelectCollored';
+import useBasicState from '../../../data/General/BasicState';
 
 import "../css/UserAnimeInformation.css"
 
@@ -60,7 +60,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const classes = useStyles();
     const [openReview, setOpenReview] = useState<boolean>(false)
     const container = React.useRef(null);
-    const { enqueueSnackbar } = useSnackbar();
+    const { snackbar } = useBasicState()
     const { airedEpisodes, animeUserInformation, animeStartDate } = props;
 
     const schema = yup.object().shape({
@@ -97,19 +97,19 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
         }
     })
 
-    const save = useCallback(() => {
+    const save = useCallback(async () => {
         if (isDirty) {
             if (Object.keys(errors).length === 0) {
-                UserService.updateAnimeUserInformationData({...getValues(), id: animeUserInformation?.id!})
-                .then(() => enqueueSnackbar("Your anime data has been updated!", snackbarInfo))
+                await UserService.updateAnimeUserInformationData({...getValues(), id: animeUserInformation?.id!})
+                .then(() => snackbar("Your anime data has been updated!", snackBarSuccess))
                 .catch((error: BackendError) => {
-                    enqueueSnackbar(error.message, snackbarError)
+                    snackbar(error.message, snackbarError)
                 })
             } else {
-                enqueueSnackbar("Your information was not updated, as it contained errors", snackbarWarning)
+                snackbar("Your information was not updated, as it contained errors", snackbarError)
             }
         }
-    }, [getValues, errors, isDirty, enqueueSnackbar, animeUserInformation?.id])
+    }, [getValues, errors, isDirty, snackbar, animeUserInformation?.id])
 
     useEffect(() => {
         window.addEventListener('onbeforeunload', (e: Event) => save);

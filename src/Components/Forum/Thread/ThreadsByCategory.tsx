@@ -1,4 +1,3 @@
-import { useSnackbar } from "notistack";
 import { useState, useCallback, useEffect } from "react";
 import { ForumCategory } from "../../../data/Forum/ForumCategory";
 import { SimpleThreadPage } from "../../../data/Forum/Thread";
@@ -10,6 +9,7 @@ import { ForumQuery } from "../../../data/Forum/ForumQuery";
 
 import "../css/ThreadByCategory.css"
 import ThreadQueryResults from "./ThreadQueryResults";
+import useBasicState from "../../../data/General/BasicState";
 
 interface ThreadsByCategoryProps {
     category: ForumCategory;
@@ -17,31 +17,24 @@ interface ThreadsByCategoryProps {
 
 export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
     const [threads, setThreads] = useState<SimpleThreadPage>()
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>();
-    const { enqueueSnackbar } = useSnackbar();
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
 
     const getByCategory = useCallback(async (threads: SimpleThreadPage) => {
         await ForumService.searchThreadsByQuery({category: props.category} as ForumQuery, threads.pageNumber ?? -1 + 1)
         .then((response: SimpleThreadPage) => setThreads({...response, content: [ ...threads?.content ?? [], ...response.content ]}))
         .catch((error: BackendError) => {
-            setError(error.message)
-            enqueueSnackbar(error.message, snackbarError)
+            setErrorMessage(error.message)
+            snackbar(error.message, snackbarError)
         })
-    }, [enqueueSnackbar, props.category])
+    }, [setErrorMessage, snackbar, props.category])
 
     useEffect(() => {
-        try {
-            setLoading(true);
+        startLoading()
 
-            getByCategory({} as SimpleThreadPage);  
+        getByCategory({} as SimpleThreadPage);  
 
-            setLoading(false)
-        } catch (error) {
-            setLoading(false)
-            setError("An unknown Error occured!")
-        }
-    }, [getByCategory]);
+        stopLoading()
+    }, [getByCategory, startLoading, stopLoading]);
 
     if (loading || threads === undefined) {
         return <Loading error={error}/>

@@ -1,4 +1,3 @@
-import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 import { useEffect, useState } from 'react';
 import { ForumCategory } from '../../data/Forum/ForumCategory';
@@ -10,14 +9,14 @@ import ForumSwitch from './ForumSwitch';
 import { AdditionalForumCategories } from '../../data/Forum/AdditionalForumCategories';
 
 import "./css/Forum.css"
+import useBasicState from '../../data/General/BasicState';
 
 interface ForumProps {
 }
 
 export default function Forum(props: ForumProps) {
     const [categories, setCategories] = useState<ForumCategory[]>();
-    const [loading, setLoading] = useState(true);
-    const { enqueueSnackbar } = useSnackbar();
+    const { loading, startLoading, stopLoading, snackbar } = useBasicState()
 
     const getCategories = useCallback(async () => {
         await ForumService.getForumCategories()
@@ -25,21 +24,20 @@ export default function Forum(props: ForumProps) {
             setCategories(response)
         })
         .catch((error: BackendError) => {
-            enqueueSnackbar(error.message, snackbarError)
+            snackbar(error.message, snackbarError)
         })
-    }, [enqueueSnackbar])
+    }, [snackbar])
 
     useEffect(() => {
             try {
-                setLoading(true);
+                startLoading()
 
                 getCategories();  
 
-                setLoading(false)
+                stopLoading()
             } catch (error) {
-                setLoading(true)
             }
-    }, [getCategories]);
+    }, [getCategories, startLoading, stopLoading]);
 
     if (loading || !categories) {
         return null;

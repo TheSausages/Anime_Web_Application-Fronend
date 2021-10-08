@@ -5,9 +5,9 @@ import { RankingItem } from './Rankings';
 import { Page } from '../../data/Anime/Page';
 import { useCallback } from 'react';
 import { BackendError } from '../../data/General/BackendError';
-import { useSnackbar } from 'notistack';
 import { snackbarError } from '../../data/General/SnackBar';
 import AnimeLink from '../AnimeLink/AnimeLink';
+import useBasicState from '../../data/General/BasicState';
 
 import './css/RankingSelect.css'
 
@@ -28,9 +28,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
     /*Start items state as possibly undefined - dummy start*/
     const [rankingItems, setRankingItems] = useState<RankingInformation>()
 
-    const { enqueueSnackbar } = useSnackbar();
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>();
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
 
     const getMoreRankingData = useCallback(async (rankingItems) => {
         let currectRankingItems = { ...rankingItems }
@@ -45,26 +43,21 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
             setRankingItems(currectRankingItems)
         })
         .catch((error: BackendError) => {
-            setError(error.message)
-            enqueueSnackbar(error.message,  snackbarError )
+            setErrorMessage(error.message)
+            snackbar(error.message,  snackbarError )
         })
-    }, [selectedRanking, enqueueSnackbar])
+    }, [selectedRanking, setErrorMessage, snackbar])
 
     useEffect(() => {
-        try {
-            setLoading(true)
+        startLoading()
 
-            let timer = setTimeout(() => setLoading(false), delayInSeconds * 100);
+        let timer = setTimeout(() => stopLoading(), delayInSeconds * 100);
 
-            /*true state start - begin with page 0 and empty array*/
-            getMoreRankingData({ items: {media: []} as Page, currentPage: 0 })
+        /*true state start - begin with page 0 and empty array*/
+        getMoreRankingData({ items: {media: []} as Page, currentPage: 0 })
 
-            return () => clearTimeout(timer)
-        } catch (error) {
-            setLoading(false)
-            setError("An unknown Error occured!")
-        }
-    }, [getMoreRankingData])
+        return () => clearTimeout(timer)
+    }, [getMoreRankingData, startLoading, stopLoading])
 
     if (loading || rankingItems === undefined) {
         return <Loading error={error}/>

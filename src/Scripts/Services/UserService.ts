@@ -1,7 +1,7 @@
 import { AnimeUserInformation } from "../../data/Anime/Smaller/AnimeUserInformation";
-import { AuthenticationToken } from "../../data/General/AuthenticationToken";
-import { Credentials } from "../../data/General/Credentials";
-import { RegistrationBody } from "../../data/General/RegistrationBody";
+import { AuthenticationToken } from "../../data/General/User/AuthenticationToken";
+import { Credentials } from "../../data/General/User/Credentials";
+import { RegistrationBody } from "../../data/General/User/RegistrationBody";
 import { performRequestWithNoResponse, performRequestWithType } from "./ApiService";
 import { HttpMethods } from "./ApiService";
 

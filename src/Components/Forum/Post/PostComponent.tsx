@@ -7,9 +7,9 @@ import { checkIfGivenUserLoggedIn, getRandomColor } from "../../../Scripts/Utili
 import { useState } from "react";
 import PostForm from "./PostForm";
 import { ForumService } from "../../../Scripts/Services/ForumService";
-import { useSnackbar } from "notistack";
-import { snackbarError, snackbarInfo } from "../../../data/General/SnackBar";
+import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
+import useBasicState from "../../../data/General/BasicState";
 
 import "../css/PostComponent.css"
 
@@ -19,21 +19,22 @@ interface PostProps {
     threadId: number;
 }
 
+const color = getRandomColor(true);
+
 export default function PostComponent(props: PostProps) {
-    const [post, setPost] = useState<CompletePost>(props.post)
     const { threadId } = props;
-    const color = getRandomColor(true);
-    const [open, setOpen] = useState<boolean>(false);
-    const { enqueueSnackbar } = useSnackbar();
+    const [post, setPost] = useState<CompletePost>(props.post)
     const history = useHistory();
 
-    function editPost(editPost: CreatePost) {
-        ForumService.updatePostForThread(threadId, {...editPost, postId: post.postId} as UpdatePost)
+    const { snackbar, open, openElement, closeElement } = useBasicState();
+
+    async function editPost(editPost: CreatePost) {
+        await ForumService.updatePostForThread(threadId, {...editPost, postId: post.postId} as UpdatePost)
         .then((response: CompletePost) => {
-            enqueueSnackbar("Post updated successfully!", snackbarInfo);
+            snackbar("Post updated successfully!", snackBarSuccess);
             setPost(response);
         })
-        .catch((error: BackendError) => enqueueSnackbar(error.message, snackbarError))
+        .catch((error: BackendError) => snackbar(error.message, snackbarError))
     }
 
     const isLoggedUser = checkIfGivenUserLoggedIn(post.user.username);
@@ -50,9 +51,9 @@ export default function PostComponent(props: PostProps) {
 
             {isLoggedUser &&
                 <div className="PostEditText">
-                    <i onClick={() => setOpen(true)} style={{color: color}}>edit post</i>
+                    <i onClick={() => openElement()} style={{color: color}}>edit post</i>
 
-                    <PostForm title="Edit Post" open={open} close={() => setOpen(false)} data={post} onSubmit={editPost} />
+                    <PostForm title="Edit Post" open={open} close={() => closeElement()} data={post} onSubmit={editPost} />
                 </div>
             }
 

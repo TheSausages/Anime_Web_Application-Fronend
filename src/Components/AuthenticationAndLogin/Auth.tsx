@@ -1,10 +1,10 @@
-import { useSnackbar } from "notistack";
 import React, { useState, useContext, createContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { BackendError } from "../../data/General/BackendError";
-import { Credentials } from "../../data/General/Credentials";
-import { RegistrationBody } from "../../data/General/RegistrationBody";
+import useBasicState from "../../data/General/BasicState";
+import { Credentials } from "../../data/General/User/Credentials";
+import { RegistrationBody } from "../../data/General/User/RegistrationBody";
 import { snackbarError, snackBarSuccess } from "../../data/General/SnackBar";
 import { UserService } from "../../Scripts/Services/UserService";
 import { checkIfLoggedIn } from "../../Scripts/Utilities";
@@ -33,7 +33,7 @@ export const useAuth = () => {
 
 function useProvideAuth(): AuthReturn {
   let history = useHistory();
-  const { enqueueSnackbar } = useSnackbar();
+  const { snackbar } = useBasicState()
   const [rerender, setRerender] = useState<boolean>(false);
   
   const signin = async (cred: Credentials) => {
@@ -42,28 +42,28 @@ function useProvideAuth(): AuthReturn {
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('refreshToken', data.refresh_token);
       localStorage.setItem('username', cred.username);
-      localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+      localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*800).toISOString())
       setRerender(!rerender);
 
       history.goBack()
-      enqueueSnackbar("Logged In Successfully",  snackBarSuccess )
+      snackbar("Logged In Successfully",  snackBarSuccess )
     })
     .catch((error: BackendError) => {
-      enqueueSnackbar(error.message,  snackbarError )
+      snackbar(error.message,  snackbarError )
     })
   };
 
   const signout = async () => {
     await UserService.logout()
     .then(data => {
-      localStorage.clear();
+      clearTokenFields();
       setRerender(!rerender);
 
       history.goBack()
-      enqueueSnackbar("Logged Out Successfully",  snackBarSuccess )
+      snackbar("Logged Out Successfully",  snackBarSuccess )
     })
     .catch((error: BackendError) => {
-      enqueueSnackbar(error.message,  snackbarError )
+      snackbar(error.message,  snackbarError )
     })
   };
 
@@ -78,10 +78,10 @@ function useProvideAuth(): AuthReturn {
 
       history.goBack();
       history.goBack();
-      enqueueSnackbar("Registered Successfully",  snackBarSuccess )
+      snackbar("Registered Successfully",  snackBarSuccess )
     })
     .catch((error: BackendError) => {
-      enqueueSnackbar(error.message,  snackbarError )
+      snackbar(error.message,  snackbarError )
     })
   };
 
@@ -100,6 +100,12 @@ function useProvideAuth(): AuthReturn {
 interface PrivateRouteProps {
   path: string,
   children: React.ReactNode
+}
+
+export function clearTokenFields() {
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('refreshIfLaterThen')
 }
 
 export function PrivateRoute(props: PrivateRouteProps) {  

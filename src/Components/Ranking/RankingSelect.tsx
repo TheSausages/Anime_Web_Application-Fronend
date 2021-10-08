@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
 import { RankingItem, Rankings } from './Rankings';
 import RankingItemRender from './SelectedRankingRender';
+import useBasicState from '../../data/General/BasicState';
 
 import './css/RankingSelect.css'
 
@@ -10,23 +11,17 @@ interface RankingSelectProps {
 
 export default function RankingSelect(props: RankingSelectProps) {
     const [selectedRanking, setSelectedRanking] = useState<RankingItem>(Rankings[0]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>();
+    const { loading, startLoading, stopLoading } = useBasicState()
 
     useEffect(() => {
-            try {
-                setLoading(true)
+        startLoading()
 
-                setLoading(false)
-            } catch (error) {
-                setLoading(false)
-                setError("An unknown Error occured!")
-            }
-    }, [selectedRanking]);
+        stopLoading()
+    }, [selectedRanking, startLoading, stopLoading]);
 
 
     if (loading || !selectedRanking) {
-        return <Loading error={error}/>
+        return <Loading />
     }
 
     return (

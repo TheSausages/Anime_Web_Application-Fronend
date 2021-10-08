@@ -1,7 +1,7 @@
 import { useAuth } from "./Auth";
 import * as yup from "yup"
 import { useForm } from "react-hook-form";
-import { Credentials } from "../../data/General/Credentials";
+import { Credentials } from "../../data/General/User/Credentials";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { makeStyles } from "@material-ui/styles";
 import TextFieldColored from "../Miscellaneous/TextFieldColored";
