@@ -20,7 +20,6 @@ export default function useAchievementService() {
     const [signal, setSignal] = useState<AbortSignal>(abortController.signal)
 
     const startListening = useCallback(async () => {
-        console.log("start lis")
         await fetchEventSource(`${backendUrl}/achievement/emitting`, {
             method: HttpMethods.GET,
             headers: getHeadersAsRecord(true),
@@ -28,7 +27,6 @@ export default function useAchievementService() {
     
             async onopen(response) {
                 if (response.ok) {
-                    console.log("Started lisening")
                     return;
                 } else if (response.status >= 400 && response.status < 500) {
                     // client-side errors are usually non-retriable:
