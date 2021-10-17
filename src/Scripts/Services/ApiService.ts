@@ -2,6 +2,8 @@ import { AuthenticationToken } from "../../data/General/User/AuthenticationToken
 import { BackendError } from "../../data/General/BackendError"
 import { checkIfLoggedIn } from "../Utilities";
 import { clearTokenFields } from "../../Components/AuthenticationAndLogin/Auth";
+import { string } from "prop-types";
+import { ArraySchema } from "yup";
 
 export enum HttpMethods {
     GET = "GET",
@@ -12,7 +14,7 @@ export enum HttpMethods {
 
 // pc only: localhost:8080
 // mobile and pc: 192.168.0.245:8080
-const backendUrl = "http://192.168.0.245:8080";
+export const backendUrl = "http://192.168.0.245:8080";
 
 export async function performRequestWithType<T>(method: HttpMethods, url: String, needAuth: boolean, body?: any): Promise<T> {
     return performRequest(method, url, needAuth, body)
@@ -73,7 +75,7 @@ function handleError(response: Response) {
     })
 }
 
-async function refreshTokens() {
+export async function refreshTokens() {
     await fetch(`${backendUrl}/auth/refreshToken`, {
         method: "POST",
         headers: getHeaders(false),
@@ -110,4 +112,13 @@ function getHeaders(needAuth: boolean) : Headers {
     }
 
     return headers;
+}
+
+export function getHeadersAsRecord(needAuth: boolean): Record<string, string> {
+    let headers = getHeaders(true);
+
+    return {
+        'Content-Type': headers.get('Content-Type')!,
+        'Authorization': headers.get('Authorization')!
+    }
 }

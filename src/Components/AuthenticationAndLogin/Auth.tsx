@@ -8,6 +8,7 @@ import { RegistrationBody } from "../../data/General/User/RegistrationBody";
 import { snackbarError, snackBarSuccess } from "../../data/General/SnackBar";
 import { UserService } from "../../Scripts/Services/UserService";
 import { checkIfLoggedIn } from "../../Scripts/Utilities";
+import useAchievementService, { AchievementService } from "../../Scripts/Services/AchievementService";
 
 export interface AuthReturn {
     signin: (cred: Credentials) => void;
@@ -33,6 +34,7 @@ export const useAuth = () => {
 
 function useProvideAuth(): AuthReturn {
     let history = useHistory();
+    const { startListeningForAchievements, stopListeningForAchievements } = useAchievementService();
     const { snackbar } = useBasicState()
     const [rerender, setRerender] = useState<boolean>(false);
   
@@ -44,6 +46,7 @@ function useProvideAuth(): AuthReturn {
             localStorage.setItem('username', cred.username);
             localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*800).toISOString())
             setRerender(!rerender);
+            startListeningForAchievements();
 
             history.goBack()
             snackbar("Logged In Successfully",  snackBarSuccess)
@@ -56,6 +59,7 @@ function useProvideAuth(): AuthReturn {
         .then(data => {
             clearTokenFields();
             setRerender(!rerender);
+            stopListeningForAchievements();
 
             snackbar("Logged Out Successfully",  snackBarSuccess)
             history.push("/")
@@ -73,6 +77,7 @@ function useProvideAuth(): AuthReturn {
             localStorage.setItem('username', regis.username);
             localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
             setRerender(!rerender);
+            startListeningForAchievements();
 
             snackbar("Registered Successfully",  snackBarSuccess)
             history.push("/")

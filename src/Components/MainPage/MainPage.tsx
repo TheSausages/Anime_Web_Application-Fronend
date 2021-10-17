@@ -11,6 +11,7 @@ import useBasicState from '../../data/General/BasicState';
 
 import './css/MainPage.css';
 import '../Miscellaneous/css/Line.css';
+import { UserService } from '../../Scripts/Services/UserService';
 
 interface MainPageProps {
 }
@@ -56,6 +57,9 @@ export default function MainPage(props: MainPageProps) {
 
                 <AnimeLink elements={currectSeason.media} id="seasonalAnime" />
             </div>
+
+<div>A</div>
+            <button onClick={() => UserService.getAch()}>AAA</button>
         </div>
         )
 }

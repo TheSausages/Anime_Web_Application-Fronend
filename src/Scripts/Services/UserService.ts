@@ -21,4 +21,8 @@ export class UserService {
     static updateAnimeUserInformationData(data: AnimeUserInformation) {
         return performRequestWithNoResponse(HttpMethods.POST, "/animeUser/updateUserAnime", true, data);
     }
+
+    static getAch() {
+        return performRequestWithNoResponse(HttpMethods.GET, "/auth/ach", true);
+    }
 }
