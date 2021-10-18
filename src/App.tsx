@@ -59,11 +59,12 @@ function App() {
               <Route path="/logout">
                 <Logout/>
               </Route>
-
             </Switch>
           </ProvideAuth>
         </Router>
       </ThemeProvider>
+
+      <div id="AchievementDialogContainer"></div>
     </div>
   );
 }

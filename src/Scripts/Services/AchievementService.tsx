@@ -1,10 +1,12 @@
 import { useSnackbar } from "notistack";
-import { useCallback, useEffect, useState } from "react";
-import { snackbarError, snackbarInfo } from "../../data/General/SnackBar";
+import { useCallback, useState } from "react";
+import { snackbarError } from "../../data/General/SnackBar";
 import { Achievement } from "../../data/General/User/Achievement";
-import { backendUrl, getHeadersAsRecord, HttpMethods, refreshTokens } from "./ApiService";
+import { backendUrl, getHeadersAsRecord, HttpMethods } from "./ApiService";
 import { EventSourceMessage, fetchEventSource } from '@microsoft/fetch-event-source';
 import { BackendError } from "../../data/General/BackendError";
+import AchievementDialog from "../../Components/Achievement/AchievementDialog";
+import ReactDOM from "react-dom";
 
 export interface AchievementService {
     startListeningForAchievements: () => void;
@@ -38,7 +40,10 @@ export default function useAchievementService() {
     
             onmessage(message: EventSourceMessage) {
                 let achievement:Achievement = JSON.parse(message.data);
-                enqueueSnackbar(achievement.name, snackbarInfo)
+                ReactDOM.render(
+                    <AchievementDialog achievement={achievement} />, 
+                    document.getElementById("AchievementDialogContainer")
+                )
             },
     
             onerror(err: BackendError) {
