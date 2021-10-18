@@ -19,9 +19,10 @@ import TextFieldColored from "../../Miscellaneous/TextFieldColored"
 import SelectCollored from "../../Miscellaneous/SelectCollored"
 import TagInput from "../TagInput"
 import useBasicState from "../../../data/General/BasicState"
+import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties"
+import ButtonCollored from "../../Miscellaneous/ButtonCollored"
 
 import "../css/ThreadSearch.css"
-import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties"
 
 interface ThreadSearchProps {
     categories: ForumCategory[];
@@ -37,22 +38,24 @@ export default function ThreadSearch(props: ThreadSearchProps) {
     const [actualQuery, setActualQuery] = useState<ForumQuery>({} as ForumQuery)
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
 
-    const searchUsingQuery = useCallback((async (query: ForumQuery) => {
+    const searchUsingQuery = useCallback((async (query: ForumQuery | undefined) => {
         startLoading()
-        setActualQuery(query)
+        
+        if (query) {
+            if (query.status === "") query.status = undefined
+            if (query.category === ("" as any as ForumCategory)) query.category = undefined
+            if (query.maxNrOfPosts === "") query.maxNrOfPosts = undefined
 
-        if (query.minCreation === null) query.minCreation = undefined
-        if (query.maxCreation === null) query.minCreation = undefined
-        if (query.minModification === null) query.minModification = undefined
-        if (query.maxModification === null) query.maxModification = undefined
+            setActualQuery(query)
+        }
 
-        await ForumService.searchThreadsByQuery(query, threads?.pageNumber ?? -1 + 1)
+        await ForumService.searchThreadsByQuery(query ?? actualQuery, threads?.pageNumber ?? -1 + 1)
         .then((response: SimpleThreadPage) => {
             setThreads({...response})
             stopLoading()
         })
         .catch((error: BackendError) => snackbar(error.message, snackbarError))
-    }), [snackbar, stopLoading, startLoading, threads?.pageNumber])
+    }), [snackbar, stopLoading, startLoading, threads?.pageNumber, actualQuery])
 
     const getTags = useCallback(async () => {
         startLoading()
@@ -72,10 +75,10 @@ export default function ThreadSearch(props: ThreadSearchProps) {
         startLoading()
 
         getTags()
-        searchUsingQuery({})
+        searchUsingQuery(undefined)
         
         stopLoading()
-    }, [getTags, searchUsingQuery, startLoading, stopLoading])
+    }, [getTags, startLoading, stopLoading, searchUsingQuery])
 
     const schema = yup.object().shape({
         title: yup.string().nullable(true),
@@ -104,8 +107,8 @@ export default function ThreadSearch(props: ThreadSearchProps) {
         resolver: yupResolver(schema),
         mode: 'all',
         defaultValues: {
-            title: undefined,
-            creatorUsername: undefined,
+            title: "",
+            creatorUsername: "",
             status: "",
             category: "" as any as ForumCategory,
             tags: [],
@@ -117,10 +120,6 @@ export default function ThreadSearch(props: ThreadSearchProps) {
             maxNrOfPosts: ""
         }
     })
-
-    if (loading) {
-        return <Loading error={error}/>
-    }
 
     return (
         <div>
@@ -264,11 +263,20 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                     name="tags"
                     control={control}
                 />
+
+                <div className="SearchSubmitButton">
+                    <ButtonCollored text="Search" type="submit" />
+                </div>
             </form>
 
             {
+                loading &&
+                    <Loading error={error}/>
+            }
+
+            {
                 threads &&
-                <ThreadQueryResults threads={threads} getMore={(threads: SimpleThreadPage) => searchUsingQuery(actualQuery)} />
+                    <ThreadQueryResults threads={threads} getMore={(threads: SimpleThreadPage) => searchUsingQuery(undefined)} />
             }
         </div>
     )

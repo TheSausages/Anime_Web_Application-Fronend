@@ -7,10 +7,11 @@
     grid-template-areas:
         "minCreationInput minModificationInput minNrOfPostsInput TitleInput CategoryInput"
         "maxCreationInput maxModificationInput maxNrOfPostsInput CreatorUsernameInput StatusInput"
-        "TagsInput TagsInput TagsInput TagsInput TagsInput";
+        "TagsInput TagsInput TagsInput TagsInput TagsInput"
+        "SearchSubmitButton SearchSubmitButton SearchSubmitButton SearchSubmitButton SearchSubmitButton";
 }
 
-.SearchOptions > *:not(.TagsInput) {
+.SearchOptions > *:not(.TagsInput, .SearchSubmitButton) {
     width: 10vw;
     justify-content: flex-end;
     min-height: 65px;
@@ -44,6 +45,8 @@
 
     margin: 10px 0;
 }
+
+.SearchSubmitButton { grid-area: SearchSubmitButton; }
 
 @media screen and (max-width: 960px) {
     .SearchOptions {
