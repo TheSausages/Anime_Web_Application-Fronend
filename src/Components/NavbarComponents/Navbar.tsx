@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { MenuItems } from './MenuItems'
-import './css/Navbar.css'
 import Button from './Button';
 import { Link } from "react-router-dom";
 import { useAuth } from '../AuthenticationAndLogin/Auth';
 import { useEffect } from 'react';
 import { checkIfLoggedIn } from '../../Scripts/Utilities';
+
+import './css/Navbar.css'
 
 interface NavbarProps {
 }

@@ -11,6 +11,7 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 import TextFieldColored from "../../Miscellaneous/TextFieldColored";
+import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties";
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -40,8 +41,6 @@ interface ReviewProps {
     review: Review | undefined;
 }
 
-const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
-
 const schema = yup.object().shape({
     reviewTitle: yup.string().required("Title cannot be empty!"),
     reviewText: yup.string(),
@@ -49,6 +48,7 @@ const schema = yup.object().shape({
 
 export function ReviewComponent(props: ReviewProps) {
     const classes = useStyles();
+    const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
 
     const { control, handleSubmit, formState: { errors, isValid } } = useForm<ReviewForm>({
         resolver: yupResolver(schema),

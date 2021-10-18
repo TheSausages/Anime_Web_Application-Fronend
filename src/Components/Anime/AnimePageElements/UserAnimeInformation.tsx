@@ -23,6 +23,7 @@ import SelectCollored from '../../Miscellaneous/SelectCollored';
 import useBasicState from '../../../data/General/BasicState';
 
 import "../css/UserAnimeInformation.css"
+import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -48,8 +49,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
-
 interface UserAnimeInformationProps {
     airedEpisodes: number;
     animeUserInformation?: AnimeUserInformation;
@@ -58,6 +57,7 @@ interface UserAnimeInformationProps {
 
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const classes = useStyles();
+    const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
     const [openReview, setOpenReview] = useState<boolean>(false)
     const container = React.useRef(null);
     const { snackbar } = useBasicState()

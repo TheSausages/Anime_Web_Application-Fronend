@@ -17,6 +17,7 @@ import { BackendError } from '../../../data/General/BackendError';
 import { useState } from 'react';
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
 import useBasicState from '../../../data/General/BasicState';
+import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
 
 interface PostReactionFormProps {
     nrOfPlus: number;
@@ -26,10 +27,9 @@ interface PostReactionFormProps {
     isLoggedUser: boolean;
 }
 
-const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
-
 export default function PostReactionForm(props: PostReactionFormProps) {
     const { nrOfPlus, nrOfMinus, postUserStatus, color, isLoggedUser } = props;
+    const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
     const [nrOfLiked, setNrOfLiked] = useState<number>(nrOfPlus)
     const [nrOfDisliked, setNrOfDisliked] = useState<number>(nrOfMinus)
     const { snackbar, open, openElement, closeElement } = useBasicState()

@@ -7,9 +7,9 @@ import { ForumService } from '../../Scripts/Services/ForumService';
 import ForumMenu from './ForumMenu';
 import ForumSwitch from './ForumSwitch';
 import { AdditionalForumCategories } from '../../data/Forum/AdditionalForumCategories';
+import useBasicState from '../../data/General/BasicState';
 
 import "./css/Forum.css"
-import useBasicState from '../../data/General/BasicState';
 
 interface ForumProps {
 }

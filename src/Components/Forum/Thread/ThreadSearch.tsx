@@ -21,6 +21,7 @@ import TagInput from "../TagInput"
 import useBasicState from "../../../data/General/BasicState"
 
 import "../css/ThreadSearch.css"
+import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties"
 
 interface ThreadSearchProps {
     categories: ForumCategory[];
@@ -28,10 +29,9 @@ interface ThreadSearchProps {
 
 const color = getRandomColor(true);
 
-const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
-
 export default function ThreadSearch(props: ThreadSearchProps) {
     const { categories } = props
+    const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
     const [tags, setTags] = useState<Tag[]>([])
     const [threads, setThreads] = useState<SimpleThreadPage>()
     const [actualQuery, setActualQuery] = useState<ForumQuery>({} as ForumQuery)

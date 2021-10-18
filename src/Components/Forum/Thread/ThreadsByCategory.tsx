@@ -6,10 +6,10 @@ import { snackbarError } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import Loading from "../../Loading/Loading";
 import { ForumQuery } from "../../../data/Forum/ForumQuery";
-
-import "../css/ThreadByCategory.css"
 import ThreadQueryResults from "./ThreadQueryResults";
 import useBasicState from "../../../data/General/BasicState";
+
+import "../css/ThreadByCategory.css"
 
 interface ThreadsByCategoryProps {
     category: ForumCategory;

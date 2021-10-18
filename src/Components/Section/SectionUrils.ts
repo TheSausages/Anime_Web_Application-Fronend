@@ -1,21 +1,37 @@
+import { MiscellaneousProperties } from "../../Properties/MiscellaneousProperties";
+
+interface sectionProperty {
+    resolution: number,
+    elements: number
+}
+
+function sectionCondition(section: sectionProperty, array: Array<any>): boolean {
+    return (window.innerWidth < section.resolution && array.length > section.elements)
+}
+
 export function isTooManySections(array: Array<any>): boolean {
-    return (window.innerWidth < 960 && array.length > 2) || (window.innerWidth < 1100 && array.length > 3) || (window.innerWidth < 1350 && array.length > 4) || array.length > 6
+    return sectionCondition(MiscellaneousProperties.section.firstSection, array) || 
+        sectionCondition(MiscellaneousProperties.section.secondSection, array) || 
+        sectionCondition(MiscellaneousProperties.section.thirdSection, array) || 
+        array.length > MiscellaneousProperties.section.maxElements
 }
 
 export function numberOfSectionElements(): number {
-    if (window.innerWidth < 960) {
-        return 2;
+    //From smallest resolution to biggest
+
+    if (window.innerWidth < MiscellaneousProperties.section.thirdSection.resolution) {
+        return MiscellaneousProperties.section.thirdSection.elements;
     }
 
-    if (window.innerWidth < 1100) {
-        return 3;
+    if (window.innerWidth < MiscellaneousProperties.section.secondSection.resolution) {
+        return MiscellaneousProperties.section.secondSection.elements;
     }
 
-    if (window.innerWidth < 1350) {
-        return 4;
+    if (window.innerWidth < MiscellaneousProperties.section.firstSection.resolution) {
+        return MiscellaneousProperties.section.firstSection.elements;
     }
 
-    return 6;
+    return MiscellaneousProperties.section.maxElements;
 }
 
 export function spliceArrayIfNeeded(array: Array<any>, showRow: boolean): Array<any> {

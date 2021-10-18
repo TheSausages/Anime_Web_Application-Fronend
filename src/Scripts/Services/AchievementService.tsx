@@ -1,13 +1,14 @@
 import { useSnackbar } from "notistack";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { snackbarError } from "../../data/General/SnackBar";
 import { Achievement } from "../../data/General/User/Achievement";
-import { backendUrl, getHeadersAsRecord, HttpMethods } from "./ApiService";
+import { getHeadersAsRecord, HttpMethods } from "./ApiService";
 import { EventSourceMessage, fetchEventSource } from '@microsoft/fetch-event-source';
 import { BackendError } from "../../data/General/BackendError";
 import AchievementDialog from "../../Components/Achievement/AchievementDialog";
 import ReactDOM from "react-dom";
 import { UserService } from "./UserService";
+import { BackendProperties } from "../../Properties/BackendProperties"
 
 export interface AchievementService {
     startListeningForAchievements: () => void;
@@ -23,7 +24,7 @@ export default function useAchievementService() {
     const signal = abortController.signal
 
     const startListening = useCallback(async () => {
-        await fetchEventSource(`${backendUrl}/achievements/subscribe`, {
+        await fetchEventSource(BackendProperties.authAndUser.achievementSubscribe, {
             method: HttpMethods.GET,
             headers: getHeadersAsRecord(true),
             signal: signal,

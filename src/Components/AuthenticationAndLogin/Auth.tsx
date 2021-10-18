@@ -9,6 +9,7 @@ import { snackbarError, snackBarSuccess } from "../../data/General/SnackBar";
 import { UserService } from "../../Scripts/Services/UserService";
 import { checkIfLoggedIn } from "../../Scripts/Utilities";
 import useAchievementService from "../../Scripts/Services/AchievementService";
+import { AuthenticationProperties } from "../../Properties/AuthenticationProperties";
 
 export interface AuthReturn {
     signin: (cred: Credentials) => void;
@@ -41,10 +42,10 @@ function useProvideAuth(): AuthReturn {
     const signin = async (cred: Credentials) => {
         await UserService.login(cred)
         .then(data => {  
-            localStorage.setItem('accessToken', data.access_token);
-            localStorage.setItem('refreshToken', data.refresh_token);
-            localStorage.setItem('username', cred.username);
-            localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*800).toISOString())
+            localStorage.setItem(AuthenticationProperties.accessTokenItem, data.access_token);
+            localStorage.setItem(AuthenticationProperties.refreshTokenItem, data.refresh_token);
+            localStorage.setItem(AuthenticationProperties.usernameItem, cred.username);
+            localStorage.setItem(AuthenticationProperties.refreshIfAfterItem, new Date(new Date().getTime() + data.expires_in*800).toISOString())
             setRerender(!rerender);
             startListeningForAchievements();
 
@@ -74,10 +75,10 @@ function useProvideAuth(): AuthReturn {
     const register = async (regis: RegistrationBody) => {
         await UserService.register(regis)
         .then(data => {  
-            localStorage.setItem('accessToken', data.access_token);
-            localStorage.setItem('refreshToken', data.refresh_token);
-            localStorage.setItem('username', regis.username);
-            localStorage.setItem('refreshIfLaterThen', new Date(new Date().getTime() + data.expires_in*1000).toISOString())
+            localStorage.setItem(AuthenticationProperties.accessTokenItem, data.access_token);
+            localStorage.setItem(AuthenticationProperties.refreshTokenItem, data.refresh_token);
+            localStorage.setItem(AuthenticationProperties.usernameItem, regis.username);
+            localStorage.setItem(AuthenticationProperties.refreshIfAfterItem, new Date(new Date().getTime() + data.expires_in*1000).toISOString())
             setRerender(!rerender);
             startListeningForAchievements();
 
@@ -100,9 +101,9 @@ function useProvideAuth(): AuthReturn {
 }
 
 export function clearTokenFields() {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-    localStorage.removeItem('refreshIfLaterThen')
+    localStorage.removeItem(AuthenticationProperties.accessTokenItem)
+    localStorage.removeItem(AuthenticationProperties.refreshTokenItem)
+    localStorage.removeItem(AuthenticationProperties.refreshIfAfterItem)
 }
 
 interface PrivateRouteProps {

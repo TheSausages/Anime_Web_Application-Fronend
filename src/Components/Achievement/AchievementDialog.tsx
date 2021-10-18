@@ -2,6 +2,7 @@ import { Dialog, DialogContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { useEffect, useState } from "react"
 import { Achievement } from "../../data/General/User/Achievement";
+import { MiscellaneousProperties } from "../../Properties/MiscellaneousProperties";
 
 interface AchievementProps {
     achievement: Achievement;
@@ -23,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const closeDelay: number = 5;
 export default function AchievementDialog(props: AchievementProps) {
     const [ open, setOpen ] = useState<boolean>(false)
     const { achievement } = props;
@@ -32,7 +32,7 @@ export default function AchievementDialog(props: AchievementProps) {
     useEffect(() => {
         setOpen(true)
 
-        setTimeout(() => setOpen(false), closeDelay * 1000)
+        setTimeout(() => setOpen(false), MiscellaneousProperties.achievementDialogCloseInSeconds * 1000)
     }, [])
 
     return (

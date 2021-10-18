@@ -1,9 +1,10 @@
 import { FuzzyDate } from "../data/Anime/Smaller/FuzzyDate";
 import { Titles } from "../data/Anime/Smaller/Titles";
+import { AuthenticationProperties } from "../Properties/AuthenticationProperties";
 
 export function checkIfLoggedIn(): boolean {
-    const accessToken = localStorage.getItem('accessToken')
-    const refreshToken = localStorage.getItem('refreshToken')
+    const accessToken = localStorage.getItem(AuthenticationProperties.accessTokenItem)
+    const refreshToken = localStorage.getItem(AuthenticationProperties.refreshTokenItem)
     return (refreshToken && accessToken && accessToken !== 'undefined') ? true : false;
 }
 
@@ -12,7 +13,7 @@ export function checkIfGivenUserLoggedIn(username: string): boolean {
         return false;
     }
 
-    let logged: string | null = localStorage.getItem('username');
+    let logged: string | null = localStorage.getItem(AuthenticationProperties.usernameItem);
 
     if (logged === null) {
         return false;

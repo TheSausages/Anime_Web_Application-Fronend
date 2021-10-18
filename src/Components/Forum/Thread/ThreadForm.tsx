@@ -18,6 +18,7 @@ import SelectCollored from "../../Miscellaneous/SelectCollored";
 import { checkIfObjectIsEmpty } from "../../../Scripts/Utilities";
 import TagInput from "../TagInput";
 import useBasicState from "../../../data/General/BasicState";
+import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties";
 
 interface NewThreadFormProps {
     title: string;
@@ -67,10 +68,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const setValueOptions = { shouldDirty: true, shouldTouch: true, shouldValidate: true }
-
 export default function ThreadForm(props: NewThreadFormProps) {
     const classes = useStyles();
+    const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
     const { title, open, close, categories, data, onSubmit } = props;
     const [tags, setTags] = useState<Tag[]>([])
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
