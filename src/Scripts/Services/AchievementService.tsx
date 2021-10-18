@@ -1,5 +1,5 @@
 import { useSnackbar } from "notistack";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { snackbarError } from "../../data/General/SnackBar";
 import { Achievement } from "../../data/General/User/Achievement";
 import { backendUrl, getHeadersAsRecord, HttpMethods } from "./ApiService";
@@ -7,6 +7,7 @@ import { EventSourceMessage, fetchEventSource } from '@microsoft/fetch-event-sou
 import { BackendError } from "../../data/General/BackendError";
 import AchievementDialog from "../../Components/Achievement/AchievementDialog";
 import ReactDOM from "react-dom";
+import { UserService } from "./UserService";
 
 export interface AchievementService {
     startListeningForAchievements: () => void;
@@ -18,11 +19,11 @@ class FatalError extends Error { }
 
 export default function useAchievementService() {
     const { enqueueSnackbar } = useSnackbar();
-    const abortController = new AbortController();
-    const [signal, setSignal] = useState<AbortSignal>(abortController.signal)
+    const abortController = useMemo(() => new AbortController(), [])
+    const signal = abortController.signal
 
     const startListening = useCallback(async () => {
-        await fetchEventSource(`${backendUrl}/achievement/emitting`, {
+        await fetchEventSource(`${backendUrl}/achievements/subscribe`, {
             method: HttpMethods.GET,
             headers: getHeadersAsRecord(true),
             signal: signal,
@@ -49,15 +50,14 @@ export default function useAchievementService() {
             onerror(err: BackendError) {
                 let defaultMessage = "You earned an achievement, but an error occured we cannot see which! Please check your profile";
                 enqueueSnackbar(err.message ?? defaultMessage, snackbarError)
-            },
-    
-            onclose() {
-                console.log("Stopping listening for achievements")
             }
         })
-    }, [signal]);
+    }, [signal, enqueueSnackbar]);
 
-    const stopListening = useCallback(() => abortController.abort(), [])
+    const stopListening = useCallback(() => {
+        UserService.cancelAchievementsSubscription();
+        abortController.abort();
+    }, [abortController])
 
     return {
         startListeningForAchievements: startListening,

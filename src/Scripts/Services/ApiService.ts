@@ -2,8 +2,6 @@ import { AuthenticationToken } from "../../data/General/User/AuthenticationToken
 import { BackendError } from "../../data/General/BackendError"
 import { checkIfLoggedIn } from "../Utilities";
 import { clearTokenFields } from "../../Components/AuthenticationAndLogin/Auth";
-import { string } from "prop-types";
-import { ArraySchema } from "yup";
 
 export enum HttpMethods {
     GET = "GET",

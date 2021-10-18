@@ -8,7 +8,7 @@ import { RegistrationBody } from "../../data/General/User/RegistrationBody";
 import { snackbarError, snackBarSuccess } from "../../data/General/SnackBar";
 import { UserService } from "../../Scripts/Services/UserService";
 import { checkIfLoggedIn } from "../../Scripts/Utilities";
-import useAchievementService, { AchievementService } from "../../Scripts/Services/AchievementService";
+import useAchievementService from "../../Scripts/Services/AchievementService";
 
 export interface AuthReturn {
     signin: (cred: Credentials) => void;
@@ -55,16 +55,18 @@ function useProvideAuth(): AuthReturn {
     };
 
     const signout = () => {
+        stopListeningForAchievements();
+
         UserService.logout()
         .then(data => {
             clearTokenFields();
             setRerender(!rerender);
-            stopListeningForAchievements();
 
             snackbar("Logged Out Successfully",  snackBarSuccess)
             history.push("/")
         })
         .catch((error: BackendError) => {
+            startListeningForAchievements()
             snackbar(error.message,  snackbarError )
         })
     };

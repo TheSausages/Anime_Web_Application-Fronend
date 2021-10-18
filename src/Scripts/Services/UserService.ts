@@ -22,7 +22,7 @@ export class UserService {
         return performRequestWithNoResponse(HttpMethods.POST, "/animeUser/updateUserAnime", true, data);
     }
 
-    static getAch() {
-        return performRequestWithNoResponse(HttpMethods.GET, "/auth/ach", true);
+    static cancelAchievementsSubscription() {
+        return performRequestWithNoResponse(HttpMethods.GET, "/achievements/cancel", true);
     }
 }

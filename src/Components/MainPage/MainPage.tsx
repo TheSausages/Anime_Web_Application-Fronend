@@ -57,9 +57,6 @@ export default function MainPage(props: MainPageProps) {
 
                 <AnimeLink elements={currectSeason.media} id="seasonalAnime" />
             </div>
-
-<div>A</div>
-            <button onClick={() => UserService.getAch()}>AAA</button>
         </div>
         )
 }
