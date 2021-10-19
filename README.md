@@ -1,6 +1,12 @@
 # Anime_Web_Application-Fronend
 Web Application created for my Bachelor's degree
 
+The 'favicon' is provided by Font Awesome.
+
+* [Link to site with icon](https://fontawesome.com/v5.15/icons/phoenix-framework)
+* [Link to the license](https://fontawesome.com/license)
+* Color of the icon was changes
+
 [Link to Backend](https://github.com/TheSausages/Anime_Web_Application-Backend "BackEnd")
 
 Section underneath is automatically created
