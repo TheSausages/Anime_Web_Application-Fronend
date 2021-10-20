@@ -71,7 +71,7 @@ function handleError(response: Response) {
 }
 
 export async function refreshTokens() {
-    await fetch(BackendProperties.authAndUser.refreshAuthTokensUrl, {
+    await fetch(localStorage.getItem(BackendProperties.authAndUser.refreshAuthTokensUrl)!, {
         method: "POST",
         headers: getHeaders(false),
         body: JSON.stringify({refreshToken: localStorage.getItem(AuthenticationProperties.refreshTokenItem)})
