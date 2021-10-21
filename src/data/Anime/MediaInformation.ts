@@ -7,6 +7,7 @@ import { Titles } from "./Smaller/Titles";
 import { StaffInformation } from "./StaffInformation";
 import { CharacterInformation } from "./CharacterInformation";
 import { AnimeUserInformation } from "./Smaller/AnimeUserInformation";
+import { LocalAnimeInformation } from "./LocalAnimeInformation";
 
 export interface MediaInformation {
     edges?: MediaEdge[]
@@ -44,6 +45,9 @@ export interface MediaB {
     relations: MediaInformation
     characters: CharacterInformation
     staff: StaffInformation
+
+    /*Custom stuff, not found in Anilist Api*/
+    localAnimeInformation?: LocalAnimeInformation;
 
     /*User information, only available when user is logged in*/
     animeUserInformation?: AnimeUserInformation

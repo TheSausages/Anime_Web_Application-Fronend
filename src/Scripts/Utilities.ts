@@ -65,7 +65,7 @@ export function valueOrNotKnown(value: any, capitalize: boolean = true) {
         value = value.replaceAll("_", " ")
     }
 
-    return !value ? "Not Known" : (capitalize ? Capitalize(value): value)
+    return !value && (value === 'number' && value === 0) ? "Not Known" : (capitalize ? Capitalize(value): value)
 }
 
 export function dateOrNotKnown(value: FuzzyDate) {

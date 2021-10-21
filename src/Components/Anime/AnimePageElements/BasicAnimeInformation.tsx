@@ -4,7 +4,7 @@ import { getRandomColor, valueOrNotKnown, Capitalize, dateOrNotKnown } from "../
 import "../css/BasicAnimeInformation.css"
 
 interface AnimeBasicInformationProps {
-    anime: MediaB
+    anime: MediaB;
 }
 
 export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
@@ -23,6 +23,9 @@ export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
 }
 
 function createBasinAnimeInformationMap(results: MediaB) {
+    let scr = results.localAnimeInformation?.averageScore;
+    let localAverageScore = scr && scr !== 0 ? valueOrNotKnown(`${results.localAnimeInformation?.averageScore}%`) : "No score submited"
+
     return [
         {
             name: "Airing Season:",
@@ -54,7 +57,7 @@ function createBasinAnimeInformationMap(results: MediaB) {
         },
         {
             name: "BachAni Average Score:",
-            value: "Not Implemented"
+            value: localAverageScore
         },
         {
             name: "Anilist Average Score:",
@@ -62,11 +65,15 @@ function createBasinAnimeInformationMap(results: MediaB) {
         },
         {
             name: "BachAni Favourites:",
-            value: "Not Implemented"
+            value: valueOrNotKnown(results.localAnimeInformation?.nrOfFavourites)
         },
         {
             name: "Anilist Favourites:",
             value: valueOrNotKnown(results.favourites)
         },
+        {
+            name: "Nr. of BachAni Reviews",
+            value: valueOrNotKnown(results.localAnimeInformation?.nrOfReviews)
+        }
     ]
 }
