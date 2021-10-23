@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
-import InfiniteScroll from "react-infinite-scroll-component";
 import { RankingItem } from './Rankings';
 import { Page } from '../../data/Anime/Page';
 import { useCallback } from 'react';
 import { BackendError } from '../../data/General/BackendError';
 import { snackbarError } from '../../data/General/SnackBar';
-import AnimeLink from '../AnimeLink/AnimeLink';
 import useBasicState from '../../data/General/BasicState';
-
-import './css/RankingSelect.css'
+import { MiscellaneousProperties } from '../../Properties/MiscellaneousProperties';
+import AnimeLinkScroll from '../AnimeLink/AnimeListScroll';
 
 interface RankingItemRenderProps {
     selectedRanking: RankingItem
@@ -19,8 +17,6 @@ interface RankingInformation {
     items: Page;
     currentPage: number;
 }
-
-const delayInSeconds = 5.5;
 
 export default function RankingItemRender(props: RankingItemRenderProps) {
     const { selectedRanking } = props
@@ -51,10 +47,10 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
     useEffect(() => {
         startLoading()
 
-        let timer = setTimeout(() => stopLoading(), delayInSeconds * 100);
+        let timer = setTimeout(() => stopLoading(), MiscellaneousProperties.anilistElementLoadingDelay * 100);
 
         /*true state start - begin with page 0 and empty array*/
-        getMoreRankingData({ items: {media: []} as Page, currentPage: 0 })
+        getMoreRankingData({ items: { media: [] } as Page, currentPage: 0 })
 
         return () => clearTimeout(timer)
     }, [getMoreRankingData, startLoading, stopLoading])
@@ -64,21 +60,6 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
     }
 
     return (
-        <div className="RankingItem">
-            <InfiniteScroll
-                style={{overflow: "hidden"}}
-                dataLength={rankingItems.items.media!.length}
-                next={() => getMoreRankingData(rankingItems)}
-                hasMore={rankingItems.items.pageInfo!.hasNextPage!}
-                loader={<Loading />}
-                endMessage={
-                    <div>
-                        You reached the end!
-                    </div>
-                }
-            >
-                <AnimeLink grid={true} elements={rankingItems.items.media!} showIndex={true}/>
-            </InfiniteScroll>
-        </div>
+        <AnimeLinkScroll items={rankingItems.items} getMore={() => getMoreRankingData(rankingItems)} />
     )
 }

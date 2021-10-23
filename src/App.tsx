@@ -16,6 +16,7 @@ import RankingSelect from './Components/Ranking/RankingSelect';
 import Rerender from './Scripts/Rerender';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Register from './Components/AuthenticationAndLogin/Register';
+import AnimeSearch from './Components/Anime/AnimeSearch';
 
 function App() {
   const theme = createTheme({})
@@ -42,6 +43,10 @@ function App() {
 
               <Route path='/rankings'>
                 <RankingSelect />
+              </Route>
+
+              <Route path="/search">
+                <AnimeSearch />
               </Route>
 
               <Route path='/loading'>

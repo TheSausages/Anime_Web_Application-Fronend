@@ -44,6 +44,9 @@ export const BackendProperties = {
         getTopAnimeMovies(pageNumber: number) {
             return `${BackendProperties.backendUrl}/anime/ranking/topMovies/${pageNumber}`
         },
+        searchByQuery(pageNumber: number) {
+            return `${BackendProperties.backendUrl}/anime/search/${pageNumber}`
+        }
     },
     forum: {
         get getForumCategories() {

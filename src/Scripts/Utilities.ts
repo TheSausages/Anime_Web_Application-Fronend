@@ -54,6 +54,8 @@ export function titlesInWantedOrder(titles: Titles): string {
 
 export function Capitalize(value: any) {
     if (typeof value === 'string') {
+        value = value.replaceAll("_", " ")
+
         return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     }
 

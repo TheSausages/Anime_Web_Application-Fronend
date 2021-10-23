@@ -1,0 +1,68 @@
+.AnimeSearchOptions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 2px 2px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "minStartDateInput minEndDateInput minNrOfEpisodesInput minAverageScore TitleInput FormatInput"
+        "maxStartDateInput maxEndDateInput maxNrOfEpisodesInput maxAverageScore SeasonInput StatusInput"
+        "AnimeSearchSubmitButton AnimeSearchSubmitButton AnimeSearchSubmitButton AnimeSearchSubmitButton AnimeSearchSubmitButton AnimeSearchSubmitButton";
+}
+
+.AnimeSearchOptions > *:not(.AnimeSearchSubmitButton) {
+    width: 10vw;
+    justify-content: flex-end;
+    min-height: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+}
+
+.minNrOfEpisodesInput { grid-area: minNrOfEpisodesInput; }
+
+.maxNrOfEpisodesInput { grid-area: maxNrOfEpisodesInput; }
+  
+.minEndDateInput { grid-area: minEndDateInput; }
+
+.maxEndDateInput { grid-area: maxEndDateInput; }
+  
+.minStartDateInput { grid-area: minStartDateInput; }
+
+.maxStartDateInput { grid-area: maxStartDateInput; }
+
+.minAverageScore { grid-area: minAverageScore; }
+
+.maxAverageScore { grid-area: maxAverageScore; }
+  
+.TitleInput { grid-area: TitleInput; }
+  
+.SeasonInput { grid-area: SeasonInput; }
+
+.FormatInput { grid-area: FormatInput; }
+
+.StatusInput { grid-area: StatusInput; }
+  
+.AnimeSearchSubmitButton { 
+    margin-top: 15px;
+    grid-area: AnimeSearchSubmitButton;
+ }
+
+@media screen and (max-width: 960px) {
+    .AnimeSearchOptions {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "minStartDateInput maxStartDateInput"
+            "minEndDateInput maxEndDateInput"
+            "minNrOfEpisodesInput maxNrOfEpisodesInput"
+            "minAverageScore maxAverageScore"
+            "TitleInput SeasonInput"
+            "FormatInput StatusInput"
+            "AnimeSearchSubmitButton AnimeSearchSubmitButton";
+    }
+
+    .AnimeSearchOptions > *:not(.TagsInput,.AnimeSearchSubmitButton) {
+        width: 40vw;
+    }
+}

@@ -54,8 +54,11 @@ export default function ThreadSearch(props: ThreadSearchProps) {
             setThreads({...response})
             stopLoading()
         })
-        .catch((error: BackendError) => snackbar(error.message, snackbarError))
-    }), [snackbar, stopLoading, startLoading, threads?.pageNumber, actualQuery])
+        .catch((error: BackendError) => {
+            snackbar(error.message, snackbarError)
+            setErrorMessage(error.message)
+        })
+    }), [snackbar, stopLoading, startLoading, threads?.pageNumber, actualQuery, setErrorMessage])
 
     const getTags = useCallback(async () => {
         startLoading()

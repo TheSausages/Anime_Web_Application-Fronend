@@ -2,6 +2,7 @@ export const MiscellaneousProperties = {
     achievementDialogCloseInSeconds: 5,
     loadingTimerInSeconds: 5,
     reactHookFormSetValueOption: { shouldDirty: true, shouldTouch: true, shouldValidate: true },
+    anilistElementLoadingDelay: 5.5,
     section: {
         maxElements: 6,
         firstSection: {
