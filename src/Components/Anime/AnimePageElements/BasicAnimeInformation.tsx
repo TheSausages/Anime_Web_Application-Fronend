@@ -1,3 +1,4 @@
+import { TFunction, useTranslation } from "react-i18next";
 import { MediaB } from "../../../data/Anime/MediaInformation";
 import { getRandomColor, valueOrNotKnown, Capitalize, dateOrNotKnown } from "../../../Scripts/Utilities";
 
@@ -8,9 +9,11 @@ interface AnimeBasicInformationProps {
 }
 
 export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
+    const { t } = useTranslation();
+
     return (
         <div className="AnimeBasicInformation">
-            {createBasinAnimeInformationMap(props.anime).map((elem, index) => {
+            {createBasinAnimeInformationMap(props.anime, t).map((elem, index) => {
                 return (
                     <div key={index}>
                         <div className='line' style={{ 'borderBottom': '1px solid ' + getRandomColor()}} id="noMargin"><p>{elem.name}</p></div>
@@ -22,57 +25,57 @@ export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
     );
 }
 
-function createBasinAnimeInformationMap(results: MediaB) {
+function createBasinAnimeInformationMap(results: MediaB, t: TFunction<"translation">) {
     let scr = results.localAnimeInformation?.averageScore;
-    let localAverageScore = scr && scr !== 0 ? valueOrNotKnown(`${results.localAnimeInformation?.averageScore}%`) : "No score submited"
+    let localAverageScore = scr && scr !== 0 ? valueOrNotKnown(`${results.localAnimeInformation?.averageScore}%`) : t("anime.animeInformation.noScoreSubmitted")
 
     return [
         {
-            name: "Airing Season:",
+            name: t("anime.animeInformation.ariringSeason"),
             value: valueOrNotKnown(`${results.season} ${results.seasonYear}`)
         },
         {
-            name: "Status:",
+            name: t("anime.animeInformation.status"),
             value: Capitalize(valueOrNotKnown(results.status))
         },
         {
-            name: "Format:",
+            name: t("anime.animeInformation.format"),
             value: valueOrNotKnown(results.format)
         },
         {
-            name: "Nr. of Episodes:",
+            name: t("anime.animeInformation.nrOfEpisodes"),
             value: valueOrNotKnown(results.episodes)
         },
         {
-            name: "Episode Length:",
+            name: t("anime.animeInformation.episodeLength"),
             value: valueOrNotKnown(results.duration)
         },
         {
-            name: "Start Date:",
+            name: t("anime.animeInformation.startDate"),
             value: dateOrNotKnown(results.startDate)
         },
         {
-            name: "End Date:",
+            name: t("anime.animeInformation.endDate"),
             value: dateOrNotKnown(results.endDate)
         },
         {
-            name: "BachAni Average Score:",
+            name: t("anime.animeInformation.averageScore", { service: "BackAni" }),
             value: localAverageScore
         },
         {
-            name: "Anilist Average Score:",
+            name: t("anime.animeInformation.averageScore", { service: "Anilist" }),
             value: valueOrNotKnown(`${results.averageScore}%`)
         },
         {
-            name: "BachAni Favourites:",
+            name: t("anime.animeInformation.favourites", { service: "BackAni" }),
             value: valueOrNotKnown(results.localAnimeInformation?.nrOfFavourites)
         },
         {
-            name: "Anilist Favourites:",
+            name: t("anime.animeInformation.averageScore", { service: "Anilist" }),
             value: valueOrNotKnown(results.favourites)
         },
         {
-            name: "Nr. of BachAni Reviews",
+            name: t("anime.animeInformation.nrOfReviews", { service: "BackAni" }),
             value: valueOrNotKnown(results.localAnimeInformation?.nrOfReviews)
         }
     ]

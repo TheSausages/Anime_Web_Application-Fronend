@@ -6,6 +6,26 @@
             "forum": "Forum",
             "signin": "Sign in",
             "signout": "Sign out"
+        },
+        "anime": {
+            "description": "Description",
+            "relations": "Relations",
+            "charaters": "Characters",
+            "clickToShowMore": "Click To Show More",
+            "clickToShowLess": "Kliknij To Show Less",
+            "animeInformation": {
+                "ariringSeason": "Airing Season",
+                "status": "Status",
+                "format": "Format",
+                "nrOfEpisodes": "Nr. of Episodes",
+                "episodeLength": "Episode Length",
+                "startDate": "Start Date",
+                "endDate": "End Date",
+                "averageScore": "{{service}} Average Score",
+                "favourites": "{{service}} Favourites",
+                "nrOfReviews": "Nr. of {{service}} Reviews",
+                "noScoreSubmitted": "No score submitted"
+            }
         }
     }
 }

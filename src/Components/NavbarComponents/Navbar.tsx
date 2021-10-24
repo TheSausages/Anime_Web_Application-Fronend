@@ -80,10 +80,12 @@ export default function Navbar(props: NavbarProps) {
                             {
                                 Object.keys(languages).map((key, index) => {
                                     let lan = languages[key];
+
+                                    console.log(`images/${lan.countryFlagPath}`)
                                 
                                     return (
                                         <MenuItem key={index} value={lan.name ?? languages.english.name} >
-                                            <img className="languageIcon" src={`images/${lan.countryFlagPath}`} alt={lan.name} />
+                                            <img key={lan.countryFlagPath} className="languageIcon" src={`/images/${lan.countryFlagPath}`} alt={lan.name} />
                                         </MenuItem>
                                     )
                                 })

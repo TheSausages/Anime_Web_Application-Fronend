@@ -7,6 +7,7 @@ import { isTooManySections, spliceArrayIfNeeded } from "../../Section/SectionUri
 
 import "../css/AnimeDetails.css";
 import "../../Section/Section.css"
+import { useTranslation } from "react-i18next"
 
 interface AnimeDetailsProps {
     relationEdges: MediaEdge[];
@@ -17,6 +18,7 @@ type ElementsWithRows = "relations" |"characters"
 
 export function AnimeDetails(props: AnimeDetailsProps) {
     const { relationEdges, characterEdges } = props;
+    const { t } = useTranslation();
 
     const [showRows, setShowRows] = useState<{ fieldName: ElementsWithRows, value: boolean }[]>([
         { fieldName: "relations", value: true },
@@ -42,9 +44,9 @@ export function AnimeDetails(props: AnimeDetailsProps) {
                     <div className="line">
                         {
                             isTooManySections(relationEdges) ?
-                                <p className="linkPointer unCopyable" onClick={() => changeRowState('relations')}>Relations | Click to show {findRowState('relations') ? 'More' : 'Less'}</p>
+                                <p className="linkPointer unCopyable" onClick={() => changeRowState('relations')}>{t("anime.relations")} | {findRowState('relations') ? t("anime.clickToShowMore") : t("anime.clickToShowLess")}</p>
                             :
-                                <p>Relations</p>
+                                <p>{t("anime.relations")}</p>
                         }
 
                         <div id="Section">
@@ -61,9 +63,9 @@ export function AnimeDetails(props: AnimeDetailsProps) {
                     <div className="line" >
                         {
                             isTooManySections(characterEdges) ? 
-                                <p className="linkPointer unCopyable" onClick={() => changeRowState('characters')}>Characters | Click to show {findRowState('characters') ? 'More' : 'Less'}</p>
+                                <p className="linkPointer unCopyable" onClick={() => changeRowState('characters')}>{t("anime.charaters")} | {findRowState('characters') ? t("anime.clickToShowMore") : t("anime.clickToShowLess")}</p>
                             :
-                                <p>Characters</p>
+                                <p>{t("anime.characters")}</p>
                         }
 
                         <div id="Section">

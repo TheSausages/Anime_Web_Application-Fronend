@@ -6,6 +6,26 @@
             "forum": "Forum",
             "signin": "Zaloguj",
             "signout": "Wyloguj"
+        },
+        "anime": {
+            "description": "Opis",
+            "relations": "Relacje",
+            "charaters": "Postacie",
+            "clickToShowMore": "Kliknij aby rozszerzyć",
+            "clickToShowLess": "Kliknij aby zminimalizować",
+            "animeInformation": {
+                "ariringSeason": "Sezon emisji",
+                "status": "Status",
+                "format": "Format",
+                "nrOfEpisodes": "Ilość episodów",
+                "episodeLength": "Długość episodów",
+                "startDate": "Data rozpoczęcia",
+                "endDate": "Data zakończenia",
+                "averageScore": "Ocena średnia {{service}}",
+                "favourites": "Ilość polubień {{service}}",
+                "nrOfReviews": "Ilość recenzji {{service}}",
+                "noScoreSubmitted": "Nie wystawiono żadnej"
+            }
         }
     }
 }
