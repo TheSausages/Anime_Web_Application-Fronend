@@ -5,39 +5,34 @@ interface MenuItemStruct {
     auth: string
 }
 
+//The title should be the key for the translation file
 export const MenuItems: MenuItemStruct[] = [
     {
-        title: 'Search',
+        title: 'navbar.search',
         url: '/search',
         cName: 'nav-links',
         auth: 'loggedIn anonymous'
     },
     {
-        title: 'Rankings',
+        title: 'navbar.rankings',
         url: '/rankings',
         cName: 'nav-links',
         auth: 'loggedIn anonymous'
     },
     {
-        title: 'Forum',
+        title: 'navbar.forum',
         url: '/forum/newest',
         cName: 'nav-links',
         auth: 'loggedIn anonymous'
     },
     {
-        title: 'Industry',
-        url: '#',
-        cName: 'nav-links',
-        auth: 'loggedIn anonymous'
-    },
-    {
-        title: 'Sign in',
+        title: 'navbar.signin',
         url: '/login',
         cName: 'nav-links-mobile',
         auth: 'anonymous'
     },
     {
-        title: 'Sign out',
+        title: 'navbar.signout',
         url: '/logout',
         cName: 'nav-links-mobile',
         auth: 'loggedIn'

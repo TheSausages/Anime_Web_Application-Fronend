@@ -1,0 +1,11 @@
+{
+    "translation": {
+        "navbar": {
+            "search": "Wyszukaj",
+            "rankings": "Ranking",
+            "forum": "Forum",
+            "signin": "Zaloguj",
+            "signout": "Wyloguj"
+        }
+    }
+}

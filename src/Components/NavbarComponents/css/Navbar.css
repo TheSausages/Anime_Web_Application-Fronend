@@ -41,7 +41,6 @@ fa-phoenix-framework {
     text-align: center;
     width: 70vw;
     justify-content: end;
-    margin-right: 2rem;
 }
 
 .nav-links {
@@ -73,12 +72,21 @@ fa-phoenix-framework {
     display: none;
 }
 
+.languageSelect {
+    justify-content: center;
+}
+
+.languageIcon {
+    width: 50px;
+    border-radius: 5px;
+}
+
 @media screen and (max-width: 960px) {
     .nav-menu {
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: max(30vh, 330px);
+        height: max(30vh, 270px);
         position: absolute;
         top: 80px;
         left: -100%;
