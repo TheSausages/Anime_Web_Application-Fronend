@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { makeStyles } from "@material-ui/styles"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as yup from "yup"
 import { RegistrationBody } from "../../data/General/User/RegistrationBody"
 import ButtonCollored from "../Miscellaneous/ButtonCollored"
@@ -25,16 +26,18 @@ const useStyles = makeStyles((theme) => ({
 interface RegisterProps {
 }
 
-const schema = yup.object().shape({
-    username: yup.string().min(6, "Must be at least 6 characters!").required(),
-    password: yup.string().min(6, "Must be at least 6 characters!").matches(/^(?=.+[0-9])(?=.{4,}[a-z])(?=.*[A-Z]).{6,}$/, "Wrong structure!").required(),
-    matchingPassword: yup.string().test("password-match", "Passwords must match!", function(value) { return this.parent.password === value }).required(),
-    email: yup.string().email("Value is not an Email!").required()
-})
-
 export default function Register(props: RegisterProps) {
     const auth = useAuth()
     const classes = useStyles()
+    const { t } = useTranslation();
+
+    const schema = yup.object().shape({
+        username: yup.string().min(6, t("fieldErrors.fieldAtLeastCharacters", { number: 6 })).required(),
+        password: yup.string().min(6, t("fieldErrors.fieldAtLeastCharacters", { number: 6 }))
+            .matches(/^(?=.+[0-9])(?=.{4,}[a-z])(?=.*[A-Z]).{6,}$/, "Wrong structure!").required(),
+        matchingPassword: yup.string().test("password-match",t("fieldErrors.fieldMustMatch", { field: "Passwords" }), function(value) { return this.parent.password === value }).required(),
+        email: yup.string().email(t("fieldErrors.fieldIsNotAn", { field: "Email" })).required()
+    })
 
     const { control, handleSubmit, formState: { errors, isValid } } = useForm<RegistrationBody>({
         resolver: yupResolver(schema),
@@ -51,7 +54,7 @@ export default function Register(props: RegisterProps) {
         <form onSubmit={handleSubmit(auth.register)} className="wrapper">
             <div className={classes.inputSpace}>
                 <TextFieldColored errors={errors.username}
-                    label="Username"
+                    label={t("auth.register.username")}
                     control={control}
                     formControlName="username"
                 />
@@ -59,7 +62,7 @@ export default function Register(props: RegisterProps) {
 
             <div className={classes.inputSpace}>
                 <TextFieldColored errors={errors.password}
-                    label="Password"
+                    label={t("auth.register.password")}
                     type="password"
                     control={control}
                     formControlName="password"
@@ -68,7 +71,7 @@ export default function Register(props: RegisterProps) {
 
             <div className={classes.inputSpace}>
                 <TextFieldColored errors={errors.matchingPassword}
-                    label="Repeat Password"
+                    label={t("auth.register.matchingPassword")}
                     type="password"
                     control={control}
                     formControlName="matchingPassword"
@@ -77,7 +80,7 @@ export default function Register(props: RegisterProps) {
 
             <div className={classes.inputSpace}>
                 <TextFieldColored errors={errors.email}
-                    label="Email"
+                    label={t("auth.register.email")}
                     type="email"
                     control={control}
                     formControlName="email"
@@ -85,7 +88,7 @@ export default function Register(props: RegisterProps) {
             </div>
 
             <div className={classes.submitButton}>
-                <ButtonCollored text="Register"
+                <ButtonCollored text={t("input.register")}
                     type="submit"
                     disabled={!isValid}
                 />

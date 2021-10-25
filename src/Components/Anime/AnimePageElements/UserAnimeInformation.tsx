@@ -21,9 +21,10 @@ import DatePickerCollored from '../../Miscellaneous/DatePickerCollored';
 import CheckboxCollored from '../../Miscellaneous/CheckboxCollored';
 import SelectCollored from '../../Miscellaneous/SelectCollored';
 import useBasicState from '../../../data/General/BasicState';
+import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
+import { useTranslation } from 'react-i18next';
 
 import "../css/UserAnimeInformation.css"
-import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +58,7 @@ interface UserAnimeInformationProps {
 
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const classes = useStyles();
+    const { t } = useTranslation();
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
     const [openReview, setOpenReview] = useState<boolean>(false)
     const container = React.useRef(null);
@@ -65,13 +67,13 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
 
     const schema = yup.object().shape({
         status: yup.mixed<AnimeUserStatus>().notRequired().nullable(true).transform((curr, orig) => orig === "" ? undefined : curr),
-        watchStartDate: yup.date().nullable(true).typeError("Wrong format")
-            .min(getDateFromFuzzy(animeStartDate), "Too early!").max(new Date(), "Too late!")
-            .notRequired().transform((curr, orig) => orig === "" ? undefined : curr),
-        watchEndDate: yup.date().nullable(true).typeError("Wrong format")
-            .min(yup.ref('watchStartDate'), "Too early!").max(new Date(), "Too late!")
-            .notRequired().transform((curr, orig) => orig === "" ? undefined : curr),
-        nrOfEpisodesSeen: yup.number().integer().min(0, "Must be positive").notRequired().nullable(true)
+        watchStartDate: yup.date().nullable(true).typeError(t("fieldErrors.dateTypeError"))
+            .min(getDateFromFuzzy(animeStartDate), t("fieldErrors.dateTooEarly"))
+            .max(new Date(), t("fieldErrors.dateTooLate")).notRequired().transform((curr, orig) => orig === "" ? undefined : curr),
+        watchEndDate: yup.date().nullable(true).typeError(t("fieldErrors.dateTypeError"))
+            .min(yup.ref('watchStartDate'), t("fieldErrors.dateTooEarly"))
+            .max(new Date(), t("fieldErrors.dateTooLate")).notRequired().transform((curr, orig) => orig === "" ? undefined : curr),
+        nrOfEpisodesSeen: yup.number().integer().min(0, t("fieldErrors.numberMustBePositive")).notRequired().nullable(true)
         .transform((curr, orig) => orig === "" ? 0 : curr),
         isFavourite: yup.boolean().notRequired().nullable(true),
         didReview: yup.boolean().notRequired().nullable(true),
@@ -112,12 +114,12 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 if (inf.watchEndDate === null) inf.watchEndDate = undefined;
 
                 await UserService.updateAnimeUserInformationData({...inf, id: animeUserInformation?.id!})
-                .then(() => snackbar("Your anime data has been updated!", snackBarSuccess))
+                .then(() => snackbar(t("anime.userAnimeInformation.user.updateSuccessfull"), snackBarSuccess))
                 .catch((error: BackendError) => {
                     snackbar(error.message, snackbarError)
                 })
             } else {
-                snackbar("Your information was not updated, as it contained errors", snackbarError)
+                snackbar(t("anime.userAnimeInformation.updateError"), snackbarError)
             }
         }
     }, [getValues, errors, isDirty, snackbar, animeUserInformation?.id])
@@ -138,7 +140,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                     onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
                     icon={<FavoriteBorder />} 
                     checkedIcon={<Favorite />} 
-                    label="Is my Favourite"
+                    label={t("anime.userAnimeInformation.favouriteLabel")}
                     color={color}
                     control={control}
                     formControlName="isFavourite"
@@ -146,7 +148,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <DatePickerCollored formControlClassName={`${classes.inputSpace} watchStartDate`}
-                    label="Watch start date"
+                    label={t("anime.userAnimeInformation.watchStartDateLabel")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -156,7 +158,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <DatePickerCollored formControlClassName={`${classes.inputSpace} watchEndDate`}
-                    label="Watch end date"
+                    label={t("anime.userAnimeInformation.watchEndDateLabel")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -166,7 +168,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <SelectCollored labelId="episodesSeenLabel"
-                    title="Episodes Seen"
+                    title={t("anime.userAnimeInformation.episodesSeenLabel")}
                     formControlClassName={`${classes.inputSpace} episodesSeen`}
                     onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
                     errors={errors.nrOfEpisodesSeen}
@@ -177,7 +179,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <SelectCollored labelId="StatusLabel"
-                    title="Status"
+                    title={t("anime.userAnimeInformation.statusLabel")}
                     formControlClassName={`${classes.inputSpace} status`}
                     onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
                     errors={errors.status}
@@ -194,7 +196,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <SelectCollored labelId="GradeLabel"
-                    title="Opinion"
+                    title={t("anime.userAnimeInformation.gradeLabel")}
                     formControlClassName={`${classes.inputSpace} grade`}
                     onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
                     errors={errors.status}
@@ -211,7 +213,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <div className="review">
-                    <ButtonCollored text="Review Editor"
+                    <ButtonCollored text={t("anime.userAnimeInformation.reviewButton")}
                         onClick={() => setOpenReview(true)}
                     />
                     <Portal container={container.current} />

@@ -1,11 +1,11 @@
 import { MiscellaneousProperties } from "../../Properties/MiscellaneousProperties";
 
-interface sectionProperty {
+interface SectionProperty {
     resolution: number,
     elements: number
 }
 
-function sectionCondition(section: sectionProperty, array: Array<any>): boolean {
+function sectionCondition(section: SectionProperty, array: Array<any>): boolean {
     return (window.innerWidth < section.resolution && array.length > section.elements)
 }
 

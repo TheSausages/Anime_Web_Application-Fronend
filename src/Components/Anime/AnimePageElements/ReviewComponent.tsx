@@ -12,6 +12,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 import TextFieldColored from "../../Miscellaneous/TextFieldColored";
 import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties";
+import { useTranslation } from "react-i18next";
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -41,14 +42,15 @@ interface ReviewProps {
     review: Review | undefined;
 }
 
-const schema = yup.object().shape({
-    reviewTitle: yup.string().required("Title cannot be empty!"),
-    reviewText: yup.string(),
-})
-
 export function ReviewComponent(props: ReviewProps) {
     const classes = useStyles();
+    const { t } = useTranslation();
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
+
+    const schema = yup.object().shape({
+        reviewTitle: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "Title" })),
+        reviewText: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "Text" })),
+    })
 
     const { control, handleSubmit, formState: { errors, isValid } } = useForm<ReviewForm>({
         resolver: yupResolver(schema),
@@ -67,20 +69,20 @@ export function ReviewComponent(props: ReviewProps) {
     return (
             <Dialog open={props.open} fullWidth maxWidth="lg">
                 <form onSubmit={handleSubmit(setReview)}>
-                    <DialogTitle>You Review</DialogTitle>
+                    <DialogTitle>{t("anime.userAnimeInformation.review.reviewDialogTitle")}</DialogTitle>
             
                     <DialogContent className={classes.dialogContent}>
                         <div className={classes.paddingTop} />
 
                         <TextFieldColored errors={errors.reviewTitle}
-                            label="Review Title"
+                            label={t("anime.userAnimeInformation.review.reviewTitle")}
                             key="Review Title"
                             formControlName="reviewTitle"
                             control={control}
                             formKey="reviewTitle"
                         />
 
-                        <TextFieldColored label="Review Text"
+                        <TextFieldColored label={t("anime.userAnimeInformation.review.reviewText")}
                             errors={undefined}
                             multiline={true}
                             rows={8}
@@ -98,8 +100,12 @@ export function ReviewComponent(props: ReviewProps) {
                     </DialogContent>
 
                     <DialogActions>
-                        <ButtonCollored onClick={() => props.setReviewOpen(false)} text="Close" />
-                        <ButtonCollored type="submit" disabled={!isValid} onClick={() => props.setReviewOpen(false)} text="Submit" />
+                        <ButtonCollored onClick={() => props.setReviewOpen(false)} text={t("input.close")} />
+                        <ButtonCollored type="submit" 
+                            disabled={!isValid} 
+                            onClick={() => props.setReviewOpen(false)} 
+                            text={t("input.submit")} 
+                        />
                     </DialogActions>    
                 </form>
             </Dialog>

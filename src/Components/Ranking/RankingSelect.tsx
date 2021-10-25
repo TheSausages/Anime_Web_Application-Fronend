@@ -3,6 +3,7 @@ import Loading from '../Loading/Loading'
 import { RankingItem, Rankings } from './Rankings';
 import RankingItemRender from './SelectedRankingRender';
 import useBasicState from '../../data/General/BasicState';
+import { useTranslation } from 'react-i18next';
 
 import './css/RankingSelect.css'
 
@@ -12,6 +13,7 @@ interface RankingSelectProps {
 export default function RankingSelect(props: RankingSelectProps) {
     const [selectedRanking, setSelectedRanking] = useState<RankingItem>(Rankings[0]);
     const { loading, startLoading, stopLoading } = useBasicState()
+    const { t } = useTranslation();
 
     useEffect(() => {
         startLoading()
@@ -31,7 +33,7 @@ export default function RankingSelect(props: RankingSelectProps) {
                     Rankings.map((item, index) => {
                         return (
                             <div key={index} onClick={() => setSelectedRanking(item)}>
-                                {item.title}
+                                {t(item.title)}
                             </div>
                         )
                     })
@@ -39,7 +41,7 @@ export default function RankingSelect(props: RankingSelectProps) {
             </div>
 
             <div className='line'>
-                    <p>{selectedRanking? selectedRanking.title : 'No Title Found'}</p>
+                    <p>{selectedRanking? t(selectedRanking.title) : t("fieldErrors.fieldNotFound")}</p>
             </div>
 
             <RankingItemRender key={selectedRanking.title} selectedRanking={selectedRanking}/>

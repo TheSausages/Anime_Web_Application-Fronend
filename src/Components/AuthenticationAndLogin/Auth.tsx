@@ -10,6 +10,7 @@ import { UserService } from "../../Scripts/Services/UserService";
 import { checkIfLoggedIn } from "../../Scripts/Utilities";
 import useAchievementService from "../../Scripts/Services/AchievementService";
 import { AuthenticationProperties } from "../../Properties/AuthenticationProperties";
+import { useTranslation } from "react-i18next";
 
 export interface AuthReturn {
     signin: (cred: Credentials) => void;
@@ -37,6 +38,7 @@ function useProvideAuth(): AuthReturn {
     let history = useHistory();
     const { startListeningForAchievements, stopListeningForAchievements } = useAchievementService();
     const { snackbar } = useBasicState()
+    const { t } = useTranslation();
     const [rerender, setRerender] = useState<boolean>(false);
   
     const signin = async (cred: Credentials) => {
@@ -50,7 +52,7 @@ function useProvideAuth(): AuthReturn {
             startListeningForAchievements();
 
             history.goBack()
-            snackbar("Logged In Successfully",  snackBarSuccess)
+            snackbar(t("auth.loginSuccessfull"),  snackBarSuccess)
         })
         .catch((error: BackendError) => snackbar(error.message,  snackbarError))
     };
@@ -63,7 +65,7 @@ function useProvideAuth(): AuthReturn {
             clearTokenFields();
             setRerender(!rerender);
 
-            snackbar("Logged Out Successfully",  snackBarSuccess)
+            snackbar(t("auth.logoutSuccessfull"),  snackBarSuccess)
             history.push("/")
         })
         .catch((error: BackendError) => {
@@ -82,7 +84,7 @@ function useProvideAuth(): AuthReturn {
             setRerender(!rerender);
             startListeningForAchievements();
 
-            snackbar("Registered Successfully",  snackBarSuccess)
+            snackbar(t("auth.registerSuccessfull"),  snackBarSuccess)
             history.push("/")
         })
         .catch((error: BackendError) => snackbar(error.message,  snackbarError))

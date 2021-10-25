@@ -12,7 +12,7 @@
             "relations": "Relations",
             "charaters": "Characters",
             "clickToShowMore": "Click To Show More",
-            "clickToShowLess": "Kliknij To Show Less",
+            "clickToShowLess": "Click To Show Less",
             "animeInformation": {
                 "ariringSeason": "Airing Season",
                 "status": "Status",
@@ -25,6 +25,86 @@
                 "favourites": "{{service}} Favourites",
                 "nrOfReviews": "Nr. of {{service}} Reviews",
                 "noScoreSubmitted": "No score submitted"
+            },
+            "userAnimeInformation": {
+                "updateSuccessfull": "Your anime data has been updated",
+                "updateError": "Your information was not updated, as it contained errors",
+                "favouriteLabel": "Is My Favourite",
+                "watchStartDateLabel": "Watch start date",
+                "watchEndDateLabel": "Watch end date",
+                "episodeSeenLabel": "Episodes seen",
+                "statusLabel": "Status",
+                "gradeLabel": "Opinion",
+                "reviewButton": "Review Editor",
+                "review": {
+                    "reviewDialogTitle": "Your Review",
+                    "reviewTitle": "Review Title",
+                    "reviewText": "Review Text"
+                }
+            },
+            "search": {
+                "minStartDate": "Started after",
+                "maxStartDate": "Started before",
+                "minEndDate": "Ended before",
+                "maxEndDate": "Ended after",
+                "minNrOfEpisodes": "Min. nr. of Episodes",
+                "maxNrOfEpisodes": "Max. nr. of Episodes",
+                "minAverageScore": "Min. average score",
+                "maxAverageScore": "Max. average score",
+                "titleContains": "Title contains",
+                "status": "Status",
+                "format": "Format",
+                "season": "Season"
+            },
+            "ranking": {
+                "topOfAllTime": "Top of All Time",
+                "topAiring": "Top Airing",
+                "topMovies": "Top Movies"
+            }
+        },
+        "forum": {
+
+        },
+        "auth": {
+            "loginSuccessfull": "Logged in successfully",
+            "logoutSuccessfull": "Logged out successfully",
+            "registerSuccessfull": "Registered successfully",
+            "login": {
+                "username": "Username",
+                "password": "Password",
+                "logIn": "Log in"
+            },
+            "register": {
+                "registerTextUnderLogin": "No Account? Register!",
+                "username": "Username",
+                "password": "Password",
+                "matchingPassword": "Repeat password",
+                "email": "Email"
+            }
+        },
+        "input": {
+            "submit": "Submit",
+            "close": "Close",
+            "search": "Search",
+            "register": "Register"
+        },
+        "fieldErrors": {
+            "dateTypeError": "Wrong format",
+            "dateTooEarly": "Too early",
+            "dateTooLate": "Too late",
+            "numberMustBePositive": "Must be positive",
+            "fieldCannotBeEmpty": "{{field}} cannot be empty",
+            "fieldCannotExceed": "Must not exceed {{number}}",
+            "fieldAtLeastCharacters": "Must be at least {{number}} characters",
+            "fieldMustMatch": "{{field}} must match",
+            "fieldIsNotA": "Value is not a {{field}}",
+            "fieldIsNotAn": "Value is not an {{field}}",
+            "fieldNotFound": "{{field}} not found"
+        },
+        "misc": {
+            "loadingDefaultMessage": "The Request cound not be processed \n Try again later",
+            "infiniteScroll": {
+                "end": "You reached the end"
             }
         }
     }

@@ -8,15 +8,15 @@ export interface RankingItem {
 
 export const Rankings: RankingItem[] = [
     {
-        title: 'Top of All Time',
+        title: 'anime.ranking.topOfAllTime',
         fetch: (pageNumber: number) => AnimeService.getTopAnimeOfAllTime(pageNumber)
     },
     {
-        title: 'Top Airing',
+        title: 'anime.ranking.topAiring',
         fetch: (pageNumber: number) => AnimeService.getTopAiringAnime(pageNumber)
     },
     {
-        title: 'Top Movies',
+        title: 'anime.ranking.topMovies',
         fetch: (pageNumber: number) => AnimeService.getTopAnimeMovies(pageNumber)
     }
 ]

@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { MenuItem, TextField, TextFieldProps } from "@material-ui/core"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as yup from "yup"
 import { AnimeQuery, SeasonYear, SeasonYearArray } from "../../data/Anime/AnimeQuery"
 import { Page } from "../../data/Anime/Page"
@@ -32,6 +33,7 @@ const color = getRandomColor(true);
 
 export default function AnimeSearch(props: AnimeSearchProps) {
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
+    const { t } = useTranslation();
     const [actualQuery, setActualQuery] = useState<AnimeQuery>({} as AnimeQuery)
     const [items, setItems] = useState<PageWithNumber>({} as PageWithNumber)
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
@@ -79,14 +81,22 @@ export default function AnimeSearch(props: AnimeSearchProps) {
             season: yup.mixed<Season>(),
             year: yup.number(),
         }).nullable(true),
-        minStartDate: yup.date().typeError("Wrong format").nullable(true).transform((curr, orig) => orig === "" ? undefined : curr),
-        maxStartDate: yup.date().typeError("Wrong format").nullable(true).transform((curr, orig) => orig === "" ? undefined : curr),
-        minEndDate: yup.date().typeError("Wrong format").nullable(true).transform((curr, orig) => orig === "" ? undefined : curr),
-        maxEndDate: yup.date().typeError("Wrong format").nullable(true).transform((curr, orig) => orig === "" ? undefined : curr),
-        minNrOfEpisodes: yup.number().nullable(true).min(0, "Must be positive").transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
-        maxNrOfEpisodes: yup.number().nullable(true).min(0, "Must be positive").transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
-        minAverageScore: yup.number().nullable(true).min(0, "Must be positive").max(101, "Must not exceed 100").transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
-        maxAverageScore: yup.number().nullable(true).min(0, "Must be positive").max(101, "Must not exceed 100").transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
+        minStartDate: yup.date().typeError(t("fieldErrors.dateTypeError")).nullable(true)
+            .transform((curr, orig) => orig === "" ? undefined : curr),
+        maxStartDate: yup.date().typeError(t("fieldErrors.dateTypeError")).nullable(true)
+            .transform((curr, orig) => orig === "" ? undefined : curr),
+        minEndDate: yup.date().typeError(t("fieldErrors.dateTypeError")).nullable(true)
+            .transform((curr, orig) => orig === "" ? undefined : curr),
+        maxEndDate: yup.date().typeError(t("fieldErrors.dateTypeError")).nullable(true)
+            .transform((curr, orig) => orig === "" ? undefined : curr),
+        minNrOfEpisodes: yup.number().nullable(true).min(0, t("fieldErrors.numberMustBePositive"))
+            .transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
+        maxNrOfEpisodes: yup.number().nullable(true).min(0, t("fieldErrors.numberMustBePositive"))
+            .transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
+        minAverageScore: yup.number().nullable(true).min(0, t("fieldErrors.numberMustBePositive")).max(101, t("fieldErrors.fieldCannotExceed", { number: 100 }))
+            .transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
+        maxAverageScore: yup.number().nullable(true).min(0, t("fieldErrors.numberMustBePositive")).max(101, t("fieldErrors.fieldCannotExceed", { number: 100 }))
+            .transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
     })
 
     const { control, handleSubmit, setValue, formState: { errors } } = useForm<AnimeQuery>({
@@ -112,7 +122,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
         <div>
             <form onSubmit={handleSubmit(formSearch)} className="AnimeSearchOptions">
                 <DatePickerCollored formControlClassName="minStartDateInput"
-                    label="Started after"
+                    label={t("anime.search.minStartDate")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -122,7 +132,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                 />
 
                 <DatePickerCollored formControlClassName="maxStartDateInput"
-                    label="Started before"
+                    label={t("anime.search.maxStartDate")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -132,7 +142,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                 />
 
                 <DatePickerCollored formControlClassName="minEndDateInput"
-                    label="Ender after"
+                    label={t("anime.search.minEndDate")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -142,7 +152,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                 />
 
                 <DatePickerCollored formControlClassName="maxEndDateInput"
-                    label="Ended before"
+                    label={t("anime.search.maxEndDate")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -155,7 +165,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                     <TextFieldColored formControlName="minNrOfEpisodes"
                         control={control}
                         errors={errors.minNrOfEpisodes}
-                        label="Min. nr. of episodes"
+                        label={t("anime.search.minNrOfEpisodes")}
                         type="number"
                         color={color}
                     />
@@ -165,7 +175,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                     <TextFieldColored formControlName="maxNrOfEpisodes"
                         control={control}
                         errors={errors.maxNrOfEpisodes}
-                        label="Max. nr. of episodes"
+                        label={t("anime.search.maxNrOfEpisodes")}
                         type="number"
                         color={color}
                     />
@@ -175,7 +185,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                     <TextFieldColored formControlName="minAverageScore"
                         control={control}
                         errors={errors.minAverageScore}
-                        label="Min. average score"
+                        label={t("anime.search.minAverageScore")}
                         type="number"
                         color={color}
                     />
@@ -185,7 +195,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                     <TextFieldColored formControlName="maxAverageScore"
                         control={control}
                         errors={errors.maxAverageScore}
-                        label="Max. average score"
+                        label={t("anime.search.maxAverageScore")}
                         type="number"
                         color={color}
                     />
@@ -195,14 +205,14 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                     <TextFieldColored formControlName="title"
                         control={control}
                         errors={errors.title}
-                        label="Title Contains"
+                        label={t("anime.search.titleContains")}
                         color={color}
                     />
                 </div>
 
                 <div className="StatusInput">
                     <SelectCollored labelId="StatusLabel"
-                        title="Status"
+                        title={t("anime.search.status")}
                         onChange={category => setValue('status', category.target.value as Status, setValueOptions)}
                         errors={errors.status}
                         color={color}
@@ -220,7 +230,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
 
                 <div className="FormatInput">
                     <SelectCollored labelId="FormatLabel"
-                        title="Format"
+                        title={t("anime.search.format")}
                         onChange={format => setValue('format', format.target.value as Format, setValueOptions)}
                         errors={errors.format}
                         color={color}
@@ -238,7 +248,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
 
                 <div className="SeasonInput">
                     <SelectCollored labelId="SeasonLabel"
-                        title="Season"
+                        title={t("anime.search.season")}
                         onChange={season => setValue('season', season.target.value as SeasonYear, setValueOptions)}
                         errors={errors.season?.season || errors.season?.year}
                         color={color}
@@ -255,7 +265,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
                 </div>
 
                 <div className="AnimeSearchSubmitButton">
-                    <ButtonCollored text="Search" type="submit" />
+                    <ButtonCollored text={t("input.search")} type="submit" />
                 </div>
             </form>
 

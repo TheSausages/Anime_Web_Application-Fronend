@@ -9,6 +9,7 @@ import ButtonCollored from "../Miscellaneous/ButtonCollored";
 import { Link } from "react-router-dom";
 
 import './css/Auth.css'
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
     inputSpace: {
@@ -26,14 +27,16 @@ const useStyles = makeStyles((theme) => ({
 interface LoginProps {
 }
 
-const schema = yup.object().shape({
-    username: yup.string().required("Login cannot be empty"),
-    password: yup.string().required("Password cannot be empty")
-})
-
 export default function Login(props: LoginProps) {
     const auth = useAuth();
     const classes = useStyles();
+    const { t } = useTranslation();
+
+    const schema = yup.object().shape({
+        username: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "Username" })),
+        password: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "Password" }))
+    })
+    
 
     const { control, handleSubmit, formState: { errors, isValid } } = useForm<Credentials>({
         resolver: yupResolver(schema),
@@ -48,7 +51,7 @@ export default function Login(props: LoginProps) {
         <form onSubmit={handleSubmit(auth.signin)} className="wrapper">
             <div className={classes.inputSpace}>
                 <TextFieldColored errors={errors.username}
-                    label="Username"
+                    label={t("auth.login.username")}
                     control={control}
                     formControlName="username"
                 />
@@ -56,7 +59,7 @@ export default function Login(props: LoginProps) {
 
             <div className={classes.inputSpace}>
                 <TextFieldColored errors={errors.password}
-                    label="Password"
+                    label={t("auth.login.password")}
                     type="password"
                     control={control}
                     formControlName="password"
@@ -64,14 +67,14 @@ export default function Login(props: LoginProps) {
             </div>
 
             <div className={classes.submitButton}>
-                <ButtonCollored text="Log In"
+                <ButtonCollored text={t("auth.login.logIn")}
                     type="submit"
                     disabled={!isValid}
                 />
             </div>
 
             <div id="registerText">
-                <Link to="/register">No Account? Register!</Link>
+                <Link to="/register">{t("auth.register.registerTextUnderLogin")}</Link>
             </div>
       </form>
     )

@@ -5,14 +5,17 @@ import { useTimer } from 'react-timer-hook';
 import { MiscellaneousProperties } from '../../Properties/MiscellaneousProperties';
 
 import './css/Loading.css'
+import { useTranslation } from "react-i18next";
 
 interface LoadingProps {
     error?: string
 }
 
 export default function Loading(props: LoadingProps) {
+    const { t } = useTranslation();
     const loadingTime: number = MiscellaneousProperties.loadingTimerInSeconds;
-    let errorMsg = props.error ? props.error! : "The Request cound not be processed \n Try again later"
+
+    let errorMsg = props.error ? props.error! : t("misc.loadingDefaultMessage")
 
     let expiryTimestamp = (new Date().setSeconds(new Date().getSeconds() + loadingTime))
     const {

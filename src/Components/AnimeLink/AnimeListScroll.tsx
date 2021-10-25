@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Page } from "../../data/Anime/Page";
 import Loading from "../Loading/Loading";
@@ -10,6 +11,7 @@ interface AnimeListScrollProps {
 
 export default function AnimeLinkScroll(props: AnimeListScrollProps) {
     const { items, getMore } = props;
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -21,7 +23,7 @@ export default function AnimeLinkScroll(props: AnimeListScrollProps) {
                 loader={<Loading />}
                 endMessage={
                     <div>
-                        You reached the end!
+                        {t("misc.infiniteScroll.end")}
                     </div>
                 }
             >

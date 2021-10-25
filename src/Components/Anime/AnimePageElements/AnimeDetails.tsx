@@ -6,7 +6,7 @@ import Relation from "../AnimePageElements/Relation"
 import { isTooManySections, spliceArrayIfNeeded } from "../../Section/SectionUrils"
 
 import "../css/AnimeDetails.css";
-import "../../Section/Section.css"
+import "../../Section/css/Section.css"
 import { useTranslation } from "react-i18next"
 
 interface AnimeDetailsProps {
