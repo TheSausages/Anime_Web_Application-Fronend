@@ -18,6 +18,7 @@ import { checkIfGivenUserLoggedIn, checkIfObjectIsEmpty } from "../../../Scripts
 import { ForumCategory } from "../../../data/Forum/ForumCategory";
 import ThreadForm from "./ThreadForm";
 import useBasicState from "../../../data/General/BasicState";
+import { useTranslation } from "react-i18next";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
@@ -30,6 +31,7 @@ interface ThreadProps {
 export default function CompleteThreadComponent(props: ThreadProps) {
     const [thread, setThread] = useState<CompleteThread>({} as CompleteThread)
     const history = useHistory();
+    const { t } = useTranslation();
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, open, openElement, closeElement } = useBasicState()
     
     const getThread = useCallback(async () => {
@@ -62,7 +64,7 @@ export default function CompleteThreadComponent(props: ThreadProps) {
         await ForumService.updateThread(thread.threadId, { ...editThread, threadId: thread.threadId })
         .then((response: CompleteThread) => {
             setThread(response)
-            snackbar("Thread updates successfully!", snackBarSuccess)
+            snackbar(t("forum.thread.threadUpdatesSuccessfully"), snackBarSuccess)
             stopLoading()
         }).catch((error: BackendError) => snackbar(error.message, snackbarError))
     }
@@ -87,17 +89,17 @@ export default function CompleteThreadComponent(props: ThreadProps) {
                 <div></div>
 
                 <div className="ThreadTimes">
-                    <div><AddIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: primaryColor }} />Created: {new Date(thread.creation).toLocaleString()}</div>
-                    <div><EditIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: primaryColor }} />Last Modified: {new Date(thread.modification).toLocaleString()}</div>
+                    <div><AddIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: primaryColor }} />{t("forum.thread.created")}: {new Date(thread.creation).toLocaleString()}</div>
+                    <div><EditIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: primaryColor }} />{t("forum.thread.lastModified")}: {new Date(thread.modification).toLocaleString()}</div>
                 </div>
 
                 <div className="ThreadCategory"><i title="Category">{thread.category.categoryName}</i></div>
 
                 {isLoggedUser &&
                     <div className="ThreadEditText" style={{color: primaryColor}}>
-                        <i onClick={() => openElement()}>edit thread</i>
+                        <i onClick={() => openElement()}>{t("forum.thread.editThreadForm.editThread")}</i>
 
-                        <ThreadForm title="Edit Thread" open={open} close={() => closeElement()} categories={props.categories} data={thread} onSubmit={editThread} />
+                        <ThreadForm title={t("forum.thread.editThreadForm.title")} open={open} close={() => closeElement()} categories={props.categories} data={thread} onSubmit={editThread} />
                     </div>
                 }
 

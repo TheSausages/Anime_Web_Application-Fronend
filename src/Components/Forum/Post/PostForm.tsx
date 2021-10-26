@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextFieldColored from "../../Miscellaneous/TextFieldColored";
 import { makeStyles } from "@material-ui/styles";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
     dialogContent: {
@@ -34,11 +35,12 @@ interface NewPostFormProps {
 
 export default function PostForm(props: NewPostFormProps) {
     const classes = useStyles();
+    const { t } = useTranslation();
     const { title, open, close, data, onSubmit } = props;
 
     const schema = yup.object().shape({
-        title: yup.string().required("Post title cannot be empty"),
-        text: yup.string().required("Post text cannot be empty")
+        title: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("forum.post.titleField") })),
+        text: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("forum.post.textField") }))
     })
 
     const { control, handleSubmit, formState: { errors, isValid } } = useForm<CreatePost>({
@@ -59,13 +61,13 @@ export default function PostForm(props: NewPostFormProps) {
 
                 <DialogContent className={classes.dialogContent}>
                     <TextFieldColored errors={errors.title}
-                        label="Post Title"
+                        label={t("forum.post.generalPostForm.titleLabel")}
                         formControlName="title"
                         control={control}
                     />
 
                     <TextFieldColored errors={errors.text}
-                        label="Post Text"
+                        label={t("forum.post.generalPostForm.textLabel")}
                         multiline={true}
                         rows={8}
                         formControlName="text"
@@ -74,8 +76,8 @@ export default function PostForm(props: NewPostFormProps) {
                 </DialogContent>
 
                 <DialogActions>
-                    <ButtonCollored onClick={close} text="Close" />
-                    <ButtonCollored type="submit" disabled={!isValid} onClick={close} text="Submit" />
+                    <ButtonCollored onClick={close} text={t("input.close")} />
+                    <ButtonCollored type="submit" disabled={!isValid} onClick={close} text={t("input.submit")} />
                 </DialogActions>
             </form>
         </Dialog>

@@ -33,8 +33,8 @@ export default function Login(props: LoginProps) {
     const { t } = useTranslation();
 
     const schema = yup.object().shape({
-        username: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "Username" })),
-        password: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "Password" }))
+        username: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("auth.login.username") })),
+        password: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("auth.login.password") }))
     })
     
 

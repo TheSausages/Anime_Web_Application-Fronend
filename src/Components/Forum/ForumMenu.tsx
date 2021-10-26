@@ -1,6 +1,7 @@
 import { Checkbox, Divider, FormControlLabel, FormGroup, List, ListItem, ListItemText, ListSubheader } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { AdditionalForumCategories } from "../../data/Forum/AdditionalForumCategories";
 import { ForumCategory } from "../../data/Forum/ForumCategory";
@@ -20,6 +21,8 @@ interface ForumMenuprops {
 
 export default function ForumMenu(props: ForumMenuprops) {
     const classes = useStyles();
+    const { t } = useTranslation();
+    
     const list = { width: '100%', bgcolor: 'background.paper' }
     const subList = { fontSize: '1.5rem', paddingRight: 0 }
     const checkboxLabel = { fontSize: '0.8rem' }
@@ -37,7 +40,7 @@ export default function ForumMenu(props: ForumMenuprops) {
                     <Checkbox sx={checkbox} checked={checked} onChange={_ => setChecked(!checked)} 
                 />} 
                     sx={checkboxLabel}
-                    label="See list meanings" 
+                    label={t("forum.forumMenu.seeCategoryMeanings")}
                     labelPlacement="start" 
                     disableTypography
                 />
@@ -45,7 +48,7 @@ export default function ForumMenu(props: ForumMenuprops) {
 
             <List sx={list} >
                 <ListSubheader component="div" className={classes.subListHeader} sx={subList} >
-                    General
+                    {t("forum.forumMenu.generalSubheader")}
                 </ListSubheader>
 
                 {props.categories.slice(0, AdditionalForumCategories.length).map((category: ForumCategory) => (
@@ -57,7 +60,7 @@ export default function ForumMenu(props: ForumMenuprops) {
                 <Divider />
 
                 <ListSubheader component="div" className={classes.subListHeader} sx={subList} >
-                    Categories
+                    {t("forum.forumMenu.categoriesSubheader")}
                 </ListSubheader>
 
                 {props.categories.slice(AdditionalForumCategories.length).map((category: ForumCategory) => (

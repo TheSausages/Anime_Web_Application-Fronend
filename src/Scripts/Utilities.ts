@@ -1,6 +1,7 @@
 import { FuzzyDate } from "../data/Anime/Smaller/FuzzyDate";
 import { Titles } from "../data/Anime/Smaller/Titles";
 import { AuthenticationProperties } from "../Properties/AuthenticationProperties";
+import { TFunction, useTranslation } from "react-i18next";
 
 export function checkIfLoggedIn(): boolean {
     const accessToken = localStorage.getItem(AuthenticationProperties.accessTokenItem)
@@ -26,17 +27,21 @@ export function checkIfObjectIsEmpty(object: Object) {
     return Object.keys(object).length === 0;
 }
 
-export function findFirstNotUndefined(elements: any[]) {
+export function FindFirstNotUndefined(elements: any[]) {
+    const { t } = useTranslation();
+
     var title: string = elements[elements.findIndex(val => val)];
 
     if (title) {
         return title
     }
 
-    return "No Title Found";
+    return t("fieldErrors.fieldNotFound", { field: t("anime.animeInformation.title") });
 }
 
-export function titlesInWantedOrder(titles: Titles): string {
+//This function needs to have the translation function passed down bcs error
+//Also because it's quite deep, need to ignore an error in the last line
+export function TitlesInWantedOrder(titles: Titles, t: TFunction<any>) {
     if (titles.english) {
         return titles.english
     }
@@ -49,7 +54,8 @@ export function titlesInWantedOrder(titles: Titles): string {
         return titles.native
     }
 
-    return "Not Found"
+    // @ts-ignore
+    return t("fieldErrors.fieldNotFoundNV");
 }
 
 export function Capitalize(value: any) {
@@ -62,16 +68,23 @@ export function Capitalize(value: any) {
     return value;
 }
 
-export function valueOrNotKnown(value: any, capitalize: boolean = true) {
+export function ValueOrNotKnown(value: any, capitalize: boolean = true) {
+    const { t } = useTranslation();
+
     if (typeof value === 'string') {
         value = value.replaceAll("_", " ")
     }
 
-    return !value && (value === 'number' && value === 0) ? "Not Known" : (capitalize ? Capitalize(value): value)
+    return !value && (value === 'number' && value === 0) ? 
+        t("fieldErrors.fieldNotKnown")
+    : 
+        (capitalize ? Capitalize(value): value)
 }
 
-export function dateOrNotKnown(value: FuzzyDate) {
-    return !value.year ? "Not Known" : (value.day + '.' + value.month + '.' + value.year)
+export function DateOrNotKnown(value: FuzzyDate) {
+    const { t } = useTranslation();
+
+    return !value.year ? t("fieldErrors.fieldNotKnown") : (value.day + '.' + value.month + '.' + value.year)
 }
 
 export function getRandomColor(dark?: boolean) {

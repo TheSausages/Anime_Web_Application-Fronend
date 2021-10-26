@@ -7,6 +7,7 @@ import Tags from "./Tags";
 import ThreadStatusComponent from "./ThreadStatusComponent";
 
 import "../css/SimpleThreadComponent.css"
+import { useTranslation } from "react-i18next";
 
 interface ThreadsProps {
     thread: SimpleThread;
@@ -15,6 +16,7 @@ interface ThreadsProps {
 export default function Threads(props: ThreadsProps) {
     const history = useHistory();
     const { thread } = props;
+    const { t } = useTranslation();
 
     const primaryColor = thread.status === "Open" ? 'rgb(29, 133, 34)' : 'rgb(255 90 90)';
 
@@ -27,13 +29,13 @@ export default function Threads(props: ThreadsProps) {
             <div onClick={_ => history.push("#")} className="ThreadCreator ThreadLink">{thread.creator.username}</div>
 
             <div className="ThreadTimes">
-                <div title="Creation Time"><AddIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.creation).toLocaleString()}</div>
-                <div title="Last time Modificated"><EditIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.modification).toLocaleString()}</div>
+                <div title={t("forum.thread.generalThread.creationTimeTitle")}><AddIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.creation).toLocaleString()}</div>
+                <div title={t("forum.thread.generalThread.modifyTimeTitle")}><EditIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.modification).toLocaleString()}</div>
             </div>
 
-            <div className="ThreadCategory"><i title="Category">{thread.category.categoryName}</i></div>
+            <div className="ThreadCategory"><i title={t("forum.thread.generalThread.categoryTitle")}>{thread.category.categoryName}</i></div>
 
-            <div  className="ThreadPosts" title="Number of Posts"><ForumIcon sx={{ verticalAlign: 'bottom', color: primaryColor, paddingInline: '5px' }} />{thread.nrOfPosts}</div>
+            <div className="ThreadPosts" title={t("forum.thread.generalThread.nrOfPostsTitle")}><ForumIcon sx={{ verticalAlign: 'bottom', color: primaryColor, paddingInline: '5px' }} />{thread.nrOfPosts}</div>
 
             <Tags tags={thread.tags} className="ThreadTags" />
         </div>

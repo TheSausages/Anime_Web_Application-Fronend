@@ -3,6 +3,7 @@ import React, { SyntheticEvent } from "react";
 import { ControllerRenderProps, FieldError, FieldPath, FieldValues } from "react-hook-form";
 import { Tag } from "../../data/Forum/Tag";
 import AddIcon from '@material-ui/icons/Add';
+import { useTranslation } from "react-i18next";
 
 interface TagInputProps {
     availableTags: Tag[];
@@ -15,6 +16,7 @@ interface TagInputProps {
 
 //Bacause a lot of options in renderInput, need to use normal TextField and customize it here
 export default function TagInput(props: TagInputProps) {
+    const { t } = useTranslation();
     let color = props.color ?? "rgb(36, 185, 44)";
 
     return (
@@ -40,7 +42,7 @@ export default function TagInput(props: TagInputProps) {
                 ))
             }
             renderInput={(params) => (
-                <TextFieldStyled {...params} label="Tags" variant="standard" style={{'--color': color} as React.CSSProperties}
+                <TextFieldStyled {...params} label={t("forum.thread.generalThread.tagsTitle")} variant="standard" style={{'--color': color} as React.CSSProperties}
                     error={props.errors !== undefined} helperText={props.errors?.message} />
             )}
         />

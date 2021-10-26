@@ -19,6 +19,7 @@ import { checkIfObjectIsEmpty } from "../../../Scripts/Utilities";
 import TagInput from "../TagInput";
 import useBasicState from "../../../data/General/BasicState";
 import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties";
+import { useTranslation } from "react-i18next";
 
 interface NewThreadFormProps {
     title: string;
@@ -71,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ThreadForm(props: NewThreadFormProps) {
     const classes = useStyles();
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
+    const { t } = useTranslation();
     const { title, open, close, categories, data, onSubmit } = props;
     const [tags, setTags] = useState<Tag[]>([])
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
@@ -94,20 +96,20 @@ export default function ThreadForm(props: NewThreadFormProps) {
     }, [getTags, open, startLoading, stopLoading])
 
     const schema = yup.object().shape({
-        title: yup.string().required("Thread title cannot be empty"),
-        text: yup.string().required("Thread text cannot be empty"),
+        title: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "forum.thread.titleField" })),
+        text: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "forum.thread.textField" })),
         category: yup.object().shape({
             categoryId: yup.number(),
             categoryName: yup.string(),
             categoryDescription: yup.string()
-        }).required("Thread must have a category!"),
+        }).required(t("forum.thread.generalThread.threadMustHaveCategoryError")),
         tags: yup.array().of(yup.object().shape({
             tagId: yup.number(),
             tagName: yup.string(),
             tagImportance: yup.mixed<TagImportance>(),
             tagColor: yup.string()
-        })).min(1, "Thread must have at least 1 tag!"),
-        status: yup.mixed<ThreadStatus>().required("Thread must have a valid status!").transform((curr, orig) => orig === "" ? undefined : curr)
+        })).min(1, t("forum.thread.generalThread.threadMustHaveAtLeast1Tag")),
+        status: yup.mixed<ThreadStatus>().required(t("forum.thread.generalThread.threadMustHaveValidStatus")).transform((curr, orig) => orig === "" ? undefined : curr)
     })
 
     let cat1 = JSON.stringify(data?.category) ?? ""
@@ -137,14 +139,14 @@ export default function ThreadForm(props: NewThreadFormProps) {
                 <DialogContent className={classes.dialogContent} >
                     <div className={`${classes.firstLine} ${classes.paddingTop}`} >
                         <TextFieldColored errors={errors.title}
-                            label="Thread Title"
+                            label={t("forum.thread.generalThread.titleLabel")}
                             formControlName="title"
                             control={control}
                         />
 
                         <SelectCollored labelId="CategoryLabel"
                             formControlClassName={classes.selectWidth}
-                            title="Category"
+                            title={t("forum.thread.generalThread.categoryTitle")}
                             onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
                             errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
                             options={
@@ -160,7 +162,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
 
                         <SelectCollored  labelId="StatusLabel"
                             formControlClassName={classes.selectWidth}
-                            title="Status"
+                            title={t("forum.thread.generalThread.statusTitle")}
                             onChange={category => setValue('status', category.target.value as ThreadStatus, setValueOptions)}
                             errors={errors.status}
                             disabled={!(data && !checkIfObjectIsEmpty(data))}
@@ -177,7 +179,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
                     </div>
 
                     <TextFieldColored errors={errors.text}
-                        label="Thread Text"
+                        label={t("forum.thread.generalThread.textLabel")}
                         multiline={true}
                         rows={8}
                         formControlName="text"

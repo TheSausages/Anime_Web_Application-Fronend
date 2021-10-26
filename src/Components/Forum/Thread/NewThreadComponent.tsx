@@ -9,6 +9,7 @@ import { ForumCategory } from "../../../data/Forum/ForumCategory";
 import useBasicState from "../../../data/General/BasicState";
 
 import "../css/NewThreadComponent.css"
+import { useTranslation } from "react-i18next";
 
 interface NewThreadComponentProps {
     categories: ForumCategory[]
@@ -16,6 +17,7 @@ interface NewThreadComponentProps {
 
 export default function NewThreadComponent(props: NewThreadComponentProps) {
     const { snackbar, open, openElement, closeElement } = useBasicState()
+    const { t } = useTranslation();
     const history = useHistory()
 
     async function createThread(thread: UpdateThread) {
@@ -26,7 +28,7 @@ export default function NewThreadComponent(props: NewThreadComponentProps) {
             tags: thread.tags
         } as CreateThread)
         .then((response: SimpleThread) => {
-            snackbar("Your thread was created!", snackBarSuccess)
+            snackbar(t("forum.thread.threadCreatedSuccessfully"), snackBarSuccess)
             history.push(`/forum/thread/${response.threadId}`);
         })
         .catch((error: BackendError) => snackbar(error.message, snackbarError))
@@ -34,9 +36,9 @@ export default function NewThreadComponent(props: NewThreadComponentProps) {
 
     return (
         <div className="newThreadButton">
-            <ButtonCollored text="new Thread" onClick={() => openElement()} />
+            <ButtonCollored text={t("forum.thread.newThreadForm.newThreadButton")} onClick={() => openElement()} />
                 
-            <ThreadForm title="Create Thread" open={open} close={() => closeElement()} onSubmit={createThread} categories={props.categories} />
+            <ThreadForm title={t("forum.thread.newThreadForm.title")} open={open} close={() => closeElement()} onSubmit={createThread} categories={props.categories} />
         </div>
     )
 }

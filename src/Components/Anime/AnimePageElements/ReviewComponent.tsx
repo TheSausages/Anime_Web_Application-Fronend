@@ -48,8 +48,8 @@ export function ReviewComponent(props: ReviewProps) {
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
 
     const schema = yup.object().shape({
-        reviewTitle: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "Title" })),
-        reviewText: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "Text" })),
+        reviewTitle: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("anime.userAnimeInformation.review.titleField") })),
+        reviewText: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("anime.userAnimeInformation.review.textField") })),
     })
 
     const { control, handleSubmit, formState: { errors, isValid } } = useForm<ReviewForm>({

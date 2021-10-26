@@ -1,6 +1,6 @@
 import { TFunction, useTranslation } from "react-i18next";
 import { MediaB } from "../../../data/Anime/MediaInformation";
-import { getRandomColor, valueOrNotKnown, Capitalize, dateOrNotKnown } from "../../../Scripts/Utilities";
+import { getRandomColor, ValueOrNotKnown, Capitalize, DateOrNotKnown } from "../../../Scripts/Utilities";
 
 import "../css/BasicAnimeInformation.css"
 
@@ -27,36 +27,36 @@ export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
 
 function createBasinAnimeInformationMap(results: MediaB, t: TFunction<"translation">) {
     let scr = results.localAnimeInformation?.averageScore;
-    let localAverageScore = scr && scr !== 0 ? valueOrNotKnown(`${results.localAnimeInformation?.averageScore}%`) : t("anime.animeInformation.noScoreSubmitted")
+    let localAverageScore = scr && scr !== 0 ? ValueOrNotKnown(`${results.localAnimeInformation?.averageScore}%`) : t("anime.animeInformation.noScoreSubmitted")
 
     return [
         {
             name: t("anime.animeInformation.ariringSeason"),
-            value: valueOrNotKnown(`${results.season} ${results.seasonYear}`)
+            value: ValueOrNotKnown(`${results.season} ${results.seasonYear}`)
         },
         {
             name: t("anime.animeInformation.status"),
-            value: Capitalize(valueOrNotKnown(results.status))
+            value: Capitalize(ValueOrNotKnown(results.status))
         },
         {
             name: t("anime.animeInformation.format"),
-            value: valueOrNotKnown(results.format)
+            value: ValueOrNotKnown(results.format)
         },
         {
             name: t("anime.animeInformation.nrOfEpisodes"),
-            value: valueOrNotKnown(results.episodes)
+            value: ValueOrNotKnown(results.episodes)
         },
         {
             name: t("anime.animeInformation.episodeLength"),
-            value: valueOrNotKnown(results.duration)
+            value: ValueOrNotKnown(results.duration)
         },
         {
             name: t("anime.animeInformation.startDate"),
-            value: dateOrNotKnown(results.startDate)
+            value: DateOrNotKnown(results.startDate)
         },
         {
             name: t("anime.animeInformation.endDate"),
-            value: dateOrNotKnown(results.endDate)
+            value: DateOrNotKnown(results.endDate)
         },
         {
             name: t("anime.animeInformation.averageScore", { service: "BackAni" }),
@@ -64,19 +64,19 @@ function createBasinAnimeInformationMap(results: MediaB, t: TFunction<"translati
         },
         {
             name: t("anime.animeInformation.averageScore", { service: "Anilist" }),
-            value: valueOrNotKnown(`${results.averageScore}%`)
+            value: ValueOrNotKnown(`${results.averageScore}%`)
         },
         {
             name: t("anime.animeInformation.favourites", { service: "BackAni" }),
-            value: valueOrNotKnown(results.localAnimeInformation?.nrOfFavourites)
+            value: ValueOrNotKnown(results.localAnimeInformation?.nrOfFavourites)
         },
         {
             name: t("anime.animeInformation.averageScore", { service: "Anilist" }),
-            value: valueOrNotKnown(results.favourites)
+            value: ValueOrNotKnown(results.favourites)
         },
         {
             name: t("anime.animeInformation.nrOfReviews", { service: "BackAni" }),
-            value: valueOrNotKnown(results.localAnimeInformation?.nrOfReviews)
+            value: ValueOrNotKnown(results.localAnimeInformation?.nrOfReviews)
         }
     ]
 }

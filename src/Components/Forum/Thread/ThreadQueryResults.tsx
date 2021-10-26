@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SimpleThread, SimpleThreadPage } from "../../../data/Forum/Thread";
 import Loading from "../../Loading/Loading";
@@ -10,11 +11,12 @@ interface ThreadQueryResultsProps {
 
 export default function ThreadQueryResults(props: ThreadQueryResultsProps) {
     const { threads, getMore } = props;
+    const { t } = useTranslation();
 
     return (
         <div>
             { threads!.content.length < 1 ?
-                <div className="NoPostsText">No Posts exist for this category!</div>
+                <div className="NoPostsText">{t("forum.thread.noThreadsForConditions")}</div>
             :
                 <InfiniteScroll
                     style={{overflow: 'none'}}

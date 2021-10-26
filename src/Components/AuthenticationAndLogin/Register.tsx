@@ -35,8 +35,8 @@ export default function Register(props: RegisterProps) {
         username: yup.string().min(6, t("fieldErrors.fieldAtLeastCharacters", { number: 6 })).required(),
         password: yup.string().min(6, t("fieldErrors.fieldAtLeastCharacters", { number: 6 }))
             .matches(/^(?=.+[0-9])(?=.{4,}[a-z])(?=.*[A-Z]).{6,}$/, "Wrong structure!").required(),
-        matchingPassword: yup.string().test("password-match",t("fieldErrors.fieldMustMatch", { field: "Passwords" }), function(value) { return this.parent.password === value }).required(),
-        email: yup.string().email(t("fieldErrors.fieldIsNotAn", { field: "Email" })).required()
+        matchingPassword: yup.string().test("password-match",t("fieldErrors.fieldMustMatch", { field: t("auth.register.password") }), function(value) { return this.parent.password === value }).required(),
+        email: yup.string().email(t("fieldErrors.fieldIsNotAn", { field: t("auth.register.email") })).required()
     })
 
     const { control, handleSubmit, formState: { errors, isValid } } = useForm<RegistrationBody>({

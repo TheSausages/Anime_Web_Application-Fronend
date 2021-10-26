@@ -1,6 +1,7 @@
 import { MediaEdge } from "../../../data/Anime/MediaInformation"
 import { Link } from 'react-router-dom';
-import { Capitalize, titlesInWantedOrder, valueOrNotKnown } from "../../../Scripts/Utilities";
+import { Capitalize, TitlesInWantedOrder, ValueOrNotKnown } from "../../../Scripts/Utilities";
+import { useTranslation } from "react-i18next";
 
 interface RelationProps {
     key: number
@@ -9,7 +10,9 @@ interface RelationProps {
 }
 
 export default function Relation(props: RelationProps) {
+    const { t } = useTranslation();
     const { element, index } = props;
+    
 
     return (
         <div key={index} className='SectionItem'>
@@ -24,9 +27,9 @@ export default function Relation(props: RelationProps) {
 
                 <div className="SectionItemInfo" id={`relation${element.node.id}`}>
                     <div className="SectionItemInfoInfoValue">
-                        <div>{Capitalize(valueOrNotKnown(element.relationType))}</div>
-                        <div>{titlesInWantedOrder(element.node.title)}</div>
-                        <div>{valueOrNotKnown(element.node.status) + " | " + valueOrNotKnown(element.node.type)}</div>
+                        <div>{Capitalize(ValueOrNotKnown(element.relationType))}</div>
+                        <div>{TitlesInWantedOrder(element.node.title, t)}</div>
+                        <div>{ValueOrNotKnown(element.node.status) + " | " + ValueOrNotKnown(element.node.type)}</div>
                     </div>
                 </div>
         </div>

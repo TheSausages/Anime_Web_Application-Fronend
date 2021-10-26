@@ -14,6 +14,7 @@
             "clickToShowMore": "Kliknij aby rozszerzyć",
             "clickToShowLess": "Kliknij aby zminimalizować",
             "animeInformation": {
+                "title": "Tytuł",
                 "ariringSeason": "Sezon emisji",
                 "status": "Status",
                 "format": "Format",
@@ -25,6 +26,167 @@
                 "favourites": "Ilość polubień {{service}}",
                 "nrOfReviews": "Ilość recenzji {{service}}",
                 "noScoreSubmitted": "Nie wystawiono żadnej"
+            },
+            "userAnimeInformation": {
+                "updateSuccessfull": "Zaktualizowano twoją opinię",
+                "updateError": "Twoja opinia nie została zaktualizowana, ponieważ posiadała błędy",
+                "favouriteLabel": "Ulubione",
+                "watchStartDateLabel": "Data rozpoczęcia oglądania",
+                "watchEndDateLabel": "Data zakończenia oglądania",
+                "episodeSeenLabel": "Pooglądano odcinków",
+                "statusLabel": "Status",
+                "gradeLabel": "Opinia",
+                "reviewButton": "Twoja recenzja",
+                "review": {
+                    "titleField": "Tytuł",
+                    "textField": "Tekst",
+                    "reviewDialogTitle": "Twoja recenzja",
+                    "reviewTitle": "Tytuł recenzji",
+                    "reviewText": "Tekst recenzji"
+                }
+            },
+            "search": {
+                "minStartDate": "Emisja rozpoczęta po",
+                "maxStartDate": "Emisja rozpoczęta przed",
+                "minEndDate": "Emisja zakończona po",
+                "maxEndDate": "Emisja zakończona przed",
+                "minNrOfEpisodes": "Min. ilość odcinków",
+                "maxNrOfEpisodes": "Max. ilość odcinków",
+                "minAverageScore": "Min. średnia ocena",
+                "maxAverageScore": "Max. średnia ocena",
+                "titleContains": "Tytuł zawiera",
+                "status": "Status",
+                "format": "Format",
+                "season": "Sezon"
+            },
+            "ranking": {
+                "topOfAllTime": "Najlepsze Wszechczasów",
+                "topAiring": "Najlepsze wychodzące",
+                "topMovies": "Najlepsze filmy"
+            }
+        },
+        "forum": {
+            "forumMenu": {
+                "seeCategoryMeanings": "Zobacz znaczenia",
+                "generalSubheader": "Generalne",
+                "categoriesSubheader": "Kategorie"
+            },
+            "post": {
+                "postCreatedSuccessfully": "Twój post został utworzony",
+                "postUpdatedSuccessfully": "Zaktualizowano post",
+                "created": "Stworzony",
+                "lastModified": "Ostatnio Edytowany",
+                "titleField": "Tytuł Postu",
+                "textField": "Tekst Postu",
+                "editPostForm": {
+                    "editPost": "edytuj post",
+                    "title": "Edytuj Post"
+                },
+                "newPostForm": {
+                    "newPostButton": "Nowy post",
+                    "title": "Nowy Post"
+                },
+                "generalPostForm": {
+                    "titleLabel": "Tytuł postu",
+                    "textLabel": "Tekst postu",
+                    "opinionSubmitted": "Opinia zapisana",
+                    "reportPostQuestion": "Czy na pewno chcesz zgłosić post?",
+                    "reportButton": "Zgłoś"
+                }
+            },
+            "thread": {
+                "threadCreatedSuccessfully": "Twój wątek został stworzony",
+                "threadUpdatesSuccessfully": "Zaktualizowano wątek",
+                "created": "Stworzony",
+                "lastModified": "Ostatnio Edytowany",
+                "noThreadsForConditions": "Nie isteją wątki dla podanych danych",
+                "titleField": "Tytuł wątku",
+                "titletext": "Tekst wątku",
+                "editThreadForm": {
+                    "editThread": "edytuj watek",
+                    "title": "Edytuj Wątek"
+                },
+                "newThreadForm": {
+                    "newThreadButton": "nowy wątek",
+                    "title": "Nowy Wątek"
+                },
+                "generalThread": {
+                    "titleLabel": "Tytuł Wątku",
+                    "statusTitle": "Status",
+                    "textLabel": "Tekst Wątku",
+                    "tagsImportance": "Waga",
+                    "creationTimeTitle": "Stworzony",
+                    "modifyTimeTitle": "Ostatnio Edytowany",
+                    "categoryTitle": "Kategoria",
+                    "nrOfPostsTitle": "Liczba Postów",
+                    "tagsTitle": "Tagi",
+                    "threadMustHaveCategoryError": "Wątek musi należeć do kategorii",
+                    "threadMustHaveAtLeast1Tag": "Wątek musi posiadac przynajmniej 1 tag",
+                    "threadMustHaveValidStatus": "Wątek musi mieć poprawny status"
+                },
+                "search": {
+                    "minCreation": "Stworzone po",
+                    "maxCreation": "Stworzone przed",
+                    "minModification": "Edytowane po",
+                    "maxModification": "Edytowane przed",
+                    "minNrOfPosts": "Min. liczba postów",
+                    "maxNrOfPosts": "Max. liczba postów",
+                    "titleContains": "Tytuł zawiera",
+                    "creatorUsernameContains": "Nazwa twórcy zawiera",
+                    "category": "Kategoria",
+                    "status": "Status"
+                }
+            }
+        },
+        "auth": {
+            "loginSuccessfull": "Zalogowano",
+            "logoutSuccessfull": "Wylogowano",
+            "registerSuccessfull": "Zarejestrowano",
+            "login": {
+                "username": "Nazwa użytkownika",
+                "password": "Hasło",
+                "logIn": "Zaloguj"
+            },
+            "register": {
+                "registerTextUnderLogin": "Nie masz konta? Zarejestruj się!",
+                "username": "Nazwa użytkownika",
+                "password": "Hasło",
+                "matchingPassword": "Powtórz hasło",
+                "email": "Email"
+            }
+        },
+        "input": {
+            "submit": "Wyślij",
+            "close": "Zamknij",
+            "search": "Szukaj",
+            "register": "Zarejestruj"
+        },
+        "fieldErrors": {
+            "dateTypeError": "Zły format",
+            "dateTooEarly": "Za wczeście",
+            "dateTooLate": "Za późno",
+            "dateCannotBeFuture": "Nie może być przyszłością",
+            "numberMustBePositive": "Musi być dodatnia",
+            "fieldCannotBeEmpty": "{{field}} nie może być puste",
+            "fieldCannotExceed": "Nie może przekroczyć {{number}}",
+            "fieldAtLeastCharacters": "Musi mieć przynajmniej {{number}} znaków",
+            "fieldMustMatch": "Musi być równe polu {{field}}",
+            "fieldIsNotA": "Pole nie jest równe {{field}}",
+            "fieldIsNotAn": "Pole nie jest równe {{field}}",
+            "fieldNotFound": "Nie znaleziono pola {{field}}",
+            "fieldNotKnown": "Informacja nieznana",
+            "fieldNotFoundNV": "Nie znaleziono informacji"
+        },
+        "errors": {
+            "methodNotAllowed": "Nie rozpoznano metody",
+            "noSuchHttpMethod": "Nie istnieje taka metoda Http: {{method}}",
+            "tooLongInactive": "Byłeś nieaktywny przez zbyt długi czas! Proszę, zaloguj się ponownie",
+            "noMessageAvailable": "No error message available"
+        },
+        "misc": {
+            "loadingDefaultMessage": "Żądanie nie mogło być poprawnie przetworzone \n Spróbuj ponownie później",
+            "infiniteScroll": {
+                "end": "Doszedłeś do końca"
             }
         }
     }

@@ -2,7 +2,7 @@ import parse from 'html-react-parser';
 import { useEffect, useState } from "react";
 import { MediaB } from "../../data/Anime/MediaInformation";
 import { AnimeService } from "../../Scripts/Services/AnimeService";
-import { checkIfLoggedIn, getRandomColor, titlesInWantedOrder } from "../../Scripts/Utilities";
+import { checkIfLoggedIn, getRandomColor, TitlesInWantedOrder } from "../../Scripts/Utilities";
 import Loading from '../Loading/Loading';
 import { AnimeBasicInformation } from './AnimePageElements/BasicAnimeInformation';
 import { DescriptionWithSocialButtons as Description } from './AnimePageElements/Description';
@@ -12,6 +12,7 @@ import { BackendError } from '../../data/General/BackendError';
 import { snackbarError } from '../../data/General/SnackBar';
 import { useCallback } from 'react';
 import useBasicState from '../../data/General/BasicState';
+import { useTranslation } from 'react-i18next';
 
 import "./css/Anime.css"
 
@@ -21,6 +22,7 @@ interface AnimeProps {
 
 export default function Anime(props: AnimeProps) {
     const [Anime, setAnime] = useState<MediaB>({} as MediaB);
+    const { t } = useTranslation();
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
 
     const getAnime = useCallback(async () => {
@@ -49,7 +51,7 @@ export default function Anime(props: AnimeProps) {
     return (
         <div id="AnimePageLayout">
             <div className='line'>
-                <p id="MainTitle">{parse(titlesInWantedOrder(Anime.title))}</p>
+                <p id="MainTitle">{parse(TitlesInWantedOrder(Anime.title, t))}</p>
             </div>
 
             <div className="AnimeInformationPage">

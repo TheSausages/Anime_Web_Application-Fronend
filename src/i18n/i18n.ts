@@ -10,7 +10,6 @@ i18n.use(LanguageDetector).init({
         Polish,
         English
     },
-    lng: languages.english.name,
     fallbackLng: languages.english.name,
     debug: false,
     interpolation: {

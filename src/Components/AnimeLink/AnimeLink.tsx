@@ -1,8 +1,9 @@
 import { styled } from "@material-ui/styles"
 import { Link } from "react-router-dom"
 import { MediaB } from "../../data/Anime/MediaInformation"
-import { titlesInWantedOrder, getRandomColor } from "../../Scripts/Utilities"
+import { TitlesInWantedOrder, getRandomColor } from "../../Scripts/Utilities"
 import ScrollContainer from 'react-indiana-drag-scroll'
+import { useTranslation } from "react-i18next"
 
 import "./css/AnimeLink.css"
 
@@ -14,6 +15,8 @@ interface AnimeLinkProps {
 }
 
 export default function AnimeLink(props: AnimeLinkProps) {
+    const { t } = useTranslation();
+
     const StyledDiv = styled('div')({
         display: 'grid',
         gridTemplateColumns: 'repeat(5, 1fr)',
@@ -35,10 +38,10 @@ export default function AnimeLink(props: AnimeLinkProps) {
 
     function restOfCode(): JSX.Element[] {
         return ( props.elements.map((anime, index) => (
-                    <Link key={index} to={'/anime/' + anime.id + '/'} title={titlesInWantedOrder(anime.title)}>
+                    <Link key={index} to={'/anime/' + anime.id + '/'} title={TitlesInWantedOrder(anime.title, t)}>
                         { props.showIndex ? <div><span>{index + 1}</span></div> : null }
                         <img src={anime.coverImage.large} style={{ 'border': '1px solid ' + getRandomColor() }} alt='new'></img>
-                        <p title={titlesInWantedOrder(anime.title)}></p>
+                        <p title={TitlesInWantedOrder(anime.title, t)}></p>
                     </Link>
                 )
             ))

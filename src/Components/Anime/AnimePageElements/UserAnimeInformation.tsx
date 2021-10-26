@@ -122,7 +122,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 snackbar(t("anime.userAnimeInformation.updateError"), snackbarError)
             }
         }
-    }, [getValues, errors, isDirty, snackbar, animeUserInformation?.id])
+    }, [getValues, errors, isDirty, snackbar, animeUserInformation?.id, t])
 
     useEffect(() => {
         window.addEventListener('onbeforeunload', (e: Event) => save);

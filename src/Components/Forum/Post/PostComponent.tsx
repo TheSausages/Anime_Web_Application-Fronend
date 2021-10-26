@@ -10,6 +10,7 @@ import { ForumService } from "../../../Scripts/Services/ForumService";
 import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import useBasicState from "../../../data/General/BasicState";
+import { useTranslation } from "react-i18next";
 
 import "../css/PostComponent.css"
 
@@ -25,13 +26,14 @@ export default function PostComponent(props: PostProps) {
     const { threadId } = props;
     const [post, setPost] = useState<CompletePost>(props.post)
     const history = useHistory();
+    const { t } = useTranslation();
 
     const { snackbar, open, openElement, closeElement } = useBasicState();
 
     async function editPost(editPost: CreatePost) {
         await ForumService.updatePostForThread(threadId, {...editPost, postId: post.postId} as UpdatePost)
         .then((response: CompletePost) => {
-            snackbar("Post updated successfully!", snackBarSuccess);
+            snackbar(t("forum.post.postUpdatedSuccessfully"), snackBarSuccess);
             setPost(response);
         })
         .catch((error: BackendError) => snackbar(error.message, snackbarError))
@@ -43,17 +45,17 @@ export default function PostComponent(props: PostProps) {
         <div className="Post" style={{borderColor: color}}>
             <div onClick={_ => history.push("#")} className="PostCreator PostLink">{post.user.username}</div>
             <div className="PostTimes">
-                <div><AddIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />Created: {new Date(post.creation).toLocaleString()}</div>
-                <div><EditIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />Last Modified: {new Date(post.modification).toLocaleString()}</div>
+                <div><AddIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />{t("forum.post.created")}: {new Date(post.creation).toLocaleString()}</div>
+                <div><EditIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />{t("forum.post.lastModified")}: {new Date(post.modification).toLocaleString()}</div>
             </div>
             <div className="PostTitle">{post.title}</div>
             <div className="PostText">{post.text}</div>
 
             {isLoggedUser &&
                 <div className="PostEditText">
-                    <i onClick={() => openElement()} style={{color: color}}>edit post</i>
+                    <i onClick={() => openElement()} style={{color: color}}>{t("forum.post.editPostForm.editPost")}</i>
 
-                    <PostForm title="Edit Post" open={open} close={() => closeElement()} data={post} onSubmit={editPost} />
+                    <PostForm title={t("forum.post.editPostForm.title")} open={open} close={() => closeElement()} data={post} onSubmit={editPost} />
                 </div>
             }
 

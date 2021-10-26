@@ -18,6 +18,7 @@ import { useState } from 'react';
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
 import useBasicState from '../../../data/General/BasicState';
 import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
+import { useTranslation } from 'react-i18next';
 
 interface PostReactionFormProps {
     nrOfPlus: number;
@@ -33,6 +34,7 @@ export default function PostReactionForm(props: PostReactionFormProps) {
     const [nrOfLiked, setNrOfLiked] = useState<number>(nrOfPlus)
     const [nrOfDisliked, setNrOfDisliked] = useState<number>(nrOfMinus)
     const { snackbar, open, openElement, closeElement } = useBasicState()
+    const { t } = useTranslation();
 
     const schema = yup.object().shape({
         isLiked: yup.boolean().notRequired(),
@@ -53,7 +55,7 @@ export default function PostReactionForm(props: PostReactionFormProps) {
     async function updateStatus(status: PostUserStatus) {
         if (postUserStatus !== undefined) {
             await ForumService.updatePostUserStatus(postUserStatus?.ids.post.postId, { ...postUserStatus, ...status })
-            .then(_ => snackbar("Opinion submitted!", snackBarSuccess))
+            .then(_ => snackbar(t("forum.post.generalPostForm.opinionSubmitted"), snackBarSuccess))
             .catch((error: BackendError) => {
                 snackbar(error.message, snackbarError)
             })
@@ -131,17 +133,17 @@ export default function PostReactionForm(props: PostReactionFormProps) {
 
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to report this posts?
+                        {t("forum.post.generalPostForm.reportPostQuestion")}
                     </DialogContentText>
                 </DialogContent>
 
                 <DialogActions>
-                    <ButtonCollored onClick={() => closeElement()} text="Close"/>
+                    <ButtonCollored onClick={() => closeElement()} text={t("input.close")}/>
                     <ButtonCollored onClick={() => {
                         setValue('isReported', true, setValueOptions);
                         closeElement()
                         handleSubmit(updateStatus)();
-                    }} text="Report"/>
+                    }} text={t("forum.post.generalPostForm.reportButton")} />
                 </DialogActions>
             </Dialog>
         </form>

@@ -1,5 +1,5 @@
 import { CharacterEdge } from "../../../data/Anime/CharacterInformation"
-import { Capitalize, valueOrNotKnown } from "../../../Scripts/Utilities"
+import { Capitalize, ValueOrNotKnown } from "../../../Scripts/Utilities"
 
 interface CharacterProps {
     key: number
@@ -18,8 +18,8 @@ export default function Character(props: CharacterProps) {
                 <div className="SectionItemInfo withMoreWidth" id={`relation${element.node.id}`}>
                     <div className="SectionItemInfoWithPicture">
                         <div>
-                            <div>{valueOrNotKnown(element.node.name.full, false)}</div>
-                            <div>{Capitalize(valueOrNotKnown(element.role))}</div>
+                            <div>{ValueOrNotKnown(element.node.name.full, false)}</div>
+                            <div>{Capitalize(ValueOrNotKnown(element.role))}</div>
                         </div>
     
                         {
@@ -36,8 +36,8 @@ export default function Character(props: CharacterProps) {
             
                 <div className="SectionItemInfo Character" id={`relation${element.node.id}`}>
                     <div className="SectionItemInfoInfoValue">
-                        <div>{valueOrNotKnown(element.node.name.full, false)}</div>
-                        <div>{Capitalize(valueOrNotKnown(element.role))}</div>
+                        <div>{ValueOrNotKnown(element.node.name.full, false)}</div>
+                        <div>{Capitalize(ValueOrNotKnown(element.role))}</div>
                     </div>
                 </div>
             </div>
@@ -49,8 +49,8 @@ function whenVoiceActor(element: CharacterEdge) {
     return (
         <div className="withPicture">
             <div>
-                <div>{valueOrNotKnown(element.voiceActors[0].name.full, false)}</div>
-                <div>{valueOrNotKnown(element.voiceActors[0].languageV2)}</div>
+                <div>{ValueOrNotKnown(element.voiceActors[0].name.full, false)}</div>
+                <div>{ValueOrNotKnown(element.voiceActors[0].languageV2)}</div>
             </div>
 
             <div>

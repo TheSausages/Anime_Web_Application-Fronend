@@ -14,6 +14,7 @@
             "clickToShowMore": "Click To Show More",
             "clickToShowLess": "Click To Show Less",
             "animeInformation": {
+                "title": "Title",
                 "ariringSeason": "Airing Season",
                 "status": "Status",
                 "format": "Format",
@@ -27,7 +28,7 @@
                 "noScoreSubmitted": "No score submitted"
             },
             "userAnimeInformation": {
-                "updateSuccessfull": "Your anime data has been updated",
+                "updateSuccessfull": "Your opinions have been updated",
                 "updateError": "Your information was not updated, as it contained errors",
                 "favouriteLabel": "Is My Favourite",
                 "watchStartDateLabel": "Watch start date",
@@ -35,8 +36,10 @@
                 "episodeSeenLabel": "Episodes seen",
                 "statusLabel": "Status",
                 "gradeLabel": "Opinion",
-                "reviewButton": "Review Editor",
+                "reviewButton": "Your Review",
                 "review": {
+                    "titleField": "Title",
+                    "textField": "Text",
                     "reviewDialogTitle": "Your Review",
                     "reviewTitle": "Review Title",
                     "reviewText": "Review Text"
@@ -63,7 +66,77 @@
             }
         },
         "forum": {
-
+            "forumMenu": {
+                "seeCategoryMeanings": "See meanings",
+                "generalSubheader": "General",
+                "categoriesSubheader": "Categories"
+            },
+            "post": {
+                "postCreatedSuccessfully": "Your new post was created",
+                "postUpdatedSuccessfully": "Post updated successfully",
+                "created": "Created",
+                "lastModified": "Last Modified",
+                "titleField": "Post title",
+                "textField": "Post text",
+                "editPostForm": {
+                    "editPost": "edit post",
+                    "title": "Edit Post"
+                },
+                "newPostForm": {
+                    "newPostButton": "New Post",
+                    "title": "Create Post"
+                },
+                "generalPostForm": {
+                    "titleLabel": "Post Title",
+                    "textLabel": "Post Text",
+                    "opinionSubmitted": "Opinion submitted",
+                    "reportPostQuestion": "Are you sure you want to report this posts?",
+                    "reportButton": "Report"
+                }
+            },
+            "thread": {
+                "threadCreatedSuccessfully": "Your thread was created",
+                "threadUpdatesSuccessfully": "Thread updates successfully",
+                "created": "Created",
+                "lastModified": "Last Modified",
+                "noThreadsForConditions": "No Threads exist for conditions",
+                "titleField": "Thread title",
+                "titletext": "Thread text",
+                "editThreadForm": {
+                    "editThread": "edit thread",
+                    "title": "Edit Thread"
+                },
+                "newThreadForm": {
+                    "newThreadButton": "new thread",
+                    "title": "Create Thread"
+                },
+                "generalThread": {
+                    "titleLabel": "Thread Title",
+                    "statusTitle": "Status",
+                    "textLabel": "Thread Text",
+                    "tagsImportance": "Importance",
+                    "creationTimeTitle": "Creation Time",
+                    "modifyTimeTitle": "Last time Modificated",
+                    "categoryTitle": "Category",
+                    "nrOfPostsTitle": "Number of Posts",
+                    "tagsTitle": "Tags",
+                    "threadMustHaveCategoryError": "Thread must have a category",
+                    "threadMustHaveAtLeast1Tag": "Thread must have at least 1 tag",
+                    "threadMustHaveValidStatus": "Thread must have a valid status"
+                },
+                "search": {
+                    "minCreation": "Created after",
+                    "maxCreation": "Created before",
+                    "minModification": "Modified after",
+                    "maxModification": "Modified before",
+                    "minNrOfPosts": "Min. nr. of posts",
+                    "maxNrOfPosts": "Max. nr. of posts",
+                    "titleContains": "Title contains",
+                    "creatorUsernameContains": "Creator username contains",
+                    "category": "Category",
+                    "status": "Status"
+                }
+            }
         },
         "auth": {
             "loginSuccessfull": "Logged in successfully",
@@ -92,6 +165,7 @@
             "dateTypeError": "Wrong format",
             "dateTooEarly": "Too early",
             "dateTooLate": "Too late",
+            "dateCannotBeFuture": "Can't be future",
             "numberMustBePositive": "Must be positive",
             "fieldCannotBeEmpty": "{{field}} cannot be empty",
             "fieldCannotExceed": "Must not exceed {{number}}",
@@ -99,7 +173,15 @@
             "fieldMustMatch": "{{field}} must match",
             "fieldIsNotA": "Value is not a {{field}}",
             "fieldIsNotAn": "Value is not an {{field}}",
-            "fieldNotFound": "{{field}} not found"
+            "fieldNotFound": "{{field}} not found",
+            "fieldNotKnown": "Not known",
+            "fieldNotFoundNV": "Not found"
+        },
+        "errors": {
+            "methodNotAllowed": "The method cannot be null or undefined",
+            "noSuchHttpMethod": "There is no such Http Method: {{method}}",
+            "tooLongInactive": "You remained unactive for too long! Please log in again",
+            "noMessageAvailable": "No error message available"
         },
         "misc": {
             "loadingDefaultMessage": "The Request cound not be processed \n Try again later",

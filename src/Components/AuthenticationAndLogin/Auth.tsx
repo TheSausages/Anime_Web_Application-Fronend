@@ -96,7 +96,7 @@ function useProvideAuth(): AuthReturn {
 
     return {
         rerenderThisComponent,
-        signin,
+        signin: signin,
         register,
         signout,
     };

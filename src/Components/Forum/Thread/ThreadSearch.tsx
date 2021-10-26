@@ -21,6 +21,7 @@ import TagInput from "../TagInput"
 import useBasicState from "../../../data/General/BasicState"
 import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties"
 import ButtonCollored from "../../Miscellaneous/ButtonCollored"
+import { useTranslation } from "react-i18next"
 
 import "../css/ThreadSearch.css"
 
@@ -33,6 +34,7 @@ const color = getRandomColor(true);
 export default function ThreadSearch(props: ThreadSearchProps) {
     const { categories } = props
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
+    const { t } = useTranslation();
     const [tags, setTags] = useState<Tag[]>([])
     const [threads, setThreads] = useState<SimpleThreadPage>()
     const [actualQuery, setActualQuery] = useState<ForumQuery>({} as ForumQuery)
@@ -98,12 +100,12 @@ export default function ThreadSearch(props: ThreadSearchProps) {
             tagImportance: yup.mixed<TagImportance>(),
             tagColor: yup.string()
         })).nullable(true),
-        minCreation: yup.date().typeError("Wrong format").nullable(true).max(new Date(), "Can't be future").transform((curr, orig) => orig === "" ? undefined : curr),
-        maxCreation: yup.date().typeError("Wrong format").nullable(true).max(new Date(), "Can't be future").transform((curr, orig) => orig === "" ? undefined : curr),
-        minModification: yup.date().typeError("Wrong format").nullable(true).max(new Date(), "Can't be future").transform((curr, orig) => orig === "" ? undefined : curr),
-        maxModification: yup.date().typeError("Wrong format").nullable(true).max(new Date(), "Can't be future").transform((curr, orig) => orig === "" ? undefined : curr),
-        minNrOfPosts: yup.number().nullable(true).min(0, "Must be positive").transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
-        maxNrOfPosts: yup.number().nullable(true).min(0, "Must be positive").transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value)
+        minCreation: yup.date().typeError(t("fieldErrors.dateTypeError")).nullable(true).max(new Date(), t("fieldErrors.dateCannotBeFuture")).transform((curr, orig) => orig === "" ? undefined : curr),
+        maxCreation: yup.date().typeError(t("fieldErrors.dateTypeError")).nullable(true).max(new Date(), t("fieldErrors.dateCannotBeFuture")).transform((curr, orig) => orig === "" ? undefined : curr),
+        minModification: yup.date().typeError(t("fieldErrors.dateTypeError")).nullable(true).max(new Date(), t("fieldErrors.dateCannotBeFuture")).transform((curr, orig) => orig === "" ? undefined : curr),
+        maxModification: yup.date().typeError(t("fieldErrors.dateTypeError")).nullable(true).max(new Date(), t("fieldErrors.dateCannotBeFuture")).transform((curr, orig) => orig === "" ? undefined : curr),
+        minNrOfPosts: yup.number().nullable(true).min(0, t("fieldErrors.numberMustBePositive")).transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value),
+        maxNrOfPosts: yup.number().nullable(true).min(0, t("fieldErrors.numberMustBePositive")).transform((value, originalValue) => String(originalValue).trim() === "" ? undefined: value)
     })
 
     const { control, handleSubmit, setValue, formState: { errors } } = useForm<ForumQuery>({
@@ -128,7 +130,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
         <div>
             <form onSubmit={handleSubmit(searchUsingQuery)} className="SearchOptions">
                 <DatePickerCollored formControlClassName="minCreationInput"
-                    label="Created after"
+                    label={t("forum.thread.search.minCreation")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -141,7 +143,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                 />
                 
                 <DatePickerCollored formControlClassName="maxCreationInput"
-                    label="Created before"
+                    label={t("forum.thread.search.minCreation")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -154,7 +156,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                 />
 
                 <DatePickerCollored formControlClassName="minModificationInput"
-                    label="Modified after"
+                    label={t("forum.thread.search.minModification")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -167,7 +169,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                 />
 
                 <DatePickerCollored formControlClassName="maxModificationInput"
-                    label="Modified before"
+                    label={t("forum.thread.search.maxModification")}
                     color={color}
                     inputFormat="dd/MM/yyyy"
                     control={control}
@@ -183,7 +185,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                     <TextFieldColored formControlName="minNrOfPosts"
                         control={control}
                         errors={errors.minNrOfPosts}
-                        label="Min. nr. of posts"
+                        label={t("forum.thread.search.minNrOfPosts")}
                         type="number"
                         color={color}
                     />
@@ -193,7 +195,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                     <TextFieldColored formControlName="maxNrOfPosts"
                         control={control}
                         errors={errors.maxNrOfPosts}
-                        label="Max. nr. of posts"
+                        label={t("forum.thread.search.maxNrOfPosts")}
                         type="number"
                         color={color}
                     />
@@ -203,7 +205,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                     <TextFieldColored formControlName="title"
                         control={control}
                         errors={errors.title}
-                        label="Title Contains"
+                        label={t("forum.thread.search.titleContains")}
                         color={color}
                     />
                 </div>
@@ -212,14 +214,14 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                     <TextFieldColored formControlName="creatorUsername"
                         control={control}
                         errors={errors.creatorUsername}
-                        label="Creator Username Contains"
+                        label={t("forum.thread.search.creatorUsernameContains")}
                         color={color}
                     />
                 </div>
 
                 <div className="CategoryInput">
                     <SelectCollored labelId="CategoryLabel"
-                        title="Category"
+                        title={t("forum.thread.search.category")}
                         onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
                         errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
                         color={color}
@@ -237,7 +239,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
 
                 <div className="StatusInput">
                     <SelectCollored labelId="StatusLabel"
-                        title="Status"
+                        title={t("forum.thread.search.status")}
                         onChange={category => setValue('status', category.target.value as ThreadStatus, setValueOptions)}
                         errors={errors.status}
                         color={color}
@@ -268,7 +270,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
                 />
 
                 <div className="SearchSubmitButton">
-                    <ButtonCollored text="Search" type="submit" />
+                    <ButtonCollored text={t("input.search")} type="submit" />
                 </div>
             </form>
 
