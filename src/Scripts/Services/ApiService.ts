@@ -4,6 +4,8 @@ import { checkIfLoggedIn } from "../Utilities";
 import { clearTokenFields } from "../../Components/AuthenticationAndLogin/Auth";
 import { BackendProperties } from "../../Properties/BackendProperties"
 import { AuthenticationProperties } from "../../Properties/AuthenticationProperties";
+import { languages } from '../../i18n/Languages';
+import { TFunction, i18n } from "i18next";
 
 export enum HttpMethods {
     GET = "GET",
@@ -12,8 +14,8 @@ export enum HttpMethods {
     DELETE = "DELETE"
 }
 
-export async function performRequestWithType<T>(method: HttpMethods, url: string, needAuth: boolean, body?: any): Promise<T> {
-    return performRequest(method, url, needAuth, body)
+export async function performRequestWithType<T>(method: HttpMethods, url: string, needAuth: boolean, body?: any, t?: TFunction, i18n?: i18n): Promise<T> {
+    return performRequest(method, url, needAuth, body, t, i18n)
         .then(response => {
             if (response.ok) {
                 return response.json()
@@ -34,9 +36,9 @@ export async function performRequestWithNoResponse(method: HttpMethods, url: str
         })
 }
 
-export async function performRequest(method: HttpMethods, url: string, needAuth: boolean, body?: any): Promise<Response> {
+export async function performRequest(method: HttpMethods, url: string, needAuth: boolean, body?: any, t?: TFunction, i18n?: i18n): Promise<Response> {
     if (method === null || method === undefined) {
-        const err = { message: "The method cannot be null or undefined", status: 400 } as BackendError
+        const err = { message: t!("auth.loginSuccessfull"), status: 400 } as BackendError
         throw err;
     }
     
@@ -49,7 +51,7 @@ export async function performRequest(method: HttpMethods, url: string, needAuth:
         refreshTokens();
     }
 
-    const headers = getHeaders(needAuth);
+    const headers = getHeaders(needAuth, i18n);
     body = JSON.stringify(body)
 
     return fetch(new Request(url, { method, headers, body }))
@@ -98,9 +100,11 @@ export async function refreshTokens() {
  * @param needAuth Does the request need authentification or need user data
  * @returns 
  */
-function getHeaders(needAuth: boolean) : Headers {
+function getHeaders(needAuth: boolean, i18n?: i18n) : Headers {
     const headers = new Headers();
     headers.set('Content-Type', 'application/json');
+
+    i18n && headers.set('Accept-Language', (Object.keys(languages).filter((key) => languages[key].name === i18n!.language ? true : false).map((key) => languages[key])[0] ?? languages.english).countryCode)
 
     if (needAuth && checkIfLoggedIn()) {
         headers.set("Authorization", "Bearer " + localStorage.getItem(AuthenticationProperties.accessTokenItem)!);
