@@ -26,12 +26,10 @@ export default function PostComponent(props: PostProps) {
     const { threadId } = props;
     const [post, setPost] = useState<CompletePost>(props.post)
     const history = useHistory();
-    const { t } = useTranslation();
-
-    const { snackbar, open, openElement, closeElement } = useBasicState();
+    const { snackbar, open, openElement, closeElement, t, i18n } = useBasicState();
 
     async function editPost(editPost: CreatePost) {
-        await ForumService.updatePostForThread(threadId, {...editPost, postId: post.postId} as UpdatePost)
+        await ForumService.updatePostForThread(threadId, {...editPost, postId: post.postId} as UpdatePost, t, i18n)
         .then((response: CompletePost) => {
             snackbar(t("forum.post.postUpdatedSuccessfully"), snackBarSuccess);
             setPost(response);

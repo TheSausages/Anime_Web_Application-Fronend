@@ -6,49 +6,51 @@ import { CompletePost, CompletePostPage, CreatePost, PostUserStatus, UpdatePost 
 import { PageDTO } from "../../data/General/PageDTO";
 import { Tag } from "../../data/Forum/Tag";
 import { BackendProperties } from "../../Properties/BackendProperties";
+import { TFunction } from "react-i18next";
+import { i18n } from "i18next";
 
 export class ForumService {
-    static getForumCategories(): Promise<ForumCategory[]> {
-        return performRequestWithType<ForumCategory[]>(HttpMethods.GET, BackendProperties.forum.getForumCategories, true)
+    static getForumCategories(t: TFunction, i18n: i18n): Promise<ForumCategory[]> {
+        return performRequestWithType<ForumCategory[]>(HttpMethods.GET, BackendProperties.forum.getForumCategories, true, t, i18n)
     }
 
-    static getNewestThreads(page: number): Promise<SimpleThreadPage> {
-        return performRequestWithType<SimpleThreadPage>(HttpMethods.GET, BackendProperties.forum.getNewestThread(page), true)
+    static getNewestThreads(page: number, t: TFunction, i18n: i18n): Promise<SimpleThreadPage> {
+        return performRequestWithType<SimpleThreadPage>(HttpMethods.GET, BackendProperties.forum.getNewestThread(page), true, t, i18n)
     }
 
-    static searchThreadsByQuery(query: ForumQuery, page: number): Promise<SimpleThreadPage> {
-        return performRequestWithType<SimpleThreadPage>(HttpMethods.POST, BackendProperties.forum.searchThreadsByQuery(page), true, query)
+    static searchThreadsByQuery(query: ForumQuery, page: number, t: TFunction, i18n: i18n): Promise<SimpleThreadPage> {
+        return performRequestWithType<SimpleThreadPage>(HttpMethods.POST, BackendProperties.forum.searchThreadsByQuery(page), true, t, i18n, query)
     }
 
-    static getThreadById(id: number): Promise<CompleteThread> {
-        return performRequestWithType<CompleteThread>(HttpMethods.GET, BackendProperties.forum.getThreadById(id), true);
+    static getThreadById(id: number, t: TFunction, i18n: i18n): Promise<CompleteThread> {
+        return performRequestWithType<CompleteThread>(HttpMethods.GET, BackendProperties.forum.getThreadById(id), true, t, i18n);
     }
 
-    static getPostsForThread(threadId: number, page: number): Promise<CompletePostPage> {
-        return performRequestWithType<CompletePostPage>(HttpMethods.GET, BackendProperties.forum.getPostsForThread(threadId, page), true);
+    static getPostsForThread(threadId: number, page: number, t: TFunction, i18n: i18n): Promise<CompletePostPage> {
+        return performRequestWithType<CompletePostPage>(HttpMethods.GET, BackendProperties.forum.getPostsForThread(threadId, page), true, t, i18n);
     }
 
-    static updatePostUserStatus(postId: number, status: PostUserStatus): Promise<PostUserStatus> {
-        return performRequestWithType<PostUserStatus>(HttpMethods.PUT, BackendProperties.forum.updatePostUserStatus(postId), true, status);
+    static updatePostUserStatus(postId: number, status: PostUserStatus, t: TFunction, i18n: i18n): Promise<PostUserStatus> {
+        return performRequestWithType<PostUserStatus>(HttpMethods.PUT, BackendProperties.forum.updatePostUserStatus(postId), true, t, i18n, status);
     }
 
-    static createPostForThread(threadId: number, post: CreatePost): Promise<PageDTO<CompletePost>> {
-        return performRequestWithType<PageDTO<CompletePost>>(HttpMethods.POST, BackendProperties.forum.createPostForThread(threadId), true, post)
+    static createPostForThread(threadId: number, post: CreatePost, t: TFunction, i18n: i18n): Promise<PageDTO<CompletePost>> {
+        return performRequestWithType<PageDTO<CompletePost>>(HttpMethods.POST, BackendProperties.forum.createPostForThread(threadId), true, t, i18n, post)
     }
 
-    static updatePostForThread(threadId: number, post: UpdatePost): Promise<CompletePost> {
-        return performRequestWithType<CompletePost>(HttpMethods.PUT, BackendProperties.forum.updatePostForThread(threadId), true, post)
+    static updatePostForThread(threadId: number, post: UpdatePost, t: TFunction, i18n: i18n): Promise<CompletePost> {
+        return performRequestWithType<CompletePost>(HttpMethods.PUT, BackendProperties.forum.updatePostForThread(threadId), true, t, i18n, post)
     }
 
-    static createThread(thread: CreateThread): Promise<any> {
-        return performRequestWithType<SimpleThread>(HttpMethods.POST, BackendProperties.forum.createThread, true, thread);
+    static createThread(thread: CreateThread, t: TFunction, i18n: i18n): Promise<any> {
+        return performRequestWithType<SimpleThread>(HttpMethods.POST, BackendProperties.forum.createThread, true, t, i18n, thread);
     }
 
-    static updateThread(threadId: number, thread: UpdateThread): Promise<any> {
-        return performRequestWithType<CompleteThread>(HttpMethods.PUT, BackendProperties.forum.updateThread(threadId), true, thread);
+    static updateThread(threadId: number, thread: UpdateThread, t: TFunction, i18n: i18n): Promise<any> {
+        return performRequestWithType<CompleteThread>(HttpMethods.PUT, BackendProperties.forum.updateThread(threadId), true, t, i18n, thread);
     }
 
-    static getTags(): Promise<Tag[]> {
-        return performRequestWithType<Tag[]>(HttpMethods.GET, BackendProperties.forum.getTags, true)
+    static getTags(t: TFunction, i18n: i18n): Promise<Tag[]> {
+        return performRequestWithType<Tag[]>(HttpMethods.GET, BackendProperties.forum.getTags, true, t, i18n)
     }
 }

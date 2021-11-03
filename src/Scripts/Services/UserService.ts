@@ -11,22 +11,22 @@ import { HttpMethods } from "./ApiService";
 
 export class UserService {
     static login(credentials: Credentials, t: TFunction, i18n: i18n): Promise<AuthenticationToken> {
-        return performRequestWithType<AuthenticationToken>(HttpMethods.POST, BackendProperties.authAndUser.login, false, credentials, t, i18n)
+        return performRequestWithType<AuthenticationToken>(HttpMethods.POST, BackendProperties.authAndUser.login, false, t, i18n, credentials)
     } 
 
-    static logout(): Promise<any> {
-        return performRequestWithNoResponse(HttpMethods.POST, BackendProperties.authAndUser.logout, true, {refreshToken: localStorage.getItem(AuthenticationProperties.refreshTokenItem)})
+    static logout(t: TFunction, i18n: i18n): Promise<any> {
+        return performRequestWithNoResponse(HttpMethods.POST, BackendProperties.authAndUser.logout, true, t, i18n, {refreshToken: localStorage.getItem(AuthenticationProperties.refreshTokenItem)})
     }
     
-    static register(regis: RegistrationBody): Promise<AuthenticationToken> {
-        return performRequestWithType<AuthenticationToken>(HttpMethods.POST, BackendProperties.authAndUser.register, false, regis)
+    static register(regis: RegistrationBody, t: TFunction, i18n: i18n): Promise<AuthenticationToken> {
+        return performRequestWithType<AuthenticationToken>(HttpMethods.POST, BackendProperties.authAndUser.register, false, t, i18n, regis)
     }
 
-    static updateAnimeUserInformationData(data: AnimeUserInformation) {
-        return performRequestWithNoResponse(HttpMethods.POST, BackendProperties.authAndUser.updateAnimeUserInformation, true, data);
+    static updateAnimeUserInformationData(data: AnimeUserInformation, t: TFunction, i18n: i18n) {
+        return performRequestWithNoResponse(HttpMethods.POST, BackendProperties.authAndUser.updateAnimeUserInformation, true, t, i18n, data);
     }
 
-    static cancelAchievementsSubscription() {
-        return performRequestWithNoResponse(HttpMethods.GET, BackendProperties.authAndUser.cancelAchievementsSubscription, true);
+    static cancelAchievementsSubscription(t: TFunction, i18n: i18n) {
+        return performRequestWithNoResponse(HttpMethods.GET, BackendProperties.authAndUser.cancelAchievementsSubscription, true, t, i18n);
     }
 }

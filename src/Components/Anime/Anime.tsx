@@ -22,11 +22,10 @@ interface AnimeProps {
 
 export default function Anime(props: AnimeProps) {
     const [Anime, setAnime] = useState<MediaB>({} as MediaB);
-    const { t } = useTranslation();
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     const getAnime = useCallback(async () => {
-        await AnimeService.getAnimeById(props.id)
+        await AnimeService.getAnimeById(props.id, t, i18n)
         .then((response: MediaB) => {
             setAnime(response);
         })

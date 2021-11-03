@@ -58,11 +58,10 @@ interface UserAnimeInformationProps {
 
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const classes = useStyles();
-    const { t } = useTranslation();
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
     const [openReview, setOpenReview] = useState<boolean>(false)
     const container = React.useRef(null);
-    const { snackbar } = useBasicState()
+    const { snackbar, t, i18n } = useBasicState()
     const { airedEpisodes, animeUserInformation, animeStartDate } = props;
 
     const schema = yup.object().shape({
@@ -113,7 +112,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 if (inf.watchStartDate === null) inf.watchStartDate = undefined;
                 if (inf.watchEndDate === null) inf.watchEndDate = undefined;
 
-                await UserService.updateAnimeUserInformationData({...inf, id: animeUserInformation?.id!})
+                await UserService.updateAnimeUserInformationData({...inf, id: animeUserInformation?.id!}, t, i18n)
                 .then(() => snackbar(t("anime.userAnimeInformation.user.updateSuccessfull"), snackBarSuccess))
                 .catch((error: BackendError) => {
                     snackbar(error.message, snackbarError)

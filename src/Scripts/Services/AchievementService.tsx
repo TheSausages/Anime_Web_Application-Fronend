@@ -9,6 +9,7 @@ import AchievementDialog from "../../Components/Achievement/AchievementDialog";
 import ReactDOM from "react-dom";
 import { UserService } from "./UserService";
 import { BackendProperties } from "../../Properties/BackendProperties"
+import useBasicState from "../../data/General/BasicState";
 
 export interface AchievementService {
     startListeningForAchievements: () => void;
@@ -19,14 +20,14 @@ class RetriableError extends Error { }
 class FatalError extends Error { }
 
 export default function useAchievementService() {
-    const { enqueueSnackbar } = useSnackbar();
+    const { snackbar, t, i18n } = useBasicState();
     const abortController = useMemo(() => new AbortController(), [])
     const signal = abortController.signal
 
     const startListening = useCallback(async () => {
         await fetchEventSource(BackendProperties.authAndUser.achievementSubscribe, {
             method: HttpMethods.GET,
-            headers: getHeadersAsRecord(true),
+            headers: getHeadersAsRecord(true, t, i18n),
             signal: signal,
     
             async onopen(response) {
@@ -49,14 +50,13 @@ export default function useAchievementService() {
             },
     
             onerror(err: BackendError) {
-                let defaultMessage = "You earned an achievement, but an error occured we cannot see which! Please check your profile";
-                enqueueSnackbar(err.message ?? defaultMessage, snackbarError)
+                snackbar(err.message ?? t("misc.defaultAchievementMessage"), snackbarError)
             }
         })
-    }, [signal, enqueueSnackbar]);
+    }, [signal, snackbar]);
 
     const stopListening = useCallback(() => {
-        UserService.cancelAchievementsSubscription();
+        UserService.cancelAchievementsSubscription(t, i18n);
         abortController.abort();
     }, [abortController])
 

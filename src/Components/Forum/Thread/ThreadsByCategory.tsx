@@ -17,10 +17,10 @@ interface ThreadsByCategoryProps {
 
 export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
     const [threads, setThreads] = useState<SimpleThreadPage>()
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     const getByCategory = useCallback(async (threads: SimpleThreadPage) => {
-        await ForumService.searchThreadsByQuery({category: props.category} as ForumQuery, threads.pageNumber ?? -1 + 1)
+        await ForumService.searchThreadsByQuery({category: props.category} as ForumQuery, threads.pageNumber ?? -1 + 1, t, i18n)
         .then((response: SimpleThreadPage) => setThreads({...response, content: [ ...threads?.content ?? [], ...response.content ]}))
         .catch((error: BackendError) => {
             setErrorMessage(error.message)

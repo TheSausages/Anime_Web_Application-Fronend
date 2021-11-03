@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SimpleThread, SimpleThreadPage } from "../../../data/Forum/Thread";
+import useBasicState from "../../../data/General/BasicState";
 import Loading from "../../Loading/Loading";
 import SimpleThreadComponent from "./SimpleThreadComponent";
 
@@ -11,7 +12,7 @@ interface ThreadQueryResultsProps {
 
 export default function ThreadQueryResults(props: ThreadQueryResultsProps) {
     const { threads, getMore } = props;
-    const { t } = useTranslation();
+    const { t } = useBasicState();
 
     return (
         <div>

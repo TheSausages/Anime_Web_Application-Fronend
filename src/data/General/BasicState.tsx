@@ -1,5 +1,7 @@
+import { i18n } from "i18next";
 import { useSnackbar } from "notistack";
 import { useCallback, useState } from "react";
+import { TFunction, useTranslation } from "react-i18next";
 import { snackbarInfo, snackBarVariant } from "./SnackBar";
 
 export interface BasicState {
@@ -11,13 +13,16 @@ export interface BasicState {
     openElement: () => void;
     closeElement: () => void;
     snackbar: (message: string, variant: snackBarVariant) => void;
-    setErrorMessage: (message: string) => void
+    setErrorMessage: (message: string) => void;
+    t: TFunction;
+    i18n: i18n;
 }
 
 export default function useBasicState() {
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
+    const { t, i18n } = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
 
     const openElement = useCallback(() => setOpen(true), [])
@@ -42,5 +47,7 @@ export default function useBasicState() {
         closeElement: closeElement,
         snackbar: snackbar,
         setErrorMessage: setErrorMessage,
+        t: t,
+        i18n: i18n
     } as BasicState
 }

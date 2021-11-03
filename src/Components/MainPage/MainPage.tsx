@@ -17,10 +17,10 @@ interface MainPageProps {
 
 export default function MainPage(props: MainPageProps) {
     const [currectSeason, setCurrectSeason] = useState<CurrentSeasonInformation>();
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     const getCurrentAnime = useCallback(async () => {
-        await AnimeService.getCurrentSeasonAnime()
+        await AnimeService.getCurrentSeasonAnime(t, i18n)
         .then((result: CurrentSeasonInformation) => {
             setCurrectSeason(result)
         })

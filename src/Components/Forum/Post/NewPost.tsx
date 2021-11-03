@@ -17,13 +17,12 @@ interface NewPostComponentProps {
 
 export default function NewPostButton(props: NewPostComponentProps) {
     const [open, setOpen] = useState<boolean>(false);
-    const { snackbar } = useBasicState()
-    const { t } = useTranslation();
+    const { snackbar, t, i18n } = useBasicState()
 
     async function createPost(post: CreatePost) {
-        await ForumService.createPostForThread(props.thread.threadId, post)
+        await ForumService.createPostForThread(props.thread.threadId, post, t, i18n)
         .then((response: PageDTO<CompletePost>) => {
-            snackbar(t("postCreatedSuccessfully"), snackBarSuccess)
+            snackbar(t("forum.post.postCreatedSuccessfully"), snackBarSuccess)
             props.setNewPosts(response)
         })
         .catch((error: BackendError) => snackbar(error.message, snackbarError))

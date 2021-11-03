@@ -16,8 +16,7 @@ interface NewThreadComponentProps {
 }
 
 export default function NewThreadComponent(props: NewThreadComponentProps) {
-    const { snackbar, open, openElement, closeElement } = useBasicState()
-    const { t } = useTranslation();
+    const { snackbar, open, openElement, closeElement, t, i18n } = useBasicState()
     const history = useHistory()
 
     async function createThread(thread: UpdateThread) {
@@ -26,7 +25,7 @@ export default function NewThreadComponent(props: NewThreadComponentProps) {
             text: thread.text,
             category: thread.category,
             tags: thread.tags
-        } as CreateThread)
+        } as CreateThread, t, i18n)
         .then((response: SimpleThread) => {
             snackbar(t("forum.thread.threadCreatedSuccessfully"), snackBarSuccess)
             history.push(`/forum/thread/${response.threadId}`);

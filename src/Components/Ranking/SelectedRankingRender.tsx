@@ -24,13 +24,13 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
     /*Start items state as possibly undefined - dummy start*/
     const [rankingItems, setRankingItems] = useState<RankingInformation>()
 
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     const getMoreRankingData = useCallback(async (rankingItems) => {
         let currectRankingItems = { ...rankingItems }
         let currentPageAfter = currectRankingItems.currentPage + 1;
     
-        await selectedRanking.fetch(currentPageAfter)
+        await selectedRanking.fetch(currentPageAfter, t, i18n)
         .then((results: Page) => {
             currectRankingItems.items.media!.push(...results.media!)
             currectRankingItems.items.pageInfo = results.pageInfo!

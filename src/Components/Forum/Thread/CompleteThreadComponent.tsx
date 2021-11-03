@@ -18,7 +18,6 @@ import { checkIfGivenUserLoggedIn, checkIfObjectIsEmpty } from "../../../Scripts
 import { ForumCategory } from "../../../data/Forum/ForumCategory";
 import ThreadForm from "./ThreadForm";
 import useBasicState from "../../../data/General/BasicState";
-import { useTranslation } from "react-i18next";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
@@ -31,11 +30,10 @@ interface ThreadProps {
 export default function CompleteThreadComponent(props: ThreadProps) {
     const [thread, setThread] = useState<CompleteThread>({} as CompleteThread)
     const history = useHistory();
-    const { t } = useTranslation();
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, open, openElement, closeElement } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, open, openElement, closeElement, t, i18n } = useBasicState()
     
     const getThread = useCallback(async () => {
-        await ForumService.getThreadById(props.threadId)
+        await ForumService.getThreadById(props.threadId, t, i18n)
         .then((response: CompleteThread) => setThread(response))
         .catch((error: BackendError) => {
             snackbar(error.message, snackbarError)
@@ -61,7 +59,7 @@ export default function CompleteThreadComponent(props: ThreadProps) {
     async function editThread(editThread: UpdateThread) {
         startLoading()
 
-        await ForumService.updateThread(thread.threadId, { ...editThread, threadId: thread.threadId })
+        await ForumService.updateThread(thread.threadId, { ...editThread, threadId: thread.threadId }, t, i18n)
         .then((response: CompleteThread) => {
             setThread(response)
             snackbar(t("forum.thread.threadUpdatesSuccessfully"), snackBarSuccess)

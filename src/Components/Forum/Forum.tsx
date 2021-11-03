@@ -16,10 +16,10 @@ interface ForumProps {
 
 export default function Forum(props: ForumProps) {
     const [categories, setCategories] = useState<ForumCategory[]>();
-    const { loading, startLoading, stopLoading, snackbar } = useBasicState()
+    const { loading, startLoading, stopLoading, snackbar, t, i18n } = useBasicState()
 
     const getCategories = useCallback(async () => {
-        await ForumService.getForumCategories()
+        await ForumService.getForumCategories(t, i18n)
         .then((response: ForumCategory[]) => {
             setCategories(response)
         })

@@ -34,11 +34,10 @@ const color = getRandomColor(true);
 export default function ThreadSearch(props: ThreadSearchProps) {
     const { categories } = props
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
-    const { t } = useTranslation();
     const [tags, setTags] = useState<Tag[]>([])
     const [threads, setThreads] = useState<SimpleThreadPage>()
     const [actualQuery, setActualQuery] = useState<ForumQuery>({} as ForumQuery)
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     const searchUsingQuery = useCallback((async (query: ForumQuery | undefined) => {
         startLoading()
@@ -51,7 +50,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
             setActualQuery(query)
         }
 
-        await ForumService.searchThreadsByQuery(query ?? actualQuery, threads?.pageNumber ?? -1 + 1)
+        await ForumService.searchThreadsByQuery(query ?? actualQuery, threads?.pageNumber ?? -1 + 1, t, i18n)
         .then((response: SimpleThreadPage) => {
             setThreads({...response})
             stopLoading()
@@ -65,7 +64,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
     const getTags = useCallback(async () => {
         startLoading()
 
-        await ForumService.getTags()
+        await ForumService.getTags(t, i18n)
         .then((response: Tag[]) => {
             setTags([...response])
             stopLoading()

@@ -14,68 +14,68 @@ export enum HttpMethods {
     DELETE = "DELETE"
 }
 
-export async function performRequestWithType<T>(method: HttpMethods, url: string, needAuth: boolean, body?: any, t?: TFunction, i18n?: i18n): Promise<T> {
-    return performRequest(method, url, needAuth, body, t, i18n)
+export async function performRequestWithType<T>(method: HttpMethods, url: string, needAuth: boolean, t: TFunction, i18n: i18n,  body?: any): Promise<T> {
+    return performRequest(method, url, needAuth, t, i18n, body)
         .then(response => {
             if (response.ok) {
                 return response.json()
             } else {
-                return handleError(response)
+                return handleError(response, t)
             }
         })
 }
 
-export async function performRequestWithNoResponse(method: HttpMethods, url: string, needAuth: boolean, body?: any) {
-    return performRequest(method, url, needAuth, body)
+export async function performRequestWithNoResponse(method: HttpMethods, url: string, needAuth: boolean, t: TFunction, i18n: i18n, body?: any) {
+    return performRequest(method, url, needAuth, t, i18n, body)
         .then(response => {
             if (response.ok) {
                 return;
             } else {
-                return handleError(response)
+                return handleError(response, t)
             }
         })
 }
 
-export async function performRequest(method: HttpMethods, url: string, needAuth: boolean, body?: any, t?: TFunction, i18n?: i18n): Promise<Response> {
+export async function performRequest(method: HttpMethods, url: string, needAuth: boolean, t: TFunction, i18n: i18n, body?: any): Promise<Response> {
     if (method === null || method === undefined) {
-        const err = { message: t!("auth.loginSuccessfull"), status: 400 } as BackendError
+        const err = { message: t!("errors.methodNotAllowed"), status: 400 } as BackendError
         throw err;
     }
     
     if (!Object.values(HttpMethods).includes(method)) {
-        const err = { message: "There is no such Http Method:" + method, status: 400 } as BackendError
+        const err = { message: t("errors.noSuchHttpMethod", { method: method }), status: 400 } as BackendError
         throw err;
     }
 
     if (checkIfLoggedIn() && new Date(localStorage.getItem(AuthenticationProperties.refreshIfAfterItem)!) <= new Date()) {
-        refreshTokens();
+        refreshTokens(t, i18n);
     }
 
-    const headers = getHeaders(needAuth, i18n);
+    const headers = getHeaders(needAuth, t, i18n);
     body = JSON.stringify(body)
 
     return fetch(new Request(url, { method, headers, body }))
 }
 
-function handleError(response: Response) {
+function handleError(response: Response, t: TFunction) {
     return response.json().then((err: {message: string}) => {
         return { status: response.status, message: err.message };
     }).catch(_ => {
         if (response.status === 401) {
             clearTokenFields()
-            return { status: response.status, message: "You remained unactive for too long! Please log in again" };
+            return { status: response.status, message: t("errors.tooLongInactive") };
         }
 
-        return { status: response.status, message: "No error message available" };
+        return { status: response.status, message: t("errors.noMessageAvailable") };
     }).then((error: BackendError) => {
         throw error;
     })
 }
 
-export async function refreshTokens() {
+export async function refreshTokens(t: TFunction, i18n: i18n) {
     await fetch(localStorage.getItem(BackendProperties.authAndUser.refreshAuthTokensUrl)!, {
         method: "POST",
-        headers: getHeaders(false),
+        headers: getHeaders(false, t, i18n),
         body: JSON.stringify({refreshToken: localStorage.getItem(AuthenticationProperties.refreshTokenItem)})
     })
     .then(data => data.json())
@@ -100,21 +100,31 @@ export async function refreshTokens() {
  * @param needAuth Does the request need authentification or need user data
  * @returns 
  */
-function getHeaders(needAuth: boolean, i18n?: i18n) : Headers {
+function getHeaders(needAuth: boolean, t: TFunction, i18n: i18n) : Headers {
     const headers = new Headers();
     headers.set('Content-Type', 'application/json');
+    headers.set('Accept-Language', (Object.keys(languages).filter((key) => languages[key].name === i18n!.language ? true : false).map((key) => languages[key])[0] ?? languages.english).countryCode)
 
-    i18n && headers.set('Accept-Language', (Object.keys(languages).filter((key) => languages[key].name === i18n!.language ? true : false).map((key) => languages[key])[0] ?? languages.english).countryCode)
+    if (needAuth) {
+        //the token is needed
+        if (checkIfLoggedIn()) {
+            headers.set("Authorization", "Bearer " + localStorage.getItem(AuthenticationProperties.accessTokenItem)!);
+        } else {
+            const err = { message: t("errors.mustLogIn"), status: 400 } as BackendError
+            throw err;
+        }
+    } else {
+        //If there is an access token, use it but it's not neceserry
+        let acc = localStorage.getItem(AuthenticationProperties.accessTokenItem)
 
-    if (needAuth && checkIfLoggedIn()) {
-        headers.set("Authorization", "Bearer " + localStorage.getItem(AuthenticationProperties.accessTokenItem)!);
+        acc && headers.set("Authorization", "Bearer " + acc);
     }
 
     return headers;
 }
 
-export function getHeadersAsRecord(needAuth: boolean): Record<string, string> {
-    let headers = getHeaders(true);
+export function getHeadersAsRecord(needAuth: boolean, t: TFunction, i18n: i18n): Record<string, string> {
+    let headers = getHeaders(true, t, i18n);
 
     return {
         'Content-Type': headers.get('Content-Type')!,

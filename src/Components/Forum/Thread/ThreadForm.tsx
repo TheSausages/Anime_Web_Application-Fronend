@@ -72,13 +72,12 @@ const useStyles = makeStyles((theme) => ({
 export default function ThreadForm(props: NewThreadFormProps) {
     const classes = useStyles();
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
-    const { t } = useTranslation();
     const { title, open, close, categories, data, onSubmit } = props;
     const [tags, setTags] = useState<Tag[]>([])
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     const getTags = useCallback(async () => {
-        await ForumService.getTags()
+        await ForumService.getTags(t, i18n)
         .then((response: Tag[]) => setTags([...response]))
         .catch((error: BackendError) => {
             snackbar(error.message, snackbarError)

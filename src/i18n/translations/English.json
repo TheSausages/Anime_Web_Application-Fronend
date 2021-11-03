@@ -181,10 +181,12 @@
             "methodNotAllowed": "The method cannot be null or undefined",
             "noSuchHttpMethod": "There is no such Http Method: {{method}}",
             "tooLongInactive": "You remained unactive for too long! Please log in again",
+            "mustLogIn": "You must be logged in",
             "noMessageAvailable": "No error message available"
         },
         "misc": {
             "loadingDefaultMessage": "The Request cound not be processed \n Try again later",
+            "defaultAchievementMessage": "You earned an achievement, but an error occured we cannot see which! Please check your profile",
             "infiniteScroll": {
                 "end": "You reached the end"
             }

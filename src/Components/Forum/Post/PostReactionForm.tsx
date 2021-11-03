@@ -33,8 +33,7 @@ export default function PostReactionForm(props: PostReactionFormProps) {
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
     const [nrOfLiked, setNrOfLiked] = useState<number>(nrOfPlus)
     const [nrOfDisliked, setNrOfDisliked] = useState<number>(nrOfMinus)
-    const { snackbar, open, openElement, closeElement } = useBasicState()
-    const { t } = useTranslation();
+    const { snackbar, open, openElement, closeElement, t, i18n } = useBasicState()
 
     const schema = yup.object().shape({
         isLiked: yup.boolean().notRequired(),
@@ -54,7 +53,7 @@ export default function PostReactionForm(props: PostReactionFormProps) {
 
     async function updateStatus(status: PostUserStatus) {
         if (postUserStatus !== undefined) {
-            await ForumService.updatePostUserStatus(postUserStatus?.ids.post.postId, { ...postUserStatus, ...status })
+            await ForumService.updatePostUserStatus(postUserStatus?.ids.post.postId, { ...postUserStatus, ...status }, t, i18n)
             .then(_ => snackbar(t("forum.post.generalPostForm.opinionSubmitted"), snackBarSuccess))
             .catch((error: BackendError) => {
                 snackbar(error.message, snackbarError)

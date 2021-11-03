@@ -33,15 +33,14 @@ const color = getRandomColor(true);
 
 export default function AnimeSearch(props: AnimeSearchProps) {
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
-    const { t } = useTranslation();
     const [actualQuery, setActualQuery] = useState<AnimeQuery>({} as AnimeQuery)
     const [items, setItems] = useState<PageWithNumber>({} as PageWithNumber)
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     const searchUsingQuery = useCallback((async (query: AnimeQuery, currentPage: number) => {
         startLoading()
 
-        await AnimeService.searchUsingQuery(query, currentPage + 1)
+        await AnimeService.searchUsingQuery(query, currentPage + 1, t, i18n)
         .then((response: Page) => {
             setItems((itemsWithPage: PageWithNumber) => ({
                 currentPage: currentPage + 1,

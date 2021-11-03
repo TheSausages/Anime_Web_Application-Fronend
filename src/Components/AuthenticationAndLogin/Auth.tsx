@@ -37,8 +37,7 @@ export const useAuth = () => {
 function useProvideAuth(): AuthReturn {
     let history = useHistory();
     const { startListeningForAchievements, stopListeningForAchievements } = useAchievementService();
-    const { snackbar } = useBasicState()
-    const { t, i18n } = useTranslation();
+    const { snackbar, t, i18n } = useBasicState()
     const [rerender, setRerender] = useState<boolean>(false);
   
     const signin = async (cred: Credentials) => {
@@ -60,7 +59,7 @@ function useProvideAuth(): AuthReturn {
     const signout = () => {
         stopListeningForAchievements();
 
-        UserService.logout()
+        UserService.logout(t, i18n)
         .then(data => {
             clearTokenFields();
             setRerender(!rerender);
@@ -75,7 +74,7 @@ function useProvideAuth(): AuthReturn {
     };
 
     const register = async (regis: RegistrationBody) => {
-        await UserService.register(regis)
+        await UserService.register(regis, t, i18n)
         .then(data => {  
             localStorage.setItem(AuthenticationProperties.accessTokenItem, data.access_token);
             localStorage.setItem(AuthenticationProperties.refreshTokenItem, data.refresh_token);

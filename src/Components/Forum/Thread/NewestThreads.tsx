@@ -12,10 +12,10 @@ interface NewestThreadsProps {
 
 export default function NewestThreads(props: NewestThreadsProps) {
     const [threads, setThreads] = useState<SimpleThreadPage>()
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     const getNewestThreads = useCallback(async (threads: SimpleThreadPage) => {
-        await ForumService.getNewestThreads(threads?.pageNumber ?? -1 + 1)
+        await ForumService.getNewestThreads(threads?.pageNumber ?? -1 + 1, t, i18n)
         .then((response: SimpleThreadPage) => setThreads({...response, content: [ ...threads?.content ?? [], ...response.content ]}))
         .catch((error: BackendError) => {
             setErrorMessage(error.message)

@@ -181,10 +181,12 @@
             "methodNotAllowed": "Nie rozpoznano metody",
             "noSuchHttpMethod": "Nie istnieje taka metoda Http: {{method}}",
             "tooLongInactive": "Byłeś nieaktywny przez zbyt długi czas! Proszę, zaloguj się ponownie",
-            "noMessageAvailable": "No error message available"
+            "mustLogIn": "Musisz się zalogować",
+            "noMessageAvailable": "Błąd nie jest dostępny"
         },
         "misc": {
             "loadingDefaultMessage": "Żądanie nie mogło być poprawnie przetworzone \n Spróbuj ponownie później",
+            "defaultAchievementMessage": "Zdobyłeś osiągnięcie, ale nie można go wystąpić. Zobacz swój profil",
             "infiniteScroll": {
                 "end": "Doszedłeś do końca"
             }

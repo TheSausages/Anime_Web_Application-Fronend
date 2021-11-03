@@ -17,7 +17,7 @@ interface ThreadPostsComponentProps {
 export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
     const { postsPage, threadId } = props;
     const [postPage, setPostPage] = useState<CompletePostPage>(postsPage)
-    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage } = useBasicState()
+    const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
 
     useEffect(() => {
         startLoading()
@@ -28,7 +28,7 @@ export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
     }, [props.postsPage, postsPage, startLoading, stopLoading])
 
     const getMorePosts= useCallback(async () => {
-        await ForumService.getPostsForThread(threadId, postPage.pageNumber + 1)
+        await ForumService.getPostsForThread(threadId, postPage.pageNumber + 1, t, i18n)
         .then((response: CompletePostPage) => setPostPage({...response, content: [...postPage.content, ...response.content]}))
         .catch((error: BackendError) => {
             setErrorMessage(error.message)
