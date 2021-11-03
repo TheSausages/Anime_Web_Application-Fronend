@@ -12,7 +12,6 @@ import { BackendError } from '../../data/General/BackendError';
 import { snackbarError } from '../../data/General/SnackBar';
 import { useCallback } from 'react';
 import useBasicState from '../../data/General/BasicState';
-import { useTranslation } from 'react-i18next';
 
 import "./css/Anime.css"
 
@@ -33,7 +32,7 @@ export default function Anime(props: AnimeProps) {
             setErrorMessage(error.message)
             snackbar(error.message,  snackbarError)
         })
-    }, [setErrorMessage, snackbar, props.id])
+    }, [setErrorMessage, snackbar, props.id, t, i18n])
 
     useEffect(() => {
         startLoading()

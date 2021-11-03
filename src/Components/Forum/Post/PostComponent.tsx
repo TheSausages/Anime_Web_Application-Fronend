@@ -10,7 +10,6 @@ import { ForumService } from "../../../Scripts/Services/ForumService";
 import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import useBasicState from "../../../data/General/BasicState";
-import { useTranslation } from "react-i18next";
 
 import "../css/PostComponent.css"
 

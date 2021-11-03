@@ -1,5 +1,5 @@
 import { i18n } from "i18next";
-import { TFunction, useTranslation } from "react-i18next";
+import { TFunction } from "react-i18next";
 import { AnimeUserInformation } from "../../data/Anime/Smaller/AnimeUserInformation";
 import { AuthenticationToken } from "../../data/General/User/AuthenticationToken";
 import { Credentials } from "../../data/General/User/Credentials";

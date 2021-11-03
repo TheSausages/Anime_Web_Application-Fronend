@@ -26,7 +26,7 @@ export default function Forum(props: ForumProps) {
         .catch((error: BackendError) => {
             snackbar(error.message, snackbarError)
         })
-    }, [snackbar])
+    }, [snackbar, t, i18n])
 
     useEffect(() => {
             try {

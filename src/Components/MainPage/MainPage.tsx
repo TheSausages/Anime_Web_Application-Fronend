@@ -28,7 +28,7 @@ export default function MainPage(props: MainPageProps) {
             setErrorMessage(error.message)
             snackbar(error.message,  snackbarError )
         })
-    }, [setErrorMessage, snackbar])
+    }, [setErrorMessage, snackbar, t, i18n])
 
     useEffect(() => {
         startLoading()

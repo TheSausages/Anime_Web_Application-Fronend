@@ -10,7 +10,6 @@ import { UserService } from "../../Scripts/Services/UserService";
 import { checkIfLoggedIn } from "../../Scripts/Utilities";
 import useAchievementService from "../../Scripts/Services/AchievementService";
 import { AuthenticationProperties } from "../../Properties/AuthenticationProperties";
-import { useTranslation } from "react-i18next";
 
 export interface AuthReturn {
     signin: (cred: Credentials) => void;

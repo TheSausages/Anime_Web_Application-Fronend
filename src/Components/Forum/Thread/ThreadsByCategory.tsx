@@ -26,7 +26,7 @@ export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
             setErrorMessage(error.message)
             snackbar(error.message, snackbarError)
         })
-    }, [setErrorMessage, snackbar, props.category])
+    }, [setErrorMessage, snackbar, props.category, t, i18n])
 
     useEffect(() => {
         startLoading()

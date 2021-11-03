@@ -34,7 +34,7 @@ export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
             setErrorMessage(error.message)
             snackbar(error.message, snackbarError)
         })
-    }, [snackbar, setErrorMessage, postPage, threadId])
+    }, [snackbar, setErrorMessage, postPage, threadId, t, i18n])
 
     if (loading || postPage === undefined) {
         return <Loading error={error}/>

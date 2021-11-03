@@ -42,7 +42,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
             setErrorMessage(error.message)
             snackbar(error.message,  snackbarError )
         })
-    }, [selectedRanking, setErrorMessage, snackbar])
+    }, [selectedRanking, setErrorMessage, snackbar, t, i18n])
 
     useEffect(() => {
         startLoading()

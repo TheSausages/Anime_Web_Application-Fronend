@@ -1,4 +1,3 @@
-import { useSnackbar } from "notistack";
 import { useCallback, useMemo } from "react";
 import { snackbarError } from "../../data/General/SnackBar";
 import { Achievement } from "../../data/General/User/Achievement";
@@ -53,12 +52,12 @@ export default function useAchievementService() {
                 snackbar(err.message ?? t("misc.defaultAchievementMessage"), snackbarError)
             }
         })
-    }, [signal, snackbar]);
+    }, [signal, snackbar, t, i18n]);
 
     const stopListening = useCallback(() => {
         UserService.cancelAchievementsSubscription(t, i18n);
         abortController.abort();
-    }, [abortController])
+    }, [abortController, t, i18n])
 
     return {
         startListeningForAchievements: startListening,

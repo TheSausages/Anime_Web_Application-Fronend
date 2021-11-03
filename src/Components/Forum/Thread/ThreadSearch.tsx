@@ -21,7 +21,6 @@ import TagInput from "../TagInput"
 import useBasicState from "../../../data/General/BasicState"
 import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties"
 import ButtonCollored from "../../Miscellaneous/ButtonCollored"
-import { useTranslation } from "react-i18next"
 
 import "../css/ThreadSearch.css"
 
@@ -59,7 +58,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
             snackbar(error.message, snackbarError)
             setErrorMessage(error.message)
         })
-    }), [snackbar, stopLoading, startLoading, threads?.pageNumber, actualQuery, setErrorMessage])
+    }), [snackbar, stopLoading, startLoading, threads?.pageNumber, actualQuery, setErrorMessage, t, i18n])
 
     const getTags = useCallback(async () => {
         startLoading()
@@ -73,7 +72,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
             snackbar(error.message, snackbarError)
             setErrorMessage(error.message)
         })
-    }, [snackbar, setErrorMessage, stopLoading, startLoading])
+    }, [snackbar, setErrorMessage, stopLoading, startLoading, t, i18n])
 
     useEffect(() => {
         startLoading()

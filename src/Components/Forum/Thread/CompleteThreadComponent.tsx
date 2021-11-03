@@ -39,7 +39,7 @@ export default function CompleteThreadComponent(props: ThreadProps) {
             snackbar(error.message, snackbarError)
             setErrorMessage(error.message)
         })
-    }, [snackbar, setErrorMessage, props.threadId])
+    }, [snackbar, setErrorMessage, props.threadId, t, i18n])
 
     useEffect(() => {
         startLoading()

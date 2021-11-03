@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { MenuItem, TextField, TextFieldProps } from "@material-ui/core"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useTranslation } from "react-i18next"
 import * as yup from "yup"
 import { AnimeQuery, SeasonYear, SeasonYearArray } from "../../data/Anime/AnimeQuery"
 import { Page } from "../../data/Anime/Page"
@@ -56,7 +55,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
             snackbar(error.message, snackbarError)
             setErrorMessage(error.message)
         })
-    }), [snackbar, stopLoading, startLoading, setErrorMessage])
+    }), [snackbar, stopLoading, startLoading, setErrorMessage, t, i18n])
 
     const formSearch = useCallback(async (query: AnimeQuery) => {
         setItems({} as PageWithNumber)

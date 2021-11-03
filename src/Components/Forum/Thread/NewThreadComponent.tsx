@@ -9,7 +9,6 @@ import { ForumCategory } from "../../../data/Forum/ForumCategory";
 import useBasicState from "../../../data/General/BasicState";
 
 import "../css/NewThreadComponent.css"
-import { useTranslation } from "react-i18next";
 
 interface NewThreadComponentProps {
     categories: ForumCategory[]

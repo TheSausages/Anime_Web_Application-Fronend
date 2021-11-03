@@ -18,7 +18,6 @@ import { useState } from 'react';
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
 import useBasicState from '../../../data/General/BasicState';
 import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
-import { useTranslation } from 'react-i18next';
 
 interface PostReactionFormProps {
     nrOfPlus: number;

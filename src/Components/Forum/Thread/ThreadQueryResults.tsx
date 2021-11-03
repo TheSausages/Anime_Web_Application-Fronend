@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SimpleThread, SimpleThreadPage } from "../../../data/Forum/Thread";
 import useBasicState from "../../../data/General/BasicState";

@@ -22,7 +22,6 @@ import CheckboxCollored from '../../Miscellaneous/CheckboxCollored';
 import SelectCollored from '../../Miscellaneous/SelectCollored';
 import useBasicState from '../../../data/General/BasicState';
 import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
-import { useTranslation } from 'react-i18next';
 
 import "../css/UserAnimeInformation.css"
 
@@ -121,7 +120,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 snackbar(t("anime.userAnimeInformation.updateError"), snackbarError)
             }
         }
-    }, [getValues, errors, isDirty, snackbar, animeUserInformation?.id, t])
+    }, [getValues, errors, isDirty, snackbar, animeUserInformation?.id, t, i18n])
 
     useEffect(() => {
         window.addEventListener('onbeforeunload', (e: Event) => save);

@@ -19,7 +19,6 @@ import { checkIfObjectIsEmpty } from "../../../Scripts/Utilities";
 import TagInput from "../TagInput";
 import useBasicState from "../../../data/General/BasicState";
 import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties";
-import { useTranslation } from "react-i18next";
 
 interface NewThreadFormProps {
     title: string;
@@ -84,7 +83,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
             setErrorMessage(error.message)
             close();
         })
-    }, [snackbar, setErrorMessage, close])
+    }, [snackbar, setErrorMessage, close, t, i18n])
 
     useEffect(() => {
         startLoading()
