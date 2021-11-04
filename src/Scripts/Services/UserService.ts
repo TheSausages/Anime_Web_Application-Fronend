@@ -23,7 +23,7 @@ export class UserService {
     }
 
     static updateAnimeUserInformationData(data: AnimeUserInformation, t: TFunction, i18n: i18n) {
-        return performRequestWithNoResponse(HttpMethods.POST, BackendProperties.authAndUser.updateAnimeUserInformation, true, t, i18n, data);
+        return performRequestWithNoResponse(HttpMethods.PUT, BackendProperties.anime.updateAnimeUserInformation, true, t, i18n, data);
     }
 
     static cancelAchievementsSubscription(t: TFunction, i18n: i18n) {

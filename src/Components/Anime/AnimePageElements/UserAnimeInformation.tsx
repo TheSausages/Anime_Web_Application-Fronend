@@ -112,7 +112,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 if (inf.watchEndDate === null) inf.watchEndDate = undefined;
 
                 await UserService.updateAnimeUserInformationData({...inf, id: animeUserInformation?.id!}, t, i18n)
-                .then(() => snackbar(t("anime.userAnimeInformation.user.updateSuccessfull"), snackBarSuccess))
+                .then(() => snackbar(t("anime.userAnimeInformation.updateSuccessfull"), snackBarSuccess))
                 .catch((error: BackendError) => {
                     snackbar(error.message, snackbarError)
                 })

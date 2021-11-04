@@ -15,9 +15,6 @@ export const BackendProperties = {
         get register() {
             return `${BackendProperties.backendUrl}/auth/register`
         },
-        get updateAnimeUserInformation() {
-            return `${BackendProperties.backendUrl}/animeUser/updateUserAnime`
-        },
         get refreshAuthTokensUrl() {
             return `${BackendProperties.backendUrl}/auth/refreshToken`
         },
@@ -31,6 +28,9 @@ export const BackendProperties = {
     anime: {
         getAnimeById(id: number) {
             return `${BackendProperties.backendUrl}/anime/${id}`
+        },
+        get updateAnimeUserInformation() {
+            return `${BackendProperties.backendUrl}/anime/updateUserAnime`
         },
         get getCurrentSeasonAnime() {
             return `${BackendProperties.backendUrl}/anime/season/current`
@@ -62,13 +62,13 @@ export const BackendProperties = {
             return `${BackendProperties.backendUrl}/forum/thread/newest/${page}`
         },
         searchThreadsByQuery(page: number) {
-            return `${BackendProperties.backendUrl}/forum/search/${page}`
+            return `${BackendProperties.backendUrl}/forum/thread/search/${page}`
         },
         getThreadById(id: number) {
             return `${BackendProperties.backendUrl}/forum/thread/${id}`
         },
         getPostsForThread(threadId: number, page: number) {
-            return `${BackendProperties.backendUrl}/forum/thread/${threadId}/posts/${page}`
+            return `${BackendProperties.backendUrl}/forum/thread/${threadId}/post/${page}`
         },
         updatePostUserStatus(postId: number) {
             return `${BackendProperties.backendUrl}/forum/post/${postId}`
