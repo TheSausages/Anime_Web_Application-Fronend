@@ -120,7 +120,7 @@ export default function PostReactionForm(props: PostReactionFormProps) {
                 />
             </FormControl>
 
-            <IconButton onClick={() => openElement()} disabled={isLoggedUser}>
+            <IconButton onClick={() => openElement()} disabled={isLoggedUser || postUserStatus?.isReported}>
                 {getValues().isReported ? <ReportIcon htmlColor={color} /> : <ReportOutlinedIcon htmlColor={color} />}
             </IconButton>
 

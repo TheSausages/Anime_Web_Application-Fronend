@@ -1,7 +1,7 @@
 import { ForumCategory } from "../../data/Forum/ForumCategory";
 import { ForumQuery } from "../../data/Forum/ForumQuery";
 import { performRequestWithType, HttpMethods } from "./ApiService";
-import { CompleteThread, CreateThread, SimpleThread, SimpleThreadPage, UpdateThread } from "../../data/Forum/Thread";
+import { CompleteThread, CreateThread, SimpleThread, SimpleThreadPage, ThreadUserStatus, UpdateThread } from "../../data/Forum/Thread";
 import { CompletePost, CompletePostPage, CreatePost, PostUserStatus, UpdatePost } from "../../data/Forum/Post";
 import { PageDTO } from "../../data/General/PageDTO";
 import { Tag } from "../../data/Forum/Tag";
@@ -48,6 +48,10 @@ export class ForumService {
 
     static updateThread(threadId: number, thread: UpdateThread, t: TFunction, i18n: i18n): Promise<any> {
         return performRequestWithType<CompleteThread>(HttpMethods.PUT, BackendProperties.forum.updateThread(threadId), true, t, i18n, thread);
+    }
+
+    static updateThreadUserStatus(threadId: number, status: ThreadUserStatus, t: TFunction, i18n: i18n): Promise<ThreadUserStatus> {
+        return performRequestWithType<ThreadUserStatus>(HttpMethods.PUT, BackendProperties.forum.updateThreadUserStatus(threadId), true, t, i18n, status);
     }
 
     static getTags(t: TFunction, i18n: i18n): Promise<Tag[]> {

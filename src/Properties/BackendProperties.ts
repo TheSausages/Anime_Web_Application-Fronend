@@ -73,6 +73,9 @@ export const BackendProperties = {
         updatePostUserStatus(postId: number) {
             return `${BackendProperties.backendUrl}/forum/post/${postId}`
         },
+        updateThreadUserStatus(threadId: number) {
+            return `${BackendProperties.backendUrl}/forum/thread/${threadId}/status`
+        },
         createPostForThread(threadId: number) {
             return `${BackendProperties.backendUrl}/forum/thread/${threadId}/post`
         },

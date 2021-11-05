@@ -3,14 +3,14 @@
     border: 1px solid rgb(34, 206, 43);
     border-radius: 10px;
     display: grid; 
-    grid-auto-columns: 1fr; 
     grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 1fr 1fr 1fr; 
+    grid-template-rows: 1fr 1fr; 
     grid-template-areas: 
     "ThreadStatus ThreadStatus" 
     "ThreadTitle ThreadCreator"
     "ThreadText ThreadText"
     "ThreadTimes ThreadCategory"
+    "ThreadReactForm ThreadTags"
     "ThreadEditText ThreadTags"; 
     justify-content: stretch; 
     align-content: stretch; 
@@ -47,6 +47,10 @@
 }
 .ThreadCategory { grid-area: ThreadCategory; }
 .ThreadTags { grid-area: ThreadTags; }
+
+.ThreadReactForm {
+    grid-area: ThreadReactForm;
+}
 
 .ThreadLink {
     font-size: 1.2rem;

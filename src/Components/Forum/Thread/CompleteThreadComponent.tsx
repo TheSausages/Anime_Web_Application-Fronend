@@ -21,6 +21,7 @@ import useBasicState from "../../../data/General/BasicState";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
+import ThreadReactionForm from "./ThreadReactionForm";
 
 interface ThreadProps {
     threadId: number;
@@ -92,6 +93,13 @@ export default function CompleteThreadComponent(props: ThreadProps) {
                 </div>
 
                 <div className="ThreadCategory"><i title="Category">{thread.category.categoryName}</i></div>
+
+                <div className="ThreadReactForm">
+                    <ThreadReactionForm threadUserStatus={thread.threadUserStatus}
+                        isLoggedUser={isLoggedUser}
+                        color={primaryColor}
+                    />
+                </div>
 
                 {isLoggedUser &&
                     <div className="ThreadEditText" style={{color: primaryColor}}>

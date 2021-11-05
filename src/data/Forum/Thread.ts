@@ -6,7 +6,12 @@ import { CompletePost } from "./Post";
 import { Tag } from "./Tag";
 import { ThreadStatus } from "./Types";
 
-export interface SimpleThread {
+/**
+ * Because the ThreadUserStatus field is being ignored during serialziation/deserialization in backend
+ * we need to get rid of it for ThreadReactionForm - 
+ * TODO: find a better way
+*/
+export interface SimpleThreadWithoutUserStatus {
     threadId: number;
     title: string;
     nrOfPosts: number;
@@ -18,11 +23,24 @@ export interface SimpleThread {
     tags: Tag[];
 }
 
+export interface SimpleThread extends SimpleThreadWithoutUserStatus {
+    threadUserStatus: ThreadUserStatus;
+}
+
 export interface SimpleThreadPage extends PageDTO<SimpleThread> {}
 
 export interface CompleteThread extends SimpleThread {
     text: string;
     posts: PageDTO<CompletePost>;
+}
+
+export interface ThreadUserStatus {
+    ids: {
+        thread: SimpleThreadWithoutUserStatus;
+        user: SimpleUser;
+    }
+    isWatching: boolean;
+    isBlocked: boolean;
 }
 
 export interface CreateThread {

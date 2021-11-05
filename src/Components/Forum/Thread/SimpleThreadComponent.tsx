@@ -5,9 +5,11 @@ import AddIcon from '@material-ui/icons/Add';
 import ForumIcon from '@material-ui/icons/Forum';
 import Tags from "./Tags";
 import ThreadStatusComponent from "./ThreadStatusComponent";
+import { useTranslation } from "react-i18next";
+import ThreadReactionForm from "./ThreadReactionForm";
+import { checkIfGivenUserLoggedIn } from "../../../Scripts/Utilities";
 
 import "../css/SimpleThreadComponent.css"
-import { useTranslation } from "react-i18next";
 
 interface ThreadsProps {
     thread: SimpleThread;
@@ -34,6 +36,13 @@ export default function Threads(props: ThreadsProps) {
             </div>
 
             <div className="ThreadCategory"><i title={t("forum.thread.generalThread.categoryTitle")}>{thread.category.categoryName}</i></div>
+
+            <div className="ThreadReactForm">
+                    <ThreadReactionForm threadUserStatus={thread.threadUserStatus}
+                        isLoggedUser={checkIfGivenUserLoggedIn(thread.creator.username)}
+                        color={primaryColor}
+                    />
+                </div>
 
             <div className="ThreadPosts" title={t("forum.thread.generalThread.nrOfPostsTitle")}><ForumIcon sx={{ verticalAlign: 'bottom', color: primaryColor, paddingInline: '5px' }} />{thread.nrOfPosts}</div>
 

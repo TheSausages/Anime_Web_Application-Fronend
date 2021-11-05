@@ -3,13 +3,13 @@
     border: 1px solid rgb(34, 206, 43);
     border-radius: 10px;
     display: grid; 
-    grid-auto-columns: 1fr; 
     grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 1fr 1fr 1fr; 
+    grid-template-rows: 1fr 1fr; 
     grid-template-areas: 
     "ThreadStatus ThreadStatus" 
     "ThreadTitle ThreadCreator"
     "ThreadTimes ThreadCategory"
+    "ThreadReactForm ThreadTags"
     "ThreadPosts ThreadTags"; 
     justify-content: stretch; 
     align-content: stretch; 
@@ -26,7 +26,7 @@
     text-align: left;
 }
 
-.SimpleThread > :nth-child(2n + 3) {
+.SimpleThread > :nth-child(2n + 3):not(.ThreadPosts) {
     text-align: right;
 }
 
@@ -41,7 +41,11 @@
     font-size: 0.7rem;
 }
 .ThreadCategory { grid-area: ThreadCategory; }
-.ThreadPosts { grid-area: ThreadPosts; }
+.ThreadReactForm { grid-area: ThreadReactForm; }
+.ThreadPosts { 
+    text-align: left;
+    grid-area: ThreadPosts;
+ }
 .ThreadTags { grid-area: ThreadTags; }
 
 .ThreadLink {
