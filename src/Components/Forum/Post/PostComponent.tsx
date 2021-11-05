@@ -36,11 +36,11 @@ export default function PostComponent(props: PostProps) {
         .catch((error: BackendError) => snackbar(error.message, snackbarError))
     }
 
-    const isLoggedUser = checkIfGivenUserLoggedIn(post.user.username);
+    const isLoggedUser = checkIfGivenUserLoggedIn(post.creator.username);
 
     return (
         <div className="Post" style={{borderColor: color}}>
-            <div onClick={_ => history.push("#")} className="PostCreator PostLink">{post.user.username}</div>
+            <div onClick={_ => history.push("#")} className="PostCreator PostLink">{post.creator.username}</div>
             <div className="PostTimes">
                 <div><AddIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />{t("forum.post.created")}: {new Date(post.creation).toLocaleString()}</div>
                 <div><EditIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />{t("forum.post.lastModified")}: {new Date(post.modification).toLocaleString()}</div>

@@ -40,8 +40,6 @@ export default function ThreadReactionForm(props: ThreadReactionFormProps) {
         }
     })
 
-    console.log(getValues())
-
     async function updateStatus(status: ThreadUserStatus) {
         if (threadUserStatus !== undefined) {
             await ForumService.updateThreadUserStatus(threadUserStatus.ids.thread.threadId, { ...threadUserStatus, ...status }, t, i18n)

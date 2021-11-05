@@ -7,7 +7,7 @@ export interface SimplePost {
     isBlocked: boolean;
     creation: Date;
     modification: Date;
-    user: SimpleUser;
+    creator: SimpleUser;
 }
 
 export interface CompletePost extends SimplePost {
