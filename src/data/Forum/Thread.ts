@@ -1,6 +1,6 @@
 import { NestedValue } from "react-hook-form";
 import { PageDTO } from "../General/PageDTO";
-import { SimpleUser } from "../General/User/SimpleUser";
+import { SimpleUser } from "../General/User/User";
 import { ForumCategory } from "./ForumCategory";
 import { CompletePost } from "./Post";
 import { Tag } from "./Tag";

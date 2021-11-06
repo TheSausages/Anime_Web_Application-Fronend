@@ -26,6 +26,12 @@ export const MenuItems: MenuItemStruct[] = [
         auth: 'loggedIn anonymous'
     },
     {
+        title: 'navbar.profile',
+        url: '/user/current',
+        cName: 'nav-links',
+        auth: 'loggedIn anonymous'
+    },
+    {
         title: 'navbar.signin',
         url: '/login',
         cName: 'nav-links-mobile',

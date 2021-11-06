@@ -1,4 +1,4 @@
-import { SimpleUser } from "../../General/User/SimpleUser";
+import { SimpleUser } from "../../General/User/User";
 export const AnimeUserStatusElements = ["No Status", "Watching", "Completed", "Dropped", "Plan to Watch"]
 export type AnimeUserStatus = typeof AnimeUserStatusElements[number]
 

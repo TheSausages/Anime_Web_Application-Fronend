@@ -1,5 +1,5 @@
 import { PageDTO } from "../General/PageDTO";
-import { SimpleUser } from "../General/User/SimpleUser";
+import { SimpleUser } from "../General/User/User";
 
 export interface SimplePost {
     postId: number;

@@ -4,12 +4,21 @@ import { AnimeUserInformation } from "../../data/Anime/Smaller/AnimeUserInformat
 import { AuthenticationToken } from "../../data/General/User/AuthenticationToken";
 import { Credentials } from "../../data/General/User/Credentials";
 import { RegistrationBody } from "../../data/General/User/RegistrationBody";
+import { CompleteUser } from "../../data/General/User/User";
 import { AuthenticationProperties } from "../../Properties/AuthenticationProperties";
 import { BackendProperties } from "../../Properties/BackendProperties";
 import { performRequestWithNoResponse, performRequestWithType } from "./ApiService";
 import { HttpMethods } from "./ApiService";
 
 export class UserService {
+    static currentUserProfile(t: TFunction, i18n: i18n): Promise<CompleteUser> {
+        return performRequestWithType<CompleteUser>(HttpMethods.GET, BackendProperties.authAndUser.currentUserProfile, true, t, i18n)
+    }
+
+    static userProfileById(userId: string, t: TFunction, i18n: i18n): Promise<CompleteUser> {
+        return performRequestWithType<CompleteUser>(HttpMethods.GET, BackendProperties.authAndUser.getUserProfile(userId), false, t, i18n)
+    }
+
     static login(credentials: Credentials, t: TFunction, i18n: i18n): Promise<AuthenticationToken> {
         return performRequestWithType<AuthenticationToken>(HttpMethods.POST, BackendProperties.authAndUser.login, false, t, i18n, credentials)
     } 

@@ -82,7 +82,7 @@ export default function CompleteThreadComponent(props: ThreadProps) {
 
                 <div className="ThreadUser"><div className="line"><p>{thread.title}</p></div></div>
 
-                <div onClick={_ => history.push("#")} className="ThreadUser ThreadLink">{thread.creator.username}</div>
+                <div onClick={_ => history.push(`/user/${thread.creator.userId}`)} className="ThreadUser ThreadLink">{thread.creator.username}</div>
 
                 <div className="ThreadText">{thread.text}</div>
                 <div></div>

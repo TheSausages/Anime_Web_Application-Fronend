@@ -19,6 +19,8 @@ import Register from './Components/AuthenticationAndLogin/Register';
 import AnimeSearch from './Components/Anime/AnimeSearch';
 import i18n from './i18n/i18n'
 import { I18nextProvider } from 'react-i18next';
+import CurrentUserProfile from './Components/User/CurrentUserProfile';
+import ExternalUserProfile from './Components/User/ExternalUserProfile';
 
 function App() {
   const theme = createTheme({})
@@ -38,11 +40,17 @@ function App() {
                   <Forum />
                 </PrivateRoute>
 
+                <PrivateRoute path="/user/current">
+                  <CurrentUserProfile />
+                </PrivateRoute>
+
                 <Route exact path='/'>
                   <MainPage />
                 </Route>
 
                 <Route path='/anime/:id' render={(props) => <Anime id={props.match.params.id as unknown as number} />}/>
+
+                <Route path='/user/:id' render={(props) => <ExternalUserProfile userId={props.match.params.id as unknown as string} />}/>
 
                 <Route path='/rankings'>
                   <RankingSelect />

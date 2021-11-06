@@ -6,6 +6,12 @@
 export const BackendProperties = {
     backendUrl: "http://192.168.0.245:8080",
     authAndUser: {
+        getUserProfile(userId: string) {
+            return `${BackendProperties.backendUrl}/user/${userId}`
+        },
+        get currentUserProfile() {
+            return `${BackendProperties.backendUrl}/user/current`
+        },
         get login() {
             return `${BackendProperties.backendUrl}/auth/login`
         },
