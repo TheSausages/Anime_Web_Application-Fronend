@@ -4,7 +4,7 @@
 */
 
 export const BackendProperties = {
-    backendUrl: "http://192.168.0.245:8080",
+    backendUrl: "http://192.168.0.245:8080/api",
     authAndUser: {
         getUserProfile(userId: string) {
             return `${BackendProperties.backendUrl}/user/${userId}`

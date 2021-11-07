@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+#Added for static content
+/nodejs
+/npm
+
 # testing
 /coverage
 
