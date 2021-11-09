@@ -37,9 +37,6 @@ export default function ExternalUserProfile(props: ExternalUserProfileProps) {
     }
 
     return (
-        <div>
-            BBBB
-            <UserProfile user={userInformation} />
-        </div>
+        <UserProfile user={userInformation} />
     )
 }

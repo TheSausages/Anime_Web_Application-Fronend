@@ -94,12 +94,12 @@ export function getRandomColor(dark?: boolean) {
 
     let genFunction: () => string
     
-    dark ? 
-        genFunction = function(): string {
+    genFunction = dark ? 
+        function(): string {
             return Math.random() >= 0.5 ? darkLetters[Math.floor(Math.random() * 4)] : letters[Math.floor(Math.random() * 16)]
         }
     :
-        genFunction = function(): string {
+        function(): string {
             return letters[Math.floor(Math.random() * 16)];
         }
 

@@ -139,6 +139,12 @@
                 }
             }
         },
+        "user": {
+            "userStatistics": {
+                "nrOfPosts": "Ilość Postów",
+                "achievementPoints": "Punkty za Osiąg."
+            }
+        },
         "auth": {
             "loginSuccessfull": "Zalogowano",
             "logoutSuccessfull": "Wylogowano",

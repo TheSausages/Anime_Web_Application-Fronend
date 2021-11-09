@@ -73,7 +73,7 @@ function handleError(response: Response, t: TFunction) {
 }
 
 export async function refreshTokens(t: TFunction, i18n: i18n) {
-    await fetch(localStorage.getItem(BackendProperties.authAndUser.refreshAuthTokensUrl)!, {
+    await fetch(BackendProperties.authAndUser.refreshAuthTokensUrl, {
         method: "POST",
         headers: getHeaders(false, t, i18n),
         body: JSON.stringify({refreshToken: localStorage.getItem(AuthenticationProperties.refreshTokenItem)})

@@ -1,0 +1,11 @@
+.UserStatisticInformationArrayElement {
+    margin-bottom: 5px;
+}
+
+.UserStatisticInformationArrayElement > :first-child {
+    text-align: start;
+}
+
+.UserStatisticInformationArrayElement > :last-child {
+    text-align: end;
+}

@@ -1,5 +1,6 @@
-import { TFunction, useTranslation } from "react-i18next";
+import { TFunction } from "react-i18next";
 import { MediaB } from "../../../data/Anime/MediaInformation";
+import useBasicState from "../../../data/General/BasicState";
 import { getRandomColor, ValueOrNotKnown, Capitalize, DateOrNotKnown } from "../../../Scripts/Utilities";
 
 import "../css/BasicAnimeInformation.css"
@@ -8,15 +9,20 @@ interface AnimeBasicInformationProps {
     anime: MediaB;
 }
 
+interface BasinAnimeInformationArrayElement {
+    name: string;
+    value: string | number;
+}
+
 export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
-    const { t } = useTranslation();
+    const { t } = useBasicState();
 
     return (
         <div className="AnimeBasicInformation">
-            {createBasinAnimeInformationMap(props.anime, t).map((elem, index) => {
+            {createBasinAnimeInformationArray(props.anime, t).map((elem: BasinAnimeInformationArrayElement, index) => {
                 return (
                     <div key={index}>
-                        <div className='line' style={{ 'borderBottom': '1px solid ' + getRandomColor()}} id="noMargin"><p>{elem.name}</p></div>
+                        <div className='line' style={{ 'borderBottom': '1px solid ' + getRandomColor(true)}} id="noMargin"><p>{elem.name}</p></div>
                         <div>{elem.value}</div>
                     </div>
                 )
@@ -25,7 +31,7 @@ export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
     );
 }
 
-function createBasinAnimeInformationMap(results: MediaB, t: TFunction<"translation">) {
+function createBasinAnimeInformationArray(results: MediaB, t: TFunction): Array<BasinAnimeInformationArrayElement> {
     let scr = results.localAnimeInformation?.averageScore;
     let localAverageScore = scr && scr !== 0 ? ValueOrNotKnown(`${results.localAnimeInformation?.averageScore}%`) : t("anime.animeInformation.noScoreSubmitted")
 

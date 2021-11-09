@@ -1,0 +1,24 @@
+#MainUserProfileContainer {
+    width: 80%;
+    margin: 3% auto;
+
+    display: grid; 
+    grid-template-columns: 1fr 2fr 2fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+    "Username Username Username"
+    "UserStatistics UserData UserData"; 
+}
+
+.Username {
+    grid-area: Username;
+    margin-bottom: 10px;
+}
+
+.UserStatistics {
+    grid-area: UserStatistics;
+}
+
+.UserData {
+    grid-area: UserData;
+}

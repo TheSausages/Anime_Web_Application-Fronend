@@ -139,6 +139,12 @@
                 }
             }
         },
+        "user": {
+            "userStatistics": {
+                "nrOfPosts": "Nr. of Posts",
+                "achievementPoints": "Achiev. Points"
+            }
+        },
         "auth": {
             "loginSuccessfull": "Logged in successfully",
             "logoutSuccessfull": "Logged out successfully",

@@ -36,9 +36,6 @@ export default function CurrentUserProfile(props: CurrentUserProfileProps) {
     }
 
     return (
-        <div>
-            AAAAA
-            <UserProfile user={currentUserInformation} />
-        </div>
+        <UserProfile user={currentUserInformation} />
     )
 }
