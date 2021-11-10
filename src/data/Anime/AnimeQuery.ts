@@ -11,6 +11,10 @@ export const SeasonYearArray = fastCartesian([SeasonArray, ["2021", "2020", "201
     .sort((a: SeasonYear, b: SeasonYear) => 
     b.year - a.year || SeasonArray.indexOf(b.season) - SeasonArray.indexOf(a.season))
 
+/**
+ * Interface used for searching Anime
+ * @see AnimeQuery
+ */
 export interface AnimeQuery {
     title?: string;
     season?: SeasonYear;

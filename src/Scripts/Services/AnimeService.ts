@@ -8,7 +8,17 @@ import { AnimeQuery } from "../../data/Anime/AnimeQuery";
 import { TFunction } from "react-i18next";
 import { i18n } from "i18next";
 
+/**
+ * Class containing methods to get data related to Anime.
+ */
 export class AnimeService {
+    /**
+     * Function to get detailed information about an Anime by it's Id
+     * @param id Id of the Anime that should be found,
+     * @param t Translation function
+     * @param i18n i18n instance
+     * @returns Data containing detailed information about a given Anime
+     */
     static getAnimeById(id: number, t: TFunction, i18n: i18n): Promise<MediaB> {
         return performRequestWithType<MediaB>(HttpMethods.GET, BackendProperties.anime.getAnimeById(id), false, t, i18n)
     }

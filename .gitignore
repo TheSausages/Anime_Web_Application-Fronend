@@ -9,6 +9,9 @@
 /nodejs
 /npm
 
+#docs
+/docs
+
 # testing
 /coverage
 

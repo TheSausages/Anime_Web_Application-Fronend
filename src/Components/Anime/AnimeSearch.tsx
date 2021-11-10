@@ -23,13 +23,23 @@ import "./css/AnimeSearch.css"
 
 interface AnimeSearchProps {}
 
-interface PageWithNumber {
+/**
+ * The props for the {@link AnimeSearch} component.
+ */
+export interface PageWithNumber {
+    /** Items that should be rendered */
     items: Page;
+    /** Current page number. It's here for easier retrieval */
     currentPage: number;
 }
 
 const color = getRandomColor(true);
 
+/**
+ * Component for searching Anime using a {@link AnimeQuery} query. Their number depend on how much the user scrolls.
+ * @returns Items that meet the query requirements.
+ * @see {@link AnimeLinkScroll}
+ */
 export default function AnimeSearch(props: AnimeSearchProps) {
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
     const [actualQuery, setActualQuery] = useState<AnimeQuery>({} as AnimeQuery)

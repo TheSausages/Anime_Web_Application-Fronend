@@ -15,10 +15,18 @@ import useBasicState from '../../data/General/BasicState';
 
 import "./css/Anime.css"
 
-interface AnimeProps {
+/**
+ * The props for the {@link Anime} component.
+ */
+export interface AnimeProps {
+    /** Id of the Anime that will be searched */
     id: number
 }
 
+/**
+ * Component that created the site for the detailed Anime Information.
+ * @returns Site with detailed information on an Anime.
+ */
 export default function Anime(props: AnimeProps) {
     const [Anime, setAnime] = useState<MediaB>({} as MediaB);
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()

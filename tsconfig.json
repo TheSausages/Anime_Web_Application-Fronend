@@ -23,5 +23,11 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "typedocOptions": {
+    "name": "Documentation for Frontend part of my Bachelors Degree",
+    "entryPointStrategy": "expand",
+    "out": "docs",
+    "exclude": ["./src/App.css", "./src/App.tsx", "./src/index.css", "./src/index.tsx", "./src/react-app-env.d.ts"]
+  }
 }

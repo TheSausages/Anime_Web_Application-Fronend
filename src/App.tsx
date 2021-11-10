@@ -21,6 +21,7 @@ import i18n from './i18n/i18n'
 import { I18nextProvider } from 'react-i18next';
 import CurrentUserProfile from './Components/User/CurrentUserProfile';
 import ExternalUserProfile from './Components/User/ExternalUserProfile';
+import { SnackbarProvider } from 'notistack';
 
 function App() {
   const theme = createTheme({})
@@ -29,59 +30,65 @@ function App() {
 
   return (
     <div className="App">
-      <I18nextProvider i18n={i18n}>
-        <ThemeProvider theme={theme}>
-          <Router>
-            <ProvideAuth>  
-              <Navbar />
-              
-              <Switch>
-                <PrivateRoute path="/forum">
-                  <Forum />
-                </PrivateRoute>
+      <SnackbarProvider maxSnack={5} 
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }} >
+          <I18nextProvider i18n={i18n}>
+            <ThemeProvider theme={theme}>
+              <Router>
+                <ProvideAuth>  
+                  <Navbar />
+                  
+                  <Switch>
+                    <PrivateRoute path="/forum">
+                      <Forum />
+                    </PrivateRoute>
 
-                <PrivateRoute path="/user/current">
-                  <CurrentUserProfile />
-                </PrivateRoute>
+                    <PrivateRoute path="/user/current">
+                      <CurrentUserProfile />
+                    </PrivateRoute>
 
-                <Route exact path='/'>
-                  <MainPage />
-                </Route>
+                    <Route exact path='/'>
+                      <MainPage />
+                    </Route>
 
-                <Route path='/anime/:id' render={(props) => <Anime id={props.match.params.id as unknown as number} />}/>
+                    <Route path='/anime/:id' render={(props) => <Anime id={props.match.params.id as unknown as number} />}/>
 
-                <Route path='/user/:id' render={(props) => <ExternalUserProfile userId={props.match.params.id as unknown as string} />}/>
+                    <Route path='/user/:id' render={(props) => <ExternalUserProfile userId={props.match.params.id as unknown as string} />}/>
 
-                <Route path='/rankings'>
-                  <RankingSelect />
-                </Route>
+                    <Route path='/rankings'>
+                      <RankingSelect />
+                    </Route>
 
-                <Route path="/search">
-                  <AnimeSearch />
-                </Route>
+                    <Route path="/search">
+                      <AnimeSearch />
+                    </Route>
 
-                <Route path='/loading'>
-                  <Loading />
-                </Route>
+                    <Route path='/loading'>
+                      <Loading />
+                    </Route>
 
-                <Route path='/login'>
-                  <Login />
-                </Route>
+                    <Route path='/login'>
+                      <Login />
+                    </Route>
 
-                <Route path='/register'>
-                  <Register />
-                </Route>
+                    <Route path='/register'>
+                      <Register />
+                    </Route>
 
-                <Route path="/logout">
-                  <Logout/>
-                </Route>
-              </Switch>
-            </ProvideAuth>
-          </Router>
-        </ThemeProvider>
+                    <Route path="/logout">
+                      <Logout/>
+                    </Route>
+                  </Switch>
+                </ProvideAuth>
+              </Router>
+            </ThemeProvider>
 
-        <div id="AchievementDialogContainer"></div>
-      </I18nextProvider>
+            <div id="AchievementDialogContainer"></div>
+          </I18nextProvider>
+        </SnackbarProvider>
     </div>
   );
 }
