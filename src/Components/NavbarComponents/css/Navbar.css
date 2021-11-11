@@ -86,7 +86,7 @@ fa-phoenix-framework {
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: max(30vh, 270px);
+        height: max(30vh, 334px);
         position: absolute;
         top: 80px;
         left: -100%;
