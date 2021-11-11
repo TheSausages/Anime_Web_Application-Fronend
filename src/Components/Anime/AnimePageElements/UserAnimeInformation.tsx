@@ -14,7 +14,7 @@ import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
-import { ReviewComponent } from './ReviewComponent';
+import ReviewFormComponent from './ReviewForm';
 import React from 'react';
 import ButtonCollored from '../../Miscellaneous/ButtonCollored';
 import DatePickerCollored from '../../Miscellaneous/DatePickerCollored';
@@ -135,7 +135,10 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
         <div className="userAnimeInformation">
             <form className="mainAnimeInformationForm">
                 <CheckboxCollored className={classes.centerContent}
-                    onChange={data => setValue('isFavourite', Boolean(data.target.checked), setValueOptions)}
+                    onChange={data => {
+                        setValue('isFavourite', Boolean(data.target.checked), setValueOptions);
+                        save();
+                    }}
                     icon={<FavoriteBorder />} 
                     checkedIcon={<Favorite />} 
                     label={t("anime.userAnimeInformation.favouriteLabel")}
@@ -151,7 +154,10 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                     inputFormat="dd/MM/yyyy"
                     control={control}
                     formControlName="watchStartDate"
-                    onChange={data => setValue('watchStartDate', data as Date, setValueOptions)}
+                    onChange={data => {
+                        setValue('watchStartDate', data as Date, setValueOptions);
+                        save();
+                    }}
                     renderInput={(params: TextFieldProps) => <TextField {...params} error={errors.watchStartDate !== undefined} helperText={errors.watchStartDate?.message} />}
                 />
 
@@ -161,14 +167,20 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                     inputFormat="dd/MM/yyyy"
                     control={control}
                     formControlName="watchEndDate"
-                    onChange={data => setValue('watchEndDate', data as Date, setValueOptions)}
+                    onChange={data => {
+                        setValue('watchEndDate', data as Date, setValueOptions);
+                        save();
+                    }}
                     renderInput={(params: TextFieldProps) => <TextField {...params} error={errors.watchEndDate !== undefined} helperText={errors.watchEndDate?.message} />}
                 />
 
                 <SelectCollored labelId="episodesSeenLabel"
                     title={t("anime.userAnimeInformation.episodesSeenLabel")}
                     formControlClassName={`${classes.inputSpace} episodesSeen`}
-                    onChange={data => setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions)}
+                    onChange={data => {
+                        setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions);
+                        save();
+                    }}
                     errors={errors.nrOfEpisodesSeen}
                     options={getEpisodeArray(airedEpisodes)}
                     color={color}
@@ -179,7 +191,10 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 <SelectCollored labelId="StatusLabel"
                     title={t("anime.userAnimeInformation.statusLabel")}
                     formControlClassName={`${classes.inputSpace} status`}
-                    onChange={data => setValue('status', data.target.value as AnimeUserStatus, setValueOptions)}
+                    onChange={data => {
+                        setValue('status', data.target.value as AnimeUserStatus, setValueOptions);
+                        save();
+                    }}
                     errors={errors.status}
                     color={color}
                     options={
@@ -196,7 +211,10 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 <SelectCollored labelId="GradeLabel"
                     title={t("anime.userAnimeInformation.gradeLabel")}
                     formControlClassName={`${classes.inputSpace} grade`}
-                    onChange={data => setValue('grade', data.target.value as number, setValueOptions)}
+                    onChange={data => {
+                        setValue('grade', data.target.value as number, setValueOptions);
+                        save();
+                    }}
                     errors={errors.status}
                     color={color}
                     options={
@@ -219,7 +237,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             </form>
 
             <div ref={container}>
-                <ReviewComponent open={openReview} control={control} setReviewOpen={setOpenReview} setMainValue={setValue} review={animeUserInformation?.review} />
+                <ReviewFormComponent open={openReview} control={control} setReviewOpen={setOpenReview} setMainValue={setValue} review={animeUserInformation?.review} />
             </div>
         </div>
     )

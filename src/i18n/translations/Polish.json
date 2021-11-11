@@ -142,7 +142,9 @@
         "user": {
             "userStatistics": {
                 "nrOfPosts": "Ilość Postów",
-                "achievementPoints": "Punkty za Osiąg."
+                "achievementPoints": "Punkty za Osiąg.",
+                "watchTime": "Przeoglądano",
+                "nrOfThreads": "Ilość Wątków"
             }
         },
         "auth": {

@@ -34,12 +34,20 @@ export default function UserStatistics(props: UserStatisticsProps) {
 function createUserStatisticsInformation(user: CompleteUser, t: TFunction): Array<UserStatisticInformationArrayElement> {
     return [
         {
+            name: t("user.userStatistics.watchTime"),
+            value: user.watchTime
+        },
+        {
             name: t("user.userStatistics.achievementPoints"),
             value: user.achievementPoints
         },
         {
             name: t("user.userStatistics.nrOfPosts"),
             value: user.nrOfPosts
+        },
+        {
+            name: t("user.userStatistics.nrOfThreads"),
+            value: user.threads ? user.threads.length : 0
         }
     ]
 }

@@ -1,6 +1,7 @@
 import { CompleteUser } from "../../data/General/User/User";
 
 import "./css/UserProfile.css"
+import UserData from "./UserData";
 import UserStatistics from "./UserStatistics";
 
 interface UserProfileProps {
@@ -19,7 +20,7 @@ export default function UserProfile(props: UserProfileProps) {
             </div>
 
             <div className="UserData">
-                UserData
+                <UserData user={props.user} />
             </div>
         </div>
     )

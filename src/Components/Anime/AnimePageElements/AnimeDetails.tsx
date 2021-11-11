@@ -2,7 +2,7 @@ import { useState } from "react"
 import { CharacterEdge } from "../../../data/Anime/CharacterInformation"
 import { MediaEdge } from "../../../data/Anime/MediaInformation"
 import Character from "./Character"
-import Relation from "../AnimePageElements/Relation"
+import RelationComponent from "./Relation"
 import { isTooManySections, spliceArrayIfNeeded } from "../../Section/SectionUrils"
 
 import "../css/AnimeDetails.css";
@@ -53,7 +53,7 @@ export function AnimeDetails(props: AnimeDetailsProps) {
                             {
                                 spliceArrayIfNeeded(relationEdges, findRowState('relations'))
                                 .map((elem, index) => {
-                                    return <Relation key={index} element={elem} index={index} />
+                                    return <RelationComponent key={index} element={elem} index={index} />
                                 })
                             }
                         </div>
