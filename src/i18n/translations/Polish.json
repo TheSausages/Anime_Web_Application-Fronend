@@ -12,6 +12,7 @@
             "description": "Opis",
             "relations": "Relacje",
             "charaters": "Postacie",
+            "reviews": "Recenzje",
             "clickToShowMore": "Kliknij aby rozszerzyć",
             "clickToShowLess": "Kliknij aby zminimalizować",
             "animeInformation": {
@@ -145,7 +146,8 @@
                 "achievementPoints": "Punkty za Osiąg.",
                 "watchTime": "Przeoglądano",
                 "nrOfThreads": "Ilość Wątków"
-            }
+            },
+            "reviews": "Twoje recenzje"
         },
         "auth": {
             "loginSuccessfull": "Zalogowano",
@@ -194,6 +196,8 @@
             "noMessageAvailable": "Błąd nie jest dostępny"
         },
         "misc": {
+            "expand": "Rozszerz",
+            "minimize": "Zamknij",
             "loadingDefaultMessage": "Żądanie nie mogło być poprawnie przetworzone \n Spróbuj ponownie później",
             "defaultAchievementMessage": "Zdobyłeś osiągnięcie, ale nie można go wystąpić. Zobacz swój profil",
             "infiniteScroll": {

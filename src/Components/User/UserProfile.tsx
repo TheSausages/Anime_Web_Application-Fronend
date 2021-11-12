@@ -1,8 +1,8 @@
 import { CompleteUser } from "../../data/General/User/User";
-
-import "./css/UserProfile.css"
 import UserData from "./UserData";
 import UserStatistics from "./UserStatistics";
+
+import "./css/UserProfile.css"
 
 interface UserProfileProps {
     user: CompleteUser;

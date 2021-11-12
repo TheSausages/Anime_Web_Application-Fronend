@@ -3,6 +3,8 @@ export const MiscellaneousProperties = {
     loadingTimerInSeconds: 5,
     reactHookFormSetValueOption: { shouldDirty: true, shouldTouch: true, shouldValidate: true },
     anilistElementLoadingDelay: 5.5,
+    reviewMaxTitleCharacters: 100,
+    reviewMaxTextCharacters: 300,
     section: {
         maxElements: 6,
         firstSection: {

@@ -8,8 +8,12 @@ import { isTooManySections, spliceArrayIfNeeded } from "../../Section/SectionUri
 import "../css/AnimeDetails.css";
 import "../../Section/css/Section.css"
 import { useTranslation } from "react-i18next"
+import { Review } from "../../../data/Anime/Smaller/AnimeUserInformation"
+import _ from "lodash"
+import ReviewComponent from "./ReviewComponent"
 
 interface AnimeDetailsProps {
+    reviews: Review[];
     relationEdges: MediaEdge[];
     characterEdges: CharacterEdge[];
 }
@@ -17,7 +21,7 @@ interface AnimeDetailsProps {
 type ElementsWithRows = "relations" |"characters"
 
 export function AnimeDetails(props: AnimeDetailsProps) {
-    const { relationEdges, characterEdges } = props;
+    const { relationEdges, characterEdges, reviews } = props;
     const { t } = useTranslation();
 
     const [showRows, setShowRows] = useState<{ fieldName: ElementsWithRows, value: boolean }[]>([
@@ -76,6 +80,20 @@ export function AnimeDetails(props: AnimeDetailsProps) {
                                 })
                             }
                         </div>
+                    </div>
+
+                    {/*Reviews*/}
+                    <div className="line">
+                        <p>{t("anime.reviews")}</p>
+
+                        <div className="Reviews">
+                        {
+                            _.sampleSize(reviews, 3)
+                            .map((value: Review, index) => (
+                                <ReviewComponent review={value} key={index} />
+                            ))
+                        }
+                </div>
                     </div>
                 </div>
     )

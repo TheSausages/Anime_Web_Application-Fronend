@@ -1,0 +1,16 @@
+.Review {
+    width: 30%;
+    margin-inline: 15px;
+    padding: 10px;
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ReviewNumbers {
+    padding-top: 10px;
+    display: flex;
+}

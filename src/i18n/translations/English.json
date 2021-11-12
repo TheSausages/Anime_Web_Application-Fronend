@@ -12,6 +12,7 @@
             "description": "Description",
             "relations": "Relations",
             "charaters": "Characters",
+            "reviews": "Reviews",
             "clickToShowMore": "Click To Show More",
             "clickToShowLess": "Click To Show Less",
             "animeInformation": {
@@ -145,7 +146,8 @@
                 "achievementPoints": "Achiev. Points",
                 "watchTime": "Watch Time",
                 "nrOfThreads": "Nr. of Threads"
-            }
+            },
+            "reviews": "Your Reviews"
         },
         "auth": {
             "loginSuccessfull": "Logged in successfully",
@@ -194,6 +196,8 @@
             "noMessageAvailable": "No error message available"
         },
         "misc": {
+            "expand": "Expand",
+            "minimize": "Minimize",
             "loadingDefaultMessage": "The Request cound not be processed \n Try again later",
             "defaultAchievementMessage": "You earned an achievement, but an error occured we cannot see which! Please check your profile",
             "infiniteScroll": {

@@ -6,7 +6,7 @@ import { FuzzyDate } from "./Smaller/FuzzyDate";
 import { Titles } from "./Smaller/Titles";
 import { StaffInformation } from "./StaffInformation";
 import { CharacterInformation } from "./CharacterInformation";
-import { AnimeUserInformation } from "./Smaller/AnimeUserInformation";
+import { AnimeUserInformation, Review } from "./Smaller/AnimeUserInformation";
 import { LocalAnimeInformation } from "./LocalAnimeInformation";
 
 export interface MediaInformation {
@@ -46,8 +46,11 @@ export interface MediaB {
     characters: CharacterInformation
     staff: StaffInformation
 
+    /*Local anime Reviews*/
+    reviews: Review[];
+
     /*Custom stuff, not found in Anilist Api*/
-    localAnimeInformation?: LocalAnimeInformation;
+    localAnimeInformation: LocalAnimeInformation;
 
     /*User information, only available when user is logged in*/
     animeUserInformation?: AnimeUserInformation

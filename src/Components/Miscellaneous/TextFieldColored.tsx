@@ -85,7 +85,7 @@ export default function TextFieldColored(props: TextFieldColoredProps) {
                 rows={props.rows}
                 multiline={props.multiline}
                 key={props.label}
-
+                maxRows={5}
                 style={{'--color': color} as React.CSSProperties}
             />
         )}

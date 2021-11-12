@@ -86,7 +86,7 @@ export default function Anime(props: AnimeProps) {
                 <Description description={Anime.description} />
 
                 {/*Anime Details*/}
-                <AnimeDetails characterEdges={Anime.characters.edges!} relationEdges={Anime.relations.edges!} />
+                <AnimeDetails characterEdges={Anime.characters.edges!} relationEdges={Anime.relations.edges!} reviews={Anime.reviews} />
             </div>
         </div>
     )

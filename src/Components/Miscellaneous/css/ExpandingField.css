@@ -1,0 +1,17 @@
+.TextContainer {
+    display: block;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    overflow: hidden;
+    line-height: 1em;
+}
+
+.lineAboveText {
+    display: flex;
+    justify-content: center;
+    padding-block-start: 7px;
+}
+
+.CollapseText {
+    font-style: italic;
+}

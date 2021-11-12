@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         "& *": {
             paddingInline: 5,
+            paddingBlock: 5,
         }
     }
 }));
@@ -48,8 +49,10 @@ export default function ReviewFormComponent(props: ReviewFormProps) {
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;
 
     const schema = yup.object().shape({
-        reviewTitle: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("anime.userAnimeInformation.review.titleField") })),
-        reviewText: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("anime.userAnimeInformation.review.textField") })),
+        reviewTitle: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("anime.userAnimeInformation.review.titleField") }))
+            .max(MiscellaneousProperties.reviewMaxTitleCharacters, t("fieldErrors.fieldCannotExceed", { number: MiscellaneousProperties.reviewMaxTitleCharacters })),
+        reviewText: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("anime.userAnimeInformation.review.textField") }))
+            .max(MiscellaneousProperties.reviewMaxTextCharacters, t("fieldErrors.fieldCannotExceed", { number: MiscellaneousProperties.reviewMaxTextCharacters }))
     })
 
     const { control, handleSubmit, formState: { errors, isValid } } = useForm<ReviewForm>({
@@ -83,7 +86,7 @@ export default function ReviewFormComponent(props: ReviewFormProps) {
                         />
 
                         <TextFieldColored label={t("anime.userAnimeInformation.review.reviewText")}
-                            errors={undefined}
+                            errors={errors.reviewText}
                             multiline={true}
                             rows={8}
                             key="Review Text"

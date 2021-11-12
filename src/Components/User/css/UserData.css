@@ -1,0 +1,8 @@
+.UserData {
+    padding-inline-start: 10px;
+}
+
+.Reviews {
+    display: flex;
+    align-items: flex-start;
+}
