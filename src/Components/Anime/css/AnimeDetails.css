@@ -7,3 +7,14 @@
 .AnimeDetails > * {
     padding-bottom: 5%;
 }
+
+.ReviewsAnime {
+    padding-block: 5px;
+
+    display: flex;
+    align-items: flex-start;
+}
+
+.ReviewsAnime > * {
+    margin-inline: 15px;
+}

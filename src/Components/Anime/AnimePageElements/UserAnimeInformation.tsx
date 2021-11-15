@@ -237,7 +237,14 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
             </form>
 
             <div ref={container}>
-                <ReviewFormComponent open={openReview} control={control} setReviewOpen={setOpenReview} setMainValue={setValue} review={animeUserInformation?.review} />
+                <ReviewFormComponent 
+                    open={openReview} 
+                    control={control} 
+                    setReviewOpen={setOpenReview} 
+                    setMainValue={setValue} 
+                    updateInfo={save}
+                    review={animeUserInformation?.review} 
+                />
             </div>
         </div>
     )

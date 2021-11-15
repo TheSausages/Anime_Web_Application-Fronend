@@ -40,6 +40,7 @@ interface ReviewFormProps {
     control: Control<AnimeUserInformation>;
     setReviewOpen: (value: boolean) => void;
     setMainValue: UseFormSetValue<AnimeUserInformation>;
+    updateInfo: () => void;
     review: Review | undefined;
 }
 
@@ -67,6 +68,10 @@ export default function ReviewFormComponent(props: ReviewFormProps) {
     function setReview(data: ReviewForm) {
         props.setMainValue('review', { ...props.review, reviewTitle: data.reviewTitle, reviewText: data.reviewText }, setValueOptions)
         props.setMainValue('didReview', true, setValueOptions)
+
+        setTimeout(function () {
+            props.updateInfo();
+        }, 1000);
     }
 
     return (

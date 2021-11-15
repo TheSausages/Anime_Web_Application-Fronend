@@ -22,3 +22,18 @@
 .UserData {
     grid-area: UserData;
 }
+
+@media screen and (max-width: 960px) {
+    #MainUserProfileContainer {
+        grid-template-columns: 1fr;
+        gap: 0px 0px; 
+        grid-template-areas: 
+        "Username"
+        "UserStatistics"
+        "UserData"; 
+    }
+
+    .Username > p:first-child {
+        text-align: center;
+    }
+}

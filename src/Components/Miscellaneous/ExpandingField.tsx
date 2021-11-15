@@ -15,16 +15,17 @@ export default function ExpandingField(props: ExpandingFieldProps) {
     return (
         <div>
             <div className="TextContainer"
-            style={{
-                /* maxHeight = lineHeight * maxRows */
-                /* Here its 1 * props.maxRows */
-                maxHeight: collapsed ? `${props.maxRown}em` : undefined,
-            }}>
+                style={{
+                    /* maxHeight = lineHeight * maxRows */
+                    /* Here its 1 * props.maxRows */
+                    maxHeight: collapsed ? `${props.maxRown}em` : undefined,
+                }}>
                 {props.text}
             </div>
 
             <div id="halfWidth" className="line lineAboveText"><p></p></div>
-            <div><span className="CollapseText"
+            <div>
+                <span className="CollapseText"
                     onClick={_ => setCollapsed(prevState => !prevState)}>
                     {collapsed ? t("misc.expand") : t("misc.minimize")}
                 </span>

@@ -147,7 +147,8 @@
                 "watchTime": "Watch Time",
                 "nrOfThreads": "Nr. of Threads"
             },
-            "reviews": "Your Reviews"
+            "reviews": "Your Reviews",
+            "achievemnts": "Your Achievements"
         },
         "auth": {
             "loginSuccessfull": "Logged in successfully",

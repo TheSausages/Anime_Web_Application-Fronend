@@ -3,6 +3,37 @@
 }
 
 .Reviews {
+    margin-inline: 15px;
+    padding-block: 5px;
+
     display: flex;
     align-items: flex-start;
+}
+
+.Achievemnts {
+    margin-inline: 15px;
+    padding-block: 5px;
+    
+    display: flex;
+    align-items: flex-start;
+}
+
+@media screen and (max-width: 960px) {
+    .UserData {
+        padding-inline-start: 0;
+    }
+
+    .Reviews {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .Review {
+        width: 100%;
+    }
+
+    .Achievemnts {
+        align-items: center;
+        justify-content: center;
+    }
 }

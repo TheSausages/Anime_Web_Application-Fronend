@@ -147,7 +147,8 @@
                 "watchTime": "Przeoglądano",
                 "nrOfThreads": "Ilość Wątków"
             },
-            "reviews": "Twoje recenzje"
+            "reviews": "Twoje recenzje",
+            "achievemnts": "Twoje Osiągnięcia"
         },
         "auth": {
             "loginSuccessfull": "Zalogowano",

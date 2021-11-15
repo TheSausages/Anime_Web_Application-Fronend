@@ -4,13 +4,13 @@ import { MediaEdge } from "../../../data/Anime/MediaInformation"
 import Character from "./Character"
 import RelationComponent from "./Relation"
 import { isTooManySections, spliceArrayIfNeeded } from "../../Section/SectionUrils"
-
-import "../css/AnimeDetails.css";
-import "../../Section/css/Section.css"
 import { useTranslation } from "react-i18next"
 import { Review } from "../../../data/Anime/Smaller/AnimeUserInformation"
 import _ from "lodash"
 import ReviewComponent from "./ReviewComponent"
+
+import "../css/AnimeDetails.css";
+import "../../Section/css/Section.css"
 
 interface AnimeDetailsProps {
     reviews: Review[];
@@ -86,7 +86,7 @@ export function AnimeDetails(props: AnimeDetailsProps) {
                     <div className="line">
                         <p>{t("anime.reviews")}</p>
 
-                        <div className="Reviews">
+                        <div className="ReviewsAnime">
                         {
                             _.sampleSize(reviews, 3)
                             .map((value: Review, index) => (
