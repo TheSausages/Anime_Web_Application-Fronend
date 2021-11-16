@@ -1,6 +1,10 @@
 /**
- * Properties file containing backend props.
- * Properties that need parameters need to be a function
+ * This file contains properties that are connected to connecting to the backend, such as a *base backend url*.
+ * Name of the property is `MUST` be the same as the method in a given service.
+ * - `backendUrl` - The basic backend url
+ * - `authAndUser` - Urls connected to general user stuff, like authentification
+ * - `anime` - Urls connected to anime, such as retrieving a specific anime or updating anime user information
+ * - `forum` - Urls connected to the forum, such as thread creation or post edition
 */
 
 export const BackendProperties = {

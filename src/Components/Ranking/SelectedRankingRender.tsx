@@ -47,7 +47,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
     useEffect(() => {
         startLoading()
 
-        let timer = setTimeout(() => stopLoading(), MiscellaneousProperties.anilistElementLoadingDelay * 100);
+        let timer = setTimeout(() => stopLoading(), MiscellaneousProperties.anilistRankingElementLoadingDelay * 100);
 
         /*true state start - begin with page 0 and empty array*/
         getMoreRankingData({ items: { media: [] } as Page, currentPage: 0 })

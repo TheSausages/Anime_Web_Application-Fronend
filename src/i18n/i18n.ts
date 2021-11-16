@@ -20,4 +20,5 @@ i18n.use(LanguageDetector).init({
     },
 })
 
+/** Create a new *i18n* instance with a fallback *English* language. Only 1 istance is used by the whole app */
 export default i18n;

@@ -1,12 +1,23 @@
 import { makeStyles } from "@material-ui/styles";
 import { Achievement } from "../../data/General/User/Achievement";
 
-interface AchievementProps {
+/**
+ * The props for the {@link AchievementComponent} component.
+ */
+export interface AchievementProps {
+    /** The achievement to be displayed. */
     achievement: Achievement;
+    /** The optional key when the component is used in a list. */
     key?: number;
+    /** Should the compontent be 'small' (smaller icon and text). */
     small?: boolean;
 }
 
+/**
+ * Component for displaying an Achievement. 
+ * The component has 2 sizes: normal and small (controlled with {@link AchievementProps.small})
+ * @returns Achievement icon with text information: its name and description.
+ */
 export default function AchievementComponent(props: AchievementProps) {
     const { achievement, small } = props;
 
