@@ -1,11 +1,11 @@
 import { i18n } from "i18next";
 import { TFunction } from "react-i18next";
-import { Page } from "../../data/Anime/Page";
+import { MediaPage } from "../../data/Anime/Page";
 import { AnimeService } from "../../Scripts/Services/AnimeService";
 
 export interface RankingItem {
     title: string
-    fetch: (pageNumber: number, t: TFunction, i18n: i18n) => Promise<Page>
+    fetch: (pageNumber: number, t: TFunction, i18n: i18n) => Promise<MediaPage>
 }
 
 export const Rankings: RankingItem[] = [

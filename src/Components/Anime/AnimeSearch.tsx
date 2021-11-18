@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { AnimeQuery, SeasonYear, SeasonYearArray } from "../../data/Anime/AnimeQuery"
-import { Page } from "../../data/Anime/Page"
+import { MediaPage } from "../../data/Anime/Page"
 import { Format, FormatArray, Season, Status, StatusArray } from "../../data/Anime/Smaller/Enums"
 import { BackendError } from "../../data/General/BackendError"
 import useBasicState from "../../data/General/BasicState"
@@ -28,7 +28,7 @@ interface AnimeSearchProps {}
  */
 export interface PageWithNumber {
     /** Items that should be rendered */
-    items: Page;
+    items: MediaPage;
     /** Current page number. It's here for easier retrieval */
     currentPage: number;
 }
@@ -50,13 +50,13 @@ export default function AnimeSearch(props: AnimeSearchProps) {
         startLoading()
 
         await AnimeService.searchUsingQuery(query, currentPage + 1, t, i18n)
-        .then((response: Page) => {
+        .then((response: MediaPage) => {
             setItems((itemsWithPage: PageWithNumber) => ({
                 currentPage: currentPage + 1,
                 items: {
                     pageInfo: response.pageInfo,
                     media: [ ...itemsWithPage?.items?.media ?? [], ...response.media ?? [] ]
-                } as Page
+                } as MediaPage
             } as PageWithNumber))
 
             stopLoading()

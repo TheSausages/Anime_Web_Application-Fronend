@@ -1,4 +1,4 @@
-import { CreateThread, SimpleThread, UpdateThread } from "../../../data/Forum/Thread";
+import { CreateThread, SimpleThreadWithUserStatus, UpdateThread } from "../../../data/Forum/Thread";
 import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { ForumService } from "../../../Scripts/Services/ForumService";
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
@@ -25,7 +25,7 @@ export default function NewThreadComponent(props: NewThreadComponentProps) {
             category: thread.category,
             tags: thread.tags
         } as CreateThread, t, i18n)
-        .then((response: SimpleThread) => {
+        .then((response: SimpleThreadWithUserStatus) => {
             snackbar(t("forum.thread.threadCreatedSuccessfully"), snackBarSuccess)
             history.push(`/forum/thread/${response.threadId}`);
         })

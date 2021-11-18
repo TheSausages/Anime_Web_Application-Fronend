@@ -10,14 +10,24 @@ import { UserService } from "./UserService";
 import { BackendProperties } from "../../Properties/BackendProperties"
 import useBasicState from "../../data/General/BasicState";
 
+/**
+ * Elements that AchievementService will return
+ */
 export interface AchievementService {
+    /** Function to begin listening for achievements. Needs to be authenticated */
     startListeningForAchievements: () => void;
+
+    /** Function to stop listening for achievement. Needs to be authenticated, so use before logout! */
     stopListeningForAchievements: () => void;
 }
 
-class RetriableError extends Error { }
+/** Error created when the Event Source cant connect to the SSE emitter in backend */
 class FatalError extends Error { }
 
+/**
+ * Service for connecting to the achievement SSE emitter in backend.
+ * The app should start listening right after log in and stop before log out.
+ */
 export default function useAchievementService() {
     const { snackbar, t, i18n } = useBasicState();
     const abortController = useMemo(() => new AbortController(), [])
@@ -32,11 +42,10 @@ export default function useAchievementService() {
             async onopen(response) {
                 if (response.ok) {
                     return;
-                } else if (response.status >= 400 && response.status < 500) {
-                    // client-side errors are usually non-retriable:
-                    throw new FatalError();
                 } else {
-                    throw new RetriableError();
+                    // client-side errors are usually non-retriable:
+                    snackbar(t("misc.defaultAchievementMessage"), snackbarError)
+                    throw new FatalError();
                 }
             },
     

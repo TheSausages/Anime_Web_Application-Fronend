@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { SimpleThread, SimpleThreadPage } from "../../../data/Forum/Thread";
+import { SimpleThreadWithUserStatus, SimpleThreadPage } from "../../../data/Forum/Thread";
 import { BackendError } from "../../../data/General/BackendError";
 import useBasicState from "../../../data/General/BasicState";
 import { snackbarError } from "../../../data/General/SnackBar";
@@ -42,7 +42,7 @@ export default function NewestThreads(props: NewestThreadsProps) {
     return (
         <div>
             {
-                threads.content.map((value: SimpleThread) => (
+                threads.content.map((value: SimpleThreadWithUserStatus) => (
                     <SimpleThreadComponent thread={value} key={value.threadId} />
                 ))
             }

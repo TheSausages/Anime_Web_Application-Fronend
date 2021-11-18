@@ -1,5 +1,10 @@
 import { useLayoutEffect, useState } from 'react';
 
+/**
+ * Small method that rerenders the screen each time the resolution is chained.
+ * Note! Should be used once!
+ * @returns Size of the current screen.
+ */
 export default function Rerender() {
   const [size, setSize] = useState([0, 0]);
   useLayoutEffect(() => {

@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import { SimpleThread } from "../../../data/Forum/Thread"
+import { SimpleThreadWithUserStatus } from "../../../data/Forum/Thread"
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import ForumIcon from '@material-ui/icons/Forum';
@@ -12,7 +12,7 @@ import { checkIfGivenUserLoggedIn } from "../../../Scripts/Utilities";
 import "../css/SimpleThreadComponent.css"
 
 interface ThreadsProps {
-    thread: SimpleThread;
+    thread: SimpleThreadWithUserStatus;
 }
 
 export default function Threads(props: ThreadsProps) {

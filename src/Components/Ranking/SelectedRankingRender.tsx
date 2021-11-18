@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
 import { RankingItem } from './Rankings';
-import { Page } from '../../data/Anime/Page';
+import { MediaPage } from '../../data/Anime/Page';
 import { useCallback } from 'react';
 import { BackendError } from '../../data/General/BackendError';
 import { snackbarError } from '../../data/General/SnackBar';
@@ -14,7 +14,7 @@ interface RankingItemRenderProps {
 }
 
 interface RankingInformation {
-    items: Page;
+    items: MediaPage;
     currentPage: number;
 }
 
@@ -31,7 +31,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
         let currentPageAfter = currectRankingItems.currentPage + 1;
     
         await selectedRanking.fetch(currentPageAfter, t, i18n)
-        .then((results: Page) => {
+        .then((results: MediaPage) => {
             currectRankingItems.items.media!.push(...results.media!)
             currectRankingItems.items.pageInfo = results.pageInfo!
             currectRankingItems.currentPage = currentPageAfter
@@ -50,7 +50,7 @@ export default function RankingItemRender(props: RankingItemRenderProps) {
         let timer = setTimeout(() => stopLoading(), MiscellaneousProperties.anilistRankingElementLoadingDelay * 100);
 
         /*true state start - begin with page 0 and empty array*/
-        getMoreRankingData({ items: { media: [] } as Page, currentPage: 0 })
+        getMoreRankingData({ items: { media: [] } as MediaPage, currentPage: 0 })
 
         return () => clearTimeout(timer)
     }, [getMoreRankingData, startLoading, stopLoading])

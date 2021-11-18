@@ -192,6 +192,7 @@
         "errors": {
             "methodNotAllowed": "Nie rozpoznano metody",
             "noSuchHttpMethod": "Nie istnieje taka metoda Http: {{method}}",
+            "httpMethodShouldNotHaveBody": "{{method}} nie powinna zawierać ciała",
             "tooLongInactive": "Byłeś nieaktywny przez zbyt długi czas! Proszę, zaloguj się ponownie",
             "mustLogIn": "Musisz się zalogować",
             "noMessageAvailable": "Błąd nie jest dostępny"

@@ -192,6 +192,7 @@
         "errors": {
             "methodNotAllowed": "The method cannot be null or undefined",
             "noSuchHttpMethod": "There is no such Http Method: {{method}}",
+            "httpMethodShouldNotHaveBody": "{{method}} should not have a body attached",
             "tooLongInactive": "You remained unactive for too long! Please log in again",
             "mustLogIn": "You must be logged in",
             "noMessageAvailable": "No error message available"
