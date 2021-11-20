@@ -38,7 +38,7 @@ export default function AnimeLink(props: AnimeLinkProps) {
 
     function restOfCode(): JSX.Element[] {
         return ( props.elements.map((anime, index) => (
-                    <Link key={index} to={'/anime/' + anime.id + '/'} title={TitlesInWantedOrder(anime.title, t)}>
+                    <Link key={index} to={`/anime/${anime.id}`} title={TitlesInWantedOrder(anime.title, t)}>
                         { props.showIndex ? <div><span>{index + 1}</span></div> : null }
                         <img src={anime.coverImage.large} style={{ 'border': '1px solid ' + getRandomColor() }} alt='new'></img>
                         <p title={TitlesInWantedOrder(anime.title, t)}></p>
