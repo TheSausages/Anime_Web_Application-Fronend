@@ -35,15 +35,33 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-interface ReviewFormProps {
+/**
+ * The props for the {@link ReviewFormComponent} component.
+ */
+export interface ReviewFormProps {
+    /** Is the component open? */
     open: boolean;
+
+    /** Control object from a *react-hook-form* for a {@link AnimeUserInformation} form. */
     control: Control<AnimeUserInformation>;
+
+    /** Function to set Review's *open* status. */
     setReviewOpen: (value: boolean) => void;
+
+    /** Function to set the review value in the main form. */
     setMainValue: UseFormSetValue<AnimeUserInformation>;
+
+    /** Function to send the update to backend. */
     updateInfo: () => void;
-    review: Review | undefined;
+
+    /** ==If exists, use these values as default values. */
+    review?: Review;
 }
 
+/**
+ * Component used for creating and editing reviews.
+ * Used as part of another form.
+ */
 export default function ReviewFormComponent(props: ReviewFormProps) {
     const classes = useStyles();
     const { t } = useTranslation();

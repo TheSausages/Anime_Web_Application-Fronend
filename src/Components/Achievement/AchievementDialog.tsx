@@ -15,7 +15,6 @@ export interface AchievementDialogProps {
 /**
  * Display an achievement in a Material-UI dialog (popup window).
  * The time after which it dissapears is deterninated using `achievementDialogCloseInSeconds` in {@link MiscellaneousProperties}.
- * @returns Achievement popup that will disappear after a given time.
  */
 export default function AchievementDialog(props: AchievementDialogProps) {
     const [ open, setOpen ] = useState<boolean>(false)

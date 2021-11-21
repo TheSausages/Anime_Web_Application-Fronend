@@ -1,12 +1,24 @@
 import { CharacterEdge } from "../../../data/Anime/CharacterInformation"
 import { Capitalize, ValueOrNotKnown } from "../../../Scripts/Utilities"
 
-interface CharacterProps {
-    key: number
-    element: CharacterEdge
-    index: number
+/**
+ * The props for the {@link Character} component.
+ */
+export interface CharacterProps {
+    /** Key used when component is part of a list. */
+    key: number;
+
+    /** Displayed character information. */
+    element: CharacterEdge;
+
+    /** Index used when component is part of a list. */
+    index: number;
 }
 
+/**
+ * Component for displaying information on a character.
+ * When hovering over the character, additional information is displayed.
+ */
 export default function Character(props: CharacterProps) {
     const { element, index } = props;
 

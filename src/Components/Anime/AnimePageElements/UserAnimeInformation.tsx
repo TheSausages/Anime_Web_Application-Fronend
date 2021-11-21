@@ -49,12 +49,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface UserAnimeInformationProps {
+/**
+ * The props for the {@link UserAnimeInformation} component.
+ */
+export interface UserAnimeInformationProps {
+    /** How many episodes where aired to this day. */
     airedEpisodes: number;
+
+    /** If exists, use those information as default values. */
     animeUserInformation?: AnimeUserInformation;
+
+    /** Date when the anime started. */
     animeStartDate: FuzzyDate;
 }
 
+/**
+ * Component for displaying and editing user information on an Anime.
+ * This component should only be displayed when logged in.
+ */
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const classes = useStyles();
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;

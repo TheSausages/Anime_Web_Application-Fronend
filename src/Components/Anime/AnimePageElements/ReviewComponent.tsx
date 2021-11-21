@@ -8,12 +8,23 @@ import ExpandingField from "../../Miscellaneous/ExpandingField";
 
 import "../css/ReviewComponent.css";
 
-interface ReviewProps {
+/**
+ * The props for the {@link ReviewComponent} component.
+ */
+export interface ReviewProps {
+    /** The displayed review. */
     review: Review;
+
+    /** Key used when component is part of a list. */
     key: number;
 }
 
 const color = getRandomColor(true);
+
+/**
+ * Component for displaying information on a review.
+ * @returns 
+ */
 export default function ReviewComponent(props: ReviewProps) {
     const { review } = props;
 

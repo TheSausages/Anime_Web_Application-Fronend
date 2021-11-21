@@ -12,14 +12,28 @@ import ReviewComponent from "./ReviewComponent"
 import "../css/AnimeDetails.css";
 import "../../Section/css/Section.css"
 
-interface AnimeDetailsProps {
+/**
+ * The props for the  {@link AnimeDetails} component.
+ */
+export interface AnimeDetailsProps {
+    /** Reviews of the Anime. */
     reviews: Review[];
+
+    /** Relations of the Anime.  */
     relationEdges: MediaEdge[];
+
+    /** Characters from the Anime */
     characterEdges: CharacterEdge[];
 }
 
 type ElementsWithRows = "relations" |"characters"
 
+/**
+ * Component for displaying Anime details. Examples include reviews or characters.
+ * @see {@link CharacterComponent}
+ * @see {@link RelationComponent}
+ * @see {@link ReviewComponent}
+ */
 export function AnimeDetails(props: AnimeDetailsProps) {
     const { relationEdges, characterEdges, reviews } = props;
     const { t } = useTranslation();
@@ -56,9 +70,9 @@ export function AnimeDetails(props: AnimeDetailsProps) {
                         <div id="Section">
                             {
                                 spliceArrayIfNeeded(relationEdges, findRowState('relations'))
-                                .map((elem, index) => {
-                                    return <RelationComponent key={index} element={elem} index={index} />
-                                })
+                                .map((elem, index) => (
+                                    <RelationComponent key={index} element={elem} index={index} />
+                                ))
                             }
                         </div>
                     </div>
@@ -75,9 +89,9 @@ export function AnimeDetails(props: AnimeDetailsProps) {
                         <div id="Section">
                             {
                                 spliceArrayIfNeeded(characterEdges, findRowState('characters'))
-                                .map((elem, index) => {
-                                    return <Character key={index} element={elem} index={index} />
-                                })
+                                .map((elem, index) => (
+                                    <Character key={index} element={elem} index={index} />
+                                ))
                             }
                         </div>
                     </div>

@@ -7,13 +7,27 @@ import { useTranslation } from "react-i18next"
 
 import "./css/AnimeLink.css"
 
-interface AnimeLinkProps {
+/**
+ * The props for {@link AnimeLink} component.
+ */
+export interface AnimeLinkProps {
+    /** Elements that should be displayed. */
     elements: MediaB[];
+
+    /** Id of the html element. */
     id?: string;
+
+    /** Should the elements be displayed as a grid and not as a flex? */
     grid?: boolean;
+
+    /** Should the index of the element be seen? */
     showIndex?: boolean;
 }
 
+/**
+ * Component for displaying Media elements af a grid/flex of images.
+ * These images are also links to their respective detailed page.
+ */
 export default function AnimeLink(props: AnimeLinkProps) {
     const { t } = useTranslation();
 
@@ -45,7 +59,6 @@ export default function AnimeLink(props: AnimeLinkProps) {
                     </Link>
                 )
             ))
-        
     }
 
     if (props.grid) {

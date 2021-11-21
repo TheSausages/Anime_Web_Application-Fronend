@@ -5,30 +5,37 @@ import { getRandomColor, ValueOrNotKnown, Capitalize, DateOrNotKnown } from "../
 
 import "../css/BasicAnimeInformation.css"
 
-interface AnimeBasicInformationProps {
+/**
+ * The props for the {@link AnimeBasicInformation} component.
+ */
+export interface AnimeBasicInformationProps {
+    /** Anime for which basic information will be displayed. */
     anime: MediaB;
 }
 
-interface BasinAnimeInformationArrayElement {
-    name: string;
-    value: string | number;
-}
-
+/**
+ * Component for creating and displaying basic information on an Anime.
+ * For each item, between the information name and value, a collored line is displayed. 
+ */
 export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
     const { t } = useBasicState();
 
     return (
         <div className="AnimeBasicInformation">
-            {createBasinAnimeInformationArray(props.anime, t).map((elem: BasinAnimeInformationArrayElement, index) => {
-                return (
+            {createBasinAnimeInformationArray(props.anime, t).map((elem: BasinAnimeInformationArrayElement, index) => (
                     <div key={index}>
                         <div className='line' style={{ 'borderBottom': '1px solid ' + getRandomColor(true)}} id="noMargin"><p>{elem.name}</p></div>
                         <div>{elem.value}</div>
                     </div>
                 )
-            })}   
+            )}   
         </div>
     );
+}
+
+interface BasinAnimeInformationArrayElement {
+    name: string;
+    value: string | number;
 }
 
 function createBasinAnimeInformationArray(results: MediaB, t: TFunction): Array<BasinAnimeInformationArrayElement> {

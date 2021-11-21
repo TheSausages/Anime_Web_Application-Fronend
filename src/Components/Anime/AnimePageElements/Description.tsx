@@ -3,11 +3,19 @@ import { useTranslation } from 'react-i18next';
 
 import "../css/Description.css";
 
-interface DescriptionWithSocialButtonsProps {
+/**
+ * The props for the {@link Description} component.
+ */
+export interface DescriptionProps {
+    /** The description of an Anime. Can be plain or formatted (for html) text. */
     description: string;
 }
 
-export function DescriptionWithSocialButtons(props: DescriptionWithSocialButtonsProps) {
+/**
+ * Component for displaying information on an Anime description.
+ * The description is additionaly parsed for htlm elements using *html-react-parser*.
+ */
+export function Description(props: DescriptionProps) {
     const { t } = useTranslation();
 
     return (

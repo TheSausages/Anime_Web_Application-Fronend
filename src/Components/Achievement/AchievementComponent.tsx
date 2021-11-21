@@ -7,8 +7,10 @@ import { Achievement } from "../../data/General/User/Achievement";
 export interface AchievementProps {
     /** The achievement to be displayed. */
     achievement: Achievement;
+
     /** The optional key when the component is used in a list. */
     key?: number;
+
     /** Should the compontent be 'small' (smaller icon and text). */
     small?: boolean;
 }
@@ -16,7 +18,6 @@ export interface AchievementProps {
 /**
  * Component for displaying an Achievement. 
  * The component has 2 sizes: normal and small (controlled with {@link AchievementProps.small})
- * @returns Achievement icon with text information: its name and description.
  */
 export default function AchievementComponent(props: AchievementProps) {
     const { achievement, small } = props;
@@ -37,7 +38,7 @@ export default function AchievementComponent(props: AchievementProps) {
             maxWidth: small => small === true ? 150 : 250,
         },
     }))
-    console.log(small)
+
     const classes = useStyles(small);
 
     return (

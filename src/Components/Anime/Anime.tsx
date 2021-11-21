@@ -5,7 +5,7 @@ import { AnimeService } from "../../Scripts/Services/AnimeService";
 import { checkIfLoggedIn, getRandomColor, TitlesInWantedOrder } from "../../Scripts/Utilities";
 import Loading from '../Loading/Loading';
 import { AnimeBasicInformation } from './AnimePageElements/BasicAnimeInformation';
-import { DescriptionWithSocialButtons as Description } from './AnimePageElements/Description';
+import { Description as Description } from './AnimePageElements/Description';
 import { AnimeDetails } from './AnimePageElements/AnimeDetails';
 import UserAnimeInformation from './AnimePageElements/UserAnimeInformation';
 import { BackendError } from '../../data/General/BackendError';
