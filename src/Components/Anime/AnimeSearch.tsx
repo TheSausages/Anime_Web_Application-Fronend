@@ -21,10 +21,13 @@ import TextFieldColored from "../Miscellaneous/TextFieldColored"
 
 import "./css/AnimeSearch.css"
 
+/**
+ * The props for the {@link AnimeSearch} component.
+ */
 interface AnimeSearchProps {}
 
 /**
- * The props for the {@link AnimeSearch} component.
+ * Used for the element state in {@link AnimeSearch}.
  */
 export interface PageWithNumber {
     /** Items that should be rendered */
@@ -36,8 +39,10 @@ export interface PageWithNumber {
 const color = getRandomColor(true);
 
 /**
- * Component for searching Anime using a {@link AnimeQuery} query. Their number depend on how much the user scrolls.
- * @returns Items that meet the query requirements.
+ * Component for searching Anime using an {@link AnimeQuery} query. Their number depend on how much the user scrolls.
+ * @param props {@link AnimeSearchProps}
+ * @returns Items that meet the query requirements from the form.
+ * @see {@link AnimeLinkScroll}
  */
 export default function AnimeSearch(props: AnimeSearchProps) {
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;

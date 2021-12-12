@@ -61,6 +61,7 @@ export interface ReviewFormProps {
 /**
  * Component used for creating and editing reviews.
  * Used as part of another form.
+ * @param props {@link ReviewFormProps}
  */
 export default function ReviewFormComponent(props: ReviewFormProps) {
     const classes = useStyles();

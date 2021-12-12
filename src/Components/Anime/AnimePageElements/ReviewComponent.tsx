@@ -23,7 +23,8 @@ const color = getRandomColor(true);
 
 /**
  * Component for displaying information on a review.
- * @returns 
+ * @param props {@link ReviewProps}
+ * @see {@link ExpandingField}
  */
 export default function ReviewComponent(props: ReviewProps) {
     const { review } = props;

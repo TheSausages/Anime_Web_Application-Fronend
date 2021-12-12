@@ -1,12 +1,13 @@
 import { CurrentSeasonInformation } from "../../data/Anime/Smaller/MainPageInterfaces";
 import { MediaB } from "../../data/Anime/MediaInformation";
 import { MediaPage } from "../../data/Anime/Page";
-import { performRequestWithType } from "./ApiService";
+import {performRequestWithNoResponse, performRequestWithType} from "./ApiService";
 import { HttpMethods } from "./ApiService";
 import { BackendProperties } from "../../Properties/BackendProperties"
 import { AnimeQuery } from "../../data/Anime/AnimeQuery";
 import { TFunction } from "react-i18next";
 import { i18n } from "i18next";
+import {AnimeUserInformation} from "../../data/Anime/Smaller/AnimeUserInformation";
 
 /**
  * Class containing methods for operations related to Anime. Should never be initialised.
@@ -77,5 +78,16 @@ export abstract class AnimeService {
      */
     static searchUsingQuery(query: AnimeQuery, pageNumber: number, t: TFunction, i18n: i18n): Promise<MediaPage> {
         return performRequestWithType<MediaPage>(HttpMethods.POST, BackendProperties.anime.searchByQuery(pageNumber), false, t, i18n, query)
+    }
+
+    /**
+     * Function to update a user's anime information.
+     * @param data The updated status.
+     * @param t Translation function.
+     * @param i18n i18n instance.
+     * @returns Nothing (only a promise used for chaining).
+     */
+    static updateAnimeUserInformationData(data: AnimeUserInformation, t: TFunction, i18n: i18n): Promise<any> {
+        return performRequestWithNoResponse(HttpMethods.PUT, BackendProperties.anime.updateAnimeUserInformation, true, t, i18n, data);
     }
 }

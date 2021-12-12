@@ -40,7 +40,7 @@ export default function PostComponent(props: PostProps) {
 
     return (
         <div className="Post" style={{borderColor: color}}>
-            <div onClick={_ => history.push(`/user/${post.creator.userId}`)} className="PostCreator PostLink">{post.creator.username}</div>
+            <div style={{color: color}} onClick={_ => history.push(`/user/${post.creator.userId}`)} className="PostCreator PostLink">{post.creator.username}</div>
             <div className="PostTimes">
                 <div><AddIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />{t("forum.post.created")}: {new Date(post.creation).toLocaleString()}</div>
                 <div><EditIcon sx={{ fontSize: '0.8rem', verticalAlign: 'text-top', color: color }} />{t("forum.post.lastModified")}: {new Date(post.modification).toLocaleString()}</div>

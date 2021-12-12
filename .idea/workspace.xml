@@ -2,10 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78144070-7645-46f5-a67c-e9528cefe398" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Anime/Anime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Anime/Anime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/AnimeFetch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/AnimeFetch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Anime/Anime.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Anime/Anime.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Anime/AnimePageElements/UserAnimeInformation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Anime/AnimePageElements/UserAnimeInformation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Anime/css/UserAnimeInformation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Anime/css/UserAnimeInformation.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AuthenticationAndLogin/Auth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AuthenticationAndLogin/Auth.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AuthenticationAndLogin/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AuthenticationAndLogin/Register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Forum/Post/PostComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forum/Post/PostComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Forum/Thread/NewestThreads.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forum/Thread/NewestThreads.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Forum/Thread/SimpleThreadComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forum/Thread/SimpleThreadComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Forum/Thread/ThreadForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forum/Thread/ThreadForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Forum/css/CompleteThreadComponent.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forum/css/CompleteThreadComponent.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Miscellaneous/TextFieldColored.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Miscellaneous/TextFieldColored.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Services/AchievementService.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Services/AchievementService.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Services/AnimeService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Services/AnimeService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Services/UserService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Services/UserService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/i18n/translations/English.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/i18n/translations/English.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/i18n/translations/Polish.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/i18n/translations/Polish.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +36,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.XML" />
+    <property name="ts.external.directory.path" value="C:\Users\Kacper\IdeaProjects\PracaInzynierska\ReactFrontEnd\node_modules\typescript\lib" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="78144070-7645-46f5-a67c-e9528cefe398" name="Default Changelist" comment="" />
@@ -32,7 +49,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1626983097142</updated>
+      <workItem from="1638179543261" duration="566000" />
+      <workItem from="1638180120788" duration="41000" />
+      <workItem from="1638180212208" duration="7544000" />
+      <workItem from="1638378852674" duration="3308000" />
+      <workItem from="1638459422913" duration="6419000" />
+      <workItem from="1638523852530" duration="2890000" />
+      <workItem from="1638616970803" duration="3018000" />
+      <workItem from="1639258890574" duration="457000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

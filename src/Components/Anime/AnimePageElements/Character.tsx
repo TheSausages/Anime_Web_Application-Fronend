@@ -18,6 +18,7 @@ export interface CharacterProps {
 /**
  * Component for displaying information on a character.
  * When hovering over the character, additional information is displayed.
+ * @param props {@link CharacterProps}
  */
 export default function Character(props: CharacterProps) {
     const { element, index } = props;

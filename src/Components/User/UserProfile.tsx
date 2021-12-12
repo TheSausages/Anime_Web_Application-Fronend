@@ -4,10 +4,21 @@ import UserStatistics from "./UserStatistics";
 
 import "./css/UserProfile.css"
 
-interface UserProfileProps {
+/**
+ * The props for the {@link UserProfile} component.
+ */
+export interface UserProfileProps {
+    /** User for thich the profile shoulds be shown. */
     user: CompleteUser;
 }
 
+/**
+ * Component used to show a users profile.
+ * This component is accessable from {@link CurrentUserProfile} and {@link ExternalUserProfile}
+ * @param props {@link UserProfileProps}
+ * @see {@link UserStatistics}
+ * @see {@link UserData}
+ */
 export default function UserProfile(props: UserProfileProps) {
     return (
         <div id="MainUserProfileContainer">

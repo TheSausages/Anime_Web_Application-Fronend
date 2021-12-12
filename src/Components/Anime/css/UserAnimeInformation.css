@@ -9,7 +9,7 @@
     row-gap: 60px;
     grid-template-areas: 
     "isFavourite watchStartDate watchEndDate review"
-    "episodesSeen status opinion review";
+    "episodesSeen status opinion submit";
     margin-bottom: 3vh; 
     justify-content: center;
 }
@@ -45,6 +45,10 @@
     align-items: center;
 }
 
+.submit {
+    grid-area: submit;
+}
+
 @media screen and (max-width: 960px) {
     #AnimePageLayout {
         margin: 5vh auto;
@@ -59,7 +63,7 @@
         "isFavourite status"
         "watchStartDate watchEndDate"
         "episodesSeen opinion"
-        "review review";
+        "submit review";
     }
 
     .mainAnimeInformationForm > * {

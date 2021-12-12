@@ -16,6 +16,7 @@ export interface AnimeBasicInformationProps {
 /**
  * Component for creating and displaying basic information on an Anime.
  * For each item, between the information name and value, a collored line is displayed. 
+ * @param props {@link AnimeBasicInformationProps}
  */
 export function AnimeBasicInformation(props: AnimeBasicInformationProps) {
     const { t } = useBasicState();

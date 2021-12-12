@@ -5,15 +5,28 @@ import { getRandomColor } from "../../Scripts/Utilities";
 
 import "./css/UserStatistics.css"
 
-interface UserStatisticsProps {
+/**
+ * The props for the {@link UserStatistics} component.
+ */
+export interface UserStatisticsProps {
+    /**
+     * The user for whom the Statistics should be shown.
+     */
     user: CompleteUser;
 }
 
-interface UserStatisticInformationArrayElement {
+/**
+ * Elements that should be shown as the statistics. Created using {@link createUserStatisticsInformation}.
+ */
+export interface UserStatisticInformationArrayElement {
     name: string;
     value: string | number;
 }
 
+/**
+ * Component used to show basic information about a user.
+ * @param props {@link UserStatisticsProps}
+ */
 export default function UserStatistics(props: UserStatisticsProps) {
     const { t } = useBasicState();
 
@@ -31,7 +44,13 @@ export default function UserStatistics(props: UserStatisticsProps) {
     )
 }
 
-function createUserStatisticsInformation(user: CompleteUser, t: TFunction): Array<UserStatisticInformationArrayElement> {
+/**
+ * Method used to create the array of basic information on the user.
+ * @param user The user for whom the information will be shown.
+ * @param t The translation functions.
+ * @returns Array of basic information on a user.
+ */
+export function createUserStatisticsInformation(user: CompleteUser, t: TFunction): Array<UserStatisticInformationArrayElement> {
     return [
         {
             name: t("user.userStatistics.watchTime"),

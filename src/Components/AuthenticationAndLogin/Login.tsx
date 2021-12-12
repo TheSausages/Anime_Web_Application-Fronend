@@ -24,9 +24,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+/**
+ * The props for the {@link Login} component.
+ */
 interface LoginProps {
 }
 
+/**
+ * Component contraining the form for logging in.
+ * Should also containg a link to the registration component.
+ * @param props {@link LoginProps}
+ */
 export default function Login(props: LoginProps) {
     const auth = useAuth();
     const classes = useStyles();

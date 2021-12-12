@@ -24,6 +24,7 @@ import useBasicState from '../../../data/General/BasicState';
 import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
 
 import "../css/UserAnimeInformation.css"
+import {AnimeService} from "../../../Scripts/Services/AnimeService";
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +67,7 @@ export interface UserAnimeInformationProps {
 /**
  * Component for displaying and editing user information on an Anime.
  * This component should only be displayed when logged in.
+ * @param props {@link UserAnimeInformation}
  */
 export default function UserAnimeInformation(props: UserAnimeInformationProps) {
     const classes = useStyles();
@@ -123,7 +125,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 if (inf.watchStartDate === null) inf.watchStartDate = undefined;
                 if (inf.watchEndDate === null) inf.watchEndDate = undefined;
 
-                await UserService.updateAnimeUserInformationData({...inf, id: animeUserInformation?.id!}, t, i18n)
+                await AnimeService.updateAnimeUserInformationData({...inf, id: animeUserInformation?.id!}, t, i18n)
                 .then(() => snackbar(t("anime.userAnimeInformation.updateSuccessfull"), snackBarSuccess))
                 .catch((error: BackendError) => {
                     snackbar(error.message, snackbarError)
@@ -245,6 +247,12 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                         onClick={() => setOpenReview(true)}
                     />
                     <Portal container={container.current} />
+                </div>
+
+                <div className="submit">
+                    <ButtonCollored text={t("input.submit")} 
+                        onClick={() => save()}
+                    />
                 </div>
             </form>
 

@@ -94,8 +94,8 @@ export default function ThreadForm(props: NewThreadFormProps) {
     }, [getTags, open, startLoading, stopLoading])
 
     const schema = yup.object().shape({
-        title: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "forum.thread.titleField" })),
-        text: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: "forum.thread.textField" })),
+        title: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("forum.thread.titleField") })),
+        text: yup.string().required(t("fieldErrors.fieldCannotBeEmpty", { field: t("forum.thread.textField") })),
         category: yup.object().shape({
             categoryId: yup.number(),
             categoryName: yup.string(),

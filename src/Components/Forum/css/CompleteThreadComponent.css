@@ -27,7 +27,7 @@
     text-align: left;
 }
 
-#Thread > :nth-child(2n + 3) {
+#Thread > :nth-child(2n + 3):not(.ThreadEditText) {
     text-align: right;
 }
 
@@ -71,7 +71,7 @@
     grid-area: ThreadEditText;
     text-align: start;
     margin-block-end: 0;
-    align-self: flex-end;
+    align-self: flex-start;
     font-size: 0.8rem;
     cursor: pointer;
     color: rgb(34, 206, 43);

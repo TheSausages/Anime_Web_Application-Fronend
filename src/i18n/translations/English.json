@@ -103,7 +103,7 @@
                 "lastModified": "Last Modified",
                 "noThreadsForConditions": "No Threads exist for conditions",
                 "titleField": "Thread title",
-                "titletext": "Thread text",
+                "textField": "Thread text",
                 "editThreadForm": {
                     "editThread": "edit thread",
                     "title": "Edit Thread"
@@ -202,6 +202,7 @@
             "minimize": "Minimize",
             "loadingDefaultMessage": "The Request cound not be processed \n Try again later",
             "defaultAchievementMessage": "You earned an achievement, but an error occured we cannot see which! Please check your profile",
+            "defaultAchievementErrorMessage": "An error has occured with the achievement service, please reload!",
             "infiniteScroll": {
                 "end": "You reached the end"
             }

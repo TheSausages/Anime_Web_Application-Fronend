@@ -26,6 +26,10 @@ export interface AnimeProps {
 /**
  * Component that created the site for the detailed Anime Information.
  * @returns Site with detailed information on an Anime.
+ * @see {@link UserAnimeInformation}
+ * @see {@link AnimeBasicInformation}
+ * @see {@link Description}
+ * @see {@link AnimeDetails}
  */
 export default function Anime(props: AnimeProps) {
     const [Anime, setAnime] = useState<MediaB>({} as MediaB);
@@ -75,7 +79,6 @@ export default function Anime(props: AnimeProps) {
                             animeStartDate={Anime.startDate}
                         />
                     :
-                        // TODO zrobić przycisk który powie żeby się zalogować aby dodać dane
                         <div className="animeUserInformation"></div>
                 }
 

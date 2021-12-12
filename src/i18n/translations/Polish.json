@@ -103,7 +103,7 @@
                 "lastModified": "Ostatnio Edytowany",
                 "noThreadsForConditions": "Nie isteją wątki dla podanych danych",
                 "titleField": "Tytuł wątku",
-                "titletext": "Tekst wątku",
+                "textField": "Tekst wątku",
                 "editThreadForm": {
                     "editThread": "edytuj watek",
                     "title": "Edytuj Wątek"
@@ -202,6 +202,7 @@
             "minimize": "Zamknij",
             "loadingDefaultMessage": "Żądanie nie mogło być poprawnie przetworzone \n Spróbuj ponownie później",
             "defaultAchievementMessage": "Zdobyłeś osiągnięcie, ale nie można go wystąpić. Zobacz swój profil",
+            "defaultAchievementErrorMessage": "Wystąpił błąd związany z osiągnięciami, proszę przeloguj się!",
             "infiniteScroll": {
                 "end": "Doszedłeś do końca"
             }

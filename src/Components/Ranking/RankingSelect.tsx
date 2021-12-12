@@ -7,9 +7,17 @@ import { useTranslation } from 'react-i18next';
 
 import './css/RankingSelect.css'
 
+/**
+ * The props for the {@link RankingSelect} component.
+ */
 interface RankingSelectProps {
 }
 
+/**
+ * Component used to select 
+ * @param props {@link RankingSelectProps}
+ * @returns 
+ */
 export default function RankingSelect(props: RankingSelectProps) {
     const [selectedRanking, setSelectedRanking] = useState<RankingItem>(Rankings[0]);
     const { loading, startLoading, stopLoading } = useBasicState()

@@ -21,9 +21,6 @@ export interface AchievementService {
     stopListeningForAchievements: () => void;
 }
 
-/** Error created when the Event Source cant connect to the SSE emitter in backend */
-class FatalError extends Error { }
-
 /**
  * Service for connecting to the achievement SSE emitter in backend.
  * The app should start listening right after log in and stop before log out.
@@ -44,22 +41,31 @@ export default function useAchievementService() {
                     return;
                 } else {
                     // client-side errors are usually non-retriable:
-                    snackbar(t("misc.defaultAchievementMessage"), snackbarError)
-                    throw new FatalError();
+                    throw { message: t("misc.defaultAchievementErrorMessage"), status: 400 } as BackendError;
+                }
+            },
+
+            onmessage(message: EventSourceMessage) {
+                if (message.event === "FatalError" || (message.retry ?? 0 > 2)) {
+                    throw { message: message.data, status: 400 } as BackendError;
+                } else {
+                    let achievement:Achievement = JSON.parse(message.data);
+                    ReactDOM.render(
+                        <AchievementDialog achievement={achievement} />,
+                        document.getElementById("AchievementDialogContainer")
+                    )
                 }
             },
     
-            onmessage(message: EventSourceMessage) {
-                let achievement:Achievement = JSON.parse(message.data);
-                ReactDOM.render(
-                    <AchievementDialog achievement={achievement} />, 
-                    document.getElementById("AchievementDialogContainer")
-                )
-            },
-    
             onerror(err: BackendError) {
-                snackbar(err.message ?? t("misc.defaultAchievementMessage"), snackbarError)
-            }
+                snackbar(err.message ?? t("misc.defaultAchievementMessage"), snackbarError);
+                // rethrow to stop the operation
+                throw err;
+            },
+
+            onclose() {
+                snackbar(t("misc.defaultAchievementErrorMessage"), snackbarError)
+            },
         })
     }, [signal, snackbar, t, i18n]);
 

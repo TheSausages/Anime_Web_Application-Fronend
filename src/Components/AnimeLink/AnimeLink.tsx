@@ -27,6 +27,7 @@ export interface AnimeLinkProps {
 /**
  * Component for displaying Media elements af a grid/flex of images.
  * These images are also links to their respective detailed page.
+ * @param props {@link AnimeLinkProps}
  */
 export default function AnimeLink(props: AnimeLinkProps) {
     const { t } = useTranslation();

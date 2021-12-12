@@ -8,10 +8,18 @@ import ReviewComponent from "../Anime/AnimePageElements/ReviewComponent";
 
 import "./css/UserData.css";
 
-interface UserDataProps {
+/**
+ * The props for the {@link UserData} component.
+ */
+export interface UserDataProps {
+    /** The user for whom the data should be rendered. */
     user: CompleteUser;
 }
 
+/**
+ * Component used to show more complicated data of the user.
+ * @param props {@link UserDataProps}
+ */
 export default function UserData(props: UserDataProps) {
     const { user } = props;
     const { t } = useBasicState();

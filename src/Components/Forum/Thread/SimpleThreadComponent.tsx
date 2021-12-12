@@ -26,9 +26,9 @@ export default function Threads(props: ThreadsProps) {
         <div style={{ borderColor: primaryColor }} key={thread.threadId} className="SimpleThread">
             <ThreadStatusComponent primaryColor={primaryColor} status={thread.status} id={`${thread.threadId}`} className="ThreadStatus" />
 
-            <div onClick={_ => history.push(`/forum/thread/${thread.threadId}`)} className="ThreadTitle ThreadLink">{thread.title}</div>
+            <div style={{color: primaryColor}} onClick={_ => history.push(`/forum/thread/${thread.threadId}`)} className="ThreadTitle ThreadLink">{thread.title}</div>
 
-            <div onClick={_ => history.push(`/user/${thread.creator.userId}`)} className="ThreadCreator ThreadLink">{thread.creator.username}</div>
+            <div style={{color: primaryColor}} onClick={_ => history.push(`/user/${thread.creator.userId}`)} className="ThreadCreator ThreadLink">{thread.creator.username}</div>
 
             <div className="ThreadTimes">
                 <div title={t("forum.thread.generalThread.creationTimeTitle")}><AddIcon sx={{ fontSize: '0.7rem', verticalAlign: 'text-top', color: primaryColor }} />{new Date(thread.creation).toLocaleString()}</div>

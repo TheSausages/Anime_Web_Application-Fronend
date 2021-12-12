@@ -21,6 +21,7 @@ export interface RelationProps {
  * Component for diplaying relation information between diffrent media.
  * If the media in an Anime, it will have a link to it. 
  * When hovering over an item, additional information will be displayed.
+ * @param props {@link RelationProps}
  */
 export default function Relation(props: RelationProps) {
     const { t } = useTranslation();

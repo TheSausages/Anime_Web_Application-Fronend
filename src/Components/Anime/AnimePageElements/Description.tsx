@@ -14,6 +14,7 @@ export interface DescriptionProps {
 /**
  * Component for displaying information on an Anime description.
  * The description is additionaly parsed for htlm elements using *html-react-parser*.
+ * @param props {@link DescriptionProps}
  */
 export function Description(props: DescriptionProps) {
     const { t } = useTranslation();

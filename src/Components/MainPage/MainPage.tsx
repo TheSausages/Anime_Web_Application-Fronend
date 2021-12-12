@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading'
-import { Capitalize } from "../../Scripts/Utilities"
+import { Capitalize, checkIfObjectIsEmpty } from "../../Scripts/Utilities"
 import { AnimeService } from '../../Scripts/Services/AnimeService';
 import { CurrentSeasonInformation } from '../../data/Anime/Smaller/MainPageInterfaces';
 import { BackendError } from '../../data/General/BackendError';
@@ -43,9 +43,11 @@ export default function MainPage(props: MainPageProps) {
         }
     }, [getCurrentAnime, startLoading, stopLoading]);
 
-    if (loading || error || !currectSeason) {
+    if (loading || error || !currectSeason || checkIfObjectIsEmpty(currectSeason)) {
         return <Loading error={error}/>
     }
+
+    console.log(currectSeason)
 
     return(
         <div>

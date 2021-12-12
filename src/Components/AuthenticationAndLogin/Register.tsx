@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { makeStyles } from "@material-ui/styles"
 import { useForm } from "react-hook-form"
-import { useTranslation } from "react-i18next"
 import * as yup from "yup"
+import useBasicState from "../../data/General/BasicState"
 import { RegistrationBody } from "../../data/General/User/RegistrationBody"
 import ButtonCollored from "../Miscellaneous/ButtonCollored"
 import TextFieldColored from "../Miscellaneous/TextFieldColored"
@@ -23,18 +23,25 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+/**
+ * The props for the {@link Register} component.
+ */
 interface RegisterProps {
 }
 
+/**
+ * Component containing the form used for Registration.
+ * @param props {@link RegisterProps}
+ */
 export default function Register(props: RegisterProps) {
     const auth = useAuth()
     const classes = useStyles()
-    const { t } = useTranslation();
+    const { t } = useBasicState();
 
     const schema = yup.object().shape({
         username: yup.string().min(6, t("fieldErrors.fieldAtLeastCharacters", { number: 6 })).required(),
         password: yup.string().min(6, t("fieldErrors.fieldAtLeastCharacters", { number: 6 }))
-            .matches(/^(?=.+[0-9])(?=.{4,}[a-z])(?=.*[A-Z]).{6,}$/, "Wrong structure!").required(),
+            .matches(/^(?=.+[0-9])(?=.{4,}[a-z])(?=.+[A-Z]).{6,}$/, "Wrong structure!").required(),
         matchingPassword: yup.string().test("password-match",t("fieldErrors.fieldMustMatch", { field: t("auth.register.password") }), function(value) { return this.parent.password === value }).required(),
         email: yup.string().email(t("fieldErrors.fieldIsNotAn", { field: t("auth.register.email") })).required()
     })

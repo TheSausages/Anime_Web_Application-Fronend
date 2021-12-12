@@ -7,10 +7,19 @@ import { UserService } from "../../Scripts/Services/UserService";
 import Loading from "../Loading/Loading";
 import UserProfile from "./UserProfile";
 
-interface ExternalUserProfileProps {
+/**
+ * The props for the {@link CurrentUserProfile} component.
+ */
+export interface ExternalUserProfileProps {
+    /** The Id of the user for whom the profile should be found. */
     userId: string;
 }
 
+/**
+ * Component used to see the profile of a User other then the logged in one.
+ * @param props {@link ExternalUserProfileProps}
+ * @see {@link UserProfile}
+ */
 export default function ExternalUserProfile(props: ExternalUserProfileProps) {
     const { t, i18n, snackbar, loading, startLoading, stopLoading, error, setErrorMessage } = useBasicState();
     const [userInformation, setUserInformation] = useState<CompleteUser>();

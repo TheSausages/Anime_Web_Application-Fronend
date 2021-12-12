@@ -30,7 +30,8 @@ type ElementsWithRows = "relations" |"characters"
 
 /**
  * Component for displaying Anime details. Examples include reviews or characters.
- * @see {@link CharacterComponent}
+ * @param props {@link AnimeDetailsProps}
+ * @see {@link Character}
  * @see {@link RelationComponent}
  * @see {@link ReviewComponent}
  */

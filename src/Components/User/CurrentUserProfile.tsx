@@ -7,9 +7,17 @@ import { UserService } from "../../Scripts/Services/UserService";
 import Loading from "../Loading/Loading";
 import UserProfile from "./UserProfile";
 
-interface CurrentUserProfileProps {
+/**
+ * The props for the {@link CurrentUserProfile} component.
+ */
+export interface CurrentUserProfileProps {
 }
 
+/**
+ * Component for getting the profile of the currently logged in user.
+ * @param props {@link CurrentUserProfileProps}
+ * @see {@link UserProfile}
+ */
 export default function CurrentUserProfile(props: CurrentUserProfileProps) {
     const { t, i18n, snackbar, loading, startLoading, stopLoading, error, setErrorMessage } = useBasicState();
     const [currentUserInformation, setCurrentUserInformation] = useState<CompleteUser>();

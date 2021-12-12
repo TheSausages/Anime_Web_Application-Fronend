@@ -17,6 +17,7 @@ export interface AnimeListScrollProps {
 
 /**
  * Component that adds an infinite scroll mechanism to a {@link AnimeLink}.
+ * @param props {@link AnimeListScrollProps}
  */
 export default function AnimeLinkScroll(props: AnimeListScrollProps) {
     const { items, getMore } = props;

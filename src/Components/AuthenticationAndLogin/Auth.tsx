@@ -11,28 +11,63 @@ import { checkIfLoggedIn } from "../../Scripts/Utilities";
 import useAchievementService from "../../Scripts/Services/AchievementService";
 import { AuthenticationProperties } from "../../Properties/AuthenticationProperties";
 
+/**
+ * Properties retuned by the {@link authContext}. The values are set in {@link useProvideAuth}.
+ */
 export interface AuthReturn {
+    /** Method used to log in. */
     signin: (cred: Credentials) => void;
+
+    /** Method used to log out a user. */
     signout: () => void;
+
+    /** Method used to register a user. */
     register: (regis: RegistrationBody) => void;
+
+    /** 
+     * When this method is used in a component, it will be rerendered when a user logs in/out.
+     * Example use:
+     * ```typescript
+     * const rerender = useAuth().rerenderThisComponent() 
+     * ```
+    */
     rerenderThisComponent: () => boolean;
 }
 
+/**
+ * Context for the authentification in the app. The values are provided in {@link useProvideAuth}.
+ */
 const authContext = createContext<AuthReturn>({} as AuthReturn);
 
-interface ProvideAuthProps {
+/**
+ * The props for {@link ProvideAuth}
+ */
+export interface ProvideAuthProps {
+    /** The element that should be able to use the context. */
     children: React.ReactNode
 }
 
+/**
+ * Main method for setting the provider of the authentication context.
+ * @returns The provider for the auth context.
+ */
 export function ProvideAuth(props: ProvideAuthProps) {
     const auth = useProvideAuth();
     return <authContext.Provider value={auth}>{props.children}</authContext.Provider>;
 }
 
+/**
+ * Method to get the auth context in any component. The component must be inside {@link ProvideAuth}!
+ * @returns the context containing all method and fields needed for authetification inside the app.
+ */
 export const useAuth = () => {
     return useContext(authContext);
 };
 
+/**
+ * Method used to provide the values for {@link AuthReturn}. These are set inside {@link ProvideAuth}
+ * @returns The values for {@link AuthReturn}.
+ */
 function useProvideAuth(): AuthReturn {
     let history = useHistory();
     const { startListeningForAchievements, stopListeningForAchievements } = useAchievementService();
@@ -82,7 +117,7 @@ function useProvideAuth(): AuthReturn {
             setRerender(!rerender);
             startListeningForAchievements();
 
-            snackbar(t("auth.registerSuccessfull"),  snackBarSuccess)
+            snackbar(t("auth.registerSuccessfull"), snackBarSuccess)
             history.push("/")
         })
         .catch((error: BackendError) => snackbar(error.message,  snackbarError))
@@ -100,17 +135,31 @@ function useProvideAuth(): AuthReturn {
     };
 }
 
+/**
+ * Small helper method that cleans all data used for authetification from the localstorage.
+ */
 export function clearTokenFields() {
     localStorage.removeItem(AuthenticationProperties.accessTokenItem)
     localStorage.removeItem(AuthenticationProperties.refreshTokenItem)
     localStorage.removeItem(AuthenticationProperties.refreshIfAfterItem)
 }
 
-interface PrivateRouteProps {
+/**
+ * The props for {@link PrivateRoute}. 
+ * The children should consist of the component that will be accessed when the user is logged in.
+ */
+export interface PrivateRouteProps {
+    /** Path to the original route/component. */
     path: string,
+
+    /** The component that will be rendered when the user is logged in. */
     children: React.ReactNode
 }
 
+/**
+ * A {@link Route} variant. When the user is not logged in, he/she will be redirected to the login screen.
+ * If the user is logged in, it is a simple route.
+ */
 export function PrivateRoute(props: PrivateRouteProps) {  
     return (
         <Route

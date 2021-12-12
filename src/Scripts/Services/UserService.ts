@@ -69,17 +69,6 @@ export abstract class UserService {
     }
 
     /**
-     * Function to update a user's anime information.
-     * @param data The updated status.
-     * @param t Translation function.
-     * @param i18n i18n instance.
-     * @returns Nothing (only a promise used for chaining).
-     */
-    static updateAnimeUserInformationData(data: AnimeUserInformation, t: TFunction, i18n: i18n): Promise<any> {
-        return performRequestWithNoResponse(HttpMethods.PUT, BackendProperties.anime.updateAnimeUserInformation, true, t, i18n, data);
-    }
-
-    /**
      * Function to cancel the subscription to achievement emission.
      * @param t Translation function.
      * @param i18n i18n instance.
