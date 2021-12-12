@@ -9,15 +9,30 @@ import useBasicState from '../../data/General/BasicState';
 import { MiscellaneousProperties } from '../../Properties/MiscellaneousProperties';
 import AnimeLinkScroll from '../AnimeLink/AnimeListScroll';
 
-interface RankingItemRenderProps {
+/**
+ * The props for the {@link CurrentUserProfile} component.
+ */
+export interface RankingItemRenderProps {
+    /** The selected ranking, for which the elements should be found. */
     selectedRanking: RankingItem
 }
 
-interface RankingInformation {
+/**
+ * Used for the element state in {@link RankingItemRender}.
+ */
+export interface RankingInformation {
+    /** The ranking items, that should be rendered. */
     items: MediaPage;
+
+    /** Current page number. It's here for easier retrieval */
     currentPage: number;
 }
 
+/**
+ * Component that renderes the elements for a given ranking.
+ * @param props {@link RankingItemRenderProps}
+ * @see {@link AnimeLinkScroll}
+ */
 export default function RankingItemRender(props: RankingItemRenderProps) {
     const { selectedRanking } = props
 

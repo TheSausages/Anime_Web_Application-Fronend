@@ -11,9 +11,16 @@ import { MenuItem, Select, SelectChangeEvent } from '@material-ui/core';
 
 import './css/Navbar.css'
 
+/**
+ * The props for the {@link Navbar} component.
+ */
 interface NavbarProps {
 }
 
+/**
+ * Component containing the navbar.
+ * @param props {@link NavbarProps}
+ */
 export default function Navbar(props: NavbarProps) {
     const [clicked, setClicked] = useState(false);
     const { t, i18n } = useTranslation();
@@ -60,36 +67,36 @@ export default function Navbar(props: NavbarProps) {
             </ul>   
 
             <div className="languageSelect">
-                        <Select defaultValue={languages.english.name}
-                            value={getCurrentLanguage().name}
-                            onChange={(event: SelectChangeEvent) => i18n.changeLanguage(event.target.value)}
-                            variant="standard"
-                            IconComponent={() => <div></div>}
-                            disableUnderline
-                            sx={{
-                                "& .MuiSelect-select.MuiSelect-standard.MuiInput-input.MuiInputBase-input": {
-                                    display: "flex",
-                                    padding: 0,
-                                    margin: "10px",
-                                },
-                                "& .MuiSelect-select.MuiSelect-standard.MuiInput-input.MuiInputBase-input:focus": {
-                                    background: "transparent",
-                                }
-                            }}
-                        >
-                            {
-                                Object.keys(languages).map((key, index) => {
-                                    let lan = languages[key];
+                <Select defaultValue={languages.english.name}
+                    value={getCurrentLanguage().name}
+                    onChange={(event: SelectChangeEvent) => i18n.changeLanguage(event.target.value)}
+                    variant="standard"
+                    IconComponent={() => <div></div>}
+                    disableUnderline
+                    sx={{
+                        "& .MuiSelect-select.MuiSelect-standard.MuiInput-input.MuiInputBase-input": {
+                            display: "flex",
+                            padding: 0,
+                            margin: "10px",
+                        },
+                        "& .MuiSelect-select.MuiSelect-standard.MuiInput-input.MuiInputBase-input:focus": {
+                            background: "transparent",
+                        }
+                    }}
+                >
+                    {
+                        Object.keys(languages).map((key, index) => {
+                            let lan = languages[key];
                                 
-                                    return (
-                                        <MenuItem key={index} value={lan.name ?? languages.english.name} >
-                                            <img key={lan.countryFlagPath} className="languageIcon" src={`/images/${lan.countryFlagPath}`} alt={lan.name} />
-                                        </MenuItem>
-                                    )
-                                })
-                            }
-                        </Select>
-                    </div>   
+                            return (
+                                <MenuItem key={index} value={lan.name ?? languages.english.name} >
+                                    <img key={lan.countryFlagPath} className="languageIcon" src={`/images/${lan.countryFlagPath}`} alt={lan.name} />
+                                </MenuItem>
+                            )
+                        })
+                     }
+                </Select>
+            </div>   
 
             {checkIfLoggedIn() ? <Button to='/logout' mobileDis={true}>{t('navbar.signout')}</Button> : <Button to='/login' mobileDis={true}>{t('navbar.signin')}</Button>}
            

@@ -10,13 +10,13 @@ import './css/RankingSelect.css'
 /**
  * The props for the {@link RankingSelect} component.
  */
-interface RankingSelectProps {
+export interface RankingSelectProps {
 }
 
 /**
- * Component used to select 
+ * Component used to select a ranking.
  * @param props {@link RankingSelectProps}
- * @returns 
+ * @see {@link RankingItemRender}
  */
 export default function RankingSelect(props: RankingSelectProps) {
     const [selectedRanking, setSelectedRanking] = useState<RankingItem>(Rankings[0]);
