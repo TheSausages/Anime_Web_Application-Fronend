@@ -55,7 +55,7 @@ If the frontend folder has any other name, please change the *ReactFrontEnd* val
 
 2) In order to build the application, use:
     ```shell
-    npm build
+    npm run build
     ```
 
 3) If frontend is build together with backend and server as static data, the building is done by the backend. [More here](https://github.com/TheSausages/Anime_Web_Application-Backend#Launch).
@@ -88,36 +88,3 @@ The 'favicon' is provided by Font Awesome.
 * [Link to site with icon](https://fontawesome.com/v5.15/icons/phoenix-framework)
 * [Link to the license](https://fontawesome.com/license)
 * Color of the icon was changes
-
-Section underneath is automatically created
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
