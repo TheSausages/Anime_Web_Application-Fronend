@@ -20,12 +20,26 @@ import TagInput from "../TagInput";
 import useBasicState from "../../../data/General/BasicState";
 import { MiscellaneousProperties } from "../../../Properties/MiscellaneousProperties";
 
-interface NewThreadFormProps {
+/**
+ * The props for the {@link ThreadForm} component.
+ */
+export interface NewThreadFormProps {
+    /** Title of the popup window. */
     title: string;
+
+    /** Should the form appear? */
     open: boolean;
+
+    /** Close the form. */
     close: () => void;
+
+    /** All available categories. */
     categories: ForumCategory[];
+
+    /** Optional data, that should appear. */
     data?: CompleteThread;
+
+    /** What should happen on submision. */
     onSubmit: (thread: UpdateThread) => void;
 }
 
@@ -68,6 +82,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+/**
+ * Component containing the form for creating new thread.
+ * If data has been provided, it will be inserted into the corresponding fields.
+ * Also works as the edition form.
+ * @param props {@link NewThreadFormProps}
+ */
 export default function ThreadForm(props: NewThreadFormProps) {
     const classes = useStyles();
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;

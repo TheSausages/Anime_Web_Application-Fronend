@@ -19,14 +19,31 @@ import ButtonCollored from '../../Miscellaneous/ButtonCollored';
 import useBasicState from '../../../data/General/BasicState';
 import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
 
-interface PostReactionFormProps {
+/**
+ * The props for the {@link PostReactionForm} component.
+ */
+export interface PostReactionFormProps {
+    /** How many pluses does the post alrady have. */
     nrOfPlus: number;
+
+    /** How many minuses does the component already have. */
     nrOfMinus: number;
+
+    /** The current post user status. */
     postUserStatus?: PostUserStatus;
+
+    /** The primary color of the post. */
     color: string;
+
+    /** Is the user logged in? */
     isLoggedUser: boolean;
 }
 
+/**
+ * Component containing the form for reacting to a post.
+ * Optional data can be given to be used as default data for the form.
+ * @param props {@link PostReactionFormProps}
+ */
 export default function PostReactionForm(props: PostReactionFormProps) {
     const { nrOfPlus, nrOfMinus, postUserStatus, color, isLoggedUser } = props;
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;

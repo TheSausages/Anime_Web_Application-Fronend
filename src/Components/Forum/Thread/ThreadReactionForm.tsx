@@ -14,12 +14,24 @@ import { snackBarSuccess, snackbarError } from "../../../data/General/SnackBar";
 import { VisibilityOutlined } from "@material-ui/icons";
 import { useState } from "react";
 
-interface ThreadReactionFormProps {
+/**
+ * The props for the {@link ThreadReactionForm} component.
+ */
+export interface ThreadReactionFormProps {
+    /** Optional values to be used as default value. */
     threadUserStatus?: ThreadUserStatus;
+
+    /** Is the user logged in? */
     isLoggedUser: boolean;
+
+    /** Primary color of the component. */
     color: string;
 }
 
+/**
+ * Component used to react to a thread. Optional default values can be provided.
+ * @param props {@link ThreadReactionFormProps}
+ */
 export default function ThreadReactionForm(props: ThreadReactionFormProps) {
     const { isLoggedUser, color } = props;
     const [threadUserStatus, setThreadUserStatus] = useState(props.threadUserStatus)

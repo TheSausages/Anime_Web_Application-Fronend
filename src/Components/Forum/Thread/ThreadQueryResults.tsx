@@ -4,8 +4,14 @@ import useBasicState from "../../../data/General/BasicState";
 import Loading from "../../Loading/Loading";
 import SimpleThreadComponent from "./SimpleThreadComponent";
 
-interface ThreadQueryResultsProps {
+/**
+ * The props for the {@link ThreadQueryResults} component.
+ */
+export interface ThreadQueryResultsProps {
+    /** Threads to be shown. */
     threads: SimpleThreadPage;
+
+    /** Function used to get more elements. */
     getMore: (threads: SimpleThreadPage) => void;
 }
 

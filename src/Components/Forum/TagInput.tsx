@@ -1,20 +1,38 @@
 import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, Chip, styled, TextField } from "@mui/material";
 import React, { SyntheticEvent } from "react";
-import { ControllerRenderProps, FieldError, FieldPath, FieldValues } from "react-hook-form";
+import { ControllerRenderProps, FieldError } from "react-hook-form";
 import { Tag } from "../../data/Forum/Tag";
 import AddIcon from '@material-ui/icons/Add';
 import { useTranslation } from "react-i18next";
 
-interface TagInputProps {
+/**
+ * The props for the {@link TagInput} component.
+ */
+export interface TagInputProps {
+    /** All available tags that can be used. */
     availableTags: Tag[];
-    field: ControllerRenderProps<FieldValues, FieldPath<FieldValues>>;
+
+    /** Controller field value. */
+    field: ControllerRenderProps<any, any>;
+
+    /** The classname (html class) of the controller. */
     className?: string;
+
+    /** The react-hook-form errors of the component. */
     errors?: FieldError;
+
+    /** What should the color of the picker be. */
     color?: string;
+
+    /** What should happen when the value changes. */
     onChange: (event: SyntheticEvent<Element, Event>, value: any[], reason: AutocompleteChangeReason, details?: AutocompleteChangeDetails<any> | undefined) => void;
 }
 
-//Bacause a lot of options in renderInput, need to use normal TextField and customize it here
+/**
+ * A customised Tag input. No Form control or controllers are used - use them yourself.
+ * The default color of the component is rgb(36, 185, 44) - light green. 
+ * @param props {@link TagInputProps}
+ */
 export default function TagInput(props: TagInputProps) {
     const { t } = useTranslation();
     let color = props.color ?? "rgb(36, 185, 44)";

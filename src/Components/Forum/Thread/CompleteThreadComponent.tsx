@@ -18,17 +18,28 @@ import { checkIfGivenUserLoggedIn, checkIfObjectIsEmpty } from "../../../Scripts
 import { ForumCategory } from "../../../data/Forum/ForumCategory";
 import ThreadForm from "./ThreadForm";
 import useBasicState from "../../../data/General/BasicState";
+import ThreadReactionForm from "./ThreadReactionForm";
 
 import "../css/CompleteThreadComponent.css";
 import '../../Miscellaneous/css/Line.css';
-import ThreadReactionForm from "./ThreadReactionForm";
 
-interface ThreadProps {
+/**
+ * The props for the {@link CompleteThreadComponent} component.
+ */
+export interface CompleteThreadProps {
+    /** The id of the thread. */
     threadId: number;
+
+    /** All possible categories */
     categories: ForumCategory[];
 }
 
-export default function CompleteThreadComponent(props: ThreadProps) {
+/**
+ * A complete thread component. It shows all information on the thread together with it's posts.
+ * @param props {@link CompleteThreadProps}
+ * @see {@link ThreadPostsComponent}
+ */
+export default function CompleteThreadComponent(props: CompleteThreadProps) {
     const [thread, setThread] = useState<CompleteThread>({} as CompleteThread)
     const history = useHistory();
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, open, openElement, closeElement, t, i18n } = useBasicState()

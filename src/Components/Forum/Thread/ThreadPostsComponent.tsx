@@ -9,11 +9,21 @@ import { ForumService } from "../../../Scripts/Services/ForumService";
 import Loading from "../../Loading/Loading";
 import PostComponent from "../Post/PostComponent";
 
-interface ThreadPostsComponentProps {
+/**
+ * The props for the {@link ThreadPostsComponent} component.
+ */
+export interface ThreadPostsComponentProps {
+    /** Page of posts to be shown. */
     postsPage: PageDTO<CompletePost>;
+
+    /** Id of the thread to which the posts belong. */
     threadId: number;
 }
 
+/**
+ * Component for displaying posts. When the user scrolls down to the last post, more will be loaded.
+ * @param props {@link ThreadPostsComponentProps}
+ */
 export default function ThreadPostsComponent(props: ThreadPostsComponentProps) {
     const { postsPage, threadId } = props;
     const [postPage, setPostPage] = useState<CompletePostPage>(postsPage)

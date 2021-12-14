@@ -6,7 +6,7 @@ import { Control, Controller, FieldError } from "react-hook-form";
 /**
  * The props for the {@link TextFieldColored} component.
  */
-interface TextFieldColoredProps {
+export interface TextFieldColoredProps {
     /** The react-hook-form errors of the component. */
     errors?: FieldError;
 
@@ -93,6 +93,11 @@ const TextFieldColoredStyled = styled(TextField)({
     },
 })
 
+/**
+ * A customized text field input. The controller is already used - dont use it yourself!
+ * The default color of the component is rgb(36, 185, 44) - light green. 
+ * @param props {@link TextFieldColoredProps}
+ */
 export default function TextFieldColored(props: TextFieldColoredProps) {
     let color = props.color ?? "rgb(36, 185, 44)";
 

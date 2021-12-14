@@ -6,10 +6,18 @@ import ThreadSearch from "./Thread/ThreadSearch";
 import CompleteThreadComponent from "./Thread/CompleteThreadComponent";
 import ComponentWithNewThreadButton from "./Thread/ComponentWithNewThreadButton";
 
-interface ForumSwitchProps {
+/**
+ * The props for the {@link ForumSwitch} component.
+ */
+export interface ForumSwitchProps {
+    /** All categories. */
     categories: ForumCategory[];
 }
 
+/**
+ * An additional switch for the forum. Each route here adds some buttons to the button of the screan.
+ * @param props {@link ForumSwitchProps}
+ */
 export default function ForumSwitch(props: ForumSwitchProps) {
     const { categories } = props
 

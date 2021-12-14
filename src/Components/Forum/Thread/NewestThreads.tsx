@@ -7,9 +7,17 @@ import { ForumService } from "../../../Scripts/Services/ForumService";
 import Loading from "../../Loading/Loading";
 import SimpleThreadComponent from "./SimpleThreadComponent";
 
-interface NewestThreadsProps {
+/**
+ * The props for the {@link NewestThreads} component.
+ */
+export interface NewestThreadsProps {
 }
 
+/**
+ * Component used to get threads sorted by the creation date.
+ * All threads are then maped into {@link SimpleThreadComponent}.
+ * @param props {@link NewestThreadsProps}
+ */
 export default function NewestThreads(props: NewestThreadsProps) {
     const [threads, setThreads] = useState<SimpleThreadPage>()
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()

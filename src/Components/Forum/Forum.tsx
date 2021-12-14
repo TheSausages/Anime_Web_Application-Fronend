@@ -11,9 +11,18 @@ import useBasicState from '../../data/General/BasicState';
 
 import "./css/Forum.css"
 
+/**
+ * The props for the {@link Forum} component.
+ */
 interface ForumProps {
 }
 
+/**
+ * Main forum component. Adds menu and points to the forum switch. 
+ * @param props 
+ * @see {@link ForumMenu}
+ * @see {@link ForumSwitch}
+ */
 export default function Forum(props: ForumProps) {
     const [categories, setCategories] = useState<ForumCategory[]>();
     const { loading, startLoading, stopLoading, snackbar, t, i18n } = useBasicState()

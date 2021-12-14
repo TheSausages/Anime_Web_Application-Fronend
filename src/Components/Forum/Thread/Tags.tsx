@@ -3,11 +3,22 @@ import { Tag } from "../../../data/Forum/Tag";
 
 import "../css/Tags.css";
 
-interface TagsProps {
+/**
+ * The props for the {@link Tags} component.
+ */
+export interface TagsProps {
+    /** Tags to be shown. */
     tags: Tag[];
+
+    /** Classname (html class) for the whole list. */
     className?: string;
 }
 
+/**
+ * Small component for showing tags as a list.
+ * If the list is too long, it will go to the next line.
+ * @param props {@link TagsProps}
+ */
 export default function Tags(props: TagsProps) {
     const { t } = useTranslation();
 

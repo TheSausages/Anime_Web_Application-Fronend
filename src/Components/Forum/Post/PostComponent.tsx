@@ -13,14 +13,28 @@ import useBasicState from "../../../data/General/BasicState";
 
 import "../css/PostComponent.css"
 
-interface PostProps {
+/**
+ * The props for the {@link PostComponent} component.
+ */
+export interface PostProps {
+    /** Post to be shown. */
     post: CompletePost;
+
+    /** The key of the post */
     key: number;
+
+    /** Id of the thread ot which the post belongs. */
     threadId: number;
 }
 
 const color = getRandomColor(true);
 
+/**
+ * Main component to show posts. Also enables the editing and reaction to the post.
+ * @param props {@link PostProps}
+ * @see {@link PostForm}
+ * @see {@link PostReactionForm}
+ */
 export default function PostComponent(props: PostProps) {
     const { threadId } = props;
     const [post, setPost] = useState<CompletePost>(props.post)

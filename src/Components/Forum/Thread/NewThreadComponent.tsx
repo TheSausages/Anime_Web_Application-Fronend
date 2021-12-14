@@ -10,10 +10,19 @@ import useBasicState from "../../../data/General/BasicState";
 
 import "../css/NewThreadComponent.css"
 
-interface NewThreadComponentProps {
+/**
+ * The props for the {@link NewThreadComponent} component.
+ */
+export interface NewThreadComponentProps {
+    /** All available categories. */
     categories: ForumCategory[]
 }
 
+/**
+ * Component for creating new threads. Has a buton, and when clicked the form appears.
+ * @param props {@link NewThreadComponentProps}
+ * @see {@link ThreadForm}
+ */
 export default function NewThreadComponent(props: NewThreadComponentProps) {
     const { snackbar, open, openElement, closeElement, t, i18n } = useBasicState()
     const history = useHistory()

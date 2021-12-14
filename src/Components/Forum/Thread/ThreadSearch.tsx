@@ -24,12 +24,21 @@ import ButtonCollored from "../../Miscellaneous/ButtonCollored"
 
 import "../css/ThreadSearch.css"
 
-interface ThreadSearchProps {
+/**
+ * The props for the {@link ThreadSearch} component.
+ */
+export interface ThreadSearchProps {
+    /** All available categories. */
     categories: ForumCategory[];
 }
 
 const color = getRandomColor(true);
 
+/**
+ * Main component for searching threads. 
+ * Contains a form with a number of criteria, that can be used to filter and search threads.
+ * @param props {@link ThreadSearchProps}
+ */
 export default function ThreadSearch(props: ThreadSearchProps) {
     const { categories } = props
     const setValueOptions = MiscellaneousProperties.reactHookFormSetValueOption;

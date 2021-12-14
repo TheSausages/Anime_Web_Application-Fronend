@@ -11,10 +11,19 @@ import useBasicState from "../../../data/General/BasicState";
 
 import "../css/ThreadByCategory.css"
 
-interface ThreadsByCategoryProps {
+/**
+ * The props for the {@link ThreadsByCategory} component.
+ */
+export interface ThreadsByCategoryProps {
+    /** All available categories. */
     category: ForumCategory;
 }
 
+/**
+ * Component for getting threads by one, selected category. Is used in the forum menu.
+ * @param props {@link ThreadsByCategoryProps}
+ * @see {@link ForumMenu}
+ */
 export default function ThreadsByCategory(props: ThreadsByCategoryProps) {
     const [threads, setThreads] = useState<SimpleThreadPage>()
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()

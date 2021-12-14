@@ -25,14 +25,31 @@ const useStyles = makeStyles((theme) => ({
     
 }));
 
-interface NewPostFormProps {
+/**
+ * The props for the {@link PostForm} component.
+ */
+export interface NewPostFormProps {
+    /** Title of the popup window. */
     title: string;
+
+    /** When should the popup be opened. */
     open: boolean;
+
+    /** Method to close the popup. */
     close: () => void;
+
+    /** Optional data to be used as default values. */
     data?: UpdatePost;
+
+    /** What should happen when submiting the form. */
     onSubmit: (post: UpdatePost) => void;
 }
 
+/**
+ * Component containg the form for creating and editing posts.
+ * Optional data can be given to be used as default values.
+ * @param props {@link NewPostFormProps } 
+ */
 export default function PostForm(props: NewPostFormProps) {
     const classes = useStyles();
     const { t } = useTranslation();

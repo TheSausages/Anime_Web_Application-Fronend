@@ -11,11 +11,20 @@ import { checkIfGivenUserLoggedIn } from "../../../Scripts/Utilities";
 
 import "../css/SimpleThreadComponent.css"
 
-interface ThreadsProps {
+/**
+ * The props for the {@link SimpleThreadComponent} component.
+ */
+export interface ThreadsProps {
+    /** Thread to be shown. */
     thread: SimpleThreadWithUserStatus;
 }
 
-export default function Threads(props: ThreadsProps) {
+/**
+ * Component for showing simple information on a thread.
+ * It enables to react to a thread using {@link ThreadReactionForm}.
+ * @param props {@link SimpleThreadComponent}
+ */
+export default function SimpleThreadComponent(props: ThreadsProps) {
     const history = useHistory();
     const { thread } = props;
     const { t } = useTranslation();

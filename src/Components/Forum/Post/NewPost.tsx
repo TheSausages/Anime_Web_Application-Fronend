@@ -8,11 +8,22 @@ import { ForumService } from "../../../Scripts/Services/ForumService";
 import ButtonCollored from "../../Miscellaneous/ButtonCollored";
 import PostForm from "./PostForm";
 
-interface NewPostComponentProps {
+/**
+ * The props for the {@link NewPostButton} component.
+ */
+export interface NewPostComponentProps {
+    /** Thread for which the post should be created. */
     thread: CompleteThread;
+
+    /** Method to add the new post to the thread posts. */
     setNewPosts: (posts: CompletePostPage) => void
 }
 
+/**
+ * Component containing the button to open the new thread component.
+ * @param props {@link NewPostComponentProps}
+ * @see {@link PostForm}
+ */
 export default function NewPostButton(props: NewPostComponentProps) {
     const [open, setOpen] = useState<boolean>(false);
     const { snackbar, t, i18n } = useBasicState()

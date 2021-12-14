@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { AdditionalForumCategories } from "../../data/Forum/AdditionalForumCategories";
 import { ForumCategory } from "../../data/Forum/ForumCategory";
+import useBasicState from "../../data/General/BasicState";
 
 const useStyles = makeStyles((theme) => ({
     subListHeader: {
@@ -15,13 +16,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface ForumMenuprops {
+/**
+ * The props for the {@link ForumMenu} component.
+ */
+export interface ForumMenuProps {
+    /** All categories. */
     categories: ForumCategory[];
 }
 
-export default function ForumMenu(props: ForumMenuprops) {
+/**
+ * The forum menu. It is seen in when using any forum component.
+ * @param props {@link ForumMenu}
+ */
+export default function ForumMenu(props: ForumMenuProps) {
     const classes = useStyles();
-    const { t } = useTranslation();
+    const { t } = useBasicState();
     
     const list = { width: '100%', bgcolor: 'background.paper' }
     const subList = { fontSize: '1.5rem', paddingRight: 0 }

@@ -3,17 +3,27 @@ import { ThreadStatus } from "../../../data/Forum/Types";
 
 import "../css/ThreadStatusComponent.css";
 
-interface ThreadStatusProps {
+/**
+ * The props for the {@link ThreadStatusComponent} component.
+ */
+export interface ThreadStatusProps {
+    /** Primary color of the whole component. */
     primaryColor: string;
+
+    /** Thew current status */
     status: ThreadStatus;
+
+    /** Id of the thread, used to set overflow for a given element. */
     id: string;
+
+    /** Classname (html class) of the status. */
     className?: string;
 }
 
 export default function ThreadStatusComponent(props: ThreadStatusProps) {
 
     useEffect(() => {
-        // small method that adds overflow: hiiden to parent of element
+        // small method that adds overflow: hiden to parent of element
         document.getElementById(`Status${props.id}`)!.parentElement!.style.overflow = "hidden"
     }, [props.id]);
 

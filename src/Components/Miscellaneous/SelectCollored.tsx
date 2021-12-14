@@ -49,8 +49,7 @@ export interface SelectColloredProps {
  * A highy customizable Select field.
  * Form Control, Label and Controller have already been used - do not use them yourself!
  * The default color of the component is rgb(36, 185, 44) - light green.
- * @param props 
- * @returns 
+ * @param props {@link SelectColloredProps}
  */
 export default function SelectCollored(props: SelectColloredProps) {
     let color = props.color ?? "rgb(36, 185, 44)";
