@@ -2,13 +2,13 @@
 
 # Table of Contents
 
-- [General Information](#General Information)
-- [File Structure for Backend](#File Structure for Backend)
-- [Main Technologies](#Main Technologies)
+- [General Information](#General-Information)
+- [File Structure for Backend](#File-Structure-fo-Backend)
+- [Main Technologies](#Main-Technologies)
 - [Launch](#Launch)
-- [Generating the documentation](#Generating the documentation)
-- [Needed environmental variables](#Needed environmental variables)
-- [Plans for future](#Plans for future)
+- [Generating the documentation](#Generating-the-documentation)
+- [Needed environmental variables](#Needed-environmental-variables)
+- [Plans for future](#Plans-for-future)
 
 # General Information
 ## General
