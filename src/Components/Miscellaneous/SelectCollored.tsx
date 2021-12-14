@@ -3,21 +3,55 @@ import { makeStyles } from "@material-ui/styles";
 import { ReactNode } from "react";
 import { Control, Controller, FieldError } from "react-hook-form";
 
-interface SelectColloredProps {
+/**
+ * The props for the {@link SelectCollored} component.
+ */
+export interface SelectColloredProps {
+    /** What should the select label Id be? */
     labelId: string;
+
+    /** what should the select component className (html class) be? */
     className?: string;
+
+    /** What should happen when the value changes. */
     onChange: (event: SelectChangeEvent<any>, child: ReactNode) => void;
+
+    /** What should the color of the picker be. */
     color?: string;
-    title: string;
+
+    /** The label of the picker. */
+    label: string;
+
+    /** The react-hook-form errors of the component. */
     errors?: FieldError;
+
+    /** 
+     * What options should the select have.
+     * One additioan option, *clean* is always added.
+     * It is used to clean the select value.
+    */
     options: ReactNode[];
+
+    /** What className (html class) should the form control of the select be. */
     formControlClassName?: string;
+
+    /** What should be the react-hook-form name of the controller. */
     formControlName: string;
-    control: Control<any> | undefined;
-    formKey?: string;
+
+    /** The react-hook-form control object. */
+    control?: Control<any>;
+
+    /** Should the select be disabled. */
     disabled?: boolean;
 }
 
+/**
+ * A highy customizable Select field.
+ * Form Control, Label and Controller have already been used - do not use them yourself!
+ * The default color of the component is rgb(36, 185, 44) - light green.
+ * @param props 
+ * @returns 
+ */
 export default function SelectCollored(props: SelectColloredProps) {
     let color = props.color ?? "rgb(36, 185, 44)";
 
@@ -82,7 +116,7 @@ export default function SelectCollored(props: SelectColloredProps) {
     return (
         <FormControl className={`${classes.selectForm} ${props.formControlClassName}`} disabled={props.disabled}>
             <InputLabel id={props.labelId} className={classes.label}>
-                {props.title}
+                {props.label}
             </InputLabel>
 
             <Controller render={({field}) => (

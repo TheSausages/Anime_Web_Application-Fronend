@@ -35,7 +35,7 @@ export default function ReviewComponent(props: ReviewProps) {
                 <p>{review.reviewTitle}</p>
             </div>
 
-            <ExpandingField maxRown={2} text={review.reviewText} />
+            <ExpandingField minRow={2} text={review.reviewText} />
 
             <div className="ReviewNumbers">
                 <IconWithNumber numberToShow={review?.nrOfPlus ?? 0} iconToShow={<ThumbUpIcon htmlColor={color} />}/>

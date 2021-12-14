@@ -12,9 +12,17 @@ import useBasicState from '../../data/General/BasicState';
 import './css/MainPage.css';
 import '../Miscellaneous/css/Line.css';
 
-interface MainPageProps {
+/**
+ * The props for the {@link MainPageProps} component.
+ */
+export interface MainPageProps {
 }
 
+/**
+ * Main page of the website. 
+ * After logout, users will be redirected here.
+ * @param props {@link MainPageProps}
+ */
 export default function MainPage(props: MainPageProps) {
     const [currectSeason, setCurrectSeason] = useState<CurrentSeasonInformation>();
     const { loading, error, startLoading, stopLoading, snackbar, setErrorMessage, t, i18n } = useBasicState()
@@ -46,8 +54,6 @@ export default function MainPage(props: MainPageProps) {
     if (loading || error || !currectSeason || checkIfObjectIsEmpty(currectSeason)) {
         return <Loading error={error}/>
     }
-
-    console.log(currectSeason)
 
     return(
         <div>

@@ -14,11 +14,12 @@ import './css/Navbar.css'
 /**
  * The props for the {@link Navbar} component.
  */
-interface NavbarProps {
+export interface NavbarProps {
 }
 
 /**
  * Component containing the navbar.
+ * Should be used in a way, so that it doesnt rerender every time something changes.
  * @param props {@link NavbarProps}
  */
 export default function Navbar(props: NavbarProps) {

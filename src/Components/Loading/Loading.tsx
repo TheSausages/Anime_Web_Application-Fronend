@@ -7,10 +7,20 @@ import { MiscellaneousProperties } from '../../Properties/MiscellaneousPropertie
 import './css/Loading.css'
 import { useTranslation } from "react-i18next";
 
+/**
+ * The props for the {@link Loading} component.
+ */
 interface LoadingProps {
+    /** The error text. */
     error?: string
 }
 
+/**
+ * The component used when the loading state start.
+ * If the error time passes or an error message is given, the component show
+ * the error message indefinitely.
+ * @param props {@link Loading}
+ */
 export default function Loading(props: LoadingProps) {
     const { t } = useTranslation();
     const loadingTime: number = MiscellaneousProperties.loadingTimerInSeconds;

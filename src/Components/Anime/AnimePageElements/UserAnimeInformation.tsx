@@ -9,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FuzzyDate, getDateFromFuzzy } from "../../../data/Anime/Smaller/FuzzyDate";
 import { useForm } from "react-hook-form";
 import { useCallback } from "react";
-import { UserService } from "../../../Scripts/Services/UserService";
 import { snackbarError, snackBarSuccess } from "../../../data/General/SnackBar";
 import { BackendError } from "../../../data/General/BackendError";
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
@@ -22,9 +21,9 @@ import CheckboxCollored from '../../Miscellaneous/CheckboxCollored';
 import SelectCollored from '../../Miscellaneous/SelectCollored';
 import useBasicState from '../../../data/General/BasicState';
 import { MiscellaneousProperties } from '../../../Properties/MiscellaneousProperties';
+import {AnimeService} from "../../../Scripts/Services/AnimeService";
 
 import "../css/UserAnimeInformation.css"
-import {AnimeService} from "../../../Scripts/Services/AnimeService";
 
 const color = getRandomColor(true);
 const useStyles = makeStyles((theme) => ({
@@ -189,7 +188,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <SelectCollored labelId="episodesSeenLabel"
-                    title={t("anime.userAnimeInformation.episodesSeenLabel")}
+                    label={t("anime.userAnimeInformation.episodesSeenLabel")}
                     formControlClassName={`${classes.inputSpace} episodesSeen`}
                     onChange={data => {
                         setValue('nrOfEpisodesSeen', data.target.value as number, setValueOptions);
@@ -203,7 +202,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <SelectCollored labelId="StatusLabel"
-                    title={t("anime.userAnimeInformation.statusLabel")}
+                    label={t("anime.userAnimeInformation.statusLabel")}
                     formControlClassName={`${classes.inputSpace} status`}
                     onChange={data => {
                         setValue('status', data.target.value as AnimeUserStatus, setValueOptions);
@@ -223,7 +222,7 @@ export default function UserAnimeInformation(props: UserAnimeInformationProps) {
                 />
 
                 <SelectCollored labelId="GradeLabel"
-                    title={t("anime.userAnimeInformation.gradeLabel")}
+                    label={t("anime.userAnimeInformation.gradeLabel")}
                     formControlClassName={`${classes.inputSpace} grade`}
                     onChange={data => {
                         setValue('grade', data.target.value as number, setValueOptions);

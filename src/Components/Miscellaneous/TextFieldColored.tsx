@@ -3,17 +3,41 @@ import { styled } from "@material-ui/styles";
 import React, { ChangeEventHandler } from "react";
 import { Control, Controller, FieldError } from "react-hook-form";
 
+/**
+ * The props for the {@link TextFieldColored} component.
+ */
 interface TextFieldColoredProps {
+    /** The react-hook-form errors of the component. */
     errors?: FieldError;
+
+    /** The label of the picker. */
     label: string;
+
+    /** What type of text field should this be? */
     type?: string;
+
+    /** what should the text field component className (html class) be? */
     className?: string;
+
+    /** How many rows should the text field have. */
     rows?: number;
+
+    /** Should the text field have multiple lines? */
     multiline?: boolean;
+
+    /** The react-hook-form control object. */
     color?: string;
+
+    /** What should happen when the value changes. */
     onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+
+    /** What should be the react-hook-form name of the controller. */
     formControlName: string;
-    control: Control<any> | undefined;
+
+    /** The react-hook-form control object. */
+    control?: Control<any>;
+
+    /** The key of the controller. */
     formKey?: string;
 }
 

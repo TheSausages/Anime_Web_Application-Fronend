@@ -224,7 +224,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
 
                 <div className="StatusInput">
                     <SelectCollored labelId="StatusLabel"
-                        title={t("anime.search.status")}
+                        label={t("anime.search.status")}
                         onChange={category => setValue('status', category.target.value as Status, setValueOptions)}
                         errors={errors.status}
                         color={color}
@@ -242,7 +242,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
 
                 <div className="FormatInput">
                     <SelectCollored labelId="FormatLabel"
-                        title={t("anime.search.format")}
+                        label={t("anime.search.format")}
                         onChange={format => setValue('format', format.target.value as Format, setValueOptions)}
                         errors={errors.format}
                         color={color}
@@ -260,7 +260,7 @@ export default function AnimeSearch(props: AnimeSearchProps) {
 
                 <div className="SeasonInput">
                     <SelectCollored labelId="SeasonLabel"
-                        title={t("anime.search.season")}
+                        label={t("anime.search.season")}
                         onChange={season => setValue('season', season.target.value as SeasonYear, setValueOptions)}
                         errors={errors.season?.season || errors.season?.year}
                         color={color}

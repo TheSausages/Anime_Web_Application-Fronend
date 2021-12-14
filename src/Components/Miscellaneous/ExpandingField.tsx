@@ -3,11 +3,22 @@ import useBasicState from "../../data/General/BasicState";
 
 import "./css/ExpandingField.css"
 
-interface ExpandingFieldProps {
+/**
+ * The props for the {@link ExpandingField} component.
+ */
+export interface ExpandingFieldProps {
+    /** What text should be shown */
     text: string;
-    maxRown: number;
+
+    /** How many rows should be shown minumum */
+    minRow: number;
 }
 
+/**
+ * A field that will show a maximum number of rows by default.
+ * The user can click to show the whole text.
+ * @param props {@link ExpandingFieldProps}
+ */
 export default function ExpandingField(props: ExpandingFieldProps) {
     const { t } = useBasicState();
     const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -18,7 +29,7 @@ export default function ExpandingField(props: ExpandingFieldProps) {
                 style={{
                     /* maxHeight = lineHeight * maxRows */
                     /* Here its 1 * props.maxRows */
-                    maxHeight: collapsed ? `${props.maxRown}em` : undefined,
+                    maxHeight: collapsed ? `${props.minRow}em` : undefined,
                 }}>
                 {props.text}
             </div>

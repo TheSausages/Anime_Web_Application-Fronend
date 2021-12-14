@@ -219,7 +219,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
 
                 <div className="CategoryInput">
                     <SelectCollored labelId="CategoryLabel"
-                        title={t("forum.thread.search.category")}
+                        label={t("forum.thread.search.category")}
                         onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
                         errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
                         color={color}
@@ -237,7 +237,7 @@ export default function ThreadSearch(props: ThreadSearchProps) {
 
                 <div className="StatusInput">
                     <SelectCollored labelId="StatusLabel"
-                        title={t("forum.thread.search.status")}
+                        label={t("forum.thread.search.status")}
                         onChange={category => setValue('status', category.target.value as ThreadStatus, setValueOptions)}
                         errors={errors.status}
                         color={color}

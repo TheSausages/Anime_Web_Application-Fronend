@@ -144,7 +144,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
 
                         <SelectCollored labelId="CategoryLabel"
                             formControlClassName={classes.selectWidth}
-                            title={t("forum.thread.generalThread.categoryTitle")}
+                            label={t("forum.thread.generalThread.categoryTitle")}
                             onChange={category => setValue('category', category.target.value as ForumCategory, setValueOptions)}
                             errors={errors.category?.categoryDescription || errors.category?.categoryName || errors.category?.categoryId}
                             options={
@@ -160,7 +160,7 @@ export default function ThreadForm(props: NewThreadFormProps) {
 
                         <SelectCollored  labelId="StatusLabel"
                             formControlClassName={classes.selectWidth}
-                            title={t("forum.thread.generalThread.statusTitle")}
+                            label={t("forum.thread.generalThread.statusTitle")}
                             onChange={category => setValue('status', category.target.value as ThreadStatus, setValueOptions)}
                             errors={errors.status}
                             disabled={!(data && !checkIfObjectIsEmpty(data))}
