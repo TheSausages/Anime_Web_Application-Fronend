@@ -27,7 +27,7 @@
   "typedocOptions": {
     "name": "Documentation for Frontend part of my Bachelors Degree",
     "entryPointStrategy": "expand",
-    "out": "docs",
+    "out": "documentation",
     "exclude": ["./src/App.css", "./src/App.tsx", "./src/index.css", "./src/index.tsx", "./src/react-app-env.d.ts"]
   }
 }
