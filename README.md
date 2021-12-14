@@ -3,7 +3,7 @@
 # Table of Contents
 
 - [General Information](#General-Information)
-- [File Structure for Backend](#File-Structure-fo-Backend)
+- [File Structure for Frontend](#File-Structure-for-Frontend)
 - [Main Technologies](#Main-Technologies)
 - [Launch](#Launch)
 - [Generating the documentation](#Generating-the-documentation)
